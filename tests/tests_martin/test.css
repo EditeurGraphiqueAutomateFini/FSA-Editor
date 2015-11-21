@@ -1,0 +1,14 @@
+html,body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+#svg_container,#object_container{
+    display: inline-block;
+    height: 100%;
+    vertical-align: top;
+    width: 49%;
+}
+#svg_container{
+    border-right : 1px solid #000;
+}
