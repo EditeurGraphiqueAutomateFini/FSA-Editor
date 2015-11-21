@@ -1,0 +1,9 @@
+
+    {
+        cx:30,
+        fill:'blue'
+    },
+    {
+        cx:120,
+        fill:'red'
+    }
