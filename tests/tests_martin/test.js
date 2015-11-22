@@ -18,6 +18,8 @@
             var svgContainer = d3.select("#svg_container").append("svg").attr("width",200).attr("height",200);
             var circles = svgContainer.selectAll("circle").data(data).enter().append("circle");
             var circlesAttr = circles.attr("cx",function(d){return d.cx;}).attr("cy",30).attr("r",30).attr("fill",function(d){return d.fill;});
+
+            this.enableDragNDrop('#svg_container');
         },
 
         displayObject : function(object,selector){      //displays an JS object on screen; object : array of object to display, selector : html tag collection to display the object in
@@ -56,6 +58,28 @@
             }
 
             $(selector).html('{<br/>'+objString+'<br/>}');
+        },
+        enableDragNDrop : function(parent){     //enables dragndrop on each circle child of the parent
+            $(parent).find('circle').each(function(){
+                $(this)
+                    .draggable()
+                    .bind('mousedown', function(event,ui){
+                        // bring target to front
+                        $(event.target.parentElement).append( event.target);
+                    })
+                    .bind('drag',function(event,ui){
+                        // update coordinates manually, since top/left style props don't work on SVG
+                        $(event.target).attr('cx',function(){
+                            var radius = parseInt($(this).attr('r'));
+                            return ui.position.left+radius;
+                        });
+                        $(event.target).attr('cy',function(){
+                            var radius = parseInt($(this).attr('r'));
+                            return ui.position.top+radius;
+                        });
+                    });
+            });
+
         }
     };
 
