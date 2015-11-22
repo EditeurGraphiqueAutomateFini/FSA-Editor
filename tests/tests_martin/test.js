@@ -13,13 +13,25 @@
                 }
             ];
             //console.log(data);
-            this.displayObject(data,"#object_container");
+
+
+            var drag = d3.behavior.drag().on('drag', function() {
+                d3.select(this).attr('cx', d3.event.x).attr('cy', d3.event.y);
+            });
+
 
             var svgContainer = d3.select("#svg_container").append("svg").attr("width",200).attr("height",200);
             var circles = svgContainer.selectAll("circle").data(data).enter().append("circle");
-            var circlesAttr = circles.attr("cx",function(d){return d.cx;}).attr("cy",30).attr("r",30).attr("fill",function(d){return d.fill;});
+            var circlesAttr = circles.attr("cx",function(d){return d.cx;}).attr("cy",30).attr("r",30).attr("fill",function(d){return d.fill;}).call(drag);
 
-            this.enableDragNDrop('#svg_container');
+            /*
+            var svgContainer = d3.select("#svg_container");
+            var circles = svgContainer.selectAll(".circle").data(data).enter().append("div").attr("class","circle");
+            var circlesAttr = circles.attr("cx",function(d){return d.cx;}).attr("cy",30).attr("r",30).attr("fill",function(d){return d.fill;});
+            */
+
+            this.displayObject(data,"#object_container");
+            //this.enableDragNDrop('#svg_container');
         },
 
         displayObject : function(object,selector){      //displays an JS object on screen; object : array of object to display, selector : html tag collection to display the object in
@@ -60,9 +72,11 @@
             $(selector).html('{<br/>'+objString+'<br/>}');
         },
         enableDragNDrop : function(parent){     //enables dragndrop on each circle child of the parent
-            $(parent).find('circle').each(function(){
+            /*$(parent).find('circle').each(function(){
                 $(this)
-                    .draggable()
+                    .draggable({
+                        containment : 'parent'
+                    })
                     .bind('mousedown', function(event,ui){
                         // bring target to front
                         $(event.target.parentElement).append( event.target);
@@ -79,7 +93,7 @@
                         });
                     });
             });
-
+            */
         }
     };
 
