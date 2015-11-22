@@ -5,35 +5,44 @@
             var data = [
                 {
                     cx:30,
+                    cy:30,
+                    r:30,
                     fill:'blue'
                 },
                 {
                     cx:120,
+                    cy:120,
+                    r:30,
                     fill:'red'
                 }
             ];
             //console.log(data);
 
-
+            //drag natif d3
             var drag = d3.behavior.drag().on('drag', function() {
                 d3.select(this).attr('cx', d3.event.x).attr('cy', d3.event.y);
             });
 
-
+            // generation svg
+            /*
             var svgContainer = d3.select("#svg_container").append("svg").attr("width",200).attr("height",200);
             var circles = svgContainer.selectAll("circle").data(data).enter().append("circle");
             var circlesAttr = circles.attr("cx",function(d){return d.cx;}).attr("cy",30).attr("r",30).attr("fill",function(d){return d.fill;}).call(drag);
-
-            /*
-            var svgContainer = d3.select("#svg_container");
-            var circles = svgContainer.selectAll(".circle").data(data).enter().append("div").attr("class","circle");
-            var circlesAttr = circles.attr("cx",function(d){return d.cx;}).attr("cy",30).attr("r",30).attr("fill",function(d){return d.fill;});
             */
 
-            this.displayObject(data,"#object_container");
-            //this.enableDragNDrop('#svg_container');
-        },
+            //generation div
+            ///*
+            var svgContainer = d3.select("#svg_container");
+            var circles = svgContainer.selectAll(".circle").data(data).enter().append("div").attr("class","circle");
+            var circlesAttr = circles.attr("style",function(d){
+                var divStyles ='background:'+d.fill+';height:'+(d.r*2)+'px;width:'+(d.r*2)+'px;left:'+d.cx+'px;top:'+d.cy+'px;';
+                return divStyles;
+            });
+            //*/
 
+            this.displayObject(data,"#object_container");
+            this.enableDragNDrop('#svg_container');
+        },
         displayObject : function(object,selector){      //displays an JS object on screen; object : array of object to display, selector : html tag collection to display the object in
             //todo mettre dans un textarea
             //todo gerer objets de plus d'un niveau de profondeur
@@ -75,7 +84,7 @@
             /*$(parent).find('circle').each(function(){
                 $(this)
                     .draggable({
-                        containment : 'parent'
+                        containment : parent
                     })
                     .bind('mousedown', function(event,ui){
                         // bring target to front
@@ -92,8 +101,22 @@
                             return ui.position.top+radius;
                         });
                     });
+            });*/
+            $(parent).find('.circle').each(function(){
+                $(this)
+                    .draggable({
+                        containment : parent
+                    })
+                    .droppable({
+                        accept : function(draggableItem){
+                            if(draggableItem==$(this)){
+                                return false;
+                            }else{
+                                return true;
+                            }
+                        }
+                    });
             });
-            */
         }
     };
 
