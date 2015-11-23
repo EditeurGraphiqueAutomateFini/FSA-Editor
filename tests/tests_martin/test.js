@@ -23,6 +23,7 @@
                 }
             ];
 
+
             //drag natif d3
             var drag = d3.behavior.drag().on('drag', function() {
                 d3.select(this).attr('cx', d3.event.x).attr('cy', d3.event.y);
@@ -38,9 +39,14 @@
             //generation div
             var svgContainer = d3.select("#svg_container");
             var circles = svgContainer.selectAll(".circle").data(data).enter().append("div").attr("class","circle");
-            var circlesAttr = circles.attr("style",function(d){
-                var divStyles ='background:'+d.fill+';height:'+(d.r*2)+'px;width:'+(d.r*2)+'px;left:'+d.cx+'px;top:'+d.cy+'px;';
-                return divStyles;
+            var circlesAttr = circles.attr({
+                "style":function(d){
+                    var divStyles ='background:'+d.fill+';height:'+(d.r*2)+'px;width:'+(d.r*2)+'px;left:'+d.cx+'px;top:'+d.cy+'px;';
+                    return divStyles;
+                },
+                "id":function(d){
+                    return d.uniqueId;
+                }
             });
 
             this.displayObject(data,"#object_container");
@@ -90,6 +96,13 @@
                         containment : parent,
                         zIndex: 10,
                         revert:'valid',
+                        drag:function(e,obj){
+                            d = $("path."+obj.helper[0].id);
+                            dAttr = $("path."+obj.helper[0].id).attr("d");
+                            d.attr("d",function(){
+                                return "M "+e.clientX+" "+e.clientY+dAttr.slice((dAttr.indexOf("L")));
+                            });
+                        },
                         revertDuration:100
                     })
                     .droppable({
@@ -121,15 +134,41 @@
             });*/
         },
         createPath:function(circles){
+            //color of the lines
+            var color='black';
+            //width of the lines
+            var stroke_width='2'
             circles.each(function(el){
+                // check if circle is bound, if so get bind coordinates
+                var isBound={
+                    is:false,
+                    bindCx:0,
+                    bindCy:0,
+                    bindR:0
+                };
                 if(el.boundTo.length>0){
+                    var bound = el.boundTo;
                     circles.each(function(el){
-                        console.log(el);
+                        for(var i=0;i<bound.length;i++){
+                            if(bound[i]==el.uniqueId){
+                                isBound.is=true;
+                                isBound.bindCx=el.cx;
+                                isBound.bindCy=el.cy;
+                                isBound.bindR=el.r;
+                            }
+                        }
                     });
-                    d3.select("#svg_container").append("svg").append("path").attr({
-                        "d":"M"+" "+(el.cx+el.r)+" "+(el.cy+el.r)+" l 150 -300",
-                        "stroke":"red",
-                        "stroke-width":"3"
+                };
+                if(isBound.is){
+                    var svgMarker='<defs><marker id="markerArrow" markerWidth="13" markerHeight="13" refX="2" refY="6" orient="auto"><path d="M2,2 L2,11 L10,6 L2,2" fill="black"/></marker></defs>';
+                    var newSvgPath = d3.select("#svg_container").append("svg");
+                    newSvgPath.html(svgMarker);
+                    newSvgPath.append("path").attr({
+                        "class":el.uniqueId,
+                        "d":"M "+(el.cx+el.r)+" "+(el.cy+el.r)+" L "+(isBound.bindCx+isBound.bindR)+" "+(isBound.bindCy+isBound.bindR),
+                        "stroke":color,
+                        "stroke-width":stroke_width,
+                        "marker-end":"url(#markerArrow)"
                     });
                 }
             });
