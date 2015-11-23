@@ -4,12 +4,18 @@
         main : function(){
             var data = [
                 {
+                    //unique id
+                    uniqueId:1,
+                    //object to which this is bound
+                    boundTo:[2],
                     cx:30,
                     cy:30,
                     r:30,
                     fill:'blue'
                 },
                 {
+                    uniqueId:2,
+                    boundTo:[],
                     cx:120,
                     cy:120,
                     r:30,
@@ -36,25 +42,10 @@
                 var divStyles ='background:'+d.fill+';height:'+(d.r*2)+'px;width:'+(d.r*2)+'px;left:'+d.cx+'px;top:'+d.cy+'px;';
                 return divStyles;
             });
-            /*var link = svgContainer.append("svg").append("path").attr({
-                "d":"M 0 100 l 150 -300",
-                "stroke":"red",
-                "stroke-width":"3"
-            });
-            */
-
-            circles.each(function(el){
-                console.log(el);
-                // console.log(d3.select(this));
-                d3.select("#svg_container").append("svg").append("path").attr({
-                    "d":"M 0 "+el.cx+" l 150 -300",
-                    "stroke":"red",
-                    "stroke-width":"3"
-                });
-            });
 
             this.displayObject(data,"#object_container");
             this.enableDragNDrop('#svg_container');
+            this.createPath(circles);
         },
         displayObject : function(object,selector){      //displays an JS object on screen; object : array of object to display, selector : html tag collection to display the object in
             //todo mettre dans un textarea
@@ -128,6 +119,20 @@
                         });
                     });
             });*/
+        },
+        createPath:function(circles){
+            circles.each(function(el){
+                if(el.boundTo.length>0){
+                    circles.each(function(el){
+                        console.log(el);
+                    });
+                    d3.select("#svg_container").append("svg").append("path").attr({
+                        "d":"M"+" "+(el.cx+el.r)+" "+(el.cy+el.r)+" l 150 -300",
+                        "stroke":"red",
+                        "stroke-width":"3"
+                    });
+                }
+            });
         }
     };
 
