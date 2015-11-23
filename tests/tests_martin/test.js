@@ -1,5 +1,4 @@
 (function(){
-
     var emptyShell = {
         main : function(){
             var data = [
@@ -15,11 +14,19 @@
                 },
                 {
                     uniqueId:2,
-                    boundTo:[],
+                    boundTo:[3],
                     cx:120,
                     cy:120,
                     r:30,
                     fill:'red'
+                },
+                {
+                    uniqueId:3,
+                    boundTo:[],
+                    cx:210,
+                    cy:210,
+                    r:30,
+                    fill:'green'
                 }
             ];
 
@@ -143,6 +150,10 @@
             var color='black';
             //width of the lines
             var stroke_width='2'
+
+            var svgMarker='<defs><marker id="markerArrow" markerWidth="13" markerHeight="13" refX="2" refY="6" orient="auto"><path d="M2,2 L2,11 L10,6 L2,2" fill="black"/></marker></defs>';
+            var newSvgPath = d3.select("#svg_container").append("svg").html(svgMarker);
+
             circles.each(function(el){
                 // check if circle is bound, if so get bind coordinates
                 var isBound={
@@ -167,10 +178,7 @@
                     });
                 };
                 if(isBound.is){
-                    var svgMarker='<defs><marker id="markerArrow" markerWidth="13" markerHeight="13" refX="2" refY="6" orient="auto"><path d="M2,2 L2,11 L10,6 L2,2" fill="black"/></marker></defs>';
-                    var newSvgPath = d3.select("#svg_container").append("svg");
-                    newSvgPath.html(svgMarker);
-                    newSvgPath.append("path").attr({
+                    d3.select("#svg_container svg").append("path").attr({
                         // "class":el.uniqueId,
                         "id-start":el.uniqueId,
                         "id-end":isBound.id_origin,
