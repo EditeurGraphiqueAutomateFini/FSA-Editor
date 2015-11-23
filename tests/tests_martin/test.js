@@ -36,6 +36,22 @@
                 var divStyles ='background:'+d.fill+';height:'+(d.r*2)+'px;width:'+(d.r*2)+'px;left:'+d.cx+'px;top:'+d.cy+'px;';
                 return divStyles;
             });
+            /*var link = svgContainer.append("svg").append("path").attr({
+                "d":"M 0 100 l 150 -300",
+                "stroke":"red",
+                "stroke-width":"3"
+            });
+            */
+
+            circles.each(function(el){
+                console.log(el);
+                // console.log(d3.select(this));
+                d3.select("#svg_container").append("svg").append("path").attr({
+                    "d":"M 0 "+el.cx+" l 150 -300",
+                    "stroke":"red",
+                    "stroke-width":"3"
+                });
+            });
 
             this.displayObject(data,"#object_container");
             this.enableDragNDrop('#svg_container');
