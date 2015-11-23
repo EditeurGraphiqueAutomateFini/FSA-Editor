@@ -16,7 +16,6 @@
                     fill:'red'
                 }
             ];
-            //console.log(data);
 
             //drag natif d3
             var drag = d3.behavior.drag().on('drag', function() {
@@ -31,14 +30,12 @@
             */
 
             //generation div
-            ///*
             var svgContainer = d3.select("#svg_container");
             var circles = svgContainer.selectAll(".circle").data(data).enter().append("div").attr("class","circle");
             var circlesAttr = circles.attr("style",function(d){
                 var divStyles ='background:'+d.fill+';height:'+(d.r*2)+'px;width:'+(d.r*2)+'px;left:'+d.cx+'px;top:'+d.cy+'px;';
                 return divStyles;
             });
-            //*/
 
             this.displayObject(data,"#object_container");
             this.enableDragNDrop('#svg_container');
@@ -64,8 +61,8 @@
                     }
                 }
                 //removing last coma
-                if(objString.slice(-1)==','){
-                    objString=objString.slice(0,-1);
+                if(objString.charAt(objString.length-6)==','){
+                    objString=objString.slice(0,-6)+objString.slice(-5);
                 };
                 //removing last backspace
                 if(objString.slice(-5)=="<br/>"){
@@ -77,10 +74,23 @@
                     objString+='<br/>';
                 }
             }
-
             $(selector).html('{<br/>'+objString+'<br/>}');
         },
         enableDragNDrop : function(parent){     //enables dragndrop on each circle child of the parent
+            $(parent).find('.circle').each(function(){
+                $(this)
+                    .draggable({
+                        containment : parent,
+                        zIndex: 10,
+                        revert:'valid',
+                        revertDuration:100
+                    })
+                    .droppable({
+                        accept:'.circle',
+                        tolerance:'touch'
+                    });
+            });
+            //version svg
             /*$(parent).find('circle').each(function(){
                 $(this)
                     .draggable({
@@ -102,21 +112,6 @@
                         });
                     });
             });*/
-            $(parent).find('.circle').each(function(){
-                $(this)
-                    .draggable({
-                        containment : parent
-                    })
-                    .droppable({
-                        accept : function(draggableItem){
-                            if(draggableItem==$(this)){
-                                return false;
-                            }else{
-                                return true;
-                            }
-                        }
-                    });
-            });
         }
     };
 
