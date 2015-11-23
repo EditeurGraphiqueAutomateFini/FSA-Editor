@@ -97,10 +97,15 @@
                         zIndex: 10,
                         revert:'valid',
                         drag:function(e,obj){
-                            d = $("path."+obj.helper[0].id);
-                            dAttr = $("path."+obj.helper[0].id).attr("d");
-                            d.attr("d",function(){
-                                return "M "+e.clientX+" "+e.clientY+dAttr.slice((dAttr.indexOf("L")));
+                            start = $("path[id-start="+obj.helper[0].__data__.uniqueId+"]");
+                            end = $("path[id-end="+obj.helper[0].__data__.uniqueId+"]");
+                            startAttr = start.attr("d");
+                            endAttr = end.attr("d");
+                            start.attr("d",function(){
+                                return "M "+e.clientX+" "+e.clientY+startAttr.slice((startAttr.indexOf("L")));
+                            });
+                            end.attr("d",function(){
+                                return endAttr.slice(0,endAttr.indexOf("L"))+" L "+e.clientX+" "+e.clientY;
                             });
                         },
                         revertDuration:100
@@ -142,6 +147,7 @@
                 // check if circle is bound, if so get bind coordinates
                 var isBound={
                     is:false,
+                    id_origin:0,
                     bindCx:0,
                     bindCy:0,
                     bindR:0
@@ -152,6 +158,7 @@
                         for(var i=0;i<bound.length;i++){
                             if(bound[i]==el.uniqueId){
                                 isBound.is=true;
+                                isBound.id_origin=el.uniqueId;
                                 isBound.bindCx=el.cx;
                                 isBound.bindCy=el.cy;
                                 isBound.bindR=el.r;
@@ -164,7 +171,9 @@
                     var newSvgPath = d3.select("#svg_container").append("svg");
                     newSvgPath.html(svgMarker);
                     newSvgPath.append("path").attr({
-                        "class":el.uniqueId,
+                        // "class":el.uniqueId,
+                        "id-start":el.uniqueId,
+                        "id-end":isBound.id_origin,
                         "d":"M "+(el.cx+el.r)+" "+(el.cy+el.r)+" L "+(isBound.bindCx+isBound.bindR)+" "+(isBound.bindCy+isBound.bindR),
                         "stroke":color,
                         "stroke-width":stroke_width,
