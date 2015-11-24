@@ -10,10 +10,15 @@ svg{
 }
 .circle{
     border-radius: 100%;
+    cursor: pointer;
     display: block;
     position: absolute;
+    transition:  opacity 0.2s ease-in-out;
 }
-#svg_container,#object_container{
+.circle:hover{
+    opacity: 0.8;
+}
+#svg_container,#object_container,#object_container_left,#object_textarea{
     display: inline-block;
     height: 100%;
     vertical-align: top;

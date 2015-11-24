@@ -1,5 +1,5 @@
 (function(){
-    var emptyShell = {
+    var editMode = {
         init : function(){
             var data = [
                 {
@@ -9,7 +9,7 @@
                     boundTo:[2],
                     cx:30,
                     cy:30,
-                    r:30,
+                    r:20,
                     fill:'blue'
                 },
                 {
@@ -17,7 +17,7 @@
                     boundTo:[3],
                     cx:120,
                     cy:120,
-                    r:30,
+                    r:20,
                     fill:'red'
                 },
                 {
@@ -25,8 +25,16 @@
                     boundTo:[],
                     cx:210,
                     cy:210,
-                    r:30,
+                    r:20,
                     fill:'green'
+                },
+                {
+                    uniqueId:4,
+                    boundTo:[2],
+                    cx:210,
+                    cy:30,
+                    r:20,
+                    fill:'pink'
                 }
             ];
 
@@ -56,7 +64,7 @@
                 }
             });
 
-            this.displayObject(data,"#object_container");
+            this.displayObject(data,"#object_container_left");
             this.enableDragNDrop('#svg_container');
             this.createPath(circles);
         },
@@ -74,7 +82,10 @@
                         objString+='<span style="padding-left:'+indent*2+'px'+';"></span>';
                         if(typeof(object[i][key])=='string'){
                             objString+=key+' : '+'\''+object[i][key]+'\'';
-                        }else{
+                        }else if(typeof(object[i][key])=='object'){
+                            objString+=key+' : ['+object[i][key]+']';
+                        }
+                        else{
                             objString+=key+' : '+object[i][key];
                         }
                         objString+=",<br/>";
@@ -95,6 +106,9 @@
                 }
             }
             $(selector).html('{<br/>'+objString+'<br/>}');
+            if($(selector).parent().find('textarea#objectArea').size()>0){
+                $(selector).parent().find('textarea#objectArea').val(JSON.stringify(object));
+            }
         },
         enableDragNDrop : function(parent){     //enables dragndrop on each circle child of the parent
             $(parent).find('.circle').each(function(){
@@ -102,17 +116,21 @@
                     .draggable({
                         containment : parent,
                         zIndex: 10,
-                        revert:'valid',
+                        revert:function(obj){
+                            if(obj){
+                                return true;
+                            }
+                        },
                         drag:function(e,obj){
                             start = $("path[id-start="+obj.helper[0].__data__.uniqueId+"]");
                             end = $("path[id-end="+obj.helper[0].__data__.uniqueId+"]");
                             startAttr = start.attr("d");
                             endAttr = end.attr("d");
                             start.attr("d",function(){
-                                return "M "+e.clientX+" "+e.clientY+startAttr.slice((startAttr.indexOf("L")));
+                                return "M "+e.clientX+" "+e.clientY+" "+startAttr.slice((startAttr.indexOf("L")));
                             });
                             end.attr("d",function(){
-                                return endAttr.slice(0,endAttr.indexOf("L"))+" L "+e.clientX+" "+e.clientY;
+                                return endAttr.slice(0,endAttr.indexOf("L"))+"L "+e.clientX+" "+e.clientY;
                             });
                         },
                         revertDuration:100
@@ -192,6 +210,6 @@
         }
     };
 
-    emptyShell.init();
+    editMode.init();
 
 })();
