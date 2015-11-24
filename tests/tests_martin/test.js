@@ -1,6 +1,6 @@
 (function(){
     var emptyShell = {
-        main : function(){
+        init : function(){
             var data = [
                 {
                     //unique id
@@ -89,8 +89,8 @@
                     objString=objString.slice(0,-5);
                 }
                 //each object in the object array ends with a curl
-                objString+='<br/><span style="padding-left:'+indent+'px'+';"></span>}'
-                if(!i==object.length-1){
+                objString+='<br/><span style="padding-left:'+indent+'px'+';"></span>}';
+                if(i!=object.length-1){
                     objString+='<br/>';
                 }
             }
@@ -192,6 +192,6 @@
         }
     };
 
-    emptyShell.main();
+    emptyShell.init();
 
 })();
