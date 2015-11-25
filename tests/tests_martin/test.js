@@ -17,7 +17,7 @@
                     boundTo:[3],
                     cx:120,
                     cy:120,
-                    r:20,
+                    r:40,
                     fill:'red'
                 },
                 {
@@ -122,15 +122,20 @@
                             }
                         },
                         drag:function(e,obj){
-                            start = $("path[id-start="+obj.helper[0].__data__.uniqueId+"]");
-                            end = $("path[id-end="+obj.helper[0].__data__.uniqueId+"]");
-                            startAttr = start.attr("d");
-                            endAttr = end.attr("d");
-                            start.attr("d",function(){
-                                return "M "+e.clientX+" "+e.clientY+" "+startAttr.slice((startAttr.indexOf("L")));
+                            var start = $("path[id-start="+obj.helper[0].__data__.uniqueId+"]"),
+                                end = $("path[id-end="+obj.helper[0].__data__.uniqueId+"]"),
+                                widthObj = obj.helper[0].clientWidth;
+                            start.each(function(){
+                                var startAttr = $(this).attr("d");
+                                $(this).attr("d",function(){
+                                    return "M "+(obj.offset.left+(widthObj/2))+" "+(obj.offset.top+(widthObj/2))+" "+startAttr.slice((startAttr.indexOf("L")));
+                                });
                             });
-                            end.attr("d",function(){
-                                return endAttr.slice(0,endAttr.indexOf("L"))+"L "+e.clientX+" "+e.clientY;
+                            end.each(function(){
+                                var endAttr = $(this).attr("d");
+                                $(this).attr("d",function(){
+                                    return endAttr.slice(0,endAttr.indexOf("L"))+"L "+(obj.offset.left+(widthObj/2))+" "+(obj.offset.top+(widthObj/2));
+                                });
                             });
                         },
                         revertDuration:100
@@ -168,8 +173,7 @@
             var color='black';
             //width of the lines
             var stroke_width='2'
-
-            var svgMarker='<defs><marker id="markerArrow" markerWidth="13" markerHeight="13" refX="2" refY="6" orient="auto"><path d="M2,2 L2,11 L10,6 L2,2" fill="black"/></marker></defs>';
+            var svgMarker='<defs><marker id="markerArrow" markerWidth="13" markerHeight="13" refX="2" refY="6" orient="auto"><path d="M5,2 L1,10 L10,10 L5,2" fill="black" /></marker></defs>';
             var newSvgPath = d3.select("#svg_container").append("svg").html(svgMarker);
 
             circles.each(function(el){
@@ -201,9 +205,13 @@
                         "id-start":el.uniqueId,
                         "id-end":isBound.id_origin,
                         "d":"M "+(el.cx+el.r)+" "+(el.cy+el.r)+" L "+(isBound.bindCx+isBound.bindR)+" "+(isBound.bindCy+isBound.bindR),
+                        //todo un d qui se dirige vers le point le plus proche
+                        /*"d":"M "+(el.cx+el.r)+" "+(el.cy+el.r)+" L "+(isBound.bindCx-5)+" "+(isBound.bindCy-5)
+                              +", M"+(isBound.bindCx-5)+" "+(isBound.bindCy-5)+" L "+(isBound.bindCx+isBound.bindR)+" "+(isBound.bindCy+isBound.bindR),
+                              */
                         "stroke":color,
                         "stroke-width":stroke_width,
-                        "marker-end":"url(#markerArrow)"
+                        "marker-mid":"url(#markerArrow)"
                     });
                 }
             });
