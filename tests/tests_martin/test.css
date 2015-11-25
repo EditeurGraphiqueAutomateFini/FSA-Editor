@@ -3,7 +3,22 @@ html,body{
     margin: 0;
     padding: 0;
 }
-#svg_container,#object_container{
+svg{
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+.circle{
+    border-radius: 100%;
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    transition:  opacity 0.2s ease-in-out;
+}
+.circle:hover{
+    opacity: 0.8;
+}
+#svg_container,#object_container,#object_container_left,#object_textarea{
     display: inline-block;
     height: 100%;
     vertical-align: top;
