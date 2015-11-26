@@ -95,34 +95,27 @@
                 }
             });
 
-            console.log(d3.values(data));
-            console.log(d3.values(links));
-
-            var width = 960,
-                height = 500;
+            var width = 300,
+                height = 300;
 
             var force = d3.layout.force()
                 .nodes(d3.values(data))
                 .links(d3.values(links))
                 .size([width, height])
-                .linkDistance(60)
+                .linkDistance(200)
                 .charge(-300)
                 .on("tick", tick)
                 .start();
 
-
-            var svg = d3.select(container).append("svg")
-                .attr("width", width)
-                .attr("height", height);
+            var svg = d3.select(container).append("svg");
 
             // Per-type markers, as they don't inherit styles.
-            svg.append("defs").selectAll("marker")
-                .data(["suit", "licensing", "resolved"])
-                .enter().append("marker")
-                .attr("id", function(d) { return d; })
+            svg.append("defs")
+                .append("marker")
+                .attr("id", "end")
                 .attr("viewBox", "0 -5 10 10")
-                .attr("refX", 15)
-                .attr("refY", -1.5)
+                .attr("refX", 37)
+                .attr("refY", -3)
                 .attr("markerWidth", 6)
                 .attr("markerHeight", 6)
                 .attr("orient", "auto")
@@ -132,13 +125,14 @@
             var path = svg.append("g").selectAll("path")
                 .data(force.links())
                 .enter().append("path")
-                .attr("class", function(d) { return "link " + d.boundTo; })
-                .attr("marker-end", function(d) { return "url(#" + ""+ ")"; });
+                .attr("class", function(d) {console.log(d); return "link " + d.source.index; })
+                .attr("marker-end", "url(#end");
 
             var circle = svg.append("g").selectAll("circle")
                 .data(force.nodes())
                 .enter().append("circle")
-                .attr("r", function(d){return d.r;})
+                .attr("r", "10")
+                // .attr("r", function(d){return d.r;})
                 .attr("fill", function(d){return d.fill;})
                 .call(force.drag);
 
