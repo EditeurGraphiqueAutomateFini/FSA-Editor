@@ -13,10 +13,11 @@ svg{
     cursor: pointer;
     display: block;
     position: absolute;
-    transition:  opacity 0.2s ease-in-out;
+    transition:  background 0.2s ease-in-out;
 }
-.circle:hover{
-    opacity: 0.8;
+.circle:hover,circle:hover{
+    /*opacity: 0.8;*/
+    background:aqua !important;
 }
 #svg_container,#object_container,#object_container_left,#object_textarea{
     display: inline-block;
@@ -26,4 +27,9 @@ svg{
 }
 #svg_container{
     border-right : 1px solid #000;
+}
+.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
 }
