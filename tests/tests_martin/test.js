@@ -204,14 +204,13 @@
                         // "class":el.uniqueId,
                         "id-start":el.uniqueId,
                         "id-end":isBound.id_origin,
-                        "d":"M "+(el.cx+el.r)+" "+(el.cy+el.r)+" L "+(isBound.bindCx+isBound.bindR)+" "+(isBound.bindCy+isBound.bindR),
+                        //"d":"M "+(el.cx+el.r)+" "+(el.cy+el.r)+" L "+(isBound.bindCx+isBound.bindR)+" "+(isBound.bindCy+isBound.bindR),
                         //todo un d qui se dirige vers le point le plus proche
-                        /*"d":"M "+(el.cx+el.r)+" "+(el.cy+el.r)+" L "+(isBound.bindCx-5)+" "+(isBound.bindCy-5)
-                              +", M"+(isBound.bindCx-5)+" "+(isBound.bindCy-5)+" L "+(isBound.bindCx+isBound.bindR)+" "+(isBound.bindCy+isBound.bindR),
-                              */
+                        "d":"M "+(el.cx+el.r)+" "+(el.cy+el.r)+" L "+(isBound.bindCx)+" "+(isBound.bindCy),
+
                         "stroke":color,
                         "stroke-width":stroke_width,
-                        "marker-mid":"url(#markerArrow)"
+                        //"marker-end":"url(#markerArrow)"
                     });
                 }
             });
