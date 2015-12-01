@@ -8,16 +8,15 @@ svg{
     height: 100%;
     width: 100%;
 }
-.circle{
+.circle,circle{
     border-radius: 100%;
     cursor: pointer;
     display: block;
     position: absolute;
-    transition:  background 0.2s ease-in-out;
+    transition:  opacity 0.2s ease-in-out;
 }
 .circle:hover,circle:hover{
-    /*opacity: 0.8;*/
-    background:aqua !important;
+    opacity: 0.8;
 }
 #svg_container,#object_container,#object_container_left,#object_textarea{
     display: inline-block;
