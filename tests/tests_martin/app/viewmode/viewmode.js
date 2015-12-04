@@ -1,25 +1,30 @@
 define(function(){
     return{
+        // initialisation function : [data] = array of data objects
         init : function(data){
-            this.createPath("#svg_container",data);
-        },
-        createPath:function(container,data){
-            var links=[]
-            // Compute the distinct nodes from the links.
-            data.forEach(function(data,i){
-                data.fixed = true;
-                data.x = data.cx;
-                data.y = data.cy;
-                if(data.boundTo.length>0){
-                    for(i=0;i<data.boundTo.length;i++){
-                        links.push({
-                            source : data.uniqueId,
-                            target : data.boundTo[i]
-                        });
+            if(data){
+                var links=[]
+                // Compute the distinct nodes from the links.
+                data.forEach(function(data,i){
+                    data.fixed = true;
+                    data.x = data.cx || i*50+20;   //known position or random
+                    data.y = data.cy || i*50+20;
+                    if(data.boundTo.length>0){
+                        for(i=0;i<data.boundTo.length;i++){
+                            links.push({
+                                source : data.uniqueId,
+                                target : data.boundTo[i]
+                            });
+                        }
                     }
-                }
-            });
-
+                });
+                this.createPaths("#svg_container",data,links);
+            }else{
+                //todo : vue par défaut ? basculer vers le mode creation ?
+            }
+        },
+        //create path between states : container : html container selector, data : array of data, links : links array created w/ data array
+        createPaths:function(container,data,links){
             var width = 300,
                 height = 300;
 

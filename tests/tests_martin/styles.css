@@ -21,6 +21,7 @@ svg{
 #svg_container,#object_container,#object_container_left,#object_textarea{
     display: inline-block;
     height: 100%;
+    overflow-y: scroll;
     vertical-align: top;
     width: 49%;
 }
