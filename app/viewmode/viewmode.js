@@ -1,30 +1,61 @@
 define(function(){
     return{
-        init : function(data){
-            this.createPath("#svg_container",data);
-        },
-        createPath:function(container,data){
-            var links=[]
-            // Compute the distinct nodes from the links.
-            data.forEach(function(data,i){
-                data.fixed = true;
-                data.x = data.cx;
-                data.y = data.cy;
-                if(data.boundTo.length>0){
-                    for(i=0;i<data.boundTo.length;i++){
-                        links.push({
-                            source : data.uniqueId,
-                            target : data.boundTo[i]
-                        });
+        // initialisation function : [data] = array of data objects
+        init : function(states){
+            if(states){
+                var links=[],
+                    dataset=[];
+                // Compute the distinct nodes from the links.
+                //très moyennement satisfait du bouzin ci-dessous
+                states.forEach(function(data,i){
+                    var cpt=0;
+                    for(var key in data){
+                        var state = data[key];
+                        if(data.hasOwnProperty(key)){
+                            state.fixed = true;
+                            state.uniqueId = cpt;
+                            state.name = key;
+                            state.x = state.cx || cpt*50+20;   //known position or random
+                            state.y = state.cy || cpt*50+20;
+                            dataset.push(state);
+                        }
+                        cpt++;
                     }
-                }
-            });
+                    for(var key in data){
+                        var state = data[key];
+                        if(data.hasOwnProperty(key)){
+                            if(state.transitions && state.transitions.length>0){
+                                for(var i=0;i<state.transitions.length;i++){
+                                    links.push({
+                                        source : state.uniqueId,
+                                        // target : state.transitions[i].target
+                                        target:(function(data){
+                                            for(var key in data){
+                                                if(state.transitions[i].target==data[key].name){
+                                                    return data[key].uniqueId;
+                                                }
+                                            }
+                                        })(dataset)
+                                    });
+                                }
+                            }
+                        }
+                    }
+                });
+                this.createPaths("#svg_container",dataset,links);
+            }else{
+                //todo : vue par défaut ? basculer vers le mode creation ?
+            }
+        },
+        //create path between states : container : html container selector, states : array of states, links : links array created w/ data array
+        createPaths:function(container,states,links){
+            console.log(states,links);
 
             var width = 300,
                 height = 300;
 
             var force = d3.layout.force()
-                .nodes(d3.values(data))
+                .nodes(d3.values(states))
                 .links(d3.values(links))
                 .size([width, height])
                 .linkDistance(200)

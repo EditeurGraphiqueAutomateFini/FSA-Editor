@@ -5,8 +5,8 @@ define(function(){
             //object to which this is bound
             uniqueId:0,
             boundTo:[1],
-            cx:30,
-            cy:30,
+            //cx:30,
+            //cy:30,
             r:20,
             fill:'blue'
         },
