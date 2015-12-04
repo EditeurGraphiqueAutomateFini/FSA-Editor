@@ -11,7 +11,14 @@ define(function(require){
     if($(displayZone).parent().find('textarea#objectArea').size()>0){
         $(displayZone).parent().find('textarea#objectArea').val(JSON.stringify(data));
     }
+
     //initiate view mode
-    //viewmode.init(data);
+    var states=[];
+    for(var i=0;i<data.length;i++){
+        if(data[i].states){
+            states.push(data[i].states);
+        }
+    }
+    viewmode.init(states);
 
 });
