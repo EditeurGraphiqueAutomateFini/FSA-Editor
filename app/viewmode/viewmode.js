@@ -49,7 +49,7 @@ define(function(){
         },
         //create path between states : container : html container selector, states : array of states, links : links array created w/ data array
         createPaths:function(container,states,links){
-            //console.log(states,links);
+            console.log(states,links);
 
             var width = 300,
                 height = 300;
@@ -98,7 +98,13 @@ define(function(){
                 .attr("x", 20)
                 .attr("y", 0)
                 // .attr("y", ".31em")
-                .text(function(d) { return d.name; });
+                .text(function(d) {
+                    var text = d.name;
+                    if(d.max_noise>0){
+                        text+="["+d.max_noise+"]";
+                    }
+                    return text;
+                 });
 
             var condition = svg.append("g").selectAll("text")
                 .data(force.links())
