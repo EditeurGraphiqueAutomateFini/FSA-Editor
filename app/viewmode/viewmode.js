@@ -88,7 +88,10 @@ define(function(){
                 .data(force.nodes())
                 .enter().append("circle")
                 .attr("r", "15")
-                // .attr("r", function(d){return d.r;})
+                .attr("class",function(d){
+                    if(d.terminal){return "terminal"}
+                    else{return "";}
+                })
                 .attr("fill", function(d){return d.fill;})
                 .call(force.drag);
 

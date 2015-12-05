@@ -36,3 +36,7 @@ svg{
 text{
     fill:#000;
 }
+.terminal{
+    stroke:grey;
+    stroke-width:3px;
+}
