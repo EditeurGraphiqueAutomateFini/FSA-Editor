@@ -33,3 +33,6 @@ svg{
   stroke: #666;
   stroke-width: 1.5px;
 }
+text{
+    fill:#000;
+}

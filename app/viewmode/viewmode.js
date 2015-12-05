@@ -28,14 +28,14 @@ define(function(){
                                 for(var i=0;i<state.transitions.length;i++){
                                     links.push({
                                         source : state.uniqueId,
-                                        // target : state.transitions[i].target
-                                        target:(function(data){
+                                        target :(function(data){
                                             for(var key in data){
                                                 if(state.transitions[i].target==data[key].name){
                                                     return data[key].uniqueId;
                                                 }
                                             }
-                                        })(dataset)
+                                        })(dataset),
+                                        condition : state.transitions[i].condition
                                     });
                                 }
                             }
@@ -49,7 +49,7 @@ define(function(){
         },
         //create path between states : container : html container selector, states : array of states, links : links array created w/ data array
         createPaths:function(container,states,links){
-            console.log(states,links);
+            //console.log(states,links);
 
             var width = 300,
                 height = 300;
@@ -92,6 +92,21 @@ define(function(){
                 .attr("fill", function(d){return d.fill;})
                 .call(force.drag);
 
+            var text = svg.append("g").selectAll("text")
+                .data(force.nodes())
+                .enter().append("text")
+                .attr("x", 20)
+                .attr("y", 0)
+                // .attr("y", ".31em")
+                .text(function(d) { return d.name; });
+
+            var condition = svg.append("g").selectAll("text")
+                .data(force.links())
+                .enter().append("text")
+                .attr("x", 20)
+                .attr("y", 0)
+                .text(function(d) { return d.condition; });
+
             var drag = force.drag()
                 .on("dragend", dragstart);
 
@@ -102,6 +117,8 @@ define(function(){
             function tick(){
                 path.attr("d", linkArc);
                 circle.attr("transform", transform);
+                text.attr("transform", transform);
+                condition.attr("transform", transformCondition);
             }
             function linkArc(d){
                 var dx = d.target.x - d.source.x,
@@ -119,6 +136,16 @@ define(function(){
             }
             function transform(d) {
                 return "translate(" + d.x + "," + d.y + ")";
+            }
+            function transformCondition(d) {
+                var translate = "";
+                //if source is related to itself
+                if(d.source==d.target){ //todo variabiliser le 50
+                    translate+="translate(" + (d.source.x+50) + "," + (d.source.y+50) + ")";
+                }else{
+                    translate+="translate(" + ((d.source.x+d.target.x)/2) + "," + ((d.source.y+d.target.y)/2) + ")";
+                }
+                return translate;
             }
         }
     }
