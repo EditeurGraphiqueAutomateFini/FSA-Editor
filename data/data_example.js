@@ -1,3 +1,4 @@
+// données d'exemple format JSON selon la structure "Finite State Automata" (FSA)
 //from link : http://fsa4streams.readthedocs.org/en/latest/syntax.html#example
 define(function(){
     return [
