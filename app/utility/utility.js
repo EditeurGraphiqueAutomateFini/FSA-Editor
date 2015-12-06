@@ -1,3 +1,5 @@
+//global utility functions
+//ne pas être trop regardant, accepter ce code tel qu'il est
 define(function(){
     return{
          //displays a JS object on screen; object : array of object to display

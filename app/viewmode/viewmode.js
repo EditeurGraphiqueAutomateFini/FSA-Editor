@@ -1,6 +1,6 @@
 define(function(){
     return{
-        // initialisation function : [data] = array of data objects
+        // initialisation function : states : array of state objects
         init : function(states){
             if(states){
                 var links=[],
@@ -49,11 +49,12 @@ define(function(){
         },
         //create path between states : container : html container selector, states : array of states, links : links array created w/ data array
         createPaths:function(container,states,links){
-            console.log(states,links);
+            console.log(states,links);  //affiche les tableaux d'etats et de liens (transitions) dans la console (temporaire)
 
             var width = 300,
                 height = 300;
 
+            //creating the force layout with states as nodes
             var force = d3.layout.force()
                 .nodes(d3.values(states))
                 .links(d3.values(links))
@@ -65,7 +66,7 @@ define(function(){
 
             var svg = d3.select(container).append("svg");
 
-            // Per-type markers, as they don't inherit styles.
+            // marker creation
             svg.append("defs")
                 .append("marker")
                 .attr("id","end")
@@ -78,12 +79,14 @@ define(function(){
                 .append("path")
                 .attr("d","M0,-5L10,0L0,5");
 
+            //create a path for each link/transition
             var path = svg.append("g").selectAll("path")
                 .data(force.links())
                 .enter().append("path")
                 .attr("class", function(d) {return "link "+d.source.index +"_"+d.target.index;})
                 .attr("marker-end", "url(#end");
 
+            //create a circle for each state and apply D3 drag system
             var circle = svg.append("g").selectAll("circle")
                 .data(force.nodes())
                 .enter().append("circle")
@@ -95,12 +98,12 @@ define(function(){
                 .attr("fill", function(d){return d.fill;})
                 .call(force.drag);
 
+            //create a text for each state w/ the name of the state and [max_nosie] if set
             var text = svg.append("g").selectAll("text")
                 .data(force.nodes())
                 .enter().append("text")
                 .attr("x", 20)
                 .attr("y", 0)
-                // .attr("y", ".31em")
                 .text(function(d) {
                     var text = d.name;
                     if(d.max_noise>0){
@@ -109,6 +112,7 @@ define(function(){
                     return text;
                  });
 
+            //create a text for each transition w/ the condition of the transition
             var condition = svg.append("g").selectAll("text")
                 .data(force.links())
                 .enter().append("text")
@@ -116,12 +120,6 @@ define(function(){
                 .attr("y", 0)
                 .text(function(d) { return d.condition; });
 
-            var drag = force.drag()
-                .on("dragend", dragstart);
-
-            function dragstart(d){
-                d3.select(this).classed("fixed", d.fixed = true);
-            }
             // Use elliptical arc path segments to doubly-encode directionality.
             function tick(){
                 path.attr("d", linkArc);
@@ -129,23 +127,29 @@ define(function(){
                 text.attr("transform", transform);
                 condition.attr("transform", transformCondition);
             }
+            //create arc between states
             function linkArc(d){
                 var dx = d.target.x - d.source.x,
                     dy = d.target.y - d.source.y,
                     dr = Math.sqrt(dx * dx + dy * dy);
 
+                //if source is pointing toward itself, create a fixed arc
+                //optimisé pour 50, a modifier/tester
                 if(d.target==d.source){
-                    var dr1 = "50",
+                    var distance = 50,
+                        dr1 = "50",
                         dr2 = "33";
-                    return "M" + d.source.x + "," + d.source.y + "A" +dr1+","+dr2+ " 0 0,1 " + (d.target.x+50) + "," + (d.target.y+50)+
-                            ",M"+(d.target.x+50)+","+(d.target.y+50)+"A"+dr2+","+dr1+" 0 0,1 "+d.source.x+","+d.source.y;
+                    return "M" + d.source.x + "," + d.source.y + "A" +dr1+","+dr2+ " 0 0,1 " + (d.target.x+distance) + "," + (d.target.y+distance)+
+                            ",M"+(d.target.x+distance)+","+(d.target.y+distance)+"A"+dr2+","+dr1+" 0 0,1 "+d.source.x+","+d.source.y;
                 }else{
                     return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
                 }
             }
+            //define position
             function transform(d) {
                 return "translate(" + d.x + "," + d.y + ")";
             }
+            //define position of transition condition
             function transformCondition(d) {
                 var translate = "";
                 //if source is related to itself
