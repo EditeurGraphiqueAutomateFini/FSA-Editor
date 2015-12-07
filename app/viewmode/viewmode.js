@@ -15,8 +15,8 @@ define(function(){
                             state.fixed = true;
                             state.uniqueId = cpt;
                             state.name = key;
-                            state.x = state.cx || cpt*50+20;   //known position or random
-                            state.y = state.cy || cpt*50+20;
+                            state.x = state.cx || setPositions(cpt);   //known position or random
+                            state.y = state.cy || setPositions(cpt);
                             dataset.push(state);
                         }
                         cpt++;
@@ -45,6 +45,12 @@ define(function(){
                 this.createPaths("#svg_container",dataset,links);
             }else{
                 //todo : vue par défaut ? basculer vers le mode creation ?
+            }
+
+            //fonction pour positionner les cercles sans coordonnées
+            function setPositions(cpt){
+                //here goes the code of the jeanseba
+                return cpt*50+20;
             }
         },
         //create path between states : container : html container selector, states : array of states, links : links array created w/ data array
