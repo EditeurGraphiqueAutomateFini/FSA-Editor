@@ -2,8 +2,11 @@ define(function(require){
     return{
         // initialisation function : states : array of state objects
         init : function(states){
-            var createPaths = require("viewmode/createPaths"),
-                createSVG = require("viewmode/createSVG");
+            var createSVG = require("viewmode/createSVG"),
+                createForceLayout = require("viewmode/createForceLayout"),
+                createCircles = require("viewmode/createCircles"),
+                createPaths = require("viewmode/createPaths");
+
             if(states){
                 var links=[],
                     dataset=[];
@@ -44,8 +47,12 @@ define(function(require){
                         }
                     }
                 });
-                //createSVG("#svg_container");
-                createPaths(createSVG("#svg_container"),dataset,links);
+                var svg = createSVG("#svg_container"),
+                    force = createForceLayout(svg,dataset,links);
+
+                createPaths(svg,force,dataset,links);
+                createCircles(svg,force,dataset,links);
+
             }else{
                 //todo : vue par défaut ? basculer vers le mode creation ?
             }
