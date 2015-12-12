@@ -17,7 +17,7 @@
                     boundTo:[3],
                     cx:120,
                     cy:120,
-                    r:40,
+                    r:20,
                     fill:'red'
                 },
                 {
@@ -173,7 +173,7 @@
             var color='black';
             //width of the lines
             var stroke_width='2'
-            var svgMarker='<defs><marker id="markerArrow" markerWidth="13" markerHeight="13" refX="2" refY="6" orient="auto"><path d="M5,2 L1,10 L10,10 L5,2" fill="black" /></marker></defs>';
+            var svgMarker='<defs><marker id="markerArrow" markerWidth="13" markerHeight="13" refX="20" refY="6" orient="auto"><path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000;"/></marker></defs>';
             var newSvgPath = d3.select("#svg_container").append("svg").html(svgMarker);
 
             circles.each(function(el){
@@ -206,12 +206,11 @@
                         "id-end":isBound.id_origin,
                         "d":"M "+(el.cx+el.r)+" "+(el.cy+el.r)+" L "+(isBound.bindCx+isBound.bindR)+" "+(isBound.bindCy+isBound.bindR),
                         //todo un d qui se dirige vers le point le plus proche
-                        /*"d":"M "+(el.cx+el.r)+" "+(el.cy+el.r)+" L "+(isBound.bindCx-5)+" "+(isBound.bindCy-5)
-                              +", M"+(isBound.bindCx-5)+" "+(isBound.bindCy-5)+" L "+(isBound.bindCx+isBound.bindR)+" "+(isBound.bindCy+isBound.bindR),
-                              */
+                        // "d":"M "+(el.cx+el.r)+" "+(el.cy+el.r)+" L "+(isBound.bindCx)+" "+(isBound.bindCy),
+
                         "stroke":color,
                         "stroke-width":stroke_width,
-                        "marker-mid":"url(#markerArrow)"
+                        "marker-end":"url(#markerArrow)"
                     });
                 }
             });

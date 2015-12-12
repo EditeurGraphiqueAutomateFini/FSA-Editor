@@ -1,29 +1,52 @@
+/*general styles*/
 html,body{
     height: 100%;
     margin: 0;
     padding: 0;
 }
+/*svg*/
 svg{
     display: block;
     height: 100%;
     width: 100%;
 }
-.circle{
+/*svg - circles (states)*/
+.circle,circle{
     border-radius: 100%;
     cursor: pointer;
     display: block;
     position: absolute;
     transition:  opacity 0.2s ease-in-out;
 }
-.circle:hover{
+.circle:hover,circle:hover{
     opacity: 0.8;
 }
+.terminal{
+    stroke:grey;
+    stroke-width:3px;
+}
+/*svg - paths (links)*/
+.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+/*svg - texts (names,conditions)*/
+text{
+    fill:#000;
+}
+/*containers*/
 #svg_container,#object_container,#object_container_left,#object_textarea{
     display: inline-block;
     height: 100%;
+    overflow-y: scroll;
     vertical-align: top;
     width: 49%;
 }
 #svg_container{
     border-right : 1px solid #000;
+}
+/*others*/
+textarea{
+    max-width: 95%;
 }
