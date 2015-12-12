@@ -1,9 +1,10 @@
 // main function
 define(function(require){
 
-    var viewmode=require("app/viewmode/viewmode"),
+    var viewmode= require("viewmode/viewInit"),
         data = require("data/data_example"),
-        utility = require("app/utility/utility");
+        menu = require("menu/menu"),
+        utility = require("utility/utility");
 
     //display object
     displayZone = "#object_container_left";
@@ -20,7 +21,17 @@ define(function(require){
         }
     }
 
-    //initiate view mode w/ array of states
-    viewmode.init(states);
+    //checking menu function's return value
+    switch (menu) {
+        case "view":
+            //initiate view mode w/ array of states
+            viewmode.init(states);
+            break;
+
+        default:
+            //viewmode.init(states);
+    }
+
+
 
 });
