@@ -1,7 +1,7 @@
 //create d3 force layout
 define(function(require){
     return function(container,states,links){
-        var tick = require("viewmode/tick");
+        var tick = require("viewmode/tickHelper");
 
         //creating the force layout with states as nodes
         var force = d3.layout.force()
