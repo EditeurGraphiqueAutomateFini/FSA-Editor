@@ -2,10 +2,10 @@ define(function(require){
     return{
         // initialisation function : states : array of state objects
         init : function(states){
-            var createSVG = require("viewmode/createSVG"),
-                createForceLayout = require("viewmode/createForceLayout"),
-                createCircles = require("viewmode/createCircles"),
-                createPaths = require("viewmode/createPaths");
+            var createSVG = require("viewmode/create_svg"),
+                createForceLayout = require("viewmode/create_force_layout"),
+                createCircles = require("viewmode/create_circles"),
+                createPaths = require("viewmode/create_paths");
 
             if(states){
                 var links=[],
