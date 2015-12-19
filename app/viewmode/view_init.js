@@ -22,6 +22,11 @@ define(function(require){
                             state.name = key;
                             state.x = state.cx || setPositions(cpt);   //known position or random
                             state.y = state.cy || setPositions(cpt);
+
+                            //add graphicEditor values if not set
+                            if(!state.graphicEditor){
+                                state.graphicEditor={};
+                            }
                             dataset.push(state);
                         }
                         cpt++;

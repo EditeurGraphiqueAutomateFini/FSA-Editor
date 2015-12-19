@@ -1,7 +1,7 @@
 // main function
 define(function(require){
 
-    var viewmode= require("viewmode/viewInit"),
+    var viewmode = require("viewmode/view_init"),
         data = require("data/data_example"),
         menu = require("menu/menu"),
         utility = require("utility/utility");
@@ -12,6 +12,7 @@ define(function(require){
     if($(displayZone).parent().find('textarea#objectArea').size()>0){   // display object in a textarea (for copy/paste)
         $(displayZone).parent().find('textarea#objectArea').val(JSON.stringify(data));
     }
+
 
     //iterating over states objects in data file (JSON), making a JS array of objects
     var states=[];
