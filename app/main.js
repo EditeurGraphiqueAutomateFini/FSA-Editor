@@ -3,7 +3,8 @@ define(function(require){
 
     var viewmode = require("viewmode/view_init"),
         menu = require("menu/menu"),
-        utility = require("utility/utility");
+        utility = require("utility/utility"),
+        server = require("utility/server_request");
 
     //checking menu function's return value
     switch (menu) {
@@ -21,13 +22,20 @@ define(function(require){
             //viewmode.init(states);
     }
 
-    function succesFunction(data){
-        var data = JSON.parse(data);
+    //handle send/reset
+    $("button.save").click(function(){
+        //server.sendRequest("test1");
+    });
 
-        //display object
-        frontEndObject([data]);
-        //initiate view mode
-        viewmode.init(viewmode.extractStates([data]));
+    function succesFunction(data){
+        if(data){
+            var data = JSON.parse(data);
+
+            //display object
+            frontEndObject([data]);
+            //initiate view mode
+            viewmode.init(viewmode.extractStates([data]));
+        }
     }
 
     function errorFunction(){
