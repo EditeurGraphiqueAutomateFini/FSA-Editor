@@ -1,5 +1,16 @@
 define(function(require){
     return{
+        //extract states
+        extractStates: function(data){
+            //iterating over states objects in data file (JSON), making a JS array of objects
+            var states=[];
+            for(var i=0;i<data.length;i++){
+                if(data[i].states){
+                    states.push(data[i].states);
+                }
+            }
+            return states;
+        },
         // initialisation function : states : array of state objects
         init : function(states){
             var createSVG = require("viewmode/create_svg"),
