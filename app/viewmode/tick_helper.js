@@ -24,7 +24,7 @@ define(function(){
             circle.attr("transform", transform);
             text.attr("transform", transform);*/
 
-            //create arc between states
+            //define new postition of arc between states
             function linkArc(d){
                 var dx = d.target.x - d.source.x,
                     dy = d.target.y - d.source.y,
@@ -42,11 +42,11 @@ define(function(){
                     return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
                 }
             }
-            //define position
+            //define new postition
             function transform(d) {
                 return "translate(" + d.x + "," + d.y + ")";
             }
-            //define position of transition condition
+            //define new postition of transition condition
             function transformCondition(d) {
                 var translate = "";
                 //if source is related to itself

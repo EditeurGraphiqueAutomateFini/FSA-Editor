@@ -31,13 +31,16 @@ define(function(require){
                             state.fixed = true;
                             state.uniqueId = cpt;
                             state.name = key;
-                            state.x = state.cx || setPositions(cpt);   //known position or random
-                            state.y = state.cy || setPositions(cpt);
 
                             //add graphicEditor values if not set
                             if(!state.graphicEditor){
                                 state.graphicEditor={};
                             }
+
+                            state.x = state.graphicEditor.coordX || setPositions(cpt);   //known position or random
+                            state.y = state.graphicEditor.coordY || setPositions(cpt);
+
+                            //push state
                             dataset.push(state);
                         }
                         cpt++;
