@@ -46,8 +46,8 @@ text{
 #svg_container{
     border-right : 1px solid #000;
 }
-/*saving*/
-.saving{
+/*load_helper*/
+.load_helper{
     background: #FFF;
     display: none;
     height: 100%;

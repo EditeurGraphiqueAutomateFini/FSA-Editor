@@ -14,7 +14,13 @@ define(function(require){
                   type: 'GET',
                   url: 'http://www.martinbolot.com/graphicEditorFSA/',
                   success: succesFunction,
-                  error: errorFunction
+                  error: errorFunction,
+                  beforeSend : function(){
+                      $(".load_helper").html("loading...").show();
+                  },
+                  complete : function(){
+                      $(".load_helper").fadeOut();
+                  }
             });
             break;
 

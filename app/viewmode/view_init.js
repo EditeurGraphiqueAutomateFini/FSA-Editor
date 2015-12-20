@@ -11,13 +11,14 @@ define(function(require){
             }
             return states;
         },
-        // initialisation function : states : array of state objects; data: initial retrieved data
-        init : function(states,postData){
+        // initialisation function : states : array of state objects; getData: initial retrieved data
+        init : function(states,getData){
             var createSVG = require("viewmode/create_svg"),
                 createForceLayout = require("viewmode/create_force_layout"),
                 createCircles = require("viewmode/create_circles"),
                 createPaths = require("viewmode/create_paths"),
-                server = require("utility/server_request");
+                server = require("utility/server_request"),
+                tick = require("viewmode/tick_helper");
 
             if(states){
                 var links=[],
@@ -36,6 +37,9 @@ define(function(require){
                             //add graphicEditor values if not set
                             if(!state.graphicEditor){
                                 state.graphicEditor={};
+                            }else{
+                                state.graphicEditor.origCoordX = state.graphicEditor.coordX;
+                                state.graphicEditor.origCoordY = state.graphicEditor.coordY;
                             }
 
                             state.x = state.graphicEditor.coordX || setPositions(cpt);   //known position or random
@@ -83,20 +87,22 @@ define(function(require){
                     states : {}
                 };
 
-                if(postData.allow_overlap){endPostData.allow_overlap=postData.allow_overlap;}
-                for(state in postData.states){
-                    if(postData.states.hasOwnProperty(state)){
+                if(getData.allow_overlap){endPostData.allow_overlap=getData.allow_overlap;}
+                for(state in getData.states){
+                    if(getData.states.hasOwnProperty(state)){
                         endPostData.states[state]={};
-                        for(key in postData.states[state]){
-                            if(postData.states[state].hasOwnProperty(key)){
+                        for(key in getData.states[state]){
+                            if(getData.states[state].hasOwnProperty(key)){
                                 if(key ==="max_noise" || key ==="transitions" || key==="terminal" || key==="graphicEditor"){
-                                    endPostData.states[state][key] = postData.states[state][key];
+                                    endPostData.states[state][key] = getData.states[state][key];
                                 }
                             }
                         }
                     }
                 }
                 server.postRequest(endPostData);
+            });
+            $("button.reset").click(function(){
             });
 
             //fonction pour positionner les cercles sans coordonnées
