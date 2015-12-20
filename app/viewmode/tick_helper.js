@@ -44,6 +44,8 @@ define(function(){
             }
             //define new postition
             function transform(d) {
+                d.graphicEditor.coordX = d.x;
+                d.graphicEditor.coordY = d.y;
                 return "translate(" + d.x + "," + d.y + ")";
             }
             //define new postition of transition condition

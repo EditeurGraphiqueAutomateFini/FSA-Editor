@@ -22,19 +22,14 @@ define(function(require){
             //viewmode.init(states);
     }
 
-    //handle send/reset
-    $("button.save").click(function(){
-        //server.sendRequest("test1");
-    });
 
-    function succesFunction(data){
-        if(data){
-            var data = JSON.parse(data);
-
+    function succesFunction(getData){
+        if(getData){
+            var parsedData = JSON.parse(getData);
             //display object
-            frontEndObject([data]);
+            frontEndObject([parsedData]);
             //initiate view mode
-            viewmode.init(viewmode.extractStates([data]));
+            viewmode.init(viewmode.extractStates([parsedData]),parsedData);
         }
     }
 
@@ -42,11 +37,11 @@ define(function(require){
         //there has been an error w/ ajax request
         console.log("/!\\ ajax : error retrieving data from server, local data loaded");
 
-        var data = data = require("data/data_example");
+        var data = require("data/data_example");
         //display object
         frontEndObject(data);
         //intiate view mode w/ static data
-        viewmode.init(viewmode.extractStates(data));
+        viewmode.init(viewmode.extractStates(data),data);
     }
 
     function frontEndObject(data){

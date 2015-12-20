@@ -11,12 +11,13 @@ define(function(require){
             }
             return states;
         },
-        // initialisation function : states : array of state objects
-        init : function(states){
+        // initialisation function : states : array of state objects; data: initial retrieved data
+        init : function(states,postData){
             var createSVG = require("viewmode/create_svg"),
                 createForceLayout = require("viewmode/create_force_layout"),
                 createCircles = require("viewmode/create_circles"),
-                createPaths = require("viewmode/create_paths");
+                createPaths = require("viewmode/create_paths"),
+                server = require("utility/server_request");
 
             if(states){
                 var links=[],
@@ -75,6 +76,28 @@ define(function(require){
             }else{
                 //todo : vue par défaut ? basculer vers le mode creation ?
             }
+
+            //handle send/reset
+            $("button.save").click(function(){
+                var endPostData = {
+                    states : {}
+                };
+
+                if(postData.allow_overlap){endPostData.allow_overlap=postData.allow_overlap;}
+                for(state in postData.states){
+                    if(postData.states.hasOwnProperty(state)){
+                        endPostData.states[state]={};
+                        for(key in postData.states[state]){
+                            if(postData.states[state].hasOwnProperty(key)){
+                                if(key ==="max_noise" || key ==="transitions" || key==="terminal" || key==="graphicEditor"){
+                                    endPostData.states[state][key] = postData.states[state][key];
+                                }
+                            }
+                        }
+                    }
+                }
+                server.postRequest(endPostData);
+            });
 
             //fonction pour positionner les cercles sans coordonnées
             function setPositions(cpt){

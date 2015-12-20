@@ -1,10 +1,18 @@
 define(function(){
     return{
-        sendRequest: function(data){
+        postRequest: function(postData){
+            console.log(JSON.stringify(postData));
+
             var ajaxRequest = $.ajax({
                   type: 'POST',
-                  data : {graphicEditorFSA:data},
+                  data : {graphicEditorFSA:JSON.stringify(postData)},
                   url: 'http://www.martinbolot.com/graphicEditorFSA/',
+                  beforeSend : function(){
+                      $(".saving").fadeIn();
+                  },
+                  complete:function(){
+                      $(".saving").fadeOut();
+                  },
                   success: function(data){
                       console.log(data);
                   },
