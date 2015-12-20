@@ -43,6 +43,9 @@ text{
     vertical-align: top;
     width: 49%;
 }
+#object_container_left{
+    transition: background 0.4s ease-in-out;
+}
 #svg_container{
     border-right : 1px solid #000;
 }

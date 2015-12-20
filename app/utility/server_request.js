@@ -10,6 +10,7 @@ define(function(){
                   },
                   complete:function(){
                       $(".load_helper").fadeOut();
+                      $("#object_container_left").css("background","transparent");
                   },
                   success: function(data){
                      // console.log(data);

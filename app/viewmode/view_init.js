@@ -103,6 +103,7 @@ define(function(require){
                 server.postRequest(endPostData);
             });
             $("button.reset").click(function(){
+                d3.dispatch("tick");
             });
 
             //fonction pour positionner les cercles sans coordonnées

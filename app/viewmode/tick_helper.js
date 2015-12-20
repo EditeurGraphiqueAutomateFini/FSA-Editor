@@ -2,7 +2,6 @@ define(function(){
 
     // Use elliptical arc path segments to doubly-encode directionality.
     return function(e){
-        //console.log(e);
         var path=d3.selectAll(".link"),
             condition=d3.selectAll(".condition"),
             circle=d3.selectAll("circle"),

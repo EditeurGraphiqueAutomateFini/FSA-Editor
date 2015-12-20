@@ -15,6 +15,13 @@ define(function(require){
             .on("tick",tick)
             .start();
 
+        var drag = force.drag().on("dragstart", function(){
+            var objectContainer = $("#object_container_left");
+            if(!(objectContainer.css("background")==="orange")){
+                objectContainer.css("background","orange");
+            }
+        });
+
         return force;
 
     }
