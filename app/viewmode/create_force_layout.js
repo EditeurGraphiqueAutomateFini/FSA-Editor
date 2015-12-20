@@ -1,7 +1,9 @@
 //create d3 force layout
 define(function(require){
-    return function(container,states,links){
-        var tick = require("viewmode/tick_helper");
+    return function(container,states,links,getData){
+        var tick = require("viewmode/tick_helper"),
+            utility = require("utility/utility"),
+            data_helper = require("viewmode/data_helper");
 
         //creating the force layout with states as nodes
         var force = d3.layout.force()
@@ -15,12 +17,16 @@ define(function(require){
             .on("tick",tick)
             .start();
 
-        var drag = force.drag().on("dragstart", function(){
-            var objectContainer = $("#object_container_left");
-            if(!(objectContainer.css("background")==="orange")){
-                objectContainer.css("background","orange");
-            }
-        });
+        var drag = force.drag()
+            .on("dragstart", function(){
+                var objectContainer = $("#object_container_left");
+                if(!(objectContainer.css("background")==="orange")){
+                    objectContainer.css("background","orange");
+                }
+            }).on("drag",function(){
+                var displayableData = data_helper.cleanData(getData);
+                utility.frontEndObject([displayableData]);
+            });
 
         return force;
 

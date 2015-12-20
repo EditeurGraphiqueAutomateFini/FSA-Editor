@@ -28,12 +28,11 @@ define(function(require){
             //viewmode.init(states);
     }
 
-
     function succesFunction(getData){
         if(getData){
             var parsedData = JSON.parse(getData);
             //display object
-            frontEndObject([parsedData]);
+            utility.frontEndObject([parsedData]);
             //initiate view mode
             viewmode.init(viewmode.extractStates([parsedData]),parsedData);
         }
@@ -45,18 +44,9 @@ define(function(require){
 
         var data = require("data/data_example");
         //display object
-        frontEndObject(data);
+        utility.frontEndObject(data);
         //intiate view mode w/ static data
         viewmode.init(viewmode.extractStates(data),data);
     }
-
-    function frontEndObject(data){
-        displayZone = "#object_container_left";
-        $(displayZone).html('{<br/>'+utility.displayObject(data,0)+'<br/>}');
-        if($(displayZone).parent().find('textarea#objectArea').size()>0){   // display object in a textarea (for copy/paste)
-            $(displayZone).parent().find('textarea#objectArea').val(JSON.stringify(data));
-        }
-    }
-
 
 });

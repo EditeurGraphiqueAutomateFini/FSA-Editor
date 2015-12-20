@@ -18,7 +18,8 @@ define(function(require){
                 createCircles = require("viewmode/create_circles"),
                 createPaths = require("viewmode/create_paths"),
                 server = require("utility/server_request"),
-                tick = require("viewmode/tick_helper");
+                tick = require("viewmode/tick_helper"),
+                data_helper = require("viewmode/data_helper");
 
             if(states){
                 var links=[],
@@ -72,7 +73,7 @@ define(function(require){
                     }
                 });
                 var svg = createSVG("#svg_container"),
-                    force = createForceLayout(svg,dataset,links);
+                    force = createForceLayout(svg,dataset,links,getData);
 
                 createPaths(svg,force,dataset,links);
                 createCircles(svg,force,dataset,links);
@@ -83,27 +84,11 @@ define(function(require){
 
             //handle send/reset
             $("button.save").click(function(){
-                var endPostData = {
-                    states : {}
-                };
-
-                if(getData.allow_overlap){endPostData.allow_overlap=getData.allow_overlap;}
-                for(state in getData.states){
-                    if(getData.states.hasOwnProperty(state)){
-                        endPostData.states[state]={};
-                        for(key in getData.states[state]){
-                            if(getData.states[state].hasOwnProperty(key)){
-                                if(key ==="max_noise" || key ==="transitions" || key==="terminal" || key==="graphicEditor"){
-                                    endPostData.states[state][key] = getData.states[state][key];
-                                }
-                            }
-                        }
-                    }
-                }
+                var endPostData = data_helper.cleanData(getData);
                 server.postRequest(endPostData);
             });
             $("button.reset").click(function(){
-                d3.dispatch("tick");
+                //T_T
             });
 
             //fonction pour positionner les cercles sans coordonnées
