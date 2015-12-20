@@ -5,7 +5,7 @@ define(function(){
         var width = 300,
             height = 300;
 
-        var svg = d3.select(container).append("svg");
+        var svg = d3.select(container).insert("svg",".buttons");
 
         // marker creation
         svg.append("defs")
