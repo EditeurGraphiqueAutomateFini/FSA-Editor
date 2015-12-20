@@ -46,6 +46,16 @@ text{
 #svg_container{
     border-right : 1px solid #000;
 }
+/*load_helper*/
+.load_helper{
+    background: #FFF;
+    display: none;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
 /*others*/
 textarea{
     max-width: 95%;
