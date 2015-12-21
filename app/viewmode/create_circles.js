@@ -16,6 +16,7 @@ define(function(){
             .on("mouseover",circleHover)
             .call(force.drag);
 
+
         //create a text for each state w/ the name of the state and [max_nosie] if set
         var text = svg.append("g").selectAll("text")
             .data(force.nodes())

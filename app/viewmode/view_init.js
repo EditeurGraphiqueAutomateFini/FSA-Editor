@@ -12,13 +12,16 @@ define(function(require){
             return states;
         },
         // initialisation function : states : array of state objects; getData: initial retrieved data
-        init : function(states,getData){
+        init : function(states,getData,reset){
             var createSVG = require("viewmode/create_svg"),
                 createForceLayout = require("viewmode/create_force_layout"),
                 createCircles = require("viewmode/create_circles"),
                 createPaths = require("viewmode/create_paths"),
                 server = require("utility/server_request"),
-                tick = require("viewmode/tick_helper");
+                tick = require("viewmode/tick_helper"),
+                data_helper = require("viewmode/data_helper"),
+                server = require("utility/server_request"),
+                viewmode=require("viewmode/view_init");
 
             if(states){
                 var links=[],
@@ -38,8 +41,13 @@ define(function(require){
                             if(!state.graphicEditor){
                                 state.graphicEditor={};
                             }else{
-                                state.graphicEditor.origCoordX = state.graphicEditor.coordX;
-                                state.graphicEditor.origCoordY = state.graphicEditor.coordY;
+                                if(reset){
+                                    state.graphicEditor.coordX = state.graphicEditor.origCoordX ;
+                                    state.graphicEditor.coordY = state.graphicEditor.origCoordY;
+                                }else{
+                                    state.graphicEditor.origCoordX = state.graphicEditor.coordX;
+                                    state.graphicEditor.origCoordY = state.graphicEditor.coordY;
+                                }
                             }
 
                             state.x = state.graphicEditor.coordX || setPositions(cpt);   //known position or random
@@ -71,8 +79,11 @@ define(function(require){
                         }
                     }
                 });
+                if($("svg").size()>0){
+                    $("svg").remove();
+                }
                 var svg = createSVG("#svg_container"),
-                    force = createForceLayout(svg,dataset,links);
+                    force = createForceLayout(svg,dataset,links,getData);
 
                 createPaths(svg,force,dataset,links);
                 createCircles(svg,force,dataset,links);
@@ -83,26 +94,16 @@ define(function(require){
 
             //handle send/reset
             $("button.save").click(function(){
-                var endPostData = {
-                    states : {}
-                };
-
-                if(getData.allow_overlap){endPostData.allow_overlap=getData.allow_overlap;}
-                for(state in getData.states){
-                    if(getData.states.hasOwnProperty(state)){
-                        endPostData.states[state]={};
-                        for(key in getData.states[state]){
-                            if(getData.states[state].hasOwnProperty(key)){
-                                if(key ==="max_noise" || key ==="transitions" || key==="terminal" || key==="graphicEditor"){
-                                    endPostData.states[state][key] = getData.states[state][key];
-                                }
-                            }
-                        }
-                    }
-                }
+                var endPostData = data_helper.cleanData(getData);
                 server.postRequest(endPostData);
             });
             $("button.reset").click(function(){
+                //T_T
+                /*force.nodes([]);
+                force.links([]);
+                //viewmode.init(states,getData,true);*/
+                //très moche à refaire - souci technique par rapport au reset
+                server.getRequest("view");
             });
 
             //fonction pour positionner les cercles sans coordonnées
