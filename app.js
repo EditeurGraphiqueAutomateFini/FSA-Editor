@@ -1,9 +1,10 @@
 //require configuration
 requirejs.config({
-    baseUrl: "app",
+    baseUrl: "app/src/",
     paths: {
-        data: '../data'
+        data: "../../data",
+        test: "../test/"
     }
 });
 // calling main function
-requirejs(["main"]);
+requirejs(["../main"]);
