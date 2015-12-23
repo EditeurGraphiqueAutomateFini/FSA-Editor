@@ -22,8 +22,11 @@ define(function(require){
                 server = require("utility/server_request"),
                 tick = require("viewmode/tick_helper"),
                 data_helper = require("viewmode/data_helper"),
-                server = require("utility/server_request"),
+                utility = require("utility/utility"),
                 viewmode=require("viewmode/view_init");
+
+            var statesClone =  _.cloneDeep(states),
+                getDataClone = _.cloneDeep(getData);
 
             if(states){
                 var links=[],
@@ -43,13 +46,8 @@ define(function(require){
                             if(!state.graphicEditor){
                                 state.graphicEditor={};
                             }else{
-                                if(reset){
-                                    state.graphicEditor.coordX = state.graphicEditor.origCoordX ;
-                                    state.graphicEditor.coordY = state.graphicEditor.origCoordY;
-                                }else{
-                                    state.graphicEditor.origCoordX = state.graphicEditor.coordX;
-                                    state.graphicEditor.origCoordY = state.graphicEditor.coordY;
-                                }
+                                state.graphicEditor.origCoordX = state.graphicEditor.coordX;
+                                state.graphicEditor.origCoordY = state.graphicEditor.coordY;
                             }
 
                             state.x = state.graphicEditor.coordX || setPositions(cpt);   //known position or random
@@ -99,20 +97,18 @@ define(function(require){
                 var endPostData = data_helper.cleanData(getData);
                 server.postRequest(endPostData);
             });
-            $("button.reset").click(function(){
-                //T_T
-                /*force.nodes([]);
-                force.links([]);
-                //viewmode.init(states,getData,true);*/
-                //très moche à refaire - souci technique par rapport au reset
-                server.getRequest("view");
-            });
 
             //fonction pour positionner les cercles sans coordonnées
             function setPositions(cpt){
                 //here goes the code of the jeanseba
                 return cpt*50+20;
             }
+        },
+        reset: function(){
+            force.nodes([]);
+            force.links([]);
+            this.init(statesClone,getDataClone,true);
+            $("#object_container_left").css("background","transparent");
         }
     }
 });

@@ -3,7 +3,8 @@ define(function(require){
         //obtain data, use it to load a mode. mode : string representing the mode to load
         getRequest : function(mode){
             var utility = require("utility/utility"),
-                viewmode = require("viewmode/view_init");
+                viewmode = require("viewmode/view_init"),
+                editmode = require("editmode/edit_init");
 
             var ajaxRequest = $.ajax({
                   type: 'GET',
@@ -32,6 +33,10 @@ define(function(require){
                     switch (mode) {
                         case "view":
                             viewmode.init(viewmode.extractStates([parsedData]),parsedData);
+                            break;
+                        case "edit":
+                            viewmode.init(viewmode.extractStates([parsedData]),parsedData);
+                            editmode.init();
                             break;
                         default:
                             viewmode.init(viewmode.extractStates([parsedData]),parsedData);

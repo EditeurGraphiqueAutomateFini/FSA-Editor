@@ -10,4 +10,5 @@ requirejs.config({
 requirejs(
     ["../main"
     // ,"test/test"
+    ,"https://cdn.jsdelivr.net/lodash/3.10.1/lodash.js"
 ]);
