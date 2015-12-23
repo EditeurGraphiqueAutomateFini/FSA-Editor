@@ -5,7 +5,8 @@ define(function(require){
             var utility = require("utility/utility"),
                 viewmode = require("viewmode/view_init"),
                 data_helper = require("viewmode/data_helper"),
-                editmode = require("editmode/edit_init");
+                editmode = require("editmode/edit_init"),
+                server=require("utility/server_request");
 
             var ajaxRequest = $.ajax({
                   type: 'GET',
@@ -44,6 +45,11 @@ define(function(require){
                             viewmode.init(viewmode.extractStates([parsedData]),parsedData);
                     }
 
+                    //handle send/reset
+                    $("button.save").click(function(){
+                        var endPostData = data_helper.cleanData(parsedData);
+                        server.postRequest(endPostData);
+                    });
                     $("button.reset").click(function(){
                         var parsedDataLiquid =  _.cloneDeep(parsedDataSolid);
                         viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,true);

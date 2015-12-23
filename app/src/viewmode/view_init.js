@@ -90,12 +90,6 @@ define(function(require){
                 //todo : vue par défaut ? basculer vers le mode creation ?
             }
 
-            //handle send/reset
-            $("button.save").click(function(){
-                var endPostData = data_helper.cleanData(getData);
-                server.postRequest(endPostData);
-            });
-
             //fonction pour positionner les cercles sans coordonnées
             function setPositions(cpt){
                 //here goes the code of the jeanseba
