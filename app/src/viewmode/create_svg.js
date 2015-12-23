@@ -11,13 +11,15 @@ define(function(){
         // marker creation
         svg.append("defs")
             .append("marker")
-            .attr("id","end")
-            .attr("viewBox","0 -5 10 10")
-            .attr("refX",25)
-            .attr("refY",-1)
-            .attr("markerWidth",6)
-            .attr("markerHeight",6)
-            .attr("orient","auto")
+            .attr({
+                "id" : "end",
+                "viewBox" : "0 -5 10 10",
+                "refX" : 25,
+                "refY" : -1,
+                "markerWidth" : 6,
+                "markerHeight" : 6,
+                "orient" : "auto"
+            })
             .append("path")
             .attr("d","M0,-5L10,0L0,5");
 

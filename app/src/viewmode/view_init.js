@@ -95,6 +95,8 @@ define(function(require){
                 //here goes the code of the jeanseba
                 return cpt*50+20;
             }
+
+            return {svg,force,dataset,links};
         }
     }
 });

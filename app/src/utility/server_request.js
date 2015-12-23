@@ -38,8 +38,8 @@ define(function(require){
                             viewmode.init(viewmode.extractStates([parsedData]),parsedData);
                             break;
                         case "edit":
-                            viewmode.init(viewmode.extractStates([parsedData]),parsedData);
-                            editmode.init();
+                            var loadedViewMode = viewmode.init(viewmode.extractStates([parsedData]),parsedData);
+                            editmode.init(loadedViewMode.svg,loadedViewMode.force,loadedViewMode.dataset,loadedViewMode.links);
                             break;
                         default:
                             viewmode.init(viewmode.extractStates([parsedData]),parsedData);

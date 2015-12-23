@@ -10,16 +10,20 @@ define(function(){
         var path = svg.append("g").selectAll("path")
             .data(force.links())
             .enter().append("path")
-            .attr("class", function(d) {return "link "+d.source.index +"_"+d.target.index;})
-            .attr("marker-end", "url(#end");
+            .attr({
+                "class" : function(d) {return "link "+d.source.index +"_"+d.target.index;},
+                "marker-end" : "url(#end)"
+            });
 
         //create a text for each transition w/ the condition of the transition
         var condition = svg.append("g").selectAll("text")
             .data(force.links())
             .enter().append("text")
-            .attr("x", 20)
-            .attr("y", 0)
-            .attr("class","condition")
+            .attr({
+                "x" : 20,
+                "y" : 0,
+                "class" : "condition"
+            })
             .text(function(d) { return d.condition; });
 
     }
