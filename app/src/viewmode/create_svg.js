@@ -1,6 +1,7 @@
 //create svg container w/ marker in a html container
 define(function(){
     return function(container){
+        if(container){
 
         var width = 300,
             height = 300;
@@ -20,6 +21,9 @@ define(function(){
             .append("path")
             .attr("d","M0,-5L10,0L0,5");
 
+        }else{
+            var svg="";
+        }
         return svg;
     }
 })

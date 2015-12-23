@@ -51,8 +51,8 @@ text{
 }
 /*load_helper*/
 .load_helper{
-    background: #FFF;
-    display: none;
+    background: url("res/images/loading.gif") no-repeat scroll center center #FFF;
+    /*display: none;*/
     height: 100%;
     left: 0;
     position: absolute;
@@ -62,4 +62,7 @@ text{
 /*others*/
 textarea{
     max-width: 95%;
+}
+#qunit{
+    display: none;
 }
