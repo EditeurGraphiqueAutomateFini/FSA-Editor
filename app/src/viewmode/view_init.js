@@ -25,8 +25,6 @@ define(function(require){
                 utility = require("utility/utility"),
                 viewmode=require("viewmode/view_init");
 
-            var statesClone =  _.cloneDeep(states),
-                getDataClone = _.cloneDeep(getData);
 
             if(states){
                 var links=[],
@@ -103,12 +101,6 @@ define(function(require){
                 //here goes the code of the jeanseba
                 return cpt*50+20;
             }
-        },
-        reset: function(){
-            force.nodes([]);
-            force.links([]);
-            this.init(statesClone,getDataClone,true);
-            $("#object_container_left").css("background","transparent");
         }
     }
 });

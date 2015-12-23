@@ -4,6 +4,7 @@ define(function(require){
         getRequest : function(mode){
             var utility = require("utility/utility"),
                 viewmode = require("viewmode/view_init"),
+                data_helper = require("viewmode/data_helper"),
                 editmode = require("editmode/edit_init");
 
             var ajaxRequest = $.ajax({
@@ -18,7 +19,7 @@ define(function(require){
                   beforeSend : function(){
                       $(".load_helper").html("loading...").show();
                   },
-                  complete : function(){
+                  complete : function(data){
                       $(".load_helper").fadeOut();
                       $("#object_container_left").css("background","transparent");
                   }
@@ -26,6 +27,7 @@ define(function(require){
             function succesFunction(getData,mode){
                 if(getData){
                     var parsedData = JSON.parse(getData);
+                    var parsedDataSolid =  _.cloneDeep(parsedData);
                     //display object
                     utility.frontEndObject([parsedData]);
                     //initiate view mode
@@ -41,6 +43,13 @@ define(function(require){
                         default:
                             viewmode.init(viewmode.extractStates([parsedData]),parsedData);
                     }
+
+                    $("button.reset").click(function(){
+                        var parsedDataLiquid =  _.cloneDeep(parsedDataSolid);
+                        viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,true);
+                        utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
+                        $("#object_container_left").css("background","transparent");
+                    });
                 }
             }
             function errorFunction(mode){
@@ -48,16 +57,24 @@ define(function(require){
                 console.log("/!\\ ajax : error retrieving data from server, local data loaded");
 
                 var data = require("data/data_example");
+                var dataSolid = _.cloneDeep(data);
                 //display object
                 utility.frontEndObject(data);
                 //intiate view mode w/ static data
                 switch (mode) {
                     case "view":
-                        viewmode.init(viewmode.extractStates(data),data);
+                        viewmode.init(viewmode.extractStates(data),data[0]);
                         break;
                     default:
-                        viewmode.init(viewmode.extractStates(data),data);
+                        viewmode.init(viewmode.extractStates(data),data[0]);
                 }
+
+                $("button.reset").click(function(){
+                    var dataLiquid =  _.cloneDeep(dataSolid);
+                    viewmode.init(viewmode.extractStates(dataLiquid),dataLiquid[0],true);
+                    utility.frontEndObject([data_helper.cleanData(dataLiquid[0])]);
+                    $("#object_container_left").css("background","transparent");
+                });
             }
         },
         postRequest: function(postData){

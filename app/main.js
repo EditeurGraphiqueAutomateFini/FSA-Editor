@@ -2,8 +2,7 @@
 define(function(require){
 
     var menu = require("menu/menu"),
-        server = require("utility/server_request"),
-        viewmode = require("viewmode/view_init");
+        server = require("utility/server_request");
 
     //checking menu function's return value
     switch (menu) {
@@ -19,10 +18,5 @@ define(function(require){
         default:
             server.getRequest("view");
     }
-
-
-    $("button.reset").click(function(){
-        viewmode.reset();
-    });
 
 });
