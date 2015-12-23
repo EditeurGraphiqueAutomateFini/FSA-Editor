@@ -7,4 +7,7 @@ requirejs.config({
     }
 });
 // calling main function
-requirejs(["../main","test/test"]);
+requirejs(
+    ["../main"
+    // ,"test/test"
+]);

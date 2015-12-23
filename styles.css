@@ -63,3 +63,6 @@ text{
 textarea{
     max-width: 95%;
 }
+#qunit{
+    display: none;
+}

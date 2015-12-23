@@ -2,11 +2,13 @@ define(function(require){
     return{
         //extract states
         extractStates: function(data){
-            //iterating over states objects in data file (JSON), making a JS array of objects
             var states=[];
-            for(var i=0;i<data.length;i++){
-                if(data[i].states){
-                    states.push(data[i].states);
+            //iterating over states objects in data file (JSON), making a JS array of objects
+            if(data){
+                for(var i=0;i<data.length;i++){
+                    if(data[i].states){
+                        states.push(data[i].states);
+                    }
                 }
             }
             return states;

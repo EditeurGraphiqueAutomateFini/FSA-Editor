@@ -11,6 +11,7 @@ define(function(require){
     var tick_helper = require("viewmode/tick_helper");
     var view_init = require("viewmode/view_init");
 
+    $("#qunit").show();
     //QUnit.config({hidepasse:true});
     QUnit.module("menu");
     QUnit.test("menu",function(assert){
@@ -35,20 +36,22 @@ define(function(require){
     });
 
     QUnit.module("create_svg");
-    QUnit.test("",function(assert){
+    QUnit.test("create_svg",function(assert){
+        assert.equal(create_svg(""),"");
     });
 
     QUnit.module("data_helper");
-    QUnit.test("",function(assert){
+    QUnit.test("cleanData",function(assert){
+        assert.equal(typeof(data_helper.cleanData({})),"object");
     });
 
     QUnit.module("tick_helper");
-    QUnit.test("",function(assert){
+    QUnit.test("tick_helper",function(assert){
+        assert.equal(tick_helper(),undefined);
     });
 
     QUnit.module("view_init");
-    QUnit.test("",function(assert){
+    QUnit.test("extractStates",function(assert){
+        assert.ok(view_init.extractStates(),[]);
     });
-
-    console.log(create_svg());
 });
