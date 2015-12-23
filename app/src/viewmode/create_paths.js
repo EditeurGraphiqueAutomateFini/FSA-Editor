@@ -1,7 +1,8 @@
 //create path between states : container : html container /!\D3/!\ selector, states : array of states, links : links array created w/ data array
 define(function(){
     return function(container,force,states,links){
-        console.log(states,links);  //affiche les tableaux d'etats et de liens (transitions) dans la console (temporaire)
+        //affiche les tableaux d'etats et de liens (transitions) dans la console (temporaire)
+        console.log(states,links);
 
         var svg = container;
 

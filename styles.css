@@ -52,7 +52,7 @@ text{
 /*load_helper*/
 .load_helper{
     background: #FFF;
-    display: none;
+    /*display: none;*/
     height: 100%;
     left: 0;
     position: absolute;
