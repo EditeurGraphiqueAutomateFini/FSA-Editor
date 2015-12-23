@@ -96,7 +96,7 @@ define(function(require){
                 return cpt*50+20;
             }
 
-            return {svg,force,dataset,links};
+            return {svg,force,getData,links};
         }
     }
 });

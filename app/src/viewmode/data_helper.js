@@ -8,7 +8,7 @@ define(function(){
 
             if(getData.allow_overlap){endPostData.allow_overlap=getData.allow_overlap;}
             for(state in getData.states){
-                if(getData.states.hasOwnProperty(state)){
+                if(getData.states[state] && getData.states.hasOwnProperty(state)){
                     endPostData.states[state]={};
                     for(key in getData.states[state]){
                         if(getData.states[state].hasOwnProperty(key)){

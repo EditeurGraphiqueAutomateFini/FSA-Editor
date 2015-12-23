@@ -11,7 +11,7 @@ define(function(){
             .data(force.links())
             .enter().append("path")
             .attr({
-                "class" : function(d) {return "link "+d.source.index +"_"+d.target.index;},
+                "class" : function(d) {return "link link_"+d.source.index +"_"+d.target.index;},
                 "marker-end" : "url(#end)"
             });
 
@@ -22,7 +22,9 @@ define(function(){
             .attr({
                 "x" : 20,
                 "y" : 0,
-                "class" : "condition"
+                "class" : function(d){
+                    return "condition link_"+d.source.index +"_"+d.target.index
+                }
             })
             .text(function(d) { return d.condition; });
 

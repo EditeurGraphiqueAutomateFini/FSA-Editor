@@ -36,10 +36,43 @@ define(function(require){
                     switch (mode) {
                         case "view":
                             viewmode.init(viewmode.extractStates([parsedData]),parsedData);
+                            $("button.reset").click(function(){
+                                var parsedDataLiquid =  _.cloneDeep(parsedDataSolid);
+                                swal({
+                                    title: "Reset?",
+                                    text: "All unsaved changes will be discarded",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "Reset",
+                                    closeOnConfirm: true
+                                },function(){
+                                    viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,true);
+                                    utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
+                                    $("#object_container_left").css("background","transparent");
+                                });
+                            });
                             break;
                         case "edit":
                             var loadedViewMode = viewmode.init(viewmode.extractStates([parsedData]),parsedData);
-                            editmode.init(loadedViewMode.svg,loadedViewMode.force,loadedViewMode.dataset,loadedViewMode.links);
+                            editmode.init(loadedViewMode.svg,loadedViewMode.force,loadedViewMode.getData,loadedViewMode.links);
+                            $("button.reset").click(function(){
+                                var parsedDataLiquid =  _.cloneDeep(parsedDataSolid);
+                                swal({
+                                    title: "Reset?",
+                                    text: "All unsaved changes will be discarded",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "Reset",
+                                    closeOnConfirm: true
+                                },function(){
+                                    var newLoadedViewMode = viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid);
+                                    editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
+                                    utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
+                                    $("#object_container_left").css("background","transparent");
+                                });
+                            });
                             break;
                         default:
                             viewmode.init(viewmode.extractStates([parsedData]),parsedData);
@@ -48,13 +81,18 @@ define(function(require){
                     //handle send/reset
                     $("button.save").click(function(){
                         var endPostData = data_helper.cleanData(parsedData);
-                        server.postRequest(endPostData);
-                    });
-                    $("button.reset").click(function(){
-                        var parsedDataLiquid =  _.cloneDeep(parsedDataSolid);
-                        viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,true);
-                        utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
-                        $("#object_container_left").css("background","transparent");
+
+                        swal({
+                            title: "Save?",
+                            text: "JSON file will be overwritten on the server",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Save",
+                            closeOnConfirm: false
+                        },function(){
+                            server.postRequest(endPostData);
+                        });
                     });
                 }
             }
@@ -97,6 +135,7 @@ define(function(require){
                   },
                   success: function(data){
                      // console.log(data);
+                     swal("Saved!", "JSON file successfully overwritten", "success");
                   },
                   error: function(){
                       console.log("send error");

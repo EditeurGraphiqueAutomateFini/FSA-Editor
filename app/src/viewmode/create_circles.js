@@ -14,7 +14,7 @@ define(function(){
                     else{return "";}
                 },
                 "id" : function(d){
-                    return d.index;
+                    return "state_"+d.index;
                 },
                 "fill" : function(d){return d.fill;}
             })
@@ -29,7 +29,9 @@ define(function(){
             .attr({
                 "x" : 20,
                 "y" : 0,
-                "class":"state_name"
+                "class" : function(d){
+                    return "state_name state_name_"+d.index;
+                }
             })
             .text(function(d) {
                 var text = d.name;
