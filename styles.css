@@ -51,7 +51,7 @@ text{
 }
 /*load_helper*/
 .load_helper{
-    background: #FFF;
+    background: url("res/images/loading.gif") no-repeat scroll center center #FFF;
     /*display: none;*/
     height: 100%;
     left: 0;
