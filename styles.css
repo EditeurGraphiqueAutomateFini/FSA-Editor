@@ -25,6 +25,11 @@ svg{
     stroke:grey;
     stroke-width:3px;
 }
+.linking{
+    stroke:grey;
+    stroke-dasharray:5,5;
+    stroke-width:3px;
+}
 /*svg - paths (links)*/
 .link {
   fill: none;

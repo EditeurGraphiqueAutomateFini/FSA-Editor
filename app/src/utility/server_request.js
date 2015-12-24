@@ -28,16 +28,16 @@ define(function(require){
             function succesFunction(getData,mode){
                 if(getData){
                     var parsedData = JSON.parse(getData);
-                    var parsedDataSolid =  _.cloneDeep(parsedData);
+                    var parsedDataSolid =  _.cloneDeep(parsedData); //cloning parsed data to keep it untouched for a later reset
                     //display object
                     utility.frontEndObject([parsedData]);
-                    //initiate view mode
-
                     switch (mode) {
                         case "view":
+                            //initiate viewmode
                             viewmode.init(viewmode.extractStates([parsedData]),parsedData);
+                            //handel reset
                             $("button.reset").click(function(){
-                                var parsedDataLiquid =  _.cloneDeep(parsedDataSolid);
+                                var parsedDataLiquid =  _.cloneDeep(parsedDataSolid);   //cloning untouched cloned data
                                 swal({
                                     title: "Reset?",
                                     text: "All unsaved changes will be discarded",
@@ -47,15 +47,20 @@ define(function(require){
                                     confirmButtonText: "Reset",
                                     closeOnConfirm: true
                                 },function(){
+                                    //re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
                                     viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,true);
+                                    //reseting front-end object display
                                     utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
                                     $("#object_container_left").css("background","transparent");
                                 });
                             });
                             break;
                         case "edit":
+                            //loading view mode
                             var loadedViewMode = viewmode.init(viewmode.extractStates([parsedData]),parsedData);
+                            //loading edit mode from previously loaded viewmode
                             editmode.init(loadedViewMode.svg,loadedViewMode.force,loadedViewMode.getData,loadedViewMode.links);
+                            //handling reset (same as edit mode)
                             $("button.reset").click(function(){
                                 var parsedDataLiquid =  _.cloneDeep(parsedDataSolid);
                                 swal({
@@ -78,7 +83,7 @@ define(function(require){
                             viewmode.init(viewmode.extractStates([parsedData]),parsedData);
                     }
 
-                    //handle send/reset
+                    //handle saving (posting edited data w/ a confirm alert)
                     $("button.save").click(function(){
                         var endPostData = data_helper.cleanData(parsedData);
 
@@ -100,6 +105,7 @@ define(function(require){
                 //there has been an error w/ ajax request
                 console.log("/!\\ ajax : error retrieving data from server, local data loaded");
 
+                //thus loading local data (probablement a modifier)
                 var data = require("data/data_example");
                 var dataSolid = _.cloneDeep(data);
                 //display object
@@ -113,6 +119,7 @@ define(function(require){
                         viewmode.init(viewmode.extractStates(data),data[0]);
                 }
 
+                //handling reset (same as above)
                 $("button.reset").click(function(){
                     var dataLiquid =  _.cloneDeep(dataSolid);
                     viewmode.init(viewmode.extractStates(dataLiquid),dataLiquid[0],true);
@@ -121,6 +128,7 @@ define(function(require){
                 });
             }
         },
+        //post data to overwrite JSON file server-side
         postRequest: function(postData){
             var ajaxRequest = $.ajax({
                   type: 'POST',

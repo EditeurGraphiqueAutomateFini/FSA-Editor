@@ -8,7 +8,7 @@ define(function(){
 
         var svg = d3.select(container).insert("svg",".buttons");
 
-        // marker creation
+        // marker creation (will append at the end of each svg path element -> done with create_paths module)
         svg.append("defs")
             .append("marker")
             .attr({
@@ -23,7 +23,7 @@ define(function(){
             .append("path")
             .attr("d","M0,-5L10,0L0,5");
 
-        }else{
+        }else{  //if no container is supplied, to avoir script error
             var svg="";
         }
         return svg;

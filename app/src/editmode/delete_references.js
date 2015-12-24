@@ -5,7 +5,7 @@ define(function(){
 
         for(var state in states){
             if(states[state] && states.hasOwnProperty(state)){
-                if(states[state].transitions){
+                if(states[state].transitions){  //remove transitions that we do not want anymore. Errors otherwise
                     states[state].transitions.forEach(function(el,i,arr){
                         if(el.target==name){
                             arr.splice(i,1);

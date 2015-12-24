@@ -1,4 +1,7 @@
 define(function(){
+    //delete a state having index == "elementIndex"
+    //"context" paramter is containing "svg" object, "getData" original datas, "force" d3 current force layout object
+    //makes global data sendable to the server
     return function(elementIndex,context){
         var states = context.getData.states;
         //suppress node at index elementIndex
@@ -16,7 +19,7 @@ define(function(){
         });
         //delete state name
         d3.select(".state_name_"+elementIndex).remove();
-        //delete departing links
+        //delete links w/ target or source set to the element
         d3.selectAll("path.link").each(function(){
             if(d3.select(this).data()[0]){
                 var sourceIndex = d3.select(this).data()[0].source.index,
