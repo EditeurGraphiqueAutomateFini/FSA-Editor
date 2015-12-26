@@ -83,7 +83,7 @@ define(function(require){
                 var svg = createSVG("#svg_container"),
                     force = createForceLayout(svg,dataset,links,getData);
 
-                createPaths(svg,force,dataset,links);
+                createPaths(svg,force,links);
                 createCircles(svg,force,dataset,links);
 
             }else{

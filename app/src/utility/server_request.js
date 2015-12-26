@@ -140,6 +140,7 @@ define(function(require){
                   complete:function(){
                       $(".load_helper").fadeOut();
                       $("#object_container_left").css("background","transparent");
+                      d3.selectAll(".new_link").classed("new_link",false);
                   },
                   success: function(data){
                      // console.log(data);
