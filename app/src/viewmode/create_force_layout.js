@@ -17,6 +17,7 @@ define(function(require){
             .on("tick",tick)
             .start();
 
+        //add a modification of the frond-end displayed data on drag
         var drag = force.drag()
             .on("dragstart", function(){
                 var objectContainer = $("#object_container_left");

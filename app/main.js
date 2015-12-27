@@ -10,9 +10,13 @@ define(function(require){
             //initiate view mode w/ array of states
             server.getRequest("view");
             break;
-
+        case "edit":
+            server.getRequest("edit");
+            break;
+        case "create":
+            break;
         default:
-            //viewmode.init(states);
+            server.getRequest("view");
     }
 
 });

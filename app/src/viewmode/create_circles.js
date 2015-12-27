@@ -7,12 +7,17 @@ define(function(){
         var circle = svg.append("g").selectAll("circle")
             .data(force.nodes())
             .enter().append("circle")
-            .attr("r", "15")
-            .attr("class",function(d){
-                if(d.terminal){return "terminal"}
-                else{return "";}
+            .attr({
+                "r":"15",
+                "class" : function(d){
+                    if(d.terminal){return "terminal"}
+                    else{return "";}
+                },
+                "id" : function(d){
+                    return "state_"+d.index;
+                },
+                "fill" : function(d){return d.fill;}
             })
-            .attr("fill", function(d){return d.fill;})
             .on("mouseover",circleHover)
             .call(force.drag);
 
@@ -21,9 +26,13 @@ define(function(){
         var text = svg.append("g").selectAll("text")
             .data(force.nodes())
             .enter().append("text")
-            .attr("x", 20)
-            .attr("y", 0)
-            .attr("class","state_name")
+            .attr({
+                "x" : 20,
+                "y" : 0,
+                "class" : function(d){
+                    return "state_name state_name_"+d.index;
+                }
+            })
             .text(function(d) {
                 var text = d.name;
                 if(d.max_noise>0){

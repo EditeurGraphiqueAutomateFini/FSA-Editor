@@ -25,15 +25,26 @@ svg{
     stroke:grey;
     stroke-width:3px;
 }
+.linking{
+    stroke:grey;
+    stroke-dasharray:5,5;
+    stroke-width:3px;
+}
 /*svg - paths (links)*/
 .link {
   fill: none;
   stroke: #666;
   stroke-width: 1.5px;
 }
+.new_link{
+    stroke:orange;
+}
 /*svg - texts (names,conditions)*/
 text{
     fill:#000;
+}
+text.new_link{
+    fill:orange;
 }
 /*containers*/
 #svg_container,#object_container,#object_container_left,#object_textarea{
