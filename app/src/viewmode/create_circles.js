@@ -16,9 +16,16 @@ define(function(){
                 "id" : function(d){
                     return "state_"+d.index;
                 },
-                "fill" : function(d){return d.fill;}
+                "fill" : function(d){return d.fill;},
             })
-            .on("mouseover",circleHover)
+            //add a tooltip to each circle
+            .each(function(el){
+                $("#state_"+el.index).tooltip({
+                    //configuration tooltip
+                    //trouver un moyen si possible d'utiliser le tooltip sans title
+                    //content:"toto"
+                });
+            })
             .call(force.drag);
 
 
@@ -40,10 +47,5 @@ define(function(){
                 }
                 return text;
              });
-
-        //fonction affichage propriétés etats
-         function circleHover(d){
-             //console.log(d);
-         }
       }
 });
