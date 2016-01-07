@@ -17,28 +17,27 @@ define(function(){
                 ,"top":"0"
                 ,"width":"100%"
             })
-            .html("<ul id=\"menu\"><li id=\"view\"><a href=\"#.html\">Mode vue</a></li><li id=\"editor\"><a href=\"#.html\">Mode edition</a></li></ul>")
+            .html("<ul id=\"menu\"><li id=\"view\"><a href=\"#\">Mode vue</a></li><li id=\"editor\"><a href=\"#\">Mode edition</a></li></ul>");
 			
-            var li = document.getElementById("menu").getElementsByTagName("li"); 
-			for(var i=0;i<li.length;i++){	
-			var liItem = document.getElementById(li[i].id); 
-			liItem.addEventListener("click",function(e){ 
-	        ventDefault(); // block the event
-			console.log(this); // print this on the console
-				
-			if( this.id == "view" ){
-					alert("mode vue"); // View mode
-			}
-			else if ( this.id == "editor"){
-					alert("mode editor"); // Editor mode
-			}
-			else{
-					alert("error");  // error if there's a problem
-		  
-			}
-    
-		  });
+		var li = document.getElementById("menu").getElementsByTagName("li"); 
+		for(var i=0;i<li.length;i++){	
+		var liItem = document.getElementById(li[i].id); 
+		liItem.addEventListener("click",function(e){ 
+		e.preventDefault(); // block the event
+		console.log(this); // print this on the console
+		if( this.id == "view" ){
+				alert("mode vue"); // View mode
 		}
+		else if ( this.id == "editor"){
+				alert("mode editor"); // Editor mode
+		}
+		else{
+				alert("error");  // error if there's a problem
+	  
+		}
+	
+	     });
+	}
 			
 	
     }
