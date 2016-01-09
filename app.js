@@ -5,6 +5,9 @@ requirejs.config({
         data: "../../data", //except for local datas (for local testing)
         test: "../test/",    //and tests
         jquery : "http://code.jquery.com/jquery-2.1.4.min"  //defining jquery as a module
+    },
+    shim:{
+        "../main":"jquery"
     }
 });
 // calling main function
@@ -26,4 +29,5 @@ requirejs(
 
         //main
         ,"../main"
-]);
+    ]
+);

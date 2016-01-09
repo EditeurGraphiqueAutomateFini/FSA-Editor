@@ -73,6 +73,16 @@ text.new_link{
     top: 0;
     width: 100%;
 }
+/*menu*/
+.menu{
+    background:#FFF;
+    height:100%;
+    left:0;
+    padding:300px;
+    position:absolute;
+    top:0;
+    width:100;
+}
 /*others*/
 textarea{
     max-width: 95%;

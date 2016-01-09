@@ -1,6 +1,5 @@
 // main function
 define(function(require){
-
     var menu = require("menu/menu"),
         server = require("utility/server_request");
 
@@ -18,5 +17,4 @@ define(function(require){
         default:
             server.getRequest("view");
     }
-
 });
