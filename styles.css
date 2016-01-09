@@ -81,7 +81,8 @@ text.new_link{
     padding:300px;
     position:absolute;
     top:0;
-    width:100;
+    width:100%;
+    z-index:10;
 }
 /*others*/
 textarea{
