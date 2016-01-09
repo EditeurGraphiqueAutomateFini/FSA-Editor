@@ -112,7 +112,7 @@ define(function(require){
                     animation: "slide-from-top",
                     inputPlaceholder: "condition"
                 },function(inputValue,confirmed){
-                    if (inputValue === false){
+                    if (inputValue === false){  //on cancel
                         //edit visual hints
                         linkingTest.graphicEditor.linking=false;
                         d.graphicEditor.linking=false;
@@ -120,22 +120,31 @@ define(function(require){
                         d3.select(thisID).classed("linking",false);
                         return false;
                     }
-                    if (inputValue === "") {
+                    if (inputValue === "") {    //if no value is entered
                         swal.showInputError("You need to write a condition");
-                        return false
+                        return false;
                     }
-                    condition = inputValue;
-                    //createPath
-                    create_path(svg,force,linkingTest.index,d.index,condition);
-                    //add transition to global data object
-                    add_transition(linkingTest,d,condition,getData);
-                    //edit visual hints
-                    linkingTest.graphicEditor.linking=false;
-                    d.graphicEditor.linking=false;
-                    d3.select(linkingTestID).classed("linking",false);
-                    d3.select(thisID).classed("linking",false);
-                    //close sweetalert prompt window
-                    swal.close();
+                    d3.select(linkingTestID).data()[0].transitions.forEach(function(el,ind,arr){
+                        if(el.target===d.name && el.condition===inputValue){
+                            inputValue=false;
+                        }
+                    });
+                    if(inputValue){
+                        //all condition passed
+                        condition = inputValue;
+                        create_path(svg,force,linkingTest.index,d.index,condition); //createPath
+                        add_transition(linkingTest,d,condition,getData);    //add transition to global data object
+                        //edit visual hints
+                        linkingTest.graphicEditor.linking=false;
+                        d.graphicEditor.linking=false;
+                        d3.select(linkingTestID).classed("linking",false);
+                        d3.select(thisID).classed("linking",false);
+                        //close sweetalert prompt window
+                        swal.close();
+                    }else{  //transition already exists w/ the same condition
+                        swal.showInputError("This condition already exists for the same transition");
+                        return false;
+                    }
                 });
             }
             function alertTerminal(){
