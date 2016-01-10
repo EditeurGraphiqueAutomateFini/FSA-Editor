@@ -5,7 +5,7 @@ define(function(require){
                 delete_references = require("editmode/delete_references"),
                 add_transition = require("editmode/add_transition"),
                 context_menu = require("menu/context_menu"),
-                create_path = require("editmode/create_path");
+                edit_path = require("editmode/edit_path");
 
             //iterates over svg circles (representing states)
             d3.selectAll("circle").each(function(){
@@ -102,7 +102,8 @@ define(function(require){
             }
             function getCondition(d,linkingTest,thisID){
                 var linkingTestID = "#state_"+linkingTest.index;
-                var condition = "";
+                var condition = ""
+                    previouslyExistingLink=false;
                 var swalCondition = swal({
                     title: "Condition",
                     text: "Write a condition for this new transition",
@@ -124,15 +125,22 @@ define(function(require){
                         swal.showInputError("You need to write a condition");
                         return false;
                     }
-                    d3.select(linkingTestID).data()[0].transitions.forEach(function(el,ind,arr){
-                        if(el.target===d.name && el.condition===inputValue){
-                            inputValue=false;
+                    d3.select(linkingTestID).data()[0].transitions.forEach(function(el,ind,arr){    //if alreay exists, cancel
+                        if(el.target===d.name){
+                            previouslyExistingLink = true;
+                            if(el.condition===inputValue){
+                                inputValue=false;
+                            }
                         }
                     });
                     if(inputValue){
                         //all condition passed
                         condition = inputValue;
-                        create_path(svg,force,linkingTest.index,d.index,condition); //createPath
+                        if(previouslyExistingLink){
+                            edit_path(svg,force,linkingTest.index,d.index,condition); //edit path
+                        }else{
+                            edit_path(svg,force,linkingTest.index,d.index,condition,"new"); //edit path
+                        }
                         add_transition(linkingTest,d,condition,getData);    //add transition to global data object
                         //edit visual hints
                         linkingTest.graphicEditor.linking=false;
