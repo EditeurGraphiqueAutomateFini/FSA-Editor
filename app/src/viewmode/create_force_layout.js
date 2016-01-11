@@ -21,8 +21,8 @@ define(function(require){
         var drag = force.drag()
             .on("dragstart", function(){
                 var objectContainer = $("#object_container_left");
-                if(!(objectContainer.css("background")==="orange")){
-                    objectContainer.css("background","orange");
+                if(!(objectContainer.css("background")==="#f5e79e")){
+                    objectContainer.css("background","#f5e79e");
                 }
             }).on("drag",function(){
                 var displayableData = data_helper.cleanData(getData);

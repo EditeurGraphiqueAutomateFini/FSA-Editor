@@ -18,7 +18,7 @@ define(function(require){
                       return errorFunction(mode);
                   },
                   beforeSend : function(){
-                      $(".load_helper").html("loading...").show();
+                      $(".load_helper").show();
                   },
                   complete : function(data){
                       $(".load_helper").fadeOut();
@@ -135,7 +135,7 @@ define(function(require){
                   data : {graphicEditorFSA:JSON.stringify(postData)},
                   url: 'http://www.martinbolot.com/graphicEditorFSA/',
                   beforeSend : function(){
-                      $(".load_helper").html("saving...").fadeIn();
+                      $(".load_helper").fadeIn();
                   },
                   complete:function(){
                       $(".load_helper").fadeOut();

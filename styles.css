@@ -29,8 +29,8 @@ svg{
     stroke-width:3px;
 }
 .linking{
-    stroke:grey;
-    stroke-dasharray:5,5;
+    fill: #f5e79e;
+    stroke: black;
     stroke-width:3px;
 }
 /*svg - paths (links)*/
@@ -40,28 +40,51 @@ svg{
   stroke-width: 1.5px;
 }
 .new_link{
-    stroke:orange;
+    stroke-dasharray: 7px;
 }
 /*svg - texts (names,conditions)*/
 text{
     fill:#000;
 }
 text.new_link{
-    fill:orange;
 }
 /*containers*/
-#svg_container,#object_container,#object_container_left,#object_textarea{
+#svg_container,#object_container_left,#object_textarea{
     display: inline-block;
-    height: 100%;
-    overflow-y: scroll;
     vertical-align: top;
-    width: 49%;
+}
+#object_textarea{
+    height: 20%;
+    margin: 20px 0 0;
+    width: 100%;
+}
+#object_textarea label{
+    cursor: pointer;
+    display: inline-block;
+    font-size: 100%;
+    margin: 0 0 10px;
+}
+#object_textarea textarea{
+    height: 77%;
+    width: 100%;
+}
+#svg_container,#object_container_left{
+    height: 75%;
 }
 #object_container_left{
+    border: 1px solid #faebcc;
+    color: #8a6d3b;
+    overflow-y: scroll;
+    padding: 5px;
     transition: background 0.4s ease-in-out;
+    width: 25%;
 }
 #svg_container{
-    border-right : 1px solid #000;
+    width: 73%;
+}
+/*general*/
+h1{
+    position: absolute;
 }
 /*load_helper*/
 .load_helper{
@@ -85,9 +108,6 @@ text.new_link{
     z-index:10;
 }
 /*others*/
-textarea{
-    max-width: 95%;
-}
 #qunit{
     display: none;
 }
