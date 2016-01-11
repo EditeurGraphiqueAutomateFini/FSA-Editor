@@ -107,6 +107,9 @@ h1{
     width:100%;
     z-index:10;
 }
+#menu li{
+    text-align: center;
+}
 /*others*/
 #qunit{
     display: none;

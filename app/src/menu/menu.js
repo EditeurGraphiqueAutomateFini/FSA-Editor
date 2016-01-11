@@ -8,7 +8,16 @@ define(function(require){
         //code ici pour définir le menu
         $(document).ready(function(){
             $("body").prepend("<div class='menu'></div>");
-            $(".menu").html("<ul id=\"menu\"><li id=\"view\"><a href=\"#\">Mode vue</a></li><li id=\"edit\"><a href=\"#\">Mode edition</a></li></ul>");
+            $(".menu").html(
+                "<ul id='menu' class='list-group'>"+
+                    "<li id='view' class='list-group-item'>"+
+                        "<a href='#' class='list-group-item'>Mode vue</a>"+
+                    "</li>"+
+                    "<li id='edit' class='list-group-item'>"+
+                        "<a href='#' class='list-group-item'>Mode edition</a>"+
+                    "</li>"+
+                "</ul>"
+            );
 
     		var li = document.getElementById("menu").getElementsByTagName("li");
     		for(var i=0;i<li.length;i++){
