@@ -57,6 +57,7 @@ text.new_link{
     height: 20%;
     margin: 20px 0 0;
     width: 100%;
+    text-align: center;
 }
 #object_textarea label{
     cursor: pointer;
@@ -64,9 +65,15 @@ text.new_link{
     font-size: 100%;
     margin: 0 0 10px;
 }
+#object_textarea label:hover + textarea{
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
 #object_textarea textarea{
+    border: 1px solid #ccc;
     height: 77%;
-    width: 100%;
+    width: 92%;
 }
 #svg_container,#object_container_left{
     height: 75%;
