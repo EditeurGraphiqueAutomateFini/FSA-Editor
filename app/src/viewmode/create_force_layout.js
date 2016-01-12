@@ -24,7 +24,7 @@ define(function(require){
                 if(!(objectContainer.css("background")==="#f5e79e")){
                     objectContainer.css("background","#f5e79e");
                 }
-            }).on("drag",function(){
+            }).on("dragend",function(){
                 var displayableData = data_helper.cleanData(getData);
                 utility.frontEndObject([displayableData]);
             });

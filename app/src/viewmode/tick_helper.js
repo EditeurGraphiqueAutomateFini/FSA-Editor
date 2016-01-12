@@ -37,10 +37,10 @@ define(function(){
                 var distance = 50,
                     dr1 = "50",
                     dr2 = "33";
-                return "M" + d.source.x + "," + d.source.y + "A" +dr1+","+dr2+ " 0 0,1 " + (d.target.x+distance) + "," + (d.target.y+distance)+
-                        ",M"+(d.target.x+distance)+","+(d.target.y+distance)+"A"+dr2+","+dr1+" 0 0,1 "+d.source.x+","+d.source.y;
+                return "M" + d.source.x + "," + d.source.y + " A" +dr1+","+dr2+ " 0 0,1 " + (d.target.x+distance) + "," + (d.target.y+distance)+
+                        " M"+(d.target.x+distance)+","+(d.target.y+distance)+" A"+dr2+","+dr1+" 0 0,1 "+d.source.x+","+d.source.y;
             }else{
-                return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+                return "M" + d.source.x + "," + d.source.y + " A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
             }
         }
         //define new postition

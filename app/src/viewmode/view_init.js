@@ -96,7 +96,12 @@ define(function(require){
                 return cpt*50+20;
             }
 
-            return {svg,force,getData,links};
+            return {
+                "svg":svg,
+                "force":force,
+                "getData":getData,
+                "links":links
+            };
         }
     }
 });

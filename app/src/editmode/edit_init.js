@@ -77,7 +77,7 @@ define(function(require){
                     confirmButtonText: "Yes, delete it",
                     closeOnConfirm: false
                 },function(){
-                    delete_state(d.index,{svg,force,getData,links});
+                    delete_state(d.index,{"svg":svg,"force":force,"getData":getData,"links":links});
                     delete_references(d.name,getData);
                     swal("Deleted!", "The state \""+d.name+"\" has been deleted.", "success");
                 });
