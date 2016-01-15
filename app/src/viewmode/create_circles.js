@@ -17,13 +17,17 @@ define(function(){
                     return "state_"+d.index;
                 },
                 "fill" : function(d){return d.fill;},
+            title: "el.name"
+                
             })
             //add a tooltip to each circle
             .each(function(el){
+                $(this).attr('title','');
+                $( ".selector" ).tooltip( "destroy" );
                 $("#state_"+el.index).tooltip({
-                    //configuration tooltip
-                    //trouver un moyen si possible d'utiliser le tooltip sans title
-                    //content:"toto"
+             position: { my: "left+30 center", at: "right center" },
+               //trigger:'click',
+              content : el.name
                 });
             })
             .call(force.drag);
