@@ -80,3 +80,15 @@ textarea{
 #qunit{
     display: none;
 }
+
+.ui-tooltip{
+    font-family: Arial, sans-serif;
+	font-size: 4px;
+	line-height: 26px;
+	padding: 28px 10px;
+	overflow: hidden;
+    font-style: italic;
+    font-weight: bold;
+     background-color: blueviolet;
+     
+}
