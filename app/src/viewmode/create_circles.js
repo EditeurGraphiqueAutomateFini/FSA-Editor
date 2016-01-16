@@ -18,17 +18,16 @@ define(function(){
                 },
                 "fill" : function(d){return d.fill;},
             title: "el.name"
-                
+
             })
             //add a tooltip to each circle
             .each(function(el){
                 $(this).attr('title','');
-                $( ".selector" ).tooltip( "destroy" );
-                $("#state_"+el.index).tooltip({
-             position: { my: "left+30 center", at: "right center" },
-               //trigger:'click',
-              content : el.name
-                });
+                //bien mais pas de possibilite de click, a revoir
+                /*$("#state_"+el.index).tooltip({
+                    position: { my: "left+30 center", at: "right center" },
+                    content : el.name
+                });*/
             })
             .call(force.drag);
 

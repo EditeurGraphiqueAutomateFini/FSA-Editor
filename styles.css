@@ -121,7 +121,7 @@ h1{
 #qunit{
     display: none;
 }
-
+/*tooltip*/
 .ui-tooltip{
     font-family: Arial, sans-serif;
 	font-size: 4px;
@@ -130,6 +130,6 @@ h1{
 	overflow: hidden;
     font-style: italic;
     font-weight: bold;
-     background-color: blueviolet;
-     
+    background-color: blueviolet;
+
 }
