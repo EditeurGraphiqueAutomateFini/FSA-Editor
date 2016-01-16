@@ -49,7 +49,7 @@ text{
 text.new_link{
 }
 /*containers*/
-#svg_container,#object_container_left,#object_textarea{
+#svg_container,#object_container_wrapper,#object_textarea{
     display: inline-block;
     vertical-align: top;
 }
@@ -75,19 +75,41 @@ text.new_link{
     height: 77%;
     width: 92%;
 }
-#svg_container,#object_container_left{
+#svg_container,#object_container_wrapper{
     height: 75%;
+}
+#object_container_wrapper{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 25%;
 }
 #object_container_left{
     border: 1px solid #faebcc;
     color: #8a6d3b;
+    height: 100%;
     overflow-y: scroll;
     padding: 5px;
     transition: background 0.4s ease-in-out;
-    width: 25%;
+}
+#object_container_close{
+    border: 1px solid #faebcc;
+    left: -34px;
+    position: absolute;
+    top: 0;
+    transition: background 0.4s ease-in-out;
+}
+#object_container_close:hover + #object_container_left {
+    background-color: #e6e6e6 !important;
+}
+.closed{
+    transition: opacity 0.4s ease-in-out, width 0s none 0.5s;
+    opacity: 0;
+    overflow: hidden;
+    width: 0 !important;
 }
 #svg_container{
-    width: 73%;
+    width: 100%;
 }
 /*general*/
 h1{

@@ -74,8 +74,8 @@ define(function(){
         frontEndObject : function(data){
             var displayZone = "#object_container_left";
             $(displayZone).html('{<br/>'+this.displayObject(data,0)+'<br/>}');
-            if($(displayZone).parent().find('textarea#objectArea').size()>0){   // display object in a textarea (for copy/paste)
-                $(displayZone).parent().find('textarea#objectArea').val(JSON.stringify(data));
+            if($(displayZone).parents().find('textarea#objectArea').size()>0){   // display object in a textarea (for copy/paste)
+                $(displayZone).parents().find('textarea#objectArea').val(JSON.stringify(data));
             }
         }
     }
