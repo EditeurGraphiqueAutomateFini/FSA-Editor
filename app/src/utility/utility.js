@@ -75,7 +75,13 @@ define(function(){
             var displayZone = "#object_container_left";
             $(displayZone).html('{<br/>'+this.displayObject(data,0)+'<br/>}');
             if($(displayZone).parents().find('textarea#objectArea').size()>0){   // display object in a textarea (for copy/paste)
-                $(displayZone).parents().find('textarea#objectArea').val(JSON.stringify(data));
+                $(displayZone).parents().find('textarea#objectArea').val(function(){
+                    var text="";
+                    for(var i=0;i<data.length;i++){
+                        text+=JSON.stringify(data[i]);
+                    }
+                    return text;
+                });
             }
         }
     }
