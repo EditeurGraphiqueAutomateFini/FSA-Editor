@@ -100,10 +100,16 @@ text.new_condition{
 }
 #object_container_close{
     border: 1px solid #faebcc;
-    left: -34px;
+    font-weight: bold;
+    left: auto;
+    right: 0;
     position: absolute;
     top: 0;
-    transition: background 0.4s ease-in-out;
+    transition: background 0.4s ease-in-out,opacity 0.4s ease-in-out;
+}
+#object_container_wrapper #object_container_close{
+    left: -34px;
+    right: auto;
 }
 #object_container_close:hover + #object_container_left {
     background-color: #e6e6e6 !important;

@@ -24,7 +24,10 @@ define(function(require){
                 if(!(objectContainer.css("background")==="#f5e79e")){
                     objectContainer.css("background","#f5e79e");
                 }
-            }).on("dragend",function(){
+            })
+            .on("drag",function(d){
+            })
+            .on("dragend",function(){
                 var displayableData = data_helper.cleanData(getData);
                 utility.frontEndObject([displayableData]);
             });
