@@ -1,22 +1,22 @@
 // main function
 define(function(require){
+    var menu = require("menu/menu");
 
-    var menu = require("menu/menu"),
-        server = require("utility/server_request");
-
-    //checking menu function's return value
-    switch (menu) {
-        case "view":
-            //initiate view mode w/ array of states
-            server.getRequest("view");
-            break;
-        case "edit":
-            server.getRequest("edit");
-            break;
-        case "create":
-            break;
-        default:
-            server.getRequest("view");
-    }
-
+    $("#object_textarea label").click(function(){
+        var forAttr = $(this).attr("for");
+        $("#"+forAttr).select();
+    });
+    $("#object_container_close").click(function(){
+        $("#object_container_wrapper").toggleClass("closed");
+        if($(this).hasClass("panel_closed")){
+            $("#object_container_close")
+                .html("X")
+                .prependTo("#object_container_wrapper");
+        }else{
+            $("#object_container_close")
+                .html("<")
+                .prependTo("body");
+        }
+        $(this).toggleClass("panel_closed");
+    })
 });

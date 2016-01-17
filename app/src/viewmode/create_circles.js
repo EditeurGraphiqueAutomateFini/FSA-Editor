@@ -4,7 +4,7 @@ define(function(){
         var svg = container;
 
         //create a circle for each state and apply D3 drag system
-        var circle = svg.append("g").selectAll("circle")
+        var circle = svg.append("g").classed("state_container",true).selectAll("circle")
             .data(force.nodes())
             .enter().append("circle")
             .attr({
@@ -17,32 +17,29 @@ define(function(){
                     return "state_"+d.index;
                 },
                 "fill" : function(d){return d.fill;},
-            title: "el.name"
-                
+                "title": "el.name"
             })
             //add a tooltip to each circle
             .each(function(el){
                 $(this).attr('title','');
-                $( ".selector" ).tooltip( "destroy" );
-                $("#state_"+el.index).tooltip({
-             position: { my: "left+30 center", at: "right center" },
-               //trigger:'click',
-              content : el.name
-                });
+                //bien mais pas de possibilite de click, a revoir
+                /*$("#state_"+el.index).tooltip({
+                    position: { my: "left+30 center", at: "right center" },
+                    content : el.name
+                });*/
             })
             .call(force.drag);
 
 
         //create a text for each state w/ the name of the state and [max_nosie] if set
-        var text = svg.append("g").selectAll("text")
+        var text = svg.append("g").classed("name_container",true).selectAll("text")
             .data(force.nodes())
             .enter().append("text")
             .attr({
                 "x" : 20,
                 "y" : 0,
-                "class" : function(d){
-                    return "state_name state_name_"+d.index;
-                }
+                "class" : "state_name",
+                "id" : function(d){return "state_name_"+d.index;}
             })
             .text(function(d) {
                 var text = d.name;

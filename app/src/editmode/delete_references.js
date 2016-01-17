@@ -5,11 +5,16 @@ define(function(){
         for(var state in states){
             if(states[state] && states.hasOwnProperty(state)){
                 if(states[state].transitions){  //remove transitions that we do not want anymore. Errors otherwise
+                    var indexToDelete=[];
                     states[state].transitions.forEach(function(el,i,arr){
                         if(el.target==name){
-                            arr.splice(i,1);
+                            indexToDelete.push(i);
                         }
                     });
+                    for(var i=0;i<indexToDelete.length;i++){
+                        states[state].transitions.splice(indexToDelete[i],1);
+                        for(var j=0;j<indexToDelete.length;j++) indexToDelete[j]--;
+                    }
                 }
             }
         }

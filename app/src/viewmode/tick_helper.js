@@ -2,28 +2,24 @@ define(function(){
 
     // Use elliptical arc path segments to doubly-encode directionality.
     return function(e){
-        //console.log("test");
         var path=d3.selectAll(".link"),
             condition=d3.selectAll(".condition"),
             circle=d3.selectAll("circle"),
             text=d3.selectAll(".state_name");
 
         //d3 mystery //moche un for de trop ?
-        path.each(function(){
+        /*path.each(function(){
             var thisPath = d3.select(this);
             thisPath.data().forEach(function(el){
                 thisPath.attr("d",linkArc(el))
             });
-        });
+        });*/
+        // ??? pourquoi j'ai fait ça ?
 
+        path.attr("d",linkArc);
         condition.attr("transform", transformCondition);
         circle.attr("transform", transform);
         text.attr("transform", transform);
-
-        /*path.attr("d", linkArc);
-        condition.attr("transform", transformCondition);
-        circle.attr("transform", transform);
-        text.attr("transform", transform);*/
 
         //define new postition of arc between states
         function linkArc(d){
@@ -37,10 +33,10 @@ define(function(){
                 var distance = 50,
                     dr1 = "50",
                     dr2 = "33";
-                return "M" + d.source.x + "," + d.source.y + "A" +dr1+","+dr2+ " 0 0,1 " + (d.target.x+distance) + "," + (d.target.y+distance)+
-                        ",M"+(d.target.x+distance)+","+(d.target.y+distance)+"A"+dr2+","+dr1+" 0 0,1 "+d.source.x+","+d.source.y;
+                return "M" + d.source.x + "," + d.source.y + " A" +dr1+","+dr2+ " 0 0,1 " + (d.target.x+distance) + "," + (d.target.y+distance)+
+                        " M"+(d.target.x+distance)+","+(d.target.y+distance)+" A"+dr2+","+dr1+" 0 0,1 "+d.source.x+","+d.source.y;
             }else{
-                return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+                return "M" + d.source.x + "," + d.source.y + " A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
             }
         }
         //define new postition

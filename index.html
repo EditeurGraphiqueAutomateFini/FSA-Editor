@@ -8,23 +8,28 @@
         <link rel="stylesheet" type="text/css" href="res/css/sweetalert.css" />
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.20.0.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
     </head>
     <body>
         <div id="svg_container">
+            <!--<h1>Edit your object</h1>-->
             <div class="buttons">
-                <button class="save">save</button>
-                <button class="reset">reset</button>
+                <button class="reset btn btn-danger">Reset</button>
+                <button class="save btn btn-success">Save</button>
             </div>
         </div>
-        <div id="object_container">
-            <div id="object_container_left">
+        <!-- <div id="object_container"> -->
+            <div id="object_container_wrapper">
+                <div id="object_container_close" class="reset btn btn-default">X</div>
+                <div id="object_container_left"></div>
             </div>
             <div id="object_textarea">
-                <textarea id="objectArea" name="name" rows="8" cols="40"></textarea>
+                <label class="btn btn-default" for="objectArea">Grab the JSON object</label>
+                <textarea id="objectArea" name="objectArea" rows="8" cols="40"></textarea>
             </div>
-        </div>
-        <div class="load_helper">loading...</div>
+        <!-- </div> -->
+        <div class="load_helper"></div>
         <div id="qunit"></div>
 
         <!-- scripts libraries -->

@@ -9,7 +9,8 @@ define(function(){
             .data(force.links())
             .enter().append("path")
             .attr({
-                "class" : function(d) {return "link link_"+d.source.index +"_"+d.target.index;},
+                "class" : "link",
+                "id" : function(d){return "link_"+d.source.index +"_"+d.target.index;},
                 "marker-end" : "url(#end)"
             });
 
@@ -24,7 +25,7 @@ define(function(){
                     return "condition link_"+d.source.index +"_"+d.target.index
                 }
             })
-            .text(function(d) { return d.condition; });
+            .text(function(d){return d.condition;});
 
     }
 });
