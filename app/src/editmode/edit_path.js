@@ -9,7 +9,8 @@ define(function(){
                 .data(force.links()).enter()
                 .append("path")
                 .attr({
-                    "class" : function(d) {return "link link_"+sourceID +"_"+targetID+" new_link";},
+                    "class" : "link new_link",
+                    "id" : function(d) {return "link_"+sourceID +"_"+targetID},
                     "marker-end" : "url(#end)"
                 });
             //adding a condition text for the newly created link
@@ -21,7 +22,7 @@ define(function(){
                     "y" : 0,
                     "class" : function(d){return "condition link_"+sourceID +"_"+targetID+" new_link"}
                 })
-                .text(function(d) { return d.condition; });
+                .text(function(d){return d.condition;});
         }else{  //simply render the new condition (transition already exists) (only text)
             force.links().forEach(function(el,ind,arr){
                 if(el.source.index===sourceID && el.target.index===targetID){
@@ -29,8 +30,8 @@ define(function(){
                 }
             });
             svg.select(".condition.link_"+sourceID+"_"+targetID)
-                .text(function(d) { return d.condition; })
-                .classed("new_link",true);
+                .text(function(d){return d.condition;})
+                .classed("new_condition",true);
         }
         //restart force layout w/ new data
         force.start();

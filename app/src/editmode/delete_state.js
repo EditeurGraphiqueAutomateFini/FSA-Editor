@@ -28,15 +28,20 @@ define(function(){
             for(var j=0;j<delete_node_id.length;j++) delete_node_id[j]--;
         }
         //delete state name
-        d3.select(".state_name_"+elementIndex).remove();
+        d3.select("#state_name_"+elementIndex).remove();
         //delete links w/ target or source set to the element
         d3.selectAll("path.link").each(function(){
             if(d3.select(this).data()[0]){
                 var sourceIndex = d3.select(this).data()[0].source.index,
-                    targetIndex = d3.select(this).data()[0].target.index,
-                    linkClass=d3.select(this).attr("class").slice(5);
+                    targetIndex = d3.select(this).data()[0].target.index;
+                //delete link and condition
                 if(sourceIndex == elementIndex || targetIndex == elementIndex){
-                    d3.selectAll("."+linkClass).remove();
+                    d3.selectAll(
+                        "path.link[id$='_"+elementIndex+"'],path.link[id^='link_"+elementIndex+"_']"
+                    ).remove();
+                    d3.selectAll(
+                        "text.condition[class$='_"+elementIndex+"'],text.condition[class*='link_"+elementIndex+"_']"
+                    ).remove();
                 }
             }
         });
@@ -48,6 +53,12 @@ define(function(){
                 }
             }
         }
+        //restarting force w/ new nodes and links
         context.force.start();
+        //editing classes and ids on svg elements which index was modified
+        d3.selectAll("circle").attr("id",function(d){return "state_"+d.index;});
+        d3.selectAll("text.state_name").attr("id",function(d){return "state_name_"+d.index;});
+        d3.selectAll("path.link").attr("id",function(d){return "link_"+d.source.index+"_"+d.target.index;});
+        d3.selectAll("text.condition").attr("class",function(d){return "condition "+"link_"+d.source.index+"_"+d.target.index;});
     }
 });

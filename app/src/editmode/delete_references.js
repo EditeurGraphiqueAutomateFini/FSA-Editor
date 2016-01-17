@@ -8,7 +8,6 @@ define(function(){
                     var indexToDelete=[];
                     states[state].transitions.forEach(function(el,i,arr){
                         if(el.target==name){
-                            arr.splice(i,1);
                             indexToDelete.push(i);
                         }
                     });

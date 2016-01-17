@@ -2,28 +2,24 @@ define(function(){
 
     // Use elliptical arc path segments to doubly-encode directionality.
     return function(e){
-        //console.log("test");
         var path=d3.selectAll(".link"),
             condition=d3.selectAll(".condition"),
             circle=d3.selectAll("circle"),
             text=d3.selectAll(".state_name");
 
         //d3 mystery //moche un for de trop ?
-        path.each(function(){
+        /*path.each(function(){
             var thisPath = d3.select(this);
             thisPath.data().forEach(function(el){
                 thisPath.attr("d",linkArc(el))
             });
-        });
+        });*/
+        // ??? pourquoi j'ai fait ça ?
 
+        path.attr("d",linkArc);
         condition.attr("transform", transformCondition);
         circle.attr("transform", transform);
         text.attr("transform", transform);
-
-        /*path.attr("d", linkArc);
-        condition.attr("transform", transformCondition);
-        circle.attr("transform", transform);
-        text.attr("transform", transform);*/
 
         //define new postition of arc between states
         function linkArc(d){

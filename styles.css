@@ -48,6 +48,9 @@ text{
 }
 text.new_link{
 }
+text.new_condition{
+    
+}
 /*containers*/
 #svg_container,#object_container_wrapper,#object_textarea{
     display: inline-block;

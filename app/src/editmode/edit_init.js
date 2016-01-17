@@ -80,6 +80,12 @@ define(function(require){
                     delete_state(d.index,{"svg":svg,"force":force,"getData":getData,"links":links});
                     delete_references(d.name,getData);
                     swal("Deleted!", "The state \""+d.name+"\" has been deleted.", "success");
+                    //edit fe object
+                    var utility = require("utility/utility"),
+                        data_helper = require("viewmode/data_helper"),
+                    displayableData = data_helper.cleanData(getData);
+                    utility.frontEndObject([displayableData]);
+                    //
                 });
             }
             function confirmTransition(d,linkingTest,thisID){
@@ -147,6 +153,12 @@ define(function(require){
                         d.graphicEditor.linking=false;
                         d3.select(linkingTestID).classed("linking",false);
                         d3.select(thisID).classed("linking",false);
+                        //edit fe object
+                        var utility = require("utility/utility"),
+                            data_helper = require("viewmode/data_helper"),
+                        displayableData = data_helper.cleanData(getData);
+                        utility.frontEndObject([displayableData]);
+                        //
                         //close sweetalert prompt window
                         swal.close();
                     }else{  //transition already exists w/ the same condition

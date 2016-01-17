@@ -23,7 +23,7 @@ define(function(require){
                 tick = require("viewmode/tick_helper"),
                 data_helper = require("viewmode/data_helper"),
                 utility = require("utility/utility"),
-                viewmode=require("viewmode/view_init");
+                viewmode = require("viewmode/view_init");
 
 
             if(states){
