@@ -7,6 +7,9 @@ html,body{
     margin: 0;
     padding: 0;
 }
+h1{
+    /*position: absolute;*/
+}
 /*svg*/
 svg{
     display: block;
@@ -49,7 +52,7 @@ text{
 text.new_link{
 }
 text.new_condition{
-    
+
 }
 /*containers*/
 #svg_container,#object_container_wrapper,#object_textarea{
@@ -114,14 +117,13 @@ text.new_condition{
 #svg_container{
     width: 100%;
 }
-/*general*/
-h1{
-    position: absolute;
+/*buttons*/
+.buttons{
+    text-align: center;
 }
 /*load_helper*/
 .load_helper{
     background: url("res/images/loading.gif") no-repeat scroll center center #FFF;
-    /*display: none;*/
     height: 100%;
     left: 0;
     position: absolute;
