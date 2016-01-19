@@ -78,7 +78,7 @@ define(function(require){
                         }
                     }
                 });
-                setPositions(states[0]);
+                //setPositions(states[0]);
                 if($("svg").size()>0){
                     $("svg").remove();
                 }
