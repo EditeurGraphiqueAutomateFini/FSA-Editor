@@ -10,7 +10,7 @@ define(function(require){
 
             var ajaxRequest = $.ajax({
                   type: 'GET',
-                //   url: 'http://www.martinbolot.com/graphicEditorFSA/',
+                  url: 'http://www.martinbolot.com/graphicEditorFSA/',
                   success: function(data){
                       return succesFunction(data,mode);
                   },
