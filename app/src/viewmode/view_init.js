@@ -23,7 +23,8 @@ define(function(require){
                 tick = require("viewmode/tick_helper"),
                 data_helper = require("viewmode/data_helper"),
                 utility = require("utility/utility"),
-                viewmode = require("viewmode/view_init");
+                viewmode = require("viewmode/view_init"),
+                setPositions = require("viewmode/set_positions");
 
 
             if(states){
@@ -48,8 +49,8 @@ define(function(require){
                                 state.graphicEditor.origCoordY = state.graphicEditor.coordY;
                             }
 
-                            state.x = state.graphicEditor.coordX || setPositions(cpt);   //known position or random
-                            state.y = state.graphicEditor.coordY || setPositions(cpt);
+                            state.x = state.graphicEditor.coordX || 0;   //known position or random
+                            state.y = state.graphicEditor.coordY || 0;
 
                             //push state
                             dataset.push(state);
@@ -77,6 +78,7 @@ define(function(require){
                         }
                     }
                 });
+                setPositions(states[0]);
                 if($("svg").size()>0){
                     $("svg").remove();
                 }
@@ -88,12 +90,6 @@ define(function(require){
 
             }else{
                 //todo : vue par défaut ? basculer vers le mode creation ?
-            }
-
-            //fonction pour positionner les cercles sans coordonnées
-            function setPositions(cpt){
-                //here goes the code of the jeanseba
-                return cpt*50+20;
             }
 
             return {
