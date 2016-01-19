@@ -4,6 +4,7 @@ define(function(){
 	
         var gap 			= 	200;
 		var nbRecursive 	= 	0;
+		var lastX			=	0;
 		var i;
 		
 		states["start"].x = gap;
@@ -24,6 +25,7 @@ define(function(){
 					
 						if(states[states[state].transitions[i].target].x == 0) {
 							states[states[state].transitions[i].target].x = states[state].x + gap;
+							lastX = states[states[state].transitions[i].target].x;
 						}
 						
 						if(i != nbRecursive) {
@@ -41,6 +43,14 @@ define(function(){
 				
 				nbRecursive = 0;
 				
+			} else {
+				if(states[state].name == "error") {
+					states[state].y = states["start"].y
+					states[state].x = lastX;
+				} else {
+					states[state].y = states["start"].y + gap;
+					states[state].x = lastX;
+				}
 			}
 			console.log("------------------");
         }
