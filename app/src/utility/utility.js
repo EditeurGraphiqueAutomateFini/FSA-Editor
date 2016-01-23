@@ -1,5 +1,5 @@
 //global utility functions
-//ne pas être trop regardant, accepter ce code tel qu'il est
+//code à optimiser
 define(function(){
     return{
          //displays a JS object on screen; object : array of object to display
@@ -13,45 +13,47 @@ define(function(){
                 objString+='<span style="padding-left:'+indent+'px'+';"></span>{<br/>';
                 for (key in object[i]){
                     if(object[i].hasOwnProperty(key)){
-                        var objProperty = object[i][key];
-                        objString+='<span style="padding-left:'+(indent*level+indent)+'px'+';"></span>';
-                        if(typeof(objProperty)=='string'){
-                            objString+=key+' : '+'\''+objProperty+'\'';
-                        }else if(Object.prototype.toString.call(objProperty)=='[object Object]'){
-                            objString+=key+' : '+this.displayObject([objProperty],level);
-                        }else if(Object.prototype.toString.call(objProperty)=='[object Array]'){
-                            objString+=key+' : ['+'<br/><span style="padding-left:'+(indent*(level+2))+'px'+';"></span>';
-                            //moche a refaire /*******************************************************************************************/
-                            for(var j=0;j<objProperty.length;j++){
-                                var arrayItem = objProperty[j],
-                                    arrayItemType = Object.prototype.toString.call(arrayItem);
-                                if(arrayItemType =='[object Object]' || arrayItemType=='[object Array]'){
-                                    if(j==objProperty.length-1){
-                                        objString+=this.displayObject([arrayItem],level+2);
+                        var objProperty = object[i][key];   //the property
+                        if(key!="graphicEditor"){   //we don't want to display "graphicEditor" property to keep it simple
+                            objString+='<span style="padding-left:'+(indent*level+indent)+'px'+';"></span>';
+                            if(typeof(objProperty)=='string'){
+                                objString+=key+' : '+'\''+objProperty+'\'';
+                            }else if(Object.prototype.toString.call(objProperty)=='[object Object]'){
+                                objString+=key+' : '+this.displayObject([objProperty],level);
+                            }else if(Object.prototype.toString.call(objProperty)=='[object Array]'){
+                                objString+=key+' : ['+'<br/><span style="padding-left:'+(indent*(level+2))+'px'+';"></span>';
+                                //moche a refaire /*******************************************************************************************/
+                                for(var j=0;j<objProperty.length;j++){
+                                    var arrayItem = objProperty[j],
+                                        arrayItemType = Object.prototype.toString.call(arrayItem);
+                                    if(arrayItemType =='[object Object]' || arrayItemType=='[object Array]'){
+                                        if(j==objProperty.length-1){
+                                            objString+=this.displayObject([arrayItem],level+2);
+                                        }else{
+                                            objString+=this.displayObject([arrayItem],level+2)+',<br/><span style="padding-left:'+(indent*(level+2))+'px'+';"></span>';
+                                        }
+                                    }else if (arrayItemType == 'string'){
+                                        if(j==objProperty.length-1){
+                                            objString+='\''+arrayItem+'\'';
+                                        }else{
+                                            objString+='\''+arrayItem+'\',<br/><span style="padding-left:'+(indent*(level+2))+'px'+';"></span>';
+                                        }
                                     }else{
-                                        objString+=this.displayObject([arrayItem],level+2)+',<br/><span style="padding-left:'+(indent*(level+2))+'px'+';"></span>';
-                                    }
-                                }else if (arrayItemType == 'string'){
-                                    if(j==objProperty.length-1){
-                                        objString+='\''+arrayItem+'\'';
-                                    }else{
-                                        objString+='\''+arrayItem+'\',<br/><span style="padding-left:'+(indent*(level+2))+'px'+';"></span>';
-                                    }
-                                }else{
-                                    if(j==objProperty.length-1){
-                                        objString+=arrayItem;
-                                    }else{
-                                        objString+=arrayItem+',<br/><span style="padding-left:'+(indent*(level+2))+'px'+';"></span>';
+                                        if(j==objProperty.length-1){
+                                            objString+=arrayItem;
+                                        }else{
+                                            objString+=arrayItem+',<br/><span style="padding-left:'+(indent*(level+2))+'px'+';"></span>';
+                                        }
                                     }
                                 }
+                                //moche a refaire /*******************************************************************************************/
+                                objString+='<br/><span style="padding-left:'+(indent*level+indent)+'px'+';"></span>'+']';
                             }
-                            //moche a refaire /*******************************************************************************************/
-                            objString+='<br/><span style="padding-left:'+(indent*level+indent)+'px'+';"></span>'+']';
+                            else{
+                                objString+=key+' : '+objProperty;
+                            }
+                            objString+=",<br/>";
                         }
-                        else{
-                            objString+=key+' : '+objProperty;
-                        }
-                        objString+=",<br/>";
                     }
                 }
                 //removing last coma
