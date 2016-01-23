@@ -3,6 +3,7 @@ define(function(require){
         init: function(svg,force,getData,links){
             var delete_state = require("editmode/delete_state"),
                 delete_references = require("editmode/delete_references"),
+                edit_references = require("editmode/edit_references"),
                 add_transition = require("editmode/add_transition"),
                 context_menu = require("menu/context_menu"),
                 edit_path = require("editmode/edit_path"),
@@ -88,7 +89,7 @@ define(function(require){
                     closeOnConfirm: false
                 },function(){
                     delete_state(d.index,{"svg":svg,"force":force,"getData":getData,"links":links});
-                    delete_references(d.name,getData);
+                    delete_references(getData,d.name);
                     swal("Deleted!", "The state \""+d.name+"\" has been deleted.", "success");
                     //edit fe object
                     var utility = require("utility/utility"),
@@ -218,8 +219,12 @@ define(function(require){
                     animation: "slide-from-top"
                 },function(inputValue){
                     if(inputValue){  //edit state name if confirmed
+                        edit_references(getData,d.name,inputValue);
                         edit_state(d,inputValue,{"svg":svg,"force":force,"getData":getData,"links":links});
                         d3.select("#state_"+d.index).classed("editing",false);
+                        d.graphicEditor.linking=false;
+                        d3.select("#state_"+d.index).classed("linking",false);
+                        swal.close();   //close sweetalert prompt window
                     }else if(inputValue===false){  //error in new state name
                         swal.showInputError("Please enter a valid state name");
                         return false;
