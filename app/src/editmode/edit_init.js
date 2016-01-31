@@ -27,9 +27,8 @@ define(function(require){
                 d3.select(this).on("dblclick",function(d){
                     createTransition(d);
                 });
-                //on echap cancel all linking process
                 d3.select(document).on("keyup",function(){
-                    if(d3.event.keyCode==27){
+                    if(d3.event.keyCode==27){ //on echap cancel all linking process
                         d3.selectAll("circle").each(function(d){    //testing if a state is being linked
                             if(d.graphicEditor.linking){    //if linking, undo process and thus remove linking class
                                 d.graphicEditor.linking=false;
@@ -37,9 +36,15 @@ define(function(require){
                             }
                         });
                     }
-                    if(d3.event.keyCode==69){
+                    if(d3.event.keyCode==69){ // on key "E" edit state name
                         d3.selectAll("circle").each(function(d){    //testing if a state is being linked
-                            if(d.graphicEditor.linking && (d3.select("#state_"+d.index).classed("editing")===false)){    //if linking edit state
+                            if(
+                              d.graphicEditor.linking
+                                &&
+                              (d3.select("#state_"+d.index).classed("editing")===false)
+                                &&
+                               (d3.selectAll(".linking").size()===1)
+                             ){    //if linking edit state
                                 d3.select("#state_"+d.index).classed("editing",true);
                                 confirmStateEdition(d);
                             }
@@ -115,6 +120,8 @@ define(function(require){
                     }else{
                         d.graphicEditor.linking=false;
                         d3.select(thisID).classed("linking",false);
+                        //linkingTest.graphicEditor.linking=false;
+                        //d3.select("#state_"+linkingTest.index).classed("linking",false);
                     }
                 });
             }
@@ -203,8 +210,7 @@ define(function(require){
                     if(confirmed){
                         getStateEdition(d);
                     }else{
-                        d.graphicEditor.linking=false;
-                        d3.select("#state_"+d.index).classed("linking",false);
+                        d3.select("#state_"+d.index).classed("editing",false);
                     }
                 });
             }
@@ -225,8 +231,10 @@ define(function(require){
                         d.graphicEditor.linking=false;
                         d3.select("#state_"+d.index).classed("linking",false);
                         swal.close();   //close sweetalert prompt window
-                    }else if(inputValue===false){  //error in new state name
-                        swal.showInputError("Please enter a valid state name");
+                    }else if(inputValue===false){  //cancel
+                        d3.select("#state_"+d.index).classed("editing",false);
+                        d.graphicEditor.linking=false;
+                        d3.select("#state_"+d.index).classed("linking",false);
                         return false;
                     }else if(inputValue===""){  //empty new state name
                         swal.showInputError("Please enter a state name");
