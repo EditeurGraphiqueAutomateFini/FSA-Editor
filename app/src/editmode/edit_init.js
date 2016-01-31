@@ -3,9 +3,11 @@ define(function(require){
         init: function(svg,force,getData,links){
             var delete_state = require("editmode/delete_state"),
                 delete_references = require("editmode/delete_references"),
+                edit_references = require("editmode/edit_references"),
                 add_transition = require("editmode/add_transition"),
                 context_menu = require("menu/context_menu"),
-                edit_path = require("editmode/edit_path");
+                edit_path = require("editmode/edit_path"),
+                edit_state = require("editmode/edit_state");
 
             //iterates over svg circles (representing states)
             d3.selectAll("circle").each(function(){
@@ -32,6 +34,14 @@ define(function(require){
                             if(d.graphicEditor.linking){    //if linking, undo process and thus remove linking class
                                 d.graphicEditor.linking=false;
                                 d3.select("#state_"+d.index).classed("linking",false);
+                            }
+                        });
+                    }
+                    if(d3.event.keyCode==69){
+                        d3.selectAll("circle").each(function(d){    //testing if a state is being linked
+                            if(d.graphicEditor.linking && (d3.select("#state_"+d.index).classed("editing")===false)){    //if linking edit state
+                                d3.select("#state_"+d.index).classed("editing",true);
+                                confirmStateEdition(d);
                             }
                         });
                     }
@@ -67,6 +77,7 @@ define(function(require){
             }
 
             //confirmation functions (w/ swal)
+            //delete
             function confirmDelete(d){
                 swal({
                     title: "Delete this state?",
@@ -78,7 +89,7 @@ define(function(require){
                     closeOnConfirm: false
                 },function(){
                     delete_state(d.index,{"svg":svg,"force":force,"getData":getData,"links":links});
-                    delete_references(d.name,getData);
+                    delete_references(getData,d.name);
                     swal("Deleted!", "The state \""+d.name+"\" has been deleted.", "success");
                     //edit fe object
                     var utility = require("utility/utility"),
@@ -88,6 +99,7 @@ define(function(require){
                     //
                 });
             }
+            //transition editing
             function confirmTransition(d,linkingTest,thisID){
                 var swalTransition = swal({
                     title: "Create transition ?",
@@ -178,6 +190,51 @@ define(function(require){
                     closeOnConfirm: true
                 });
             }
+            //state editing
+            function confirmStateEdition(d){    //confirm you want to edit selected state
+                var swalStateEdition = swal({
+                    title: "Edit state "+d.name+" ?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, edit it",
+                    closeOnConfirm: false
+                },function(confirmed){
+                    if(confirmed){
+                        getStateEdition(d);
+                    }else{
+                        d.graphicEditor.linking=false;
+                        d3.select("#state_"+d.index).classed("linking",false);
+                    }
+                });
+            }
+            function getStateEdition(d){    //get new name w/ prompt-like
+                var swalStateInfo = swal({
+                    title: "Name Edition",
+                    text: "Write a new name",
+                    type: "input",
+                    inputValue: d.name,
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top"
+                },function(inputValue){
+                    if(inputValue){  //edit state name if confirmed
+                        edit_references(getData,d.name,inputValue);
+                        edit_state(d,inputValue,{"svg":svg,"force":force,"getData":getData,"links":links});
+                        d3.select("#state_"+d.index).classed("editing",false);
+                        d.graphicEditor.linking=false;
+                        d3.select("#state_"+d.index).classed("linking",false);
+                        swal.close();   //close sweetalert prompt window
+                    }else if(inputValue===false){  //error in new state name
+                        swal.showInputError("Please enter a valid state name");
+                        return false;
+                    }else if(inputValue===""){  //empty new state name
+                        swal.showInputError("Please enter a state name");
+                        return false;
+                    }
+                });
+            }
+
         }
     }
 });
