@@ -120,6 +120,8 @@ define(function(require){
                     }else{
                         d.graphicEditor.linking=false;
                         d3.select(thisID).classed("linking",false);
+                        //linkingTest.graphicEditor.linking=false;
+                        //d3.select("#state_"+linkingTest.index).classed("linking",false);
                     }
                 });
             }
@@ -208,8 +210,6 @@ define(function(require){
                     if(confirmed){
                         getStateEdition(d);
                     }else{
-                        d.graphicEditor.linking=false;
-                        d3.select("#state_"+d.index).classed("linking",false);
                         d3.select("#state_"+d.index).classed("editing",false);
                     }
                 });
@@ -225,7 +225,6 @@ define(function(require){
                     animation: "slide-from-top"
                 },function(inputValue){
                     if(inputValue){  //edit state name if confirmed
-                      console.log("in");
                         edit_references(getData,d.name,inputValue);
                         edit_state(d,inputValue,{"svg":svg,"force":force,"getData":getData,"links":links});
                         d3.select("#state_"+d.index).classed("editing",false);
@@ -233,16 +232,14 @@ define(function(require){
                         d3.select("#state_"+d.index).classed("linking",false);
                         swal.close();   //close sweetalert prompt window
                     }else if(inputValue===false){  //cancel
-                      console.log("cancel");
                         d3.select("#state_"+d.index).classed("editing",false);
                         d.graphicEditor.linking=false;
                         d3.select("#state_"+d.index).classed("linking",false);
                         return false;
                     }else if(inputValue===""){  //empty new state name
-                      console.log("empty");
                         swal.showInputError("Please enter a state name");
                         return false;
-                    }else{console.log("test");}
+                    }
                 });
             }
 
