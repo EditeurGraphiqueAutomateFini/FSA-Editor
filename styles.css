@@ -105,12 +105,14 @@ text.new_condition{
     left: auto;
     right: 0;
     position: absolute;
-    top: 0;
+    top: 50%;
     transition: background 0.4s ease-in-out,opacity 0.4s ease-in-out;
 }
 #object_container_wrapper #object_container_close{
     left: -34px;
     right: auto;
+    top: 0;
+    /*transition: top 0.5s ease-in-out 0s;*/
 }
 #object_container_close:hover + #object_container_left {
     background-color: #e6e6e6 !important;
