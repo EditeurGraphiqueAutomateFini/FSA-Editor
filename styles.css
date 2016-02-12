@@ -82,7 +82,8 @@ text.new_condition{
     width: 92%;
 }
 #svg_container,#object_container_wrapper{
-    height: 75%;
+    height: 100%;
+    padding: 0 0 20px;
 }
 #object_container_wrapper{
     position: absolute;
