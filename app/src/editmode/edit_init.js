@@ -9,6 +9,9 @@ define(function(require){
                 edit_path = require("editmode/edit_path"),
                 edit_state = require("editmode/edit_state");
 
+            //on click on background cancel state selection
+            d3.select("#svgbox").on("click",cancelAllSelection);
+            //force.drag().on("dragend",cancelAllSelection);
             //iterates over svg circles (representing states)
             d3.selectAll("circle").each(function(){
                 //on right click, call a context menu to delete or edit state
@@ -24,17 +27,13 @@ define(function(require){
                 //on double click, select a state
                 //on a second double click on a state, create a link between them
                 //(can be the same state, source state cannot be terminal)
-                d3.select(this).on("dblclick",function(d){
+                d3.select(this).on("click",function(d){
+                    d3.event.stopPropagation();     //stop bubbling to avoid ending in background click event
                     createTransition(d);
                 });
                 d3.select(document).on("keyup",function(){
                     if(d3.event.keyCode==27){ //on echap cancel all linking process
-                        d3.selectAll("circle").each(function(d){    //testing if a state is being linked
-                            if(d.graphicEditor.linking){    //if linking, undo process and thus remove linking class
-                                d.graphicEditor.linking=false;
-                                d3.select("#state_"+d.index).classed("linking",false);
-                            }
-                        });
+                        cancelAllSelection();
                     }
                     if(d3.event.keyCode==69){ // on key "E" edit state name
                         d3.selectAll("circle").each(function(d){    //testing if a state is being linked
@@ -239,6 +238,15 @@ define(function(require){
                     }else if(inputValue===""){  //empty new state name
                         swal.showInputError("Please enter a state name");
                         return false;
+                    }
+                });
+            }
+
+            function cancelAllSelection(){
+                d3.selectAll("circle").each(function(d){    //testing if a state is being linked
+                    if(d.graphicEditor.linking){    //if linking, undo process and thus remove linking class
+                        d.graphicEditor.linking=false;
+                        d3.select("#state_"+d.index).classed("linking",false);
                     }
                 });
             }

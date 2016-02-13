@@ -31,6 +31,7 @@ define(function(require){
                 }
             })
             .on("dragend",function(){
+                //todo cancel selection
                 var displayableData = data_helper.cleanData(getData);
                 utility.frontEndObject([displayableData]);
             });

@@ -32,7 +32,8 @@ svg{
     stroke-width:3px;
 }
 .linking{
-    fill: #f5e79e;
+    /*fill: #f5e79e;*/
+    fill:#FFF;
     stroke: black;
     stroke-width:3px;
 }
