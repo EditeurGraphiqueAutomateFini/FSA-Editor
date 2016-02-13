@@ -1,7 +1,7 @@
 define(function(){
 
     // Use elliptical arc path segments to doubly-encode directionality.
-    return function(e){
+    return function(e,r,containmentWidth,containmentHeight){
         var path=d3.selectAll(".link"),
             condition=d3.selectAll(".condition"),
             circle=d3.selectAll("circle"),
@@ -14,7 +14,7 @@ define(function(){
                 thisPath.attr("d",linkArc(el))
             });
         });*/
-        // ??? pourquoi j'ai fait ça ?
+        // ^??? pourquoi j'ai fait ça ?
 
         path.attr("d",linkArc);
         condition.attr("transform", transformCondition);
@@ -41,9 +41,12 @@ define(function(){
         }
         //define new postition
         function transform(d) {
-            d.graphicEditor.coordX = d.x;
-            d.graphicEditor.coordY = d.y;
-            return "translate(" + d.x + "," + d.y + ")";
+            var coordX = Math.max(r,Math.min(d.x,containmentWidth-r)),
+                coordY = Math.max(r,Math.min(d.y,containmentHeight-r));
+
+            d.graphicEditor.coordX = coordX;
+            d.graphicEditor.coordY = coordY;
+            return "translate(" + coordX + "," + coordY + ")";
         }
         //define new postition of transition condition
         function transformCondition(d) {
