@@ -11,7 +11,8 @@ define(function(require){
 
             //on click on background cancel state selection
             d3.select("#svgbox").on("click",cancelAllSelection);
-            //force.drag().on("dragend",cancelAllSelection);
+            force.drag().on("drag",function(d){d.graphicEditor.unselectable=true;});
+
             //iterates over svg circles (representing states)
             d3.selectAll("circle").each(function(){
                 //on right click, call a context menu to delete or edit state
@@ -29,7 +30,11 @@ define(function(require){
                 //(can be the same state, source state cannot be terminal)
                 d3.select(this).on("click",function(d){
                     d3.event.stopPropagation();     //stop bubbling to avoid ending in background click event
-                    createTransition(d);
+                    if(!d.graphicEditor.unselectable){
+                        createTransition(d);
+                    }else{
+                        d.graphicEditor.unselectable=false;
+                    }
                 });
                 d3.select(document).on("keyup",function(){
                     if(d3.event.keyCode==27){ //on echap cancel all linking process
