@@ -23,12 +23,12 @@ define(function(require){
         //add a modification of the frond-end displayed data on drag
         var drag = force.drag()
             .on("dragstart", function(){
+            })
+            .on("drag",function(d){
                 var objectContainer = $("#object_container_left");
                 if(!(objectContainer.css("background")==="#f5e79e")){
                     objectContainer.css("background","#f5e79e");
                 }
-            })
-            .on("drag",function(d){
             })
             .on("dragend",function(){
                 var displayableData = data_helper.cleanData(getData);
