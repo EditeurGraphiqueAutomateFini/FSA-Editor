@@ -8,6 +8,10 @@ define(function(){
 
         var svg = d3.select(container).insert("svg",".buttons");
 
+        svg.attr({
+            "id":"svgbox"
+        });
+
         // marker creation (will append at the end of each svg path element -> done with create_paths module)
         svg.append("defs")
             .append("marker")

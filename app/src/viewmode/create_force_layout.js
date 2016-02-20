@@ -5,6 +5,9 @@ define(function(require){
             utility = require("utility/utility"),
             data_helper = require("viewmode/data_helper");
 
+        var containmentWidth = d3.select("#svgbox").property("clientWidth"),
+            containmentHeight = d3.select("#svgbox").property("clientHeight");
+
         //creating the force layout with states as nodes
         var force = d3.layout.force()
             .nodes(d3.values(states))
@@ -14,20 +17,21 @@ define(function(require){
             })
             .linkDistance(200)
             .charge(-200)
-            .on("tick",tick)
+            .on("tick",function(e){var r=15;tick(e,r,containmentWidth,containmentHeight);})
             .start();
 
         //add a modification of the frond-end displayed data on drag
         var drag = force.drag()
             .on("dragstart", function(){
+            })
+            .on("drag",function(d){
                 var objectContainer = $("#object_container_left");
                 if(!(objectContainer.css("background")==="#f5e79e")){
                     objectContainer.css("background","#f5e79e");
                 }
             })
-            .on("drag",function(d){
-            })
             .on("dragend",function(){
+                //todo cancel selection
                 var displayableData = data_helper.cleanData(getData);
                 utility.frontEndObject([displayableData]);
             });

@@ -22,17 +22,18 @@ svg{
     cursor: pointer;
     display: block;
     position: absolute;
-    transition:  opacity 0.2s ease-in-out;
+    transition:  fill 0.2s ease-in-out;
 }
 .circle:hover,circle:hover{
-    opacity: 0.8;
+    fill: #333;
 }
 .terminal{
     stroke:grey;
     stroke-width:3px;
 }
 .linking{
-    fill: #f5e79e;
+    /*fill: #f5e79e;*/
+    fill:#FFF;
     stroke: black;
     stroke-width:3px;
 }
@@ -53,6 +54,12 @@ text.new_link{
 }
 text.new_condition{
 
+}
+text.condition{
+    padding: 10px;
+}
+text.condition:hover{
+    cursor:pointer;
 }
 /*containers*/
 #svg_container,#object_container_wrapper,#object_textarea{
@@ -82,7 +89,8 @@ text.new_condition{
     width: 92%;
 }
 #svg_container,#object_container_wrapper{
-    height: 75%;
+    height: 100%;
+    padding: 0 0 20px;
 }
 #object_container_wrapper{
     position: absolute;
@@ -91,7 +99,7 @@ text.new_condition{
     width: 25%;
 }
 #object_container_left{
-    border: 1px solid #faebcc;
+    border: 1px solid #e6e6e6;
     color: #8a6d3b;
     height: 100%;
     overflow-y: scroll;
@@ -99,17 +107,19 @@ text.new_condition{
     transition: background 0.4s ease-in-out;
 }
 #object_container_close{
-    border: 1px solid #faebcc;
+    border: 1px solid #e6e6e6;
     font-weight: bold;
     left: auto;
     right: 0;
     position: absolute;
-    top: 0;
+    top: 50%;
     transition: background 0.4s ease-in-out,opacity 0.4s ease-in-out;
 }
 #object_container_wrapper #object_container_close{
     left: -34px;
     right: auto;
+    top: 0;
+    /*transition: top 0.5s ease-in-out 0s;*/
 }
 #object_container_close:hover + #object_container_left {
     background-color: #e6e6e6 !important;
