@@ -44,7 +44,7 @@ define(function(require){
                         d3.selectAll("circle").each(function(d){    //testing if a state is being linked
                             if(isEligible(d)){
                                 d3.select("#state_"+d.index).classed("editing",true);
-                                confirmStateEdition(d);
+                                getStateEdition(d);
                             }
                         });
                     }
@@ -59,8 +59,14 @@ define(function(require){
             });
             //delete state w/ confirmation
             function deleteState(d){
-                d3.event.preventDefault();
-                confirmDelete(d);
+                delete_state(d.index,{"svg":svg,"force":force,"getData":getData,"links":links});
+                delete_references(getData,d.name);
+                //edit fe object
+                var utility = require("utility/utility"),
+                    data_helper = require("viewmode/data_helper"),
+                displayableData = data_helper.cleanData(getData);
+                utility.frontEndObject([displayableData]);
+                //
             }
             //create a new link
             function createTransition(d){
@@ -75,7 +81,7 @@ define(function(require){
                 });
                 if(linkingTest){    //if a first state is selected, ask wether cancel or create link then reset linking
                     d3.select(thisID).classed("linking",true);
-                    confirmTransition(d,linkingTest,thisID);
+                    getCondition(d,linkingTest,thisID);
                 }else{  //first selection of state
                     d.graphicEditor.linking=true;
                     d3.select(thisID).classed("linking",true);
@@ -97,7 +103,7 @@ define(function(require){
 
             //confirmation functions (w/ swal)
             //delete
-            function confirmDelete(d){
+            /*function confirmDelete(d){
                 swal({
                     title: "Delete this state?",
                     text: "Transition related to this state will be deleted too",
@@ -117,28 +123,8 @@ define(function(require){
                     utility.frontEndObject([displayableData]);
                     //
                 });
-            }
+            }*/
             //transition editing
-            function confirmTransition(d,linkingTest,thisID){
-                var swalTransition = swal({
-                    title: "Create transition ?",
-                    text: "Create transition between states \""+linkingTest.name+"\" and \""+d.name+"\" ?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Yes, create it",
-                    closeOnConfirm: false
-                },function(confirmed){
-                    if(confirmed){
-                        getCondition(d,linkingTest,thisID);
-                    }else{
-                        d.graphicEditor.linking=false;
-                        d3.select(thisID).classed("linking",false);
-                        //linkingTest.graphicEditor.linking=false;
-                        //d3.select("#state_"+linkingTest.index).classed("linking",false);
-                    }
-                });
-            }
             function getCondition(d,linkingTest,thisID){
                 var linkingTestID = "#state_"+linkingTest.index;
                 var condition = ""
@@ -164,14 +150,16 @@ define(function(require){
                         swal.showInputError("You need to write a condition");
                         return false;
                     }
-                    d3.select(linkingTestID).data()[0].transitions.forEach(function(el,ind,arr){    //if alreay exists, cancel
-                        if(el.target===d.name){
-                            previouslyExistingLink = true;
-                            if(el.condition===inputValue){
-                                inputValue=false;
+                    if(d3.select(linkingTestID).data()[0].hasOwnProperty("transitions")){
+                        d3.select(linkingTestID).data()[0].transitions.forEach(function(el,ind,arr){    //if alreay exists, cancel
+                            if(el.target===d.name){
+                                previouslyExistingLink = true;
+                                if(el.condition===inputValue){
+                                    inputValue=false;
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                     if(inputValue){
                         //all condition passed
                         condition = inputValue;
@@ -201,22 +189,6 @@ define(function(require){
                 });
             }
             //state editing
-            function confirmStateEdition(d){    //confirm you want to edit selected state
-                var swalStateEdition = swal({
-                    title: "Edit state "+d.name+" ?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Yes, edit it",
-                    closeOnConfirm: false
-                },function(confirmed){
-                    if(confirmed){
-                        getStateEdition(d);
-                    }else{
-                        d3.select("#state_"+d.index).classed("editing",false);
-                    }
-                });
-            }
             function getStateEdition(d){    //get new name w/ prompt-like
                 var swalStateInfo = swal({
                     title: "Name Edition",
@@ -246,6 +218,7 @@ define(function(require){
                 });
             }
 
+            //cancel all selections
             function cancelAllSelection(){
                 d3.selectAll("circle").each(function(d){    //testing if a state is being linked
                     if(d.graphicEditor.linking){    //if linking, undo process and thus remove linking class
