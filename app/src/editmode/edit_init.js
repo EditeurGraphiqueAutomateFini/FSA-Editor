@@ -77,12 +77,8 @@ define(function(require){
                     d3.select(thisID).classed("linking",true);
                     confirmTransition(d,linkingTest,thisID);
                 }else{  //first selection of state
-                    if(d.terminal){ //disalow w/ an alert if the state is terminal
-                        alertTerminal();
-                    }else{
-                        d.graphicEditor.linking=true;
-                        d3.select(thisID).classed("linking",true);
-                    }
+                    d.graphicEditor.linking=true;
+                    d3.select(thisID).classed("linking",true);
                 }
             }
 
@@ -202,17 +198,6 @@ define(function(require){
                         swal.showInputError("This condition already exists for the same transition");
                         return false;
                     }
-                });
-            }
-            function alertTerminal(){
-                swal({
-                    title: "This state is terminal",
-                    text: "A terminal states cannot be the source for a new link",
-                    type: "warning",
-                    showCancelButton: false,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "OK",
-                    closeOnConfirm: true
                 });
             }
             //state editing
