@@ -22,7 +22,7 @@ define(function(require){
                             deleteState(d);
                             break;
                         default:
-                            deleteState(d);
+                            break;
                     }
                 });
                 //on double click, select a state
@@ -42,15 +42,16 @@ define(function(require){
                     }
                     if(d3.event.keyCode==69){ // on key "E" edit state name
                         d3.selectAll("circle").each(function(d){    //testing if a state is being linked
-                            if(
-                              d.graphicEditor.linking
-                                &&
-                              (d3.select("#state_"+d.index).classed("editing")===false)
-                                &&
-                               (d3.selectAll(".linking").size()===1)
-                             ){    //if linking edit state
+                            if(isEligible(d)){
                                 d3.select("#state_"+d.index).classed("editing",true);
                                 confirmStateEdition(d);
+                            }
+                        });
+                    }
+                    if(d3.event.keyCode==46){ // on key "suppr" delete state
+                        d3.selectAll("circle").each(function(d){
+                            if(isEligible(d)){
+                                deleteState(d);
                             }
                         });
                     }
@@ -83,6 +84,19 @@ define(function(require){
                         d3.select(thisID).classed("linking",true);
                     }
                 }
+            }
+
+            //test if a state is eligible for alteration
+            function isEligible(d){
+                if( //if linking edit state
+                    d.graphicEditor.linking
+                    &&  (d3.select("#state_"+d.index).classed("editing")===false)
+                    && (d3.selectAll(".linking").size()===1)
+                 ){
+                     return true;
+                 }else{
+                     return false;
+                 }
             }
 
             //confirmation functions (w/ swal)
