@@ -5,7 +5,8 @@ define(function(require){
     var maxStateSave = 10;
     var rollingBack = false,
         rollingBackCount = 0;
-    var undoStack = [];
+    var undoQueue = [],
+        undoQueueBackup={};
     function stackFull(stack){
         return (stack.length===maxStateSave);
     }
@@ -15,32 +16,38 @@ define(function(require){
 
     //public
     function displayStack(){
-        console.log(undoStack);
+        console.log(undoQueue);
     }
     function addToStack(state){
-        rollingBack = false;
-        rollingBackCount = 0;
-
+        if(rollingBack){
+            rollingBack = false;
+            rollingBackCount = 0;
+            undoQueue = [undoQueueBackup];
+            undoQueueBackup = [];
+        }
         var stateClone = _.cloneDeep(state);
 
-        if(stackFull(undoStack)){
-            undoStack.shift();
+        if(stackFull(undoQueue)){
+            undoQueue.shift();
         }
-        undoStack.push(stateClone);
+        undoQueue.push(stateClone);
     }
     function deleteFromStack(){
 
     }
     function rollBack(){
-        console.log(rollingBackCount);
-        console.log(undoStack);
-        rollingBack = true;
+        if(!rollingBack){
+            rollingBack = true;
+            undoQueueBackup = _.clone(undoQueue[0]);
+            console.log(undoQueueBackup);
+        }
         if( rollingBackCount > maxStateSave ){
             rollingBackCount = maxStateSave;
         }else{
             rollingBackCount++;
         }
-        return undoStack[(undoStack.length)-(1+rollingBackCount)];
+            console.log(rollingBack,undoQueue.length,rollingBackCount,undoQueue);
+        return undoQueue[(undoQueue.length)-(1+rollingBackCount)];
     }
     function rollForth(){
 
