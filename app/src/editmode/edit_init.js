@@ -41,7 +41,7 @@ define(function(require){
             });
 
             //key bingings
-            d3.select(document).on("keyup",function(){
+            d3.select(document).on("keyup.edit",function(){
                 switch(d3.event.keyCode){
                     case 27:    //on key "ECHAP" cancel all linking process
                         cancelAllSelection();

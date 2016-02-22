@@ -99,6 +99,13 @@ define(function(require){
                 undo.addToStack(cloneCurrentState);
             });
 
+            //key bindings
+            d3.select(document).on("keyup.view",function(){
+                if(d3.event.keyCode==90 && d3.event.ctrlKey){
+                    undo.rollBack("view");
+                }
+            });
+
             return {
                 "svg":svg,
                 "force":force,
