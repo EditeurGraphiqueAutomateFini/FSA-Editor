@@ -19,12 +19,13 @@ define(function(require){
                 createForceLayout = require("viewmode/create_force_layout"),
                 createCircles = require("viewmode/create_circles"),
                 createPaths = require("viewmode/create_paths"),
-                server = require("utility/server_request"),
                 tick = require("viewmode/tick_helper"),
                 data_helper = require("viewmode/data_helper"),
-                utility = require("utility/utility"),
+                setPositions = require("viewmode/set_positions"),
                 viewmode = require("viewmode/view_init"),
-                setPositions = require("viewmode/set_positions");
+                utility = require("utility/utility"),
+                server = require("utility/server_request"),
+                undo = require("utility/undo");
 
 
             if(states){
@@ -91,6 +92,12 @@ define(function(require){
             }else{
                 //todo : vue par défaut ? basculer vers le mode creation ?
             }
+
+            //add state save on dragend
+            force.drag().on("dragend",function(){
+                var cloneCurrentState = _.cloneDeep(getData);
+                undo.addToStack(cloneCurrentState);
+            });
 
             return {
                 "svg":svg,

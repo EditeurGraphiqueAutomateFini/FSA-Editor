@@ -1,19 +1,28 @@
 define(function(){
     //private
     var maxStateSave = 10;
-    var stack = [];
+    var undoStack = [];
+    function stackFull(stack){
+        return (stack.length===maxStateSave);
+    }
+    function stackEmpty(){
+
+    }
 
     //public
     function displayStack(){
-        console.log(stack);
-        /*for(var i=0;i<this.stack.lenght;i++){
-            console.log(this.stack[i]);
-        }*/
+        console.log(undoStack);
     }
     function addToStack(state){
-        //tests
-        //
+        if(stackFull(undoStack)){
+            undoStack.shift();
+        }
+        undoStack.push(state);
     }
+    function deleteFromStack(){
+        
+    }
+
 
     //return (reveal) public methods
     return{

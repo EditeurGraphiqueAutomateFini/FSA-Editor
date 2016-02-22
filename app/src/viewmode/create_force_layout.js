@@ -25,15 +25,8 @@ define(function(require){
             .on("dragstart", function(){
             })
             .on("drag",function(d){
-                var objectContainer = $("#object_container_left");
-                if(!(objectContainer.css("background")==="#f5e79e")){
-                    objectContainer.css("background","#f5e79e");
-                }
             })
             .on("dragend",function(){
-                //todo cancel selection
-                var displayableData = data_helper.cleanData(getData);
-                utility.frontEndObject([displayableData]);
             });
 
         return force;
