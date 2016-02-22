@@ -15,124 +15,101 @@ define(function(require){
 
             //iterates over svg circles (representing states)
             d3.selectAll("circle").each(function(){
-                //on right click, call a context menu to delete or edit state
-                d3.select(this).on("contextmenu",function(d){
-                    switch (context_menu) {
-                        case "delete":
-                            deleteState(d);
-                            break;
-                        default:
-                            deleteState(d);
-                    }
-                });
-                //on double click, select a state
-                //on a second double click on a state, create a link between them
-                //(can be the same state, source state cannot be terminal)
-                d3.select(this).on("click",function(d){
-                    d3.event.stopPropagation();     //stop bubbling to avoid ending in background click event
-                    if(!d.graphicEditor.unselectable){
-                        createTransition(d);
-                    }else{
-                        d.graphicEditor.unselectable=false;
-                    }
-                });
-                d3.select(document).on("keyup",function(){
-                    if(d3.event.keyCode==27){ //on echap cancel all linking process
+                d3.select(this)
+                    //on right click, call a context menu to delete or edit state
+                    .on("contextmenu",function(d){
+                        switch (context_menu) {
+                            case "delete":
+                                deleteState(d);
+                                break;
+                            default:
+                                break;
+                        }
+                    })
+                    //on double click, select a state
+                    //on a second double click on a state, create a link between them
+                    //(can be the same state, source state cannot be terminal)
+                    .on("click",function(d){
+                        d3.event.stopPropagation();     //stop bubbling to avoid ending in background click event
+                        d3.event.preventDefault();      //in case of right click
+                        if(!d.graphicEditor.unselectable){
+                            selectState(d);
+                        }else{
+                            d.graphicEditor.unselectable=false;
+                        }
+                    });
+            });
+
+            //key bingings
+            d3.select(document).on("keyup",function(){
+                switch(d3.event.keyCode){
+                    case 27:    //on key "ECHAP" cancel all linking process
                         cancelAllSelection();
-                    }
-                    if(d3.event.keyCode==69){ // on key "E" edit state name
-                        d3.selectAll("circle").each(function(d){    //testing if a state is being linked
-                            if(
-                              d.graphicEditor.linking
-                                &&
-                              (d3.select("#state_"+d.index).classed("editing")===false)
-                                &&
-                               (d3.selectAll(".linking").size()===1)
-                             ){    //if linking edit state
-                                d3.select("#state_"+d.index).classed("editing",true);
-                                confirmStateEdition(d);
+                        break;
+                    case 46:    // on key "SUPPR" delete state
+                        d3.selectAll("circle").each(function(d){
+                            if(isEligible(d)){
+                                deleteState(d);
                             }
                         });
-                    }
-                });
+                        break;
+                    case 69:    // on key "E" edit state name
+                        d3.selectAll("circle").each(function(d){    //testing if a state is being linked
+                            if(isEligible(d)){
+                                d3.select("#state_"+d.index).classed("editing",true);
+                                getStateEdition(d);
+                            }
+                        });
+                        break;
+                    default:
+                        return true;
+                        break;
+                }
             });
+
             //delete state w/ confirmation
             function deleteState(d){
-                d3.event.preventDefault();
-                confirmDelete(d);
+                delete_state(d.index,{"svg":svg,"force":force,"getData":getData,"links":links});
+                delete_references(getData,d.name);
+                //edit fe object
+                editFrontEndObject();
             }
             //create a new link
-            function createTransition(d){
-                d3.event.preventDefault();
-                var linkingTest = false,
-                    thisID = "#state_"+d.index;
+            function selectState(d){
+                var previouslySelectedState = false,
+                    currentStateId = "#state_"+d.index;
 
                 d3.selectAll("circle").each(function(d){    //testing if a first state is selected (being linked)
                     if(d.graphicEditor.linking){
-                        linkingTest=d;
+                        previouslySelectedState=d;
                     }
                 });
-                if(linkingTest){    //if a first state is selected, ask wether cancel or create link then reset linking
-                    d3.select(thisID).classed("linking",true);
-                    confirmTransition(d,linkingTest,thisID);
+                if(previouslySelectedState){    //if a first state is selected, create new transition
+                    d3.select(currentStateId).classed("linking",true);
+                    getCondition(d,previouslySelectedState,currentStateId);
                 }else{  //first selection of state
-                    if(d.terminal){ //disalow w/ an alert if the state is terminal
-                        alertTerminal();
-                    }else{
-                        d.graphicEditor.linking=true;
-                        d3.select(thisID).classed("linking",true);
-                    }
+                    d.graphicEditor.linking=true;
+                    d3.select(currentStateId).classed("linking",true);
                 }
             }
 
-            //confirmation functions (w/ swal)
-            //delete
-            function confirmDelete(d){
-                swal({
-                    title: "Delete this state?",
-                    text: "Transition related to this state will be deleted too",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Yes, delete it",
-                    closeOnConfirm: false
-                },function(){
-                    delete_state(d.index,{"svg":svg,"force":force,"getData":getData,"links":links});
-                    delete_references(getData,d.name);
-                    swal("Deleted!", "The state \""+d.name+"\" has been deleted.", "success");
-                    //edit fe object
-                    var utility = require("utility/utility"),
-                        data_helper = require("viewmode/data_helper"),
-                    displayableData = data_helper.cleanData(getData);
-                    utility.frontEndObject([displayableData]);
-                    //
-                });
+            //test if a state is eligible for alteration
+            function isEligible(d){
+                if( //if linking edit state
+                    d.graphicEditor.linking
+                    && (d3.select("#state_"+d.index).classed("editing")===false)
+                    && (d3.selectAll(".linking").size()===1)
+                 ){
+                     return true;
+                 }else{
+                     return false;
+                 }
             }
+
             //transition editing
-            function confirmTransition(d,linkingTest,thisID){
-                var swalTransition = swal({
-                    title: "Create transition ?",
-                    text: "Create transition between states \""+linkingTest.name+"\" and \""+d.name+"\" ?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Yes, create it",
-                    closeOnConfirm: false
-                },function(confirmed){
-                    if(confirmed){
-                        getCondition(d,linkingTest,thisID);
-                    }else{
-                        d.graphicEditor.linking=false;
-                        d3.select(thisID).classed("linking",false);
-                        //linkingTest.graphicEditor.linking=false;
-                        //d3.select("#state_"+linkingTest.index).classed("linking",false);
-                    }
-                });
-            }
-            function getCondition(d,linkingTest,thisID){
-                var linkingTestID = "#state_"+linkingTest.index;
-                var condition = ""
-                    previouslyExistingLink=false;
+            function getCondition(d,previouslySelectedState,thisID){
+                var linkingTestID = "#state_"+previouslySelectedState.index;
+                var previouslyExistingLink=false;
                 var swalCondition = swal({
                     title: "Condition",
                     text: "Write a condition for this new transition",
@@ -144,7 +121,7 @@ define(function(require){
                 },function(inputValue,confirmed){
                     if (inputValue === false){  //on cancel
                         //edit visual hints
-                        linkingTest.graphicEditor.linking=false;
+                        previouslySelectedState.graphicEditor.linking=false;
                         d.graphicEditor.linking=false;
                         d3.select(linkingTestID).classed("linking",false);
                         d3.select(thisID).classed("linking",false);
@@ -154,33 +131,32 @@ define(function(require){
                         swal.showInputError("You need to write a condition");
                         return false;
                     }
-                    d3.select(linkingTestID).data()[0].transitions.forEach(function(el,ind,arr){    //if alreay exists, cancel
-                        if(el.target===d.name){
-                            previouslyExistingLink = true;
-                            if(el.condition===inputValue){
-                                inputValue=false;
+                    if(d3.select(linkingTestID).data()[0].hasOwnProperty("transitions")){   //if link alreay exists width the condition, error message
+                        d3.select(linkingTestID).data()[0].transitions.forEach(function(el,ind,arr){
+                            if(el.target===d.name){
+                                previouslyExistingLink = true;
+                                if(el.condition===inputValue){
+                                    inputValue=false;
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                     if(inputValue){
                         //all condition passed
-                        condition = inputValue;
+                        var condition = inputValue;
                         if(previouslyExistingLink){
-                            edit_path(svg,force,linkingTest.index,d.index,condition); //edit path
+                            edit_path(svg,force,previouslySelectedState.index,d.index,condition); //edit path
                         }else{
-                            edit_path(svg,force,linkingTest.index,d.index,condition,"new"); //edit path
+                            edit_path(svg,force,previouslySelectedState.index,d.index,condition,"new"); //edit path
                         }
-                        add_transition(linkingTest,d,condition,getData);    //add transition to global data object
+                        add_transition(previouslySelectedState,d,condition,getData);    //add transition to global data object
                         //edit visual hints
-                        linkingTest.graphicEditor.linking=false;
+                        previouslySelectedState.graphicEditor.linking=false;
                         d.graphicEditor.linking=false;
                         d3.select(linkingTestID).classed("linking",false);
                         d3.select(thisID).classed("linking",false);
                         //edit fe object
-                        var utility = require("utility/utility"),
-                            data_helper = require("viewmode/data_helper"),
-                        displayableData = data_helper.cleanData(getData);
-                        utility.frontEndObject([displayableData]);
+                        editFrontEndObject();
                         //
                         //close sweetalert prompt window
                         swal.close();
@@ -190,34 +166,7 @@ define(function(require){
                     }
                 });
             }
-            function alertTerminal(){
-                swal({
-                    title: "This state is terminal",
-                    text: "A terminal states cannot be the source for a new link",
-                    type: "warning",
-                    showCancelButton: false,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "OK",
-                    closeOnConfirm: true
-                });
-            }
             //state editing
-            function confirmStateEdition(d){    //confirm you want to edit selected state
-                var swalStateEdition = swal({
-                    title: "Edit state "+d.name+" ?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Yes, edit it",
-                    closeOnConfirm: false
-                },function(confirmed){
-                    if(confirmed){
-                        getStateEdition(d);
-                    }else{
-                        d3.select("#state_"+d.index).classed("editing",false);
-                    }
-                });
-            }
             function getStateEdition(d){    //get new name w/ prompt-like
                 var swalStateInfo = swal({
                     title: "Name Edition",
@@ -234,6 +183,7 @@ define(function(require){
                         d3.select("#state_"+d.index).classed("editing",false);
                         d.graphicEditor.linking=false;
                         d3.select("#state_"+d.index).classed("linking",false);
+                        editFrontEndObject();
                         swal.close();   //close sweetalert prompt window
                     }else if(inputValue===false){  //cancel
                         d3.select("#state_"+d.index).classed("editing",false);
@@ -247,6 +197,7 @@ define(function(require){
                 });
             }
 
+            //cancel all selections
             function cancelAllSelection(){
                 d3.selectAll("circle").each(function(d){    //testing if a state is being linked
                     if(d.graphicEditor.linking){    //if linking, undo process and thus remove linking class
@@ -254,6 +205,14 @@ define(function(require){
                         d3.select("#state_"+d.index).classed("linking",false);
                     }
                 });
+            }
+
+            //edit fe object
+            function editFrontEndObject(){
+                var utility = require("utility/utility"),
+                    data_helper = require("viewmode/data_helper"),
+                    displayableData = data_helper.cleanData(getData);
+                utility.frontEndObject([displayableData]);
             }
 
         }

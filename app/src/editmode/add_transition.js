@@ -7,10 +7,10 @@ define(function(){
                 target:target.name
             };
 
-        if(state.transitions){
+        if(state.hasOwnProperty("transitions")){
             state.transitions.push(transition);
         }else{
-            object.states[source.name][transitions]=[transition];
+            object.states[source.name]["transitions"]=[transition];
         }
     }
 });

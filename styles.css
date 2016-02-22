@@ -27,6 +27,9 @@ svg{
 .circle:hover,circle:hover{
     fill: #333;
 }
+.circle.linking:hover,circle.linking:hover{
+    fill: #e6e6e6;
+}
 .terminal{
     stroke:grey;
     stroke-width:3px;
