@@ -27,7 +27,6 @@ define(function(require){
                 server = require("utility/server_request"),
                 undo = require("utility/undo");
 
-
             if(states){
                 var links=[],
                     dataset=[];
@@ -95,14 +94,16 @@ define(function(require){
 
             //add state save on dragend
             force.drag().on("dragend",function(){
-                var cloneCurrentState = _.cloneDeep(getData);
-                undo.addToStack(cloneCurrentState);
+                undo.addToStack(getData);
             });
 
             //key bindings
             d3.select(document).on("keyup.view",function(){
                 if(d3.event.keyCode==90 && d3.event.ctrlKey){
-                    undo.rollBack("view");
+                    var rollback = undo.rollBack();
+                    if(rollback){   //if any action has already been performed
+                        viewmode.init(viewmode.extractStates([rollback]),rollback,true);
+                    }
                 }
             });
 

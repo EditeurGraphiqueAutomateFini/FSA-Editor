@@ -1,7 +1,10 @@
+//attention ici on essaie de créer un concept bâtard entre pile et file
+//"pfile" ou "fpile" ? "FLIFO" ? moment difficile...
 define(function(require){
     //private
-    var viewmode = require("viewmode/view_init");
     var maxStateSave = 10;
+    var rollingBack = false,
+        rollingBackCount = 0;
     var undoStack = [];
     function stackFull(stack){
         return (stack.length===maxStateSave);
@@ -15,23 +18,29 @@ define(function(require){
         console.log(undoStack);
     }
     function addToStack(state){
+        rollingBack = false;
+        rollingBackCount = 0;
+
+        var stateClone = _.cloneDeep(state);
+
         if(stackFull(undoStack)){
             undoStack.shift();
         }
-        undoStack.push(state);
+        undoStack.push(stateClone);
     }
     function deleteFromStack(){
 
     }
-    function rollBack(mode){
-        switch (mode) {
-            case "view":
-                var retrieveState = undoStack[(undoStack.length)-1];
-                viewmode.init(viewmode.extractStates([retrieveState]),retrieveState,true);
-                break;
-            default:
-                break;
+    function rollBack(){
+        console.log(rollingBackCount);
+        console.log(undoStack);
+        rollingBack = true;
+        if( rollingBackCount > maxStateSave ){
+            rollingBackCount = maxStateSave;
+        }else{
+            rollingBackCount++;
         }
+        return undoStack[(undoStack.length)-(1+rollingBackCount)];
     }
     function rollForth(){
 

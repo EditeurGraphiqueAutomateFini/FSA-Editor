@@ -2,10 +2,11 @@ define(function(require){
     return{
         //obtain data, use it to load a mode. mode : string representing the mode to load
         getRequest : function(mode){
-            var utility = require("utility/utility"),
-                viewmode = require("viewmode/view_init"),
+            var viewmode = require("viewmode/view_init"),
                 data_helper = require("viewmode/data_helper"),
                 editmode = require("editmode/edit_init"),
+                utility = require("utility/utility"),
+                undo = require("utility/undo"),
                 server=require("utility/server_request");
 
             var ajaxRequest = $.ajax({
@@ -31,6 +32,7 @@ define(function(require){
                     var parsedDataSolid =  _.cloneDeep(parsedData); //cloning parsed data to keep it untouched for a later reset
                     //display object
                     utility.frontEndObject([parsedData]);
+                    undo.addToStack(parsedData);
                     switch (mode) {
                         case "view":
                             //initiate viewmode
