@@ -5,8 +5,8 @@ define(function(require){
     var maxStateSave = 10;
     var rollingBack = false,
         rollingBackCount = 0;
-    var undoQueue = [],
-        undoQueueBackup={};
+    var undoQueue = [];
+
     function stackFull(stack){
         return (stack.length===maxStateSave);
     }
@@ -20,10 +20,10 @@ define(function(require){
     }
     function addToStack(state){
         if(rollingBack){
+            var reroll = _.cloneDeep(undoQueue[(undoQueue.length)-(1+rollingBackCount)]);
+            undoQueue = [reroll];
             rollingBack = false;
             rollingBackCount = 0;
-            undoQueue = [undoQueueBackup];
-            undoQueueBackup = [];
         }
         var stateClone = _.cloneDeep(state);
 
@@ -38,16 +38,14 @@ define(function(require){
     function rollBack(){
         if(!rollingBack){
             rollingBack = true;
-            undoQueueBackup = _.clone(undoQueue[0]);
-            console.log(undoQueueBackup);
         }
-        if( rollingBackCount > maxStateSave ){
-            rollingBackCount = maxStateSave;
+        if( rollingBackCount >= undoQueue.length-1 ){
+            rollingBackCount =  undoQueue.length-1;
         }else{
             rollingBackCount++;
         }
-            console.log(rollingBack,undoQueue.length,rollingBackCount,undoQueue);
-        return undoQueue[(undoQueue.length)-(1+rollingBackCount)];
+            //console.log(rollingBack,undoQueue.length,rollingBackCount,undoQueue);
+        return _.cloneDeep(undoQueue[(undoQueue.length)-(1+rollingBackCount)]);
     }
     function rollForth(){
 
