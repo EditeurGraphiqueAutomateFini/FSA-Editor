@@ -1,13 +1,16 @@
 define(function(require){
     return{
         init: function(svg,force,getData,links){
-            var delete_state = require("editmode/delete_state"),
+            var context_menu = require("menu/context_menu"),
+                delete_state = require("editmode/delete_state"),
                 delete_references = require("editmode/delete_references"),
                 edit_references = require("editmode/edit_references"),
                 add_transition = require("editmode/add_transition"),
-                context_menu = require("menu/context_menu"),
                 edit_path = require("editmode/edit_path"),
-                edit_state = require("editmode/edit_state");
+                edit_state = require("editmode/edit_state"),
+                editmode = require("editmode/edit_init"),
+                viewmode = require("viewmode/view_init"),
+                undo = require("utility/undo");
 
             //on click on background cancel state selection
             d3.select("#svgbox").on("click",cancelAllSelection);
@@ -41,7 +44,7 @@ define(function(require){
             });
 
             //key bingings
-            d3.select(document).on("keyup.edit",function(){
+            d3.select(document).on("keyup",function(){
                 switch(d3.event.keyCode){
                     case 27:    //on key "ECHAP" cancel all linking process
                         cancelAllSelection();
@@ -62,8 +65,29 @@ define(function(require){
                         });
                         break;
                     default:
-                        return true;
                         break;
+                }
+
+                //ajouter un preventdefault pour les actions de base du nav ?
+                if(d3.event.ctrlKey){
+                    switch (d3.event.keyCode) {
+                        case 90:    // on key "CTRL + Z" rollback
+                            var rollBack = undo.rollBack();
+                            if(rollBack){   //if any action has already been performed
+                                var newLoadedViewMode = viewmode.init(viewmode.extractStates([rollBack]),rollBack,true);
+                                editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
+                            }
+                            break;
+                        case 89:    // on key "CTRL + Z" rollback
+                            var rollForth = undo.rollForth();
+                            if(rollForth){   //if any action has already been performed
+                                var newLoadedViewMode = viewmode.init(viewmode.extractStates([rollForth]),rollForth,true);
+                                editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
             });
 
@@ -73,6 +97,7 @@ define(function(require){
                 delete_references(getData,d.name);
                 //edit fe object
                 editFrontEndObject();
+                undo.addToStack(getData);
             }
             //create a new link
             function selectState(d){
@@ -157,6 +182,7 @@ define(function(require){
                         d3.select(thisID).classed("linking",false);
                         //edit fe object
                         editFrontEndObject();
+                        undo.addToStack(getData);
                         //
                         //close sweetalert prompt window
                         swal.close();
@@ -184,6 +210,7 @@ define(function(require){
                         d.graphicEditor.linking=false;
                         d3.select("#state_"+d.index).classed("linking",false);
                         editFrontEndObject();
+                        undo.addToStack(getData);
                         swal.close();   //close sweetalert prompt window
                     }else if(inputValue===false){  //cancel
                         d3.select("#state_"+d.index).classed("editing",false);

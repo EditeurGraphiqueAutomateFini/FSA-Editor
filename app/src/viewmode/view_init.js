@@ -98,17 +98,17 @@ define(function(require){
             });
 
             //key bindings
-            d3.select(document).on("keyup.view",function(){
+            d3.select(document).on("keyup",function(){
                 //ajouter un preventdefault pour les actions de base du nav ?
                 if(d3.event.ctrlKey){
                     switch (d3.event.keyCode) {
-                        case 90:    // CTRL + Z
+                        case 90:    // on key "CTRL + Z" rollback
                             var rollBack = undo.rollBack();
                             if(rollBack){   //if any action has already been performed
                                 viewmode.init(viewmode.extractStates([rollBack]),rollBack,true);
                             }
                             break;
-                        case 89:    // CTRL + Y
+                        case 89:    // on key "CTRL + Z" rollback
                             var rollForth = undo.rollForth();
                             if(rollForth){   //if any action has already been performed
                                 viewmode.init(viewmode.extractStates([rollForth]),rollForth,true);
