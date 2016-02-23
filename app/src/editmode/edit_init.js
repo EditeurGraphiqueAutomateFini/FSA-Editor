@@ -15,6 +15,7 @@ define(function(require){
             //on click on background cancel state selection
             d3.select("#svgbox").on("click",cancelAllSelection);
             force.drag().on("drag",function(d){d.graphicEditor.unselectable=true;});
+            force.drag().on("dragend",function(){});    //cancel context saving on drag/click
 
             //iterates over svg circles (representing states)
             d3.selectAll("circle").each(function(){
@@ -40,6 +41,18 @@ define(function(require){
                         }else{
                             d.graphicEditor.unselectable=false;
                         }
+                    });
+            });
+            d3.selectAll("text.state_name").each(function(){
+                d3.select(this)
+                    .on("click",function(d){
+                        getStateEdition(d);
+                    });
+            });
+            d3.selectAll("text.condition").each(function(){
+                d3.select(this)
+                    .on("click",function(d){
+                        console.log(d);
                     });
             });
 

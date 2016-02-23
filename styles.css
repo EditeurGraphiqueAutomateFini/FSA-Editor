@@ -22,7 +22,7 @@ svg{
     cursor: pointer;
     display: block;
     position: absolute;
-    transition:  fill 0.2s ease-in-out;
+    transition: fill 0.2s ease-in-out;
 }
 .circle:hover,circle:hover{
     fill: #333;
@@ -52,6 +52,11 @@ svg{
 /*svg - texts (names,conditions)*/
 text{
     fill:#000;
+    transition: fill 0.2s ease-in-out;
+}
+text:hover{
+    fill:#666;
+    cursor:pointer;
 }
 text.new_link{
 }
@@ -59,10 +64,6 @@ text.new_condition{
 
 }
 text.condition{
-    padding: 10px;
-}
-text.condition:hover{
-    cursor:pointer;
 }
 /*containers*/
 #svg_container,#object_container_wrapper,#object_textarea{
