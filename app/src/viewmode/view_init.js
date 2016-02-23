@@ -99,10 +99,23 @@ define(function(require){
 
             //key bindings
             d3.select(document).on("keyup.view",function(){
-                if(d3.event.keyCode==90 && d3.event.ctrlKey){
-                    var rollback = undo.rollBack();
-                    if(rollback){   //if any action has already been performed
-                        viewmode.init(viewmode.extractStates([rollback]),rollback,true);
+                //ajouter un preventdefault pour les actions de base du nav ?
+                if(d3.event.ctrlKey){
+                    switch (d3.event.keyCode) {
+                        case 90:    // CTRL + Z
+                            var rollBack = undo.rollBack();
+                            if(rollBack){   //if any action has already been performed
+                                viewmode.init(viewmode.extractStates([rollBack]),rollBack,true);
+                            }
+                            break;
+                        case 89:    // CTRL + Y
+                            var rollForth = undo.rollForth();
+                            if(rollForth){   //if any action has already been performed
+                                viewmode.init(viewmode.extractStates([rollForth]),rollForth,true);
+                            }
+                            break;
+                        default:
+                            break;
                     }
                 }
             });

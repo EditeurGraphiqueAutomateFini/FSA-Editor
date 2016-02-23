@@ -2,7 +2,7 @@
 //"pfile" ou "fpile" ? "FLIFO" ? moment difficile...
 define(function(require){
     //private
-    var maxStateSave = 10;
+    var maxStateSave = 50;
     var rollingBack = false,
         rollingBackCount = 0;
     var undoQueue = [];
@@ -40,7 +40,7 @@ define(function(require){
             rollingBack = true;
         }
         if( rollingBackCount >= undoQueue.length-1 ){
-            rollingBackCount =  undoQueue.length-1;
+            rollingBackCount = undoQueue.length-1;
         }else{
             rollingBackCount++;
         }
@@ -48,7 +48,15 @@ define(function(require){
         return _.cloneDeep(undoQueue[(undoQueue.length)-(1+rollingBackCount)]);
     }
     function rollForth(){
-
+        if(rollingBack){
+            if( rollingBackCount <= 0 ){
+                rollingBackCount = 0;
+            }else{
+                rollingBackCount--;
+            }
+            return _.cloneDeep(undoQueue[(undoQueue.length)-(1+rollingBackCount)]);
+        }
+        return true;
     }
 
 
@@ -56,7 +64,8 @@ define(function(require){
     return{
         "displayStack" : displayStack,
         "addToStack" : addToStack,
-        "rollBack" : rollBack
+        "rollBack" : rollBack,
+        "rollForth" : rollForth
     }
 
 });
