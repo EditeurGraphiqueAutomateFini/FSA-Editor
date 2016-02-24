@@ -32,9 +32,7 @@ define(function(require){
         }
         undoQueue.push(stateClone);
     }
-    function deleteFromStack(){
-
-    }
+    function deleteFromStack(){}
     function rollBack(){
         if(!rollingBack){
             rollingBack = true;

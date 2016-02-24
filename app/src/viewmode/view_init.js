@@ -35,44 +35,53 @@ define(function(require){
                 states.forEach(function(data,i){
                     var cpt=0;
                     for(var key in data){
-                        var state = data[key];
                         if(data.hasOwnProperty(key)){
-                            state.fixed = true;
-                            state.uniqueId = cpt;
-                            state.name = key;
+                            var state = data[key];
+                            if(state){
+                                state.fixed = true;
+                                state.uniqueId = cpt;
+                                state.index = cpt;
+                                state.name = key;
 
-                            //add graphicEditor values if not set
-                            if(!state.graphicEditor){
-                                state.graphicEditor={};
-                            }else{
-                                state.graphicEditor.origCoordX = state.graphicEditor.coordX;
-                                state.graphicEditor.origCoordY = state.graphicEditor.coordY;
+                                //add graphicEditor values if not set
+                                if(!state.graphicEditor){
+                                    state.graphicEditor={};
+                                }else{
+                                    state.graphicEditor.origCoordX = state.graphicEditor.coordX;
+                                    state.graphicEditor.origCoordY = state.graphicEditor.coordY;
+                                }
+
+                                state.x = state.graphicEditor.coordX || 0;   //known position or random
+                                state.y = state.graphicEditor.coordY || 0;
+
+                                //push state
+                                dataset.push(state);
+                                cpt++;
                             }
-
-                            state.x = state.graphicEditor.coordX || 0;   //known position or random
-                            state.y = state.graphicEditor.coordY || 0;
-
-                            //push state
-                            dataset.push(state);
                         }
-                        cpt++;
                     }
                     for(var key in data){
-                        var state = data[key];
                         if(data.hasOwnProperty(key)){
-                            if(state.transitions && state.transitions.length>0){
-                                for(var i=0;i<state.transitions.length;i++){
-                                    links.push({
-                                        source : state.uniqueId,
-                                        target :(function(data){
-                                            for(var key in data){
-                                                if(state.transitions[i].target==data[key].name){
-                                                    return data[key].uniqueId;
+                            var state = data[key];
+                            if(state){
+                                if(state.transitions && state.transitions.length>0){
+                                    for(var i=0;i<state.transitions.length;i++){
+                                        links.push({
+                                            source : state.uniqueId,
+                                            target : (function(data){
+                                                for(var key in data){
+                                                    if(data.hasOwnProperty(key)){
+                                                        if(data[key]){
+                                                            if(state.transitions[i].target==data[key].name){
+                                                                return data[key].uniqueId;
+                                                            }
+                                                        }
+                                                    }
                                                 }
-                                            }
-                                        })(dataset),
-                                        condition : state.transitions[i].condition
-                                    });
+                                            })(dataset),
+                                            condition : state.transitions[i].condition
+                                        });
+                                    }
                                 }
                             }
                         }

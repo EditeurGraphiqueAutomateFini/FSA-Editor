@@ -7,7 +7,6 @@ define(function(require){
 
         var containmentWidth = d3.select("#svgbox").property("clientWidth"),
             containmentHeight = d3.select("#svgbox").property("clientHeight");
-
         //creating the force layout with states as nodes
         var force = d3.layout.force()
             .nodes(d3.values(states))
