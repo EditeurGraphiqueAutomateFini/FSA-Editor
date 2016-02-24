@@ -52,7 +52,7 @@ define(function(require){
             d3.selectAll("text.condition").each(function(){
                 d3.select(this)
                     .on("click",function(d){
-                        console.log(d);
+                        getTransitionEdition(d);
                     });
             });
 
@@ -208,7 +208,7 @@ define(function(require){
             //state editing
             function getStateEdition(d){    //get new name w/ prompt-like
                 var swalStateInfo = swal({
-                    title: "Name Edition",
+                    title: "State Edition",
                     text: "Write a new name",
                     type: "input",
                     inputValue: d.name,
@@ -235,6 +235,52 @@ define(function(require){
                         return false;
                     }
                 });
+            }
+
+            //transition editing
+            function getTransitionEdition(d){    //get new name w/ prompt-like
+                var swalTransitionInfo = swal({
+                    title: "Transition Edition",
+                    text: displayTransitionsAsList(d),
+                    html: true,
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top"
+                },function(inputValue){
+                    if(inputValue){
+
+                        /*
+                        editFrontEndObject();
+                        undo.addToStack(getData);
+                        swal.close();   //close sweetalert prompt window
+                        */
+                    }else if(inputValue===false){  //cancel
+                        return false;
+                    }else if(inputValue===""){
+                        swal.showInputError("error");
+                        return false;
+                    }
+                });
+            }
+            function displayTransitionsAsList(d){
+                var html = d.source.name + " ==> " + d.target.name,
+                    conditions = d.condition.split(",");
+
+                conditions.forEach(function(condition,index){
+                    html+="<span class='condition_display condition_display_"+index+"'>"+
+                            "<span class='custom_swal_delete' id='delete_condition_"+index+"'>X</span>"+
+                            "<input class='custom_swal_input' type='text' value='"+condition+"' id='input_condition_"+index+"' />"+
+                        "</span>";
+                });
+
+                console.log(d3.selectAll(".custom_swal_delete"));
+                d3.selectAll(".custom_swal_delete").each(function(){
+                    d3.select(this).on("click",function(){
+                        console.log("delete");
+                    });
+                })
+
+                return html;
             }
 
             //cancel all selections
