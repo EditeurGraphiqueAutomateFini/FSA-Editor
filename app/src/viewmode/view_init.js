@@ -66,7 +66,7 @@ define(function(require){
                             if(state){
                                 if(state.transitions && state.transitions.length>0){
                                     for(var i=0;i<state.transitions.length;i++){
-                                        links.push({
+                                        var newLink = {
                                             source : state.uniqueId,
                                             target : (function(data){
                                                 for(var key in data){
@@ -80,7 +80,21 @@ define(function(require){
                                                 }
                                             })(dataset),
                                             condition : state.transitions[i].condition
-                                        });
+                                        },
+                                        isPresent = false,
+                                        isPresentIndex = 0;
+
+                                        for(var j=0; j<links.length;j++){
+                                            if(links[j].source === newLink.source && links[j].target === newLink.target){
+                                                isPresent=true;
+                                                isPresentIndex=j;
+                                            }
+                                        }
+                                        if(isPresent){
+                                            links[isPresentIndex].condition+=","+state.transitions[i].condition;
+                                        }else{
+                                            links.push(newLink);
+                                        }
                                     }
                                 }
                             }
