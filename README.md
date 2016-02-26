@@ -1,3 +1,3 @@
 # FSA Graphic Editor
 
-A graphic editor to edit and display a Finished State Automaton
+A graphic editor to display and edit a Finished State Automaton
