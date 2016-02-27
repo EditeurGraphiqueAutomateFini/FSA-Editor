@@ -1,5 +1,5 @@
 // main function
-define(function(require){
+    define(function(require){
     var menu = require("menu/menu");
 
     closeContainer();
@@ -17,4 +17,21 @@ define(function(require){
                 .prependTo("body");
         }
     }
-});
+});	
+
+     $(document).ready(function() {
+		$("#cadre-menu").click(function() {
+			$("#cadre-menu").animate({ marginLeft: "90px"  }, 400 );
+  		},function(){
+
+   		 $("#cadre-menu").animate({ marginLeft: "0"  }, 400);  });
+
+    	 $("#cadre-menu").hover(function() {
+     	 },function(){
+    	$("#cadre-menu").animate({ marginLeft: "0"  }, 300 );
+ 		 });
+	});	
+
+
+
+		
