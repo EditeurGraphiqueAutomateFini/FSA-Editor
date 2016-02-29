@@ -197,3 +197,6 @@ text.condition{
     color: #d9534f;
     cursor: pointer;
 }
+.user_delete{
+    display: none;
+}

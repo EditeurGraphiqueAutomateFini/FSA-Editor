@@ -248,6 +248,18 @@ define(function(require){
                     animation: "slide-from-top"
                 },function(inputValue){
                     if(inputValue){
+                        var conditionsToDelete = [],
+                            conditionsToEdit = [];
+                            
+                        d3.selectAll(".condition_display.user_delete input").each(function(){conditionsToDelete.push(this.value);});
+                        d3.selectAll(".condition_display.user_edited input").each(function(){conditionsToEdit.push(this.value);});
+
+                        if(conditionsToDelete.length>0){
+                            //delete_conditions(conditionsToDelete);
+                        }
+                        if(conditionsToEdit.length>0){
+                            //edit_conditions(conditionsToEdit);
+                        }
 
                         /*
                         editFrontEndObject();
@@ -261,6 +273,18 @@ define(function(require){
                         return false;
                     }
                 });
+                d3.selectAll(".custom_swal_delete").each(function(){
+                    d3.select(this)
+                        .on("click",function(){
+                            d3.select(this.parentNode).classed("user_delete",true);
+                        });
+                });
+                d3.selectAll(".condition_display input").each(function(){
+                    d3.select(this)
+                        .on("change",function(){
+                            d3.select(this.parentNode).classed("user_edited",true);
+                        });
+                })
             }
             function displayTransitionsAsList(d){
                 var html = d.source.name + " ==> " + d.target.name,
@@ -273,12 +297,6 @@ define(function(require){
                         "</span>";
                 });
 
-                console.log(d3.selectAll(".custom_swal_delete"));
-                d3.selectAll(".custom_swal_delete").each(function(){
-                    d3.select(this).on("click",function(){
-                        console.log("delete");
-                    });
-                })
 
                 return html;
             }
