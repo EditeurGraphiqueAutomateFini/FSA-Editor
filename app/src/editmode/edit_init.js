@@ -6,6 +6,8 @@ define(function(require){
                 delete_references = require("editmode/delete_references"),
                 edit_references = require("editmode/edit_references"),
                 add_transition = require("editmode/add_transition"),
+                edit_transition = require("editmode/edit_transition"),
+                delete_transition = require("editmode/delete_transition"),
                 edit_path = require("editmode/edit_path"),
                 edit_state = require("editmode/edit_state"),
                 editmode = require("editmode/edit_init"),
@@ -250,7 +252,7 @@ define(function(require){
                     if(inputValue){
                         var conditionsToDelete = [],
                             conditionsToEdit = [];
-                            
+
                         d3.selectAll(".condition_display.user_delete input").each(function(){conditionsToDelete.push(this.value);});
                         d3.selectAll(".condition_display.user_edited input").each(function(){conditionsToEdit.push(this.value);});
 
@@ -258,7 +260,7 @@ define(function(require){
                             //delete_conditions(conditionsToDelete);
                         }
                         if(conditionsToEdit.length>0){
-                            //edit_conditions(conditionsToEdit);
+                            edit_transition(d,conditionsToEdit,{"svg":svg,"force":force,"getData":getData,"links":links});
                         }
 
                         /*
