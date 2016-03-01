@@ -2,10 +2,11 @@ define(function(require){
     return{
         //obtain data, use it to load a mode. mode : string representing the mode to load
         getRequest : function(mode){
-            var utility = require("utility/utility"),
-                viewmode = require("viewmode/view_init"),
+            var viewmode = require("viewmode/view_init"),
                 data_helper = require("viewmode/data_helper"),
                 editmode = require("editmode/edit_init"),
+                utility = require("utility/utility"),
+                undo = require("utility/undo"),
                 server=require("utility/server_request");
 
             var ajaxRequest = $.ajax({
@@ -31,6 +32,7 @@ define(function(require){
                     var parsedDataSolid =  _.cloneDeep(parsedData); //cloning parsed data to keep it untouched for a later reset
                     //display object
                     utility.frontEndObject([parsedData]);
+                    undo.addToStack(parsedData);
                     switch (mode) {
                         case "view":
                             //initiate viewmode
@@ -38,21 +40,11 @@ define(function(require){
                             //handel reset
                             $("button.reset").click(function(){
                                 var parsedDataLiquid =  _.cloneDeep(parsedDataSolid);   //cloning untouched cloned data
-                                swal({
-                                    title: "Reset?",
-                                    text: "All unsaved changes will be discarded",
-                                    type: "warning",
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#DD6B55",
-                                    confirmButtonText: "Reset",
-                                    closeOnConfirm: true
-                                },function(){
-                                    //re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
-                                    viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,true);
-                                    //reseting front-end object display
-                                    utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
-                                    $("#object_container_left").css("background","transparent");
-                                });
+                                //re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
+                                viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,true);
+                                //reseting front-end object display
+                                utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
+                                $("#object_container_left").css("background","transparent");
                             });
                             break;
                         case "edit":
@@ -63,41 +55,20 @@ define(function(require){
                             //handling reset (same as edit mode)
                             $("button.reset").click(function(){
                                 var parsedDataLiquid =  _.cloneDeep(parsedDataSolid);
-                                swal({
-                                    title: "Reset?",
-                                    text: "All unsaved changes will be discarded",
-                                    type: "warning",
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#DD6B55",
-                                    confirmButtonText: "Reset",
-                                    closeOnConfirm: true
-                                },function(){
-                                    var newLoadedViewMode = viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid);
-                                    editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
-                                    utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
-                                    $("#object_container_left").css("background","transparent");
-                                });
+                                var newLoadedViewMode = viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid);
+                                editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
+                                utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
+                                $("#object_container_left").css("background","transparent");
                             });
                             break;
                         default:
                             viewmode.init(viewmode.extractStates([parsedData]),parsedData);
                     }
 
-                    //handle saving (posting edited data w/ a confirm alert)
+                    //handle saving (posting edited data)
                     $("button.save").click(function(){
                         var endPostData = data_helper.cleanData(parsedData);
-
-                        swal({
-                            title: "Save?",
-                            text: "JSON file will be overwritten on the server",
-                            type: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "Save",
-                            closeOnConfirm: false
-                        },function(){
-                            server.postRequest(endPostData);
-                        });
+                        server.postRequest(endPostData);
                     });
                 }
             }

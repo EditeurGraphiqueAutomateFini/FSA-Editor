@@ -1,9 +1,11 @@
 define(function(require){
     var server = require("utility/server_request")
     //return menu value (view : viewmode, edit: editmode)
-    if(location.href.indexOf("test")!=-1){  //pour éviter d'avoir le menu en test, ajouter "?test=1" au bout de son url
-        //exemple file:///D:/Martin/_Cours/IUT/Projet%20tuteur%C3%A9/Editeur_graphique_projet/index.html?test=1
-            server.getRequest("edit"); // Editor mode
+    if(location.href.indexOf("edit")!=-1){  //pour éviter d'avoir le menu en test, ajouter "?edit=1" au bout de son url
+        //exemple file:///D:/Martin/_Cours/IUT/Projet%20tuteur%C3%A9/Editeur_graphique_projet/index.html?edit=1
+        server.getRequest("edit"); // Editor mode
+    }else if(location.href.indexOf("view")!=-1){
+        server.getRequest("view");
     }else{
         //code ici pour définir le menu
         $(document).ready(function(){

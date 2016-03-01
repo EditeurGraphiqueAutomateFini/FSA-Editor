@@ -7,7 +7,6 @@ define(function(require){
 
         var containmentWidth = d3.select("#svgbox").property("clientWidth"),
             containmentHeight = d3.select("#svgbox").property("clientHeight");
-
         //creating the force layout with states as nodes
         var force = d3.layout.force()
             .nodes(d3.values(states))
@@ -25,15 +24,8 @@ define(function(require){
             .on("dragstart", function(){
             })
             .on("drag",function(d){
-                var objectContainer = $("#object_container_left");
-                if(!(objectContainer.css("background")==="#f5e79e")){
-                    objectContainer.css("background","#f5e79e");
-                }
             })
             .on("dragend",function(){
-                //todo cancel selection
-                var displayableData = data_helper.cleanData(getData);
-                utility.frontEndObject([displayableData]);
             });
 
         return force;

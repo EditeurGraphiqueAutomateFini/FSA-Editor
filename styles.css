@@ -22,7 +22,7 @@ svg{
     cursor: pointer;
     display: block;
     position: absolute;
-    transition:  fill 0.2s ease-in-out;
+    transition: fill 0.2s ease-in-out;
 }
 .circle:hover,circle:hover{
     fill: #333;
@@ -52,6 +52,11 @@ svg{
 /*svg - texts (names,conditions)*/
 text{
     fill:#000;
+    transition: fill 0.2s ease-in-out;
+}
+text:hover{
+    fill:#666;
+    cursor:pointer;
 }
 text.new_link{
 }
@@ -59,10 +64,6 @@ text.new_condition{
 
 }
 text.condition{
-    padding: 10px;
-}
-text.condition:hover{
-    cursor:pointer;
 }
 /*containers*/
 #svg_container,#object_container_wrapper,#object_textarea{
@@ -179,17 +180,37 @@ text.condition:hover{
     background-color: blueviolet;
 
 }
+/*sweet alert*/
+.condition_display{
+    display: block;
+}
+.condition_display .custom_swal_input, .condition_display .custom_swal_delete{
+    display: inline-block;
+}
+.condition_display .custom_swal_input{
+    width: 90%;
+}
+.condition_display .custom_swal_delete{
+    width: 10%;
+}
+.condition_display .custom_swal_delete:hover{
+    color: #d9534f;
+    cursor: pointer;
+}
+.user_delete{
+    display: none;
+}
 /*tools*/
 #cadre-menu {
 	position:fixed;
 	left:-114px;
 	overflow:hidden;
 	top:40%;
-	width:210px; 
+	width:210px;
 	font:12px Arial;
-   
+
 }
-#bordure-menu {	
+#bordure-menu {
 	float:left;
 	background:#D19275;
 	width:115px;
@@ -197,22 +218,22 @@ text.condition:hover{
 	padding:2px;
 	border:5px solid #000000;
 	border-left:none;
-	font-family: Tahoma; 
+	font-family: Tahoma;
     height: 193px;
-    
-  
+
+
 }
 #bordure-menu ul {
 	list-style: square inside;
 }
 #bordure-menu ul li {
-    
+
 	padding-top:25px;
 
     /*vertical-align:middle;
     text-align: center;*/
-  
-    
+
+
 }
 #bordure-menu ul li a {
 	color:#555;
@@ -226,10 +247,8 @@ text.condition:hover{
 	margin:0px;
 	height:193px;
 	background:#A52A2A;
-	font-family: Tahoma; 
+	font-family: Tahoma;
     padding-top: 55px;
     /*display: block;*/
-	
+
 }
-
-
