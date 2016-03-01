@@ -200,3 +200,55 @@ text.condition{
 .user_delete{
     display: none;
 }
+/*tools*/
+#cadre-menu {
+	position:fixed;
+	left:-114px;
+	overflow:hidden;
+	top:40%;
+	width:210px;
+	font:12px Arial;
+
+}
+#bordure-menu {
+	float:left;
+	background:#D19275;
+	width:115px;
+	margin:0px auto;
+	padding:2px;
+	border:5px solid #000000;
+	border-left:none;
+	font-family: Tahoma;
+    height: 193px;
+
+
+}
+#bordure-menu ul {
+	list-style: square inside;
+}
+#bordure-menu ul li {
+
+	padding-top:25px;
+
+    /*vertical-align:middle;
+    text-align: center;*/
+
+
+}
+#bordure-menu ul li a {
+	color:#555;
+}
+#bordure-menu ul li a:hover {
+	text-decoration:underline;
+}
+#bouton-menu {
+	float:right;
+	width:95px;
+	margin:0px;
+	height:193px;
+	background:#A52A2A;
+	font-family: Tahoma;
+    padding-top: 55px;
+    /*display: block;*/
+
+}
