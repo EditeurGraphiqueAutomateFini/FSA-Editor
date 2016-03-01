@@ -251,23 +251,32 @@ define(function(require){
                 },function(inputValue){
                     if(inputValue){
                         var conditionsToDelete = [],
-                            conditionsToEdit = [];
+                            conditionsToEdit = []
+                            commaError = false;
 
                         d3.selectAll(".condition_display.user_delete input").each(function(){conditionsToDelete.push(this.value);});
                         d3.selectAll(".condition_display.user_edited input").each(function(){conditionsToEdit.push(this.value);});
 
                         if(conditionsToDelete.length>0){
-                            //delete_conditions(conditionsToDelete);
+                            delete_transition(d,conditionsToDelete,{"svg":svg,"force":force,"getData":getData,"links":links});
                         }
                         if(conditionsToEdit.length>0){
-                            edit_transition(d,conditionsToEdit,{"svg":svg,"force":force,"getData":getData,"links":links});
+                            conditionsToEdit.forEach(function(el){
+                                if(el.indexOf(",")!=-1){
+                                    commaError = true;
+                                }
+                            });
+                            if(commaError){
+                                swal.showInputError("\',\' is not allowed for transitions");
+                                return false;
+                            }else{
+                                edit_transition(d,conditionsToEdit,{"svg":svg,"force":force,"getData":getData,"links":links});
+                            }
                         }
 
-                        /*
                         editFrontEndObject();
                         undo.addToStack(getData);
                         swal.close();   //close sweetalert prompt window
-                        */
                     }else if(inputValue===false){  //cancel
                         return false;
                     }else if(inputValue===""){
