@@ -17,9 +17,7 @@ define(function(require){
                 .prependTo("body");
         }
     }
-});
-/*
-     $(document).ready(function() {
+      //$(document).ready(function() {
 		$("#cadre-menu").click(function() {
 			$("#cadre-menu").animate({ marginLeft: "90px"  }, 400 );
   		},function(){
@@ -30,5 +28,9 @@ define(function(require){
      	 },function(){
     	$("#cadre-menu").animate({ marginLeft: "0"  }, 300 );
  		 });
-	});
-*/
+        
+	//});
+
+});
+
+   
