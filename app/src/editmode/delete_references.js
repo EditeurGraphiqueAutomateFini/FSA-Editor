@@ -1,4 +1,4 @@
-//delete references to "name" (string) parameter in "object" (object) parameter. Designed to clean data that are being sent
+//delete references to "name" (string, name of a state) parameter in "object" (object) parameter. Designed to clean data that are being sent
 define(function(){
     return function(object,name){
         var states=object.states;
