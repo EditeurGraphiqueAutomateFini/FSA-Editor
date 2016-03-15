@@ -10,7 +10,7 @@ define(function(){
                     if(states[state].transitions){
                         states[state].transitions.forEach(function(object,index){
                             conditionsToDelete.forEach(function(condition){
-                                if(object.condition===condition){
+                                if(object.condition===condition && object.target===d.target.name){
                                     indexesToDelete.push(index);
                                 }
                             });
@@ -25,17 +25,15 @@ define(function(){
         }
 
         //delete in d3 links
-        var newCondition = "";
+        var newCondition = [];
         context.force.links().forEach(function(object){
-            if(object.source.index===d.source.index){
-                var source = object.source;
-                for (var i=0;i<source.transitions.length;i++){
-                    newCondition += source.transitions[i].condition;
-                    if(i+1!==source.transitions.length){
-                        newCondition+=",";
+            if(object.source.index===d.source.index && object.target.index===d.target.index){
+                for (var i=0;i<object.source.transitions.length;i++){
+                    if(object.source.transitions[i].target===d.target.name){
+                        newCondition.push(object.source.transitions[i].condition);
                     }
                 }
-                object.condition = newCondition;
+                object.condition = newCondition.toString();
             }
         });
 
