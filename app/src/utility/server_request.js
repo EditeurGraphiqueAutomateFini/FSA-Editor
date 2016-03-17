@@ -11,7 +11,7 @@ define(function(require){
 
             var ajaxRequest = $.ajax({
                   type: 'GET',
-                  url: 'http://www.martinbolot.com/graphicEditorFSA/',
+                  url: 'http://www.fsaeditor.com',
                   success: function(data){
                       return succesFunction(data,mode);
                   },
@@ -84,19 +84,36 @@ define(function(require){
                 //intiate view mode w/ static data
                 switch (mode) {
                     case "view":
-                        viewmode.init(viewmode.extractStates(data),data[0]);
+                        //initiate viewmode
+                        viewmode.init(viewmode.extractStates(data),data);
+                        //handel reset
+                        $("button.reset").click(function(){
+                            var parsedDataLiquid =  _.cloneDeep(dataSolid);   //cloning untouched cloned data
+                            //re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
+                            viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,true);
+                            //reseting front-end object display
+                            utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
+                            $("#object_container_left").css("background","transparent");
+                        });
+                        break;
+                    case "edit":
+                        //loading view mode
+                        var loadedViewMode = viewmode.init(viewmode.extractStates(data),data);
+                        //loading edit mode from previously loaded viewmode
+
+                        editmode.init(loadedViewMode.svg,loadedViewMode.force,loadedViewMode.getData,loadedViewMode.links);
+                        //handling reset (same as edit mode)
+                        $("button.reset").click(function(){
+                            var parsedDataLiquid =  _.cloneDeep(dataSolid);
+                            var newLoadedViewMode = viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid);
+                            editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
+                            utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
+                            $("#object_container_left").css("background","transparent");
+                        });
                         break;
                     default:
-                        viewmode.init(viewmode.extractStates(data),data[0]);
+                        viewmode.init(viewmode.extractStates(data),data);
                 }
-
-                //handling reset (same as above)
-                $("button.reset").click(function(){
-                    var dataLiquid =  _.cloneDeep(dataSolid);
-                    viewmode.init(viewmode.extractStates(dataLiquid),dataLiquid[0],true);
-                    utility.frontEndObject([data_helper.cleanData(dataLiquid[0])]);
-                    $("#object_container_left").css("background","transparent");
-                });
             }
         },
         //post data to overwrite JSON file server-side
@@ -104,7 +121,7 @@ define(function(require){
             var ajaxRequest = $.ajax({
                   type: 'POST',
                   data : {graphicEditorFSA:JSON.stringify(postData)},
-                  url: 'http://www.martinbolot.com/graphicEditorFSA/',
+                  url: 'http://www.fsaeditor.com',
                   beforeSend : function(){
                       $(".load_helper").fadeIn();
                   },
