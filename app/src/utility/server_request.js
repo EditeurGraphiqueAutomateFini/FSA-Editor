@@ -11,7 +11,7 @@ define(function(require){
 
             var ajaxRequest = $.ajax({
                   type: 'GET',
-                  url: 'http://www.martinbolot.com/graphicEditorFSA/',
+                  url: 'http://www.fsaeditor.com',
                   success: function(data){
                       return succesFunction(data,mode);
                   },
@@ -121,7 +121,7 @@ define(function(require){
             var ajaxRequest = $.ajax({
                   type: 'POST',
                   data : {graphicEditorFSA:JSON.stringify(postData)},
-                  url: 'http://www.martinbolot.com/graphicEditorFSA/',
+                  url: 'http://www.fsaeditor.com',
                   beforeSend : function(){
                       $(".load_helper").fadeIn();
                   },
