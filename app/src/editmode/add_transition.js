@@ -12,5 +12,9 @@ define(function(){
         }else{
             object.states[source.name]["transitions"]=[transition];
         }
+
+        //edit links
+        console.log(arguments);
+        //restart force layout
     }
 });
