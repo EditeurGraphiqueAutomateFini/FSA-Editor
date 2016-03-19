@@ -174,12 +174,14 @@ define(function(require){
                     if(d3.select(linkingTestID).data()[0].hasOwnProperty("transitions")){   //if link alreay exists width the condition, error message
                         d3.select(linkingTestID).data()[0].transitions.forEach(function(el,ind,arr){
                             if(el.target===d.name){
-                                previouslyExistingLink = true;
                                 if(el.condition===inputValue){
                                     inputValue=false;
                                 }
                             }
                         });
+                    }
+                    if(d3.selectAll("path.link#link_"+previouslySelectedState.index+"_"+d.index).size()>0){   //if path already exist
+                        previouslyExistingLink = true;
                     }
                     if(inputValue){
                         //all condition passed
@@ -188,6 +190,10 @@ define(function(require){
                             edit_path(svg,force,previouslySelectedState.index,d.index,condition); //edit path
                         }else{
                             edit_path(svg,force,previouslySelectedState.index,d.index,condition,"new"); //edit path
+                            d3.select("text.condition.link_"+previouslySelectedState.index+"_"+d.index)
+                                .on("click",function(d){
+                                    getTransitionEdition(d);
+                                });
                         }
                         add_transition(force,getData,previouslySelectedState,d,condition);    //add transition to global data object
                         //edit visual hints
@@ -251,7 +257,7 @@ define(function(require){
                 },function(inputValue){
                     if(inputValue){
                         var conditionsToDelete = [],
-                            conditionsToEdit = []
+                            conditionsToEdit = [],
                             commaError = false;
 
                         d3.selectAll(".condition_display.user_delete input").each(function(){conditionsToDelete.push(this.value);});

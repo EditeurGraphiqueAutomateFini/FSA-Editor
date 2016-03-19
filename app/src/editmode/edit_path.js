@@ -24,11 +24,19 @@ define(function(){
                 })
                 .text(function(d){return d.condition;});
         }else{  //simply render the new condition (transition already exists) (only text)
-            force.links().forEach(function(el,ind,arr){
-                if(el.source.index===sourceID && el.target.index===targetID){
-                    el.condition+=","+condition;
-                }
-            });
+            if(d3.selectAll("text.condition.link_"+sourceID+"_"+targetID).html()!==""){
+                force.links().forEach(function(el,ind,arr){
+                    if(el.source.index===sourceID && el.target.index===targetID){
+                        el.condition+=","+condition;
+                    }
+                });
+            }else{
+                force.links().forEach(function(el,ind,arr){
+                    if(el.source.index===sourceID && el.target.index===targetID){
+                        el.condition=condition;
+                    }
+                });
+            }
             svg.select(".condition.link_"+sourceID+"_"+targetID)
                 .text(function(d){return d.condition;})
                 .classed("new_condition",true);
