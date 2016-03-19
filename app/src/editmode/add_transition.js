@@ -1,6 +1,6 @@
 //add transition array to the global object
 define(function(){
-    return function(source,target,condition,object){
+    return function(force,object,source,target,condition){
         var state = object.states[source.name],
             transition = {
                 condition:condition,
@@ -14,7 +14,12 @@ define(function(){
         }
 
         //edit links
-        console.log(arguments);
+        force.links().push({
+            "condition":condition,
+            'source':source,
+            "target":target
+        });
         //restart force layout
+        force.start();
     }
 });

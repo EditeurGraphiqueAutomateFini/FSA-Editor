@@ -189,7 +189,7 @@ define(function(require){
                         }else{
                             edit_path(svg,force,previouslySelectedState.index,d.index,condition,"new"); //edit path
                         }
-                        add_transition(previouslySelectedState,d,condition,getData);    //add transition to global data object
+                        add_transition(force,getData,previouslySelectedState,d,condition);    //add transition to global data object
                         //edit visual hints
                         previouslySelectedState.graphicEditor.linking=false;
                         d.graphicEditor.linking=false;
