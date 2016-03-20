@@ -52,11 +52,15 @@ svg{
 /*svg - texts (names,conditions)*/
 text{
     fill:#000;
-    transition: fill 0.2s ease-in-out;
 }
-text:hover{
+text:hover,text:hover tspan:hover{
     fill:#999;
     cursor:pointer;
+    transition: fill 0.2s ease-in-out;
+}
+text:hover tspan{
+    fill:#000;
+    cursor: default;
 }
 text.new_link{
 }

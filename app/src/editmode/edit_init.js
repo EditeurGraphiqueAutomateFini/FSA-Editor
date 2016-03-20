@@ -45,7 +45,7 @@ define(function(require){
                         }
                     });
             });
-            d3.selectAll("text.state_name").each(function(){
+            d3.selectAll("text.state_name .state_name_label").each(function(){
                 d3.select(this)
                     .on("click",function(d){
                         getStateEdition(d);
