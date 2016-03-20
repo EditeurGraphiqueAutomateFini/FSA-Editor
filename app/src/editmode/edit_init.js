@@ -49,7 +49,7 @@ define(function(require){
             d3.selectAll("text.state_name .state_name_label").each(function(){
                 d3.select(this)
                     .on("click",function(d){
-                        getStateEdition(d);
+                        getStateNameEdition(d);
                     });
             });
             d3.selectAll("text.state_name .state_name_maxnoise").each(function(){
@@ -228,7 +228,32 @@ define(function(require){
                 });
             }
             //state editing
-            function getStateEdition(d){    //get new name w/ prompt-like
+            function getStateEdition(d){
+                var swalTransitionInfo = swal({
+                    title: d.name,
+                    text: displayStateAsList(d),
+                    html: true,
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top"
+                },function(inputValue){
+                    if(inputValue){
+
+                        editFrontEndObject();
+                        undo.addToStack(getData);
+                        swal.close();   //close sweetalert prompt window
+                    }else if(inputValue===false){  //cancel
+                        d3.select("#state_"+d.index).classed("editing",false);
+                        d.graphicEditor.linking=false;
+                        d3.select("#state_"+d.index).classed("linking",false);
+                        return false;
+                    }else if(inputValue===""){
+                        swal.showInputError("error");
+                        return false;
+                    }
+                });
+            }
+            function getStateNameEdition(d){    //get new name w/ prompt-like
                 var swalStateInfo = swal({
                     title: "State Edition",
                     text: "Write a new name",
@@ -270,23 +295,106 @@ define(function(require){
                     animation: "slide-from-top"
                 },function(inputValue){
                     if(inputValue){  //edit state name if confirmed
-                        edit_state_maxnoise(d,inputValue,{"svg":svg,"force":force,"getData":getData,"links":links});
-                        d3.select("#state_"+d.index).classed("editing",false);
-                        d.graphicEditor.linking=false;
-                        d3.select("#state_"+d.index).classed("linking",false);
-                        editFrontEndObject();
-                        undo.addToStack(getData);
-                        swal.close();   //close sweetalert prompt window
+                        if(parseInt(inputValue)<0){ //negative noise
+                            swal.showInputError("max_noise cannot be negative");
+                            return false;
+                        }else{
+                            edit_state_maxnoise(d,inputValue,{"svg":svg,"force":force,"getData":getData,"links":links});
+                            d3.select("#state_"+d.index).classed("editing",false);
+                            d.graphicEditor.linking=false;
+                            d3.select("#state_"+d.index).classed("linking",false);
+                            editFrontEndObject();
+                            undo.addToStack(getData);
+                            swal.close();   //close sweetalert prompt window
+                        }
                     }else if(inputValue===false){  //cancel
                         d3.select("#state_"+d.index).classed("editing",false);
                         d.graphicEditor.linking=false;
                         d3.select("#state_"+d.index).classed("linking",false);
                         return false;
-                    }else if(inputValue===""){  //empty new state name
+                    }else if(inputValue===""){  //empty noise
                         swal.showInputError("Please enter a value");
                         return false;
                     }
                 });
+            }
+            function displayStateAsList(d){
+                var html = "",
+                    state = getData.states[d.name];
+                    input="",
+                    propertiesToEdit=[
+                        { "name":"name", "type":"text" },
+                        { "name":"terminal", "type":"check" },
+                        { "name":"default_transition", "type":"transition" },
+                        { "name":"max_noise", "type":"number" },
+                        { "name":"max_total_noise", "type":"number" },
+                        { "name":"max_duration", "type":"number" },
+                        { "name":"max_total_duration", "type":"number" }
+                    ];
+
+                for(var i=0;i<propertiesToEdit.length;i++){
+                    switch(propertiesToEdit[i].type){
+                        case "text":
+                            input = "<input "+
+                                        "class='custom_swal_input' "+
+                                        "type='text' "+
+                                        "value='"+(state[propertiesToEdit[i].name] || "")+"' "+
+                                        "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
+                                    "/>"
+                            break;
+                        case "number":
+                            input = "<input "+
+                                        "class='custom_swal_input' "+
+                                        "type='number' "+
+                                        "value='"+(state[propertiesToEdit[i].name] || "")+"' "+
+                                        "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
+                                    "/>"
+                            break;
+                        case "check":
+                            input = "<input "+
+                                        "class='custom_swal_input' "+
+                                        "type='checkbox' "+
+                                        (state[propertiesToEdit[i].name] ? "checked='true' " : "")+
+                                        "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
+                                    "/>"
+                            break;
+                        case "transition":
+                            options = "";
+                            for(var state in getData.states){ options+="<option value='"+getData.states[state].index+"'>"+state+"</option>"; }
+                            input = "<span class='swal_select_container'>"+
+                                        "<span class='swal_select_subcontainer'>"+
+                                            //"<span class='sub_label'>default_transition_condition : </span>"+
+                                            "<input "+
+                                                "class='custom_swal_input default_transtion_input' "+
+                                                "type='text' "+
+                                                "value='"+((state[propertiesToEdit[i].name]!==undefined ? state[propertiesToEdit[i].name].condition : "") || "")+"' "+
+                                                "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
+                                                "placeholder='condition'"+
+                                            "/>"+
+                                        "</span>"+
+                                        "<span class='swal_select_subcontainer'>"+
+                                            //"<span class='sub_label'>default_transition_target : </span>"+
+                                            "<select "+
+                                                "class='custom_swal_select' "+
+                                                "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
+                                            ">"+
+                                                "<option selected='true'>Target</option>"+
+                                                options +
+                                            "</select>"+
+                                        "</span>"+
+                                    "</span>"
+
+                            break;
+                        default:
+                            break;
+                    }
+                    html+="<span class='swal_display state_display state_display_"+d.index+"'>"+
+                                "<span class='custom_swal_label' id='label_property_"+propertiesToEdit[i].name+"'>"+propertiesToEdit[i].name+" : </span>"+
+                                input+
+                            "</span>";
+                }
+
+                return html;
             }
 
             //transition editing
@@ -357,12 +465,11 @@ define(function(require){
                     conditions = d.condition.split(",");
 
                 conditions.forEach(function(condition,index){
-                    html+="<span class='condition_display condition_display_"+index+"'>"+
+                    html+="<span class='swal_display condition_display condition_display_"+index+"'>"+
                             "<span class='custom_swal_delete' id='delete_condition_"+index+"'>X</span>"+
                             "<input class='custom_swal_input' type='text' value='"+condition+"' id='input_condition_"+index+"' />"+
                         "</span>";
                 });
-
 
                 return html;
             }
