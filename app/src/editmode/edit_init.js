@@ -10,6 +10,7 @@ define(function(require){
                 delete_transition = require("editmode/delete_transition"),
                 edit_path = require("editmode/edit_path"),
                 edit_state = require("editmode/edit_state"),
+                edit_state_maxnoise = require("editmode/edit_state_maxnoise"),
                 editmode = require("editmode/edit_init"),
                 viewmode = require("viewmode/view_init"),
                 undo = require("utility/undo");
@@ -45,10 +46,16 @@ define(function(require){
                         }
                     });
             });
-            d3.selectAll("text.state_name").each(function(){
+            d3.selectAll("text.state_name .state_name_label").each(function(){
                 d3.select(this)
                     .on("click",function(d){
                         getStateEdition(d);
+                    });
+            });
+            d3.selectAll("text.state_name .state_name_maxnoise").each(function(){
+                d3.select(this)
+                    .on("click",function(d){
+                        getMaxNoiseEdition(d);
                     });
             });
             d3.selectAll("text.condition").each(function(){
@@ -79,6 +86,13 @@ define(function(require){
                             }
                         });
                         break;
+                    case 77:    //on key "M" edit max_noise
+                        d3.selectAll("circle").each(function(d){    //testing if a state is being linked
+                            if(isEligible(d)){
+                                d3.select("#state_"+d.index).classed("editing",true);
+                                getMaxNoiseEdition(d);
+                            }
+                        });
                     default:
                         break;
                 }
@@ -240,6 +254,36 @@ define(function(require){
                         return false;
                     }else if(inputValue===""){  //empty new state name
                         swal.showInputError("Please enter a state name");
+                        return false;
+                    }
+                });
+            }
+            function getMaxNoiseEdition(d){
+                var swalStateInfo = swal({
+                    title: "Max noise edition",
+                    text: "Write a new value",
+                    type: "input",
+                    "inputType":"number",
+                    inputValue: d.max_noise,
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top"
+                },function(inputValue){
+                    if(inputValue){  //edit state name if confirmed
+                        edit_state_maxnoise(d,inputValue,{"svg":svg,"force":force,"getData":getData,"links":links});
+                        d3.select("#state_"+d.index).classed("editing",false);
+                        d.graphicEditor.linking=false;
+                        d3.select("#state_"+d.index).classed("linking",false);
+                        editFrontEndObject();
+                        undo.addToStack(getData);
+                        swal.close();   //close sweetalert prompt window
+                    }else if(inputValue===false){  //cancel
+                        d3.select("#state_"+d.index).classed("editing",false);
+                        d.graphicEditor.linking=false;
+                        d3.select("#state_"+d.index).classed("linking",false);
+                        return false;
+                    }else if(inputValue===""){  //empty new state name
+                        swal.showInputError("Please enter a value");
                         return false;
                     }
                 });

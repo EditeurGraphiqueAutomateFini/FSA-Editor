@@ -40,13 +40,15 @@ define(function(){
                 "y" : 0,
                 "class" : "state_name",
                 "id" : function(d){return "state_name_"+d.index;}
-            })
-            .text(function(d) {
-                var text = d.name;
-                if(d.max_noise>0){
-                    text+="["+d.max_noise+"]";
-                }
-                return text;
-             });
+            });
+            //add state label
+            text.append("tspan")
+                .text(function(d){ return d.name; })
+                .classed("state_name_label",true);
+            //add state max noise if needed
+            text.append("tspan")
+                .text(function(d) { return d.max_noise>0 ? "["+d.max_noise+"]" : ""; })
+                .attr("dx",3)
+                .classed("state_name_maxnoise",true);
       }
 });

@@ -52,18 +52,27 @@ svg{
 /*svg - texts (names,conditions)*/
 text{
     fill:#000;
-    transition: fill 0.2s ease-in-out;
 }
-text:hover{
+text:hover,text:hover tspan:hover{
     fill:#999;
     cursor:pointer;
+    transition: fill 0.2s ease-in-out;
+}
+text:hover tspan{
+    fill:#000;
+    cursor: default;
 }
 text.new_link{
 }
 text.new_condition{
-
 }
 text.condition{
+}
+.state_name tspan{
+
+}
+.state_name .state_name_label{
+
 }
 /*containers*/
 #svg_container,#object_container_wrapper,#object_textarea{
