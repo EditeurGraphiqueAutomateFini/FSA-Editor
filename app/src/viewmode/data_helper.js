@@ -7,6 +7,9 @@ define(function(){
             };
 
             if(getData.allow_overlap){endPostData.allow_overlap=getData.allow_overlap;}
+            if(getData.state_defaults){endPostData.state_defaults=getData.state_defaults;}
+            if(getData.default_matcher){endPostData.default_matcher=getData.default_matcher;}
+
             for(state in getData.states){
                 if(getData.states[state] && getData.states.hasOwnProperty(state)){
                     endPostData.states[state]={};
