@@ -238,14 +238,21 @@ define(function(require){
                     animation: "slide-from-top"
                 },function(inputValue){
                     if(inputValue){
+                        //name
+                        console.log(d3.select("#input_name_"+d.index).attr("value"));
+                        //terminal
+                        //max_noise
+                        //max_total_noise
+                        //max_duration
+                        //max_total_duration
+                        //default_transition
 
+                        cancelSelection(d);
                         editFrontEndObject();
                         undo.addToStack(getData);
                         swal.close();   //close sweetalert prompt window
                     }else if(inputValue===false){  //cancel
-                        d3.select("#state_"+d.index).classed("editing",false);
-                        d.graphicEditor.linking=false;
-                        d3.select("#state_"+d.index).classed("linking",false);
+                        cancelSelection(d);
                         return false;
                     }else if(inputValue===""){
                         swal.showInputError("error");
@@ -266,16 +273,12 @@ define(function(require){
                     if(inputValue){  //edit state name if confirmed
                         edit_references(getData,d.name,inputValue);
                         edit_state(d,inputValue,{"svg":svg,"force":force,"getData":getData,"links":links});
-                        d3.select("#state_"+d.index).classed("editing",false);
-                        d.graphicEditor.linking=false;
-                        d3.select("#state_"+d.index).classed("linking",false);
+                        cancelSelection(d);
                         editFrontEndObject();
                         undo.addToStack(getData);
                         swal.close();   //close sweetalert prompt window
                     }else if(inputValue===false){  //cancel
-                        d3.select("#state_"+d.index).classed("editing",false);
-                        d.graphicEditor.linking=false;
-                        d3.select("#state_"+d.index).classed("linking",false);
+                        cancelSelection(d);
                         return false;
                     }else if(inputValue===""){  //empty new state name
                         swal.showInputError("Please enter a state name");
@@ -300,17 +303,13 @@ define(function(require){
                             return false;
                         }else{
                             edit_state_maxnoise(d,inputValue,{"svg":svg,"force":force,"getData":getData,"links":links});
-                            d3.select("#state_"+d.index).classed("editing",false);
-                            d.graphicEditor.linking=false;
-                            d3.select("#state_"+d.index).classed("linking",false);
+                            cancelSelection(d);
                             editFrontEndObject();
                             undo.addToStack(getData);
                             swal.close();   //close sweetalert prompt window
                         }
                     }else if(inputValue===false){  //cancel
-                        d3.select("#state_"+d.index).classed("editing",false);
-                        d.graphicEditor.linking=false;
-                        d3.select("#state_"+d.index).classed("linking",false);
+                        cancelSelection(d);
                         return false;
                     }else if(inputValue===""){  //empty noise
                         swal.showInputError("Please enter a value");
@@ -319,6 +318,7 @@ define(function(require){
                 });
             }
             function displayStateAsList(d){
+                console.log(d);
                 var html = "",
                     currentState = getData.states[d.name];
                     input="",
@@ -362,15 +362,17 @@ define(function(require){
                             options = "",
                             hasSelection=false;
                             for(var state in getData.states){
-                                if(currentState[propertiesToEdit[i].name]!==undefined && currentState[propertiesToEdit[i].name].target===state){
-                                    hasSelection=state;
-                                }
-                                 options+="<option "+
-                                                (hasSelection===state ? "selected='true'" : "")+
-                                                "value='"+getData.states[state].index+
-                                            "'>"+
-                                                state+
-                                            "</option>";
+                                if(getData.states.hasOwnProperty(state) && getData.states[state]!==undefined){
+                                    if(currentState[propertiesToEdit[i].name]!==undefined && currentState[propertiesToEdit[i].name].target===state){
+                                        hasSelection=state;
+                                    }
+                                     options+="<option "+
+                                                    (hasSelection===state ? "selected='true'" : "")+
+                                                    "value='"+getData.states[state].index+
+                                                "'>"+
+                                                    state+
+                                                "</option>";
+                                    }
                              }
                             input = "<span class='swal_select_container'>"+
                                         "<span class='swal_select_subcontainer'>"+
@@ -400,7 +402,13 @@ define(function(require){
                             break;
                     }
                     html+="<span class='swal_display state_display state_display_"+d.index+"'>"+
-                                "<span class='custom_swal_label' id='label_property_"+propertiesToEdit[i].name+"'>"+propertiesToEdit[i].name+" : </span>"+
+                                "<label "+
+                                    "class='custom_swal_label' "+
+                                    "for='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
+                                    "id='label_property_"+propertiesToEdit[i].name+"'"+
+                                ">"
+                                    +propertiesToEdit[i].name+" : "+
+                                "</label>"+
                                 input+
                             "</span>";
                 }
@@ -493,6 +501,12 @@ define(function(require){
                         d3.select("#state_"+d.index).classed("linking",false);
                     }
                 });
+            }
+            //cancel on selection
+            function cancelSelection(d){
+                d3.select("#state_"+d.index).classed("editing",false);
+                d.graphicEditor.linking=false;
+                d3.select("#state_"+d.index).classed("linking",false);
             }
 
             //edit fe object
