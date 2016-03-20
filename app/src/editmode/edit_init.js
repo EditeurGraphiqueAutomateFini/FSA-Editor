@@ -10,6 +10,7 @@ define(function(require){
                 delete_transition = require("editmode/delete_transition"),
                 edit_path = require("editmode/edit_path"),
                 edit_state = require("editmode/edit_state"),
+                edit_state_name = require("editmode/edit_state_name"),
                 edit_state_maxnoise = require("editmode/edit_state_maxnoise"),
                 editmode = require("editmode/edit_init"),
                 viewmode = require("viewmode/view_init"),
@@ -238,14 +239,64 @@ define(function(require){
                     animation: "slide-from-top"
                 },function(inputValue){
                     if(inputValue){
+                        var newName = "",
+                            newTerminal = false,
+                            newMaxNoise = 0,
+                            newMaxTotalNoise = 0,
+                            newMaxDuration = 0,
+                            newMaxTotalDuration = 0,
+                            newDefaultTransition = {
+                                "condition":"",
+                                "target":0
+                            };
                         //name
-                        console.log(d3.select("#input_name_"+d.index).attr("value"));
+                        newName = d3.select("#input_name_"+d.index).property("value");
                         //terminal
+                        newTerminal = d3.select("#input_terminal_"+d.index).property("checked");
                         //max_noise
+                        newMaxNoise = d3.select("#input_max_noise_"+d.index).property("value");
                         //max_total_noise
+                        newMaxTotalNoise = d3.select("#input_max_total_noise_"+d.index).property("value");
                         //max_duration
+                        newMaxDuration = d3.select("#input_max_duration_"+d.index).property("value");
                         //max_total_duration
+                        newMaxTotalDuration = d3.select("#input_max_total_duration_"+d.index).property("value");
                         //default_transition
+                        newDefaultTransition.condition = d3.select("#input_default_transition_condition_"+d.index).property("value");
+                        newDefaultTransition.target = d3.select("#input_default_transition_target_"+d.index).property("value");
+
+                        //tests
+                        if(newMaxNoise < 0){
+                            swal.showInputError("max_noise cannot be negative");
+                            return false;
+                        }
+                        if(newMaxTotalNoise < 0){
+                            swal.showInputError("max_total_noise cannot be negative");
+                            return false;
+                        }
+                        if(newMaxDuration < 0){
+                            swal.showInputError("max_duration cannot be negative");
+                            return false;
+                        }
+                        if(newMaxTotalDuration < 0){
+                            swal.showInputError("max_total_duration cannot be negative");
+                            return false;
+                        }
+                        if(newDefaultTransition.condition.indexOf(",")!==-1){
+                            swal.showInputError("conditions cannot have commas");
+                            return false;
+                        }
+                        //
+                        var newValues = {
+                            "newName":newName,
+                            "newTerminal":newTerminal,
+                            "newMaxNoise":newMaxNoise,
+                            "newMaxTotalNoise":newMaxTotalNoise,
+                            "newMaxDuration":newMaxDuration,
+                            "newMaxTotalDuration":newMaxTotalDuration,
+                            "newDefaultTransition":newDefaultTransition
+                        }
+                        edit_state(newValues,d,{"force":force,"getData":getData});
 
                         cancelSelection(d);
                         editFrontEndObject();
@@ -272,7 +323,7 @@ define(function(require){
                 },function(inputValue){
                     if(inputValue){  //edit state name if confirmed
                         edit_references(getData,d.name,inputValue);
-                        edit_state(d,inputValue,{"svg":svg,"force":force,"getData":getData,"links":links});
+                        edit_state_name(d,inputValue,{"svg":svg,"force":force,"getData":getData,"links":links});
                         cancelSelection(d);
                         editFrontEndObject();
                         undo.addToStack(getData);
@@ -318,7 +369,6 @@ define(function(require){
                 });
             }
             function displayStateAsList(d){
-                console.log(d);
                 var html = "",
                     currentState = getData.states[d.name];
                     input="",
@@ -381,7 +431,7 @@ define(function(require){
                                                 "class='custom_swal_input default_transtion_input' "+
                                                 "type='text' "+
                                                 "value='"+((currentState[propertiesToEdit[i].name]!==undefined ? currentState[propertiesToEdit[i].name].condition : "") || "")+"' "+
-                                                "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
+                                                "id='input_"+propertiesToEdit[i].name+"_condition_"+d.index+"' "+
                                                 "placeholder='condition'"+
                                             "/>"+
                                         "</span>"+
@@ -389,9 +439,9 @@ define(function(require){
                                             //"<span class='sub_label'>default_transition_target : </span>"+
                                             "<select "+
                                                 "class='custom_swal_select' "+
-                                                "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
+                                                "id='input_"+propertiesToEdit[i].name+"_target_"+d.index+"' "+
                                             ">"+
-                                                "<option "+( hasSelection ? "" : "selected='true'" )+">Target</option>"+
+                                                "<option "+( hasSelection ? "" : "selected='true'" )+" value=''>Select a target</option>"+
                                                 options +
                                             "</select>"+
                                         "</span>"+
