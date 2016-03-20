@@ -261,14 +261,19 @@ define(function(require){
                             commaError = false;
 
                         d3.selectAll(".condition_display.user_delete input").each(function(){conditionsToDelete.push(this.value);});
-                        d3.selectAll(".condition_display.user_edited input").each(function(){conditionsToEdit.push(this.value);});
+                        d3.selectAll(".condition_display.user_edited input").each(function(){
+                            conditionsToEdit.push({
+                                "index":this.id.slice("input_condition_".length),
+                                "updatedValue":this.value
+                            });
+                        });
 
                         if(conditionsToDelete.length>0){
                             delete_transition(d,conditionsToDelete,{"svg":svg,"force":force,"getData":getData,"links":links});
                         }
                         if(conditionsToEdit.length>0){
                             conditionsToEdit.forEach(function(el){
-                                if(el.indexOf(",")!=-1){
+                                if(el.updatedValue.indexOf(",")!=-1){
                                     commaError = true;
                                 }
                             });
