@@ -325,11 +325,11 @@ define(function(require){
                     propertiesToEdit=[
                         { "name":"name", "type":"text" },
                         { "name":"terminal", "type":"check" },
-                        { "name":"default_transition", "type":"transition" },
                         { "name":"max_noise", "type":"number" },
                         { "name":"max_total_noise", "type":"number" },
                         { "name":"max_duration", "type":"number" },
-                        { "name":"max_total_duration", "type":"number" }
+                        { "name":"max_total_duration", "type":"number" },
+                        { "name":"default_transition", "type":"transition" }
                     ];
 
                 for(var i=0;i<propertiesToEdit.length;i++){
