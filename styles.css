@@ -65,9 +65,14 @@ text:hover tspan{
 text.new_link{
 }
 text.new_condition{
-
 }
 text.condition{
+}
+.state_name tspan{
+
+}
+.state_name .state_name_label{
+
 }
 /*containers*/
 #svg_container,#object_container_wrapper,#object_textarea{
