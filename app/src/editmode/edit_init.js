@@ -86,6 +86,13 @@ define(function(require){
                             }
                         });
                         break;
+                    case 77:    //on key "M" edit max_noise
+                        d3.selectAll("circle").each(function(d){    //testing if a state is being linked
+                            if(isEligible(d)){
+                                d3.select("#state_"+d.index).classed("editing",true);
+                                getMaxNoiseEdition(d);
+                            }
+                        });
                     default:
                         break;
                 }
