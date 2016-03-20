@@ -320,7 +320,7 @@ define(function(require){
             }
             function displayStateAsList(d){
                 var html = "",
-                    state = getData.states[d.name];
+                    currentState = getData.states[d.name];
                     input="",
                     propertiesToEdit=[
                         { "name":"name", "type":"text" },
@@ -338,7 +338,7 @@ define(function(require){
                             input = "<input "+
                                         "class='custom_swal_input' "+
                                         "type='text' "+
-                                        "value='"+(state[propertiesToEdit[i].name] || "")+"' "+
+                                        "value='"+(currentState[propertiesToEdit[i].name] || "")+"' "+
                                         "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
                                     "/>"
                             break;
@@ -346,7 +346,7 @@ define(function(require){
                             input = "<input "+
                                         "class='custom_swal_input' "+
                                         "type='number' "+
-                                        "value='"+(state[propertiesToEdit[i].name] || "")+"' "+
+                                        "value='"+(currentState[propertiesToEdit[i].name] || "")+"' "+
                                         "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
                                     "/>"
                             break;
@@ -354,20 +354,31 @@ define(function(require){
                             input = "<input "+
                                         "class='custom_swal_input' "+
                                         "type='checkbox' "+
-                                        (state[propertiesToEdit[i].name] ? "checked='true' " : "")+
+                                        (currentState[propertiesToEdit[i].name] ? "checked='true' " : "")+
                                         "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
                                     "/>"
                             break;
                         case "transition":
-                            options = "";
-                            for(var state in getData.states){ options+="<option value='"+getData.states[state].index+"'>"+state+"</option>"; }
+                            options = "",
+                            hasSelection=false;
+                            for(var state in getData.states){
+                                if(currentState[propertiesToEdit[i].name]!==undefined && currentState[propertiesToEdit[i].name].target===state){
+                                    hasSelection=state;
+                                }
+                                 options+="<option "+
+                                                (hasSelection===state ? "selected='true'" : "")+
+                                                "value='"+getData.states[state].index+
+                                            "'>"+
+                                                state+
+                                            "</option>";
+                             }
                             input = "<span class='swal_select_container'>"+
                                         "<span class='swal_select_subcontainer'>"+
                                             //"<span class='sub_label'>default_transition_condition : </span>"+
                                             "<input "+
                                                 "class='custom_swal_input default_transtion_input' "+
                                                 "type='text' "+
-                                                "value='"+((state[propertiesToEdit[i].name]!==undefined ? state[propertiesToEdit[i].name].condition : "") || "")+"' "+
+                                                "value='"+((currentState[propertiesToEdit[i].name]!==undefined ? currentState[propertiesToEdit[i].name].condition : "") || "")+"' "+
                                                 "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
                                                 "placeholder='condition'"+
                                             "/>"+
@@ -378,7 +389,7 @@ define(function(require){
                                                 "class='custom_swal_select' "+
                                                 "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
                                             ">"+
-                                                "<option selected='true'>Target</option>"+
+                                                "<option "+( hasSelection ? "" : "selected='true'" )+">Target</option>"+
                                                 options +
                                             "</select>"+
                                         "</span>"+
