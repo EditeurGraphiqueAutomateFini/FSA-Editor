@@ -25,7 +25,7 @@ svg{
     transition: fill 0.2s ease-in-out;
 }
 .circle:hover,circle:hover{
-    fill: #333;
+    fill: #444;
 }
 .circle.linking:hover,circle.linking:hover{
     fill: #e6e6e6;
@@ -55,7 +55,7 @@ text{
     transition: fill 0.2s ease-in-out;
 }
 text:hover{
-    fill:#666;
+    fill:#999;
     cursor:pointer;
 }
 text.new_link{

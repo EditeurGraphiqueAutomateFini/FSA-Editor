@@ -68,7 +68,7 @@ define(function(require){
                     //handle saving (posting edited data)
                     $("button.save").click(function(){
                         var endPostData = data_helper.cleanData(parsedData);
-                        server.postRequest(endPostData);
+                        server.postRequest(endPostData,mode);
                     });
                 }
             }
@@ -117,7 +117,12 @@ define(function(require){
             }
         },
         //post data to overwrite JSON file server-side
-        postRequest: function(postData){
+        postRequest: function(postData,mode){
+            var viewmode = require("viewmode/view_init"),
+            data_helper = require("viewmode/data_helper"),
+            editmode = require("editmode/edit_init"),
+            utility = require("utility/utility");
+
             var ajaxRequest = $.ajax({
                   type: 'POST',
                   data : {graphicEditorFSA:JSON.stringify(postData)},
@@ -129,9 +134,23 @@ define(function(require){
                       $(".load_helper").fadeOut();
                       $("#object_container_left").css("background","transparent");
                       d3.selectAll(".new_link").classed("new_link",false);
+                      switch (mode) {
+                          case "view":
+                              //var parsedData =  _.cloneDeep(postData);   //cloning untouched cloned data
+                              //re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
+                              viewmode.init(viewmode.extractStates([postData]),postData,true);
+                              //reseting front-end object display
+                              utility.frontEndObject([data_helper.cleanData(postData)]);
+                          break;
+                          case "edit":
+                              //var parsedData =  _.cloneDeep(postData);
+                              var newLoadedViewMode = viewmode.init(viewmode.extractStates([postData]),postData);
+                              editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
+                              utility.frontEndObject([data_helper.cleanData(postData)]);
+                          default:
+                      }
                   },
                   success: function(data){
-                     // console.log(data);
                      swal("Saved!", "JSON file successfully overwritten", "success");
                   },
                   error: function(){
