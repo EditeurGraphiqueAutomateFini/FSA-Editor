@@ -16,7 +16,16 @@ define(function(){
                     for(key in getData.states[state]){
                         if(getData.states[state].hasOwnProperty(key)){
                             //condition giving the set of properties we want to keep
-                            if(key ==="max_noise" || key ==="transitions" || key==="terminal" || key==="graphicEditor"){
+                            if(
+                                key ==="max_noise"
+                                || key ==="transitions"
+                                || key==="terminal"
+                                || key==="graphicEditor"
+                                || key === "default_transition"
+                                || key === "max_total_noise"
+                                || key === "max_duration"
+                                || key === "max_total_duration"
+                            ){
                                 endPostData.states[state][key] = getData.states[state][key];
                             }
                         }
