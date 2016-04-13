@@ -412,8 +412,8 @@ define(function(require){
                             options = "",
                             hasSelection=false;
                             for(var state in getData.states){
-                                if(getData.states.hasOwnProperty(state) && getData.states[state]!==undefined){
-                                    if( currentState[propertiesToEdit[i].name] !== undefined && currentState[propertiesToEdit[i].name].target == getData.states[state].index ){
+                                if(getData.states.hasOwnProperty(state) && getData.states[state] !== undefined){
+                                    if( currentState[propertiesToEdit[i].name] !== undefined && currentState[propertiesToEdit[i].name].target == getData.states[state].name ){
                                         hasSelection=getData.states[state].index;
                                     }
                                      options+="<option "+
@@ -422,7 +422,7 @@ define(function(require){
                                                 "'>"+
                                                     state+
                                                 "</option>";
-                                    }
+                                }
                              }
                             input = "<span class='swal_select_container'>"+
                                         "<span class='swal_select_subcontainer'>"+
