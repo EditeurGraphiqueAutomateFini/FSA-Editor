@@ -68,38 +68,8 @@ define(function(require){
 
             //key bingings
             d3.select(document).on("keyup",function(){
-                switch(d3.event.keyCode){
-                    case 27:    //on key "ECHAP" cancel all linking process
-                        cancelAllSelection();
-                        break;
-                    case 46:    // on key "SUPPR" delete state
-                        d3.selectAll("circle").each(function(d){
-                            if(isEligible(d)){
-                                deleteState(d);
-                            }
-                        });
-                        break;
-                    case 69:    // on key "E" edit state name
-                        d3.selectAll("circle").each(function(d){    //testing if a state is being linked
-                            if(isEligible(d)){
-                                d3.select("#state_"+d.index).classed("editing",true);
-                                getStateEdition(d);
-                            }
-                        });
-                        break;
-                    case 77:    //on key "M" edit max_noise
-                        d3.selectAll("circle").each(function(d){    //testing if a state is being linked
-                            if(isEligible(d)){
-                                d3.select("#state_"+d.index).classed("editing",true);
-                                getMaxNoiseEdition(d);
-                            }
-                        });
-                    default:
-                        break;
-                }
-
                 //ajouter un preventdefault pour les actions de base du nav ?
-                if(d3.event.ctrlKey){
+                if(d3.event.ctrlKey){   // key "CTRL" is pressed
                     switch (d3.event.keyCode) {
                         case 90:    // on key "CTRL + Z" rollback
                             var rollBack = undo.rollBack();
@@ -115,6 +85,36 @@ define(function(require){
                                 editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
                             }
                             break;
+                        default:
+                            break;
+                    }
+                }else{  // key "CTRL" is not pressed
+                    switch(d3.event.keyCode){
+                        case 27:    //on key "ECHAP" cancel all linking process
+                            cancelAllSelection();
+                            break;
+                        case 46:    // on key "SUPPR" delete state
+                            d3.selectAll("circle").each(function(d){
+                                if(isEligible(d)){
+                                    deleteState(d);
+                                }
+                            });
+                            break;
+                        case 69:    // on key "E" edit state name
+                            d3.selectAll("circle").each(function(d){    //testing if a state is being linked
+                                if(isEligible(d)){
+                                    d3.select("#state_"+d.index).classed("editing",true);
+                                    getStateEdition(d);
+                                }
+                            });
+                            break;
+                        case 77:    //on key "M" edit max_noise
+                            d3.selectAll("circle").each(function(d){    //testing if a state is being linked
+                                if(isEligible(d)){
+                                    d3.select("#state_"+d.index).classed("editing",true);
+                                    getMaxNoiseEdition(d);
+                                }
+                            });
                         default:
                             break;
                     }
