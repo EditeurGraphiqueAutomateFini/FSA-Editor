@@ -6,14 +6,14 @@ define(function(require){
             edit_state_name = require("editmode/edit_state_name");
 
 
-        //console.log(_.clone(newValues.newDefaultTransition));
+        console.log(_.clone(newValues.newDefaultTransition),d);
 
         //edit default_transition if necessary
         if(newValues.newDefaultTransition){
             if(d.default_transition){
                 if(
                     (newValues.newDefaultTransition.condition !== d.default_transition.condition)
-                    && (newValues.newDefaultTransition.target !== d.default_transition.target)
+                    || (newValues.newDefaultTransition.target !== d.default_transition.target)
                 ){
                     edit_default_transition(d,newValues.newDefaultTransition.condition,newValues.newDefaultTransition.target,context);
                 }

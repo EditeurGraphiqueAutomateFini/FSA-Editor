@@ -413,7 +413,7 @@ define(function(require){
                             hasSelection=false;
                             for(var state in getData.states){
                                 if(getData.states.hasOwnProperty(state) && getData.states[state]!==undefined){
-                                    if(currentState[propertiesToEdit[i].name]!==undefined && currentState[propertiesToEdit[i].name].target == getData.states[state].index){
+                                    if( currentState[propertiesToEdit[i].name] !== undefined && currentState[propertiesToEdit[i].name].target == getData.states[state].index ){
                                         hasSelection=getData.states[state].index;
                                     }
                                      options+="<option "+
