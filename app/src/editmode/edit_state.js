@@ -6,7 +6,7 @@ define(function(require){
             edit_state_name = require("editmode/edit_state_name");
 
 
-        console.log(_.clone(newValues.newDefaultTransition));
+        //console.log(_.clone(newValues.newDefaultTransition));
 
         //edit default_transition if necessary
         if(newValues.newDefaultTransition){
