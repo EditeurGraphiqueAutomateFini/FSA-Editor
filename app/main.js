@@ -4,6 +4,7 @@ define(function(require){
 
     closeContainer();
     $("#object_container_close").click(closeContainer);
+    
     function closeContainer(){
         $("#object_container_wrapper").toggleClass("closed");
         $(this).toggleClass("panel_closed");

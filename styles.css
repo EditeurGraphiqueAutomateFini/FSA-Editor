@@ -190,7 +190,7 @@ text.condition{
 
 }
 /*sweet alert*/
-.condition_display,.state_display{
+.condition_display,.state_display,.global_display{
     display: block;
 }
 .swal_display .custom_swal_input,.swal_display .custom_swal_delete{
@@ -199,10 +199,10 @@ text.condition{
 .swal_display .custom_swal_input{
     width: 90%;
 }
-.swal_display.state_display .custom_swal_input{
+.swal_display.state_display .custom_swal_input,.swal_display.global_display .custom_swal_input{
     width: auto;
 }
-.swal_display.state_display .custom_swal_input[type="checkbox"]{
+.swal_display.state_display .custom_swal_input[type="checkbox"],.swal_display.global_display .custom_swal_input[type="checkbox"]{
     height: auto;
     margin: 0 0 17px 10px;
     width: auto;
@@ -217,14 +217,14 @@ text.condition{
 .user_delete{
     display: none;
 }
-.state_display{
+.state_display,.global_display{
     text-align: left;
 }
-.state_display .custom_swal_label{
+.state_display .custom_swal_label,.global_display .custom_swal_label{
     font-weight: bold;
     width: 40%;
 }
-.state_display .custom_swal_delete{
+.state_display .custom_swal_delete,.global_display .custom_swal_delete{
     text-align: center;
 }
 .swal_select_container,.swal_select_subcontainer{
@@ -247,7 +247,6 @@ text.condition{
 	top:40%;
 	width:210px;
 	font:12px Arial;
-
 }
 #bordure-menu {
 	float:left;
@@ -259,20 +258,12 @@ text.condition{
 	border-left:none;
 	font-family: Tahoma;
     height: 193px;
-
-
 }
 #bordure-menu ul {
 	list-style: square inside;
 }
 #bordure-menu ul li {
-
 	padding-top:25px;
-
-    /*vertical-align:middle;
-    text-align: center;*/
-
-
 }
 #bordure-menu ul li a {
 	color:#555;
@@ -288,6 +279,13 @@ text.condition{
 	background:#A52A2A;
 	font-family: Tahoma;
     padding-top: 55px;
-    /*display: block;*/
 
+}
+/*global properties*/
+#global_properties{
+    text-align: center;
+    width: 100%;
+}
+.button_edit_global_properties{
+    margin: 10px 0 0;
 }

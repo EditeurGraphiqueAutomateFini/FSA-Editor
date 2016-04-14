@@ -16,6 +16,12 @@ define(function(require){
                 viewmode = require("viewmode/view_init"),
                 undo = require("utility/undo");
 
+            //generate global edition button
+            d3.select("#global_properties").html("<button class='btn btn-primary button_edit_global_properties'>Edit Global Properties</button>");
+            d3.selectAll("#global_properties button").on("click",function(){
+                getGlobalEdition();
+            });
+
             //on click on background cancel state selection
             d3.select("#svgbox").on("click",cancelAllSelection);
             force.drag().on("drag",function(d){d.graphicEditor.unselectable=true;});
@@ -159,6 +165,20 @@ define(function(require){
                  }else{
                      return false;
                  }
+            }
+
+            //global properties editing
+            function getGlobalEdition(){
+                var swalGlobalEdition = swal({
+                    title: "Edit global properties",
+                    text: displayGlobalPropertiesAsList(),
+                    html: true,
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top"
+                },function(inputValue){
+
+                });
             }
 
             //transition editing
@@ -368,9 +388,61 @@ define(function(require){
                     }
                 });
             }
+
+            function displayGlobalPropertiesAsList(){
+                var html = "",
+                    input="",
+                    propertiesToEdit=[
+                        { "name":"allow_overlap", "type":"check" },
+                        { "name":"state_defaults", "type":"state" },
+                        { "name":"default_matcher", "type":"text" }
+                    ];
+
+                for(var i=0;i<propertiesToEdit.length;i++){
+                    switch(propertiesToEdit[i].type){
+                        case "text":
+                            input = "<input "+
+                                        "class='custom_swal_input' "+
+                                        "type='text' "+
+                                        "value='"+(getData[propertiesToEdit[i].name] || "")+"' "+
+                                        "id='input_"+propertiesToEdit[i].name+"' "+
+                                    "/>"
+                            break;
+                        case "number":
+                            input = "<input "+
+                                        "class='custom_swal_input' "+
+                                        "type='number' "+
+                                        "value='"+(getData[propertiesToEdit[i].name] || "")+"' "+
+                                        "id='input_"+propertiesToEdit[i].name+"' "+
+                                    "/>"
+                            break;
+                        case "check":
+                            input = "<input "+
+                                        "class='custom_swal_input' "+
+                                        "type='checkbox' "+
+                                        (getData[propertiesToEdit[i].name] ? "checked='true' " : "")+
+                                        "id='input_"+propertiesToEdit[i].name+"' "+
+                                    "/>"
+                            break;
+                    }
+                    html+="<span class='swal_display global_display'>"+
+                                "<label "+
+                                    "class='custom_swal_label' "+
+                                    "for='input_"+propertiesToEdit[i].name+"' "+
+                                    "id='label_property_"+propertiesToEdit[i].name+"'"+
+                                ">"
+                                    +propertiesToEdit[i].name+" : "+
+                                "</label>"+
+                                input+
+                            "</span>";
+                }
+
+                return html;
+            }
+
             function displayStateAsList(d){
                 var html = "",
-                    currentState = getData.states[d.name];
+                    currentState = getData.states[d.name],
                     input="",
                     propertiesToEdit=[
                         { "name":"name", "type":"text" },
