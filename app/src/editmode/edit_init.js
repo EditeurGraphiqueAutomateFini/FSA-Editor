@@ -231,7 +231,7 @@ define(function(require){
                                 "newMaxTotalDuration":newMaxTotalDuration
                             }
 
-                            edit_global(newValues,{"force":force,"getData":getData}); console.log(getData);
+                            edit_global(newValues,{"force":force,"getData":getData});
 
                             editFrontEndObject();
                             undo.addToStack(getData);
