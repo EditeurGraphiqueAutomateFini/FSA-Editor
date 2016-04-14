@@ -16,9 +16,12 @@ define(function(){
         //edit links
         force.links().push({
             "condition":condition,
-            'source':source,
+            "source":source,
             "target":target
         });
+
+        console.log(force.links());
+
         //restart force layout
         force.start();
     }

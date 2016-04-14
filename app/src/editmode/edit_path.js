@@ -24,7 +24,8 @@ define(function(){
                 })
                 .text(function(d){return d.condition;});
         }else{  //simply render the new condition (transition already exists) (only text)
-            if(d3.selectAll("text.condition.link_"+sourceID+"_"+targetID).html()!==""){
+
+            /*if(d3.selectAll("text.condition.link_"+sourceID+"_"+targetID).html()!==""){
                 force.links().forEach(function(el,ind,arr){
                     if(el.source.index===sourceID && el.target.index===targetID){
                         el.condition+=","+condition;
@@ -36,9 +37,17 @@ define(function(){
                         el.condition=condition;
                     }
                 });
-            }
+            }*/
+
+            force.links().forEach(function(el){
+                if(el.source.index===sourceID && el.target.index===targetID){
+                }
+            });
             svg.select(".condition.link_"+sourceID+"_"+targetID)
-                .text(function(d){return d.condition;})
+                .text(function(d){
+                    console.log(d);
+                    return d.condition;
+                })
                 .classed("new_condition",true);
         }
         //restart force layout w/ new data

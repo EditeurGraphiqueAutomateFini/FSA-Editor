@@ -17,7 +17,14 @@ define(function(){
         //create a text for each transition w/ the condition of the transition
         var condition = svg.append("g").classed("condition_container",true).selectAll("text")
             .data(force.links())
-            .enter().append("text")
+            .enter() //.append("text")
+            .append(function(d){
+                if(d3.selectAll(".condition.link_"+d.source.index +"_"+d.target.index).size() > 0){
+                    return document.createElementNS("http://www.w3.org/2000/svg","tspan");
+                }else{
+                    return document.createElementNS("http://www.w3.org/2000/svg","text");
+                }
+            })
             .attr({
                 "x" : 20,
                 "y" : 0,

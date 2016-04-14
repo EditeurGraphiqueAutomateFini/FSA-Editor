@@ -704,7 +704,7 @@ define(function(require){
                         });
                 })
             }
-            function displayTransitionsAsList(d){
+            function displayTransitionsAsList(d){ console.log(d);
                 var html = "<div class='transition_title'>"+d.source.name + " => " + d.target.name+"</div>",
                     conditions = d.condition.split(",");
 

@@ -80,11 +80,17 @@ define(function(require){
                                                 }
                                             })(dataset),
                                             condition : state.transitions[i].condition
-                                        },
-                                        isPresent = false,
-                                        isPresentIndex = 0;
+                                        };
 
-                                        for(var j=0; j<links.length;j++){
+                                        /*isPresent = false,
+                                        isPresentIndex = 0*/
+
+                                        if(state.transitions[i].matcher) newLink.matcher = state.transitions[i].matcher;
+                                        if(state.transitions[i].silent) newLink.silent = state.transitions[i].silent;
+
+                                        links.push(newLink);
+
+                                        /*for(var j=0; j<links.length;j++){
                                             if(links[j].source === newLink.source && links[j].target === newLink.target){
                                                 isPresent=true;
                                                 isPresentIndex=j;
@@ -94,7 +100,7 @@ define(function(require){
                                             links[isPresentIndex].condition+=","+state.transitions[i].condition;
                                         }else{
                                             links.push(newLink);
-                                        }
+                                        }*/
                                     }
                                 }
                             }
@@ -131,7 +137,7 @@ define(function(require){
                                 viewmode.init(viewmode.extractStates([rollBack]),rollBack,true);
                             }
                             break;
-                        case 89:    // on key "CTRL + Z" rollback
+                        case 89:    // on key "CTRL + Y" rollforth
                             var rollForth = undo.rollForth();
                             if(rollForth){   //if any action has already been performed
                                 viewmode.init(viewmode.extractStates([rollForth]),rollForth,true);
