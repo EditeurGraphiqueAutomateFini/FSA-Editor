@@ -348,7 +348,7 @@ define(function(require){
                         //max_total_duration
                         newMaxTotalDuration = d3.select("#input_max_total_duration_"+d.index).property("value");
                         //default_transition
-                        newDefaultTransition.condition = d3.select("#input_default_transition_condition_"+d.index).property("value");
+                        newDefaultTransition.silent = d3.select("#input_default_transition_silent_"+d.index).property("checked");
                         newDefaultTransition.target = d3.select("#input_default_transition_target_"+d.index).property("value");
 
                         //tests
@@ -368,11 +368,8 @@ define(function(require){
                             swal.showInputError("max_total_duration cannot be negative");
                             return false;
                         }
-                        if(newDefaultTransition.condition.indexOf(",")!==-1){
-                            swal.showInputError("conditions cannot have commas");
-                            return false;
-                        }
-                        //
+
+                        //aggregating new values in a single object
                         var newValues = {
                             "newName":newName,
                             "newTerminal":newTerminal,
@@ -580,19 +577,24 @@ define(function(require){
                                                 "</option>";
                                 }
                              }
+
+                             var isSilent;
+                             if(currentState[propertiesToEdit[i].name]){
+                                 isSilent = currentState[propertiesToEdit[i].name].silent;
+                             }else{
+                                 isSilent = false;
+                             }
                             input = "<span class='swal_select_container'>"+
                                         "<span class='swal_select_subcontainer'>"+
-                                            //"<span class='sub_label'>default_transition_condition : </span>"+
+                                            "<span class='sub_label'>silent : </span>"+
                                             "<input "+
-                                                "class='custom_swal_input default_transtion_input' "+
-                                                "type='text' "+
-                                                "value='"+((currentState[propertiesToEdit[i].name]!==undefined ? currentState[propertiesToEdit[i].name].condition : "") || "")+"' "+
-                                                "id='input_"+propertiesToEdit[i].name+"_condition_"+d.index+"' "+
-                                                "placeholder='condition'"+
+                                                "class='custom_swal_input' "+
+                                                "type='checkbox' "+
+                                                (isSilent ? "checked='true' " : "")+
+                                                "id='input_"+propertiesToEdit[i].name+"_silent_"+d.index+"' "+
                                             "/>"+
                                         "</span>"+
                                         "<span class='swal_select_subcontainer'>"+
-                                            //"<span class='sub_label'>default_transition_target : </span>"+
                                             "<select "+
                                                 "class='custom_swal_select' "+
                                                 "id='input_"+propertiesToEdit[i].name+"_target_"+d.index+"' "+

@@ -1,5 +1,5 @@
 define(function(){
-        return function(d,newCondition,newTarget,context){
+        return function(d,newSilent,newTarget,context){
             var states = context.getData["states"],
                 newTargetName="";
 
@@ -11,11 +11,11 @@ define(function(){
             }
 
             if(d.default_transition){
-                d.default_transition.condition = newCondition;
+                d.default_transition.silent = newSilent;
                 d.default_transition.target = newTargetName;
             }else{
                 d.default_transition = {
-                    "condition" : newCondition,
+                    "silent" : newSilent,
                     "target" : newTargetName
                 }
             }
@@ -23,11 +23,11 @@ define(function(){
             for(var state in states){
                 if(states.hasOwnProperty(state) && states[state].index === d.index){
                     if(states[state].default_transition){
-                        states[state].default_transition.condition = newCondition;
+                        states[state].default_transition.silent = newSilent;
                         states[state].default_transition.target = newTargetName;
                     }else{
                         states[state].default_transition = {
-                            "condition" : newCondition,
+                            "silent" : newSilent,
                             "target" : newTargetName
                         }
                     }

@@ -13,13 +13,13 @@ define(function(require){
         if(newValues.newDefaultTransition){
             if(d.default_transition){
                 if(
-                    (newValues.newDefaultTransition.condition !== d.default_transition.condition)
+                    (newValues.newDefaultTransition.silent !== d.default_transition.silent)
                     || (newValues.newDefaultTransition.target !== d.default_transition.target)
                 ){
-                    edit_default_transition(d,newValues.newDefaultTransition.condition,newValues.newDefaultTransition.target,context);
+                    edit_default_transition(d,newValues.newDefaultTransition.silent,newValues.newDefaultTransition.target,context);
                 }
             }else{
-                edit_default_transition(d,newValues.newDefaultTransition.condition,newValues.newDefaultTransition.target,context);
+                edit_default_transition(d,newValues.newDefaultTransition.silent,newValues.newDefaultTransition.target,context);
             }
         }
         //edit max_duration if necessary
