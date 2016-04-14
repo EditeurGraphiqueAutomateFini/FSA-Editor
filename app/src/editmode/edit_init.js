@@ -17,7 +17,7 @@ define(function(require){
                 undo = require("utility/undo");
 
             //generate global edition button
-            d3.select("#global_properties").html("<button class='btn btn-primary button_edit_global_properties'>Edit Global Properties</button>");
+            d3.select("#global_properties").html("<button class='btn btn-primary button_edit_global_properties'>Edit global properties</button>");
             d3.selectAll("#global_properties button").on("click",function(){
                 getGlobalEdition();
             });
@@ -394,8 +394,13 @@ define(function(require){
                     input="",
                     propertiesToEdit=[
                         { "name":"allow_overlap", "type":"check" },
-                        { "name":"state_defaults", "type":"state" },
-                        { "name":"default_matcher", "type":"text" }
+                        { "name":"default_matcher", "type":"text" },
+                        { "name":"state_defaults", "type":"" },
+                        { "name":"terminal", "type":"check" },
+                        { "name":"max_noise", "type":"number" },
+                        { "name":"max_total_noise", "type":"number" },
+                        { "name":"max_duration", "type":"number" },
+                        { "name":"max_total_duration", "type":"number" }
                     ];
 
                 for(var i=0;i<propertiesToEdit.length;i++){
@@ -423,6 +428,9 @@ define(function(require){
                                         (getData[propertiesToEdit[i].name] ? "checked='true' " : "")+
                                         "id='input_"+propertiesToEdit[i].name+"' "+
                                     "/>"
+                            break;
+                        default:
+                            input="";
                             break;
                     }
                     html+="<span class='swal_display global_display'>"+
@@ -521,6 +529,7 @@ define(function(require){
 
                             break;
                         default:
+                            input="";
                             break;
                     }
                     html+="<span class='swal_display state_display state_display_"+d.index+"'>"+
