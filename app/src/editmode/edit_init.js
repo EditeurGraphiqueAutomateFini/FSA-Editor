@@ -12,6 +12,7 @@ define(function(require){
                 edit_state = require("editmode/edit_state"),
                 edit_state_name = require("editmode/edit_state_name"),
                 edit_state_maxnoise = require("editmode/edit_state_maxnoise"),
+                edit_global = require("editmode/edit_global"),
                 editmode = require("editmode/edit_init"),
                 viewmode = require("viewmode/view_init"),
                 undo = require("utility/undo");
@@ -177,7 +178,70 @@ define(function(require){
                     closeOnConfirm: false,
                     animation: "slide-from-top"
                 },function(inputValue){
+                        if(inputValue){
+                            var newOverlap = false,
+                                newDefaultMatcher = "",
+                                newTerminal = false,
+                                newMaxNoise = 0,
+                                newMaxTotalNoise = 0,
+                                newMaxDuration = 0,
+                                newMaxTotalDuration = 0;
 
+                            //overlap
+                            newOverlap = d3.select("#input_allow_overlap").property("checked");
+                            //default_matcher
+                            newDefaultMatcher = d3.select("#input_default_matcher").property("value");
+                            //terminal
+                            newTerminal = d3.select("#input_terminal").property("checked");
+                            //max_noise
+                            newMaxNoise = d3.select("#input_max_noise").property("value");
+                            //max_total_noise
+                            newMaxTotalNoise = d3.select("#input_max_total_noise").property("value");
+                            //max_duration
+                            newMaxDuration = d3.select("#input_max_duration").property("value");
+                            //max_total_duration
+                            newMaxTotalDuration = d3.select("#input_max_total_duration").property("value");
+
+                            //tests
+                            if(newMaxNoise < 0){
+                                swal.showInputError("max_noise cannot be negative");
+                                return false;
+                            }
+                            if(newMaxTotalNoise < 0){
+                                swal.showInputError("max_total_noise cannot be negative");
+                                return false;
+                            }
+                            if(newMaxDuration < 0){
+                                swal.showInputError("max_duration cannot be negative");
+                                return false;
+                            }
+                            if(newMaxTotalDuration < 0){
+                                swal.showInputError("max_total_duration cannot be negative");
+                                return false;
+                            }
+
+                            //values assignment
+                            var newValues = {
+                                "newOverlap":newOverlap,
+                                "newDefaultMatcher":newDefaultMatcher,
+                                "newTerminal":newTerminal,
+                                "newMaxNoise":newMaxNoise,
+                                "newMaxTotalNoise":newMaxTotalNoise,
+                                "newMaxDuration":newMaxDuration,
+                                "newMaxTotalDuration":newMaxTotalDuration
+                            }
+
+                            edit_global(newValues,{"force":force,"getData":getData}); console.log(getData);
+
+                            editFrontEndObject();
+                            undo.addToStack(getData);
+                            swal.close();   //close sweetalert prompt window
+                        }else if(inputValue===false){  //cancel
+                            return false;
+                        }else if(inputValue===""){
+                            swal.showInputError("error");
+                            return false;
+                        }
                 });
             }
 
@@ -316,6 +380,7 @@ define(function(require){
                             "newMaxTotalDuration":newMaxTotalDuration,
                             "newDefaultTransition":newDefaultTransition
                         }
+
                         edit_state(newValues,d,{"force":force,"getData":getData});
 
                         cancelSelection(d);
@@ -396,20 +461,29 @@ define(function(require){
                         { "name":"allow_overlap", "type":"check" },
                         { "name":"default_matcher", "type":"text" },
                         { "name":"state_defaults", "type":"" },
-                        { "name":"terminal", "type":"check" },
-                        { "name":"max_noise", "type":"number" },
-                        { "name":"max_total_noise", "type":"number" },
-                        { "name":"max_duration", "type":"number" },
-                        { "name":"max_total_duration", "type":"number" }
+                        { "name":"terminal", "type":"check", "sub":"state_defaults" },
+                        { "name":"max_noise", "type":"number", "sub":"state_defaults" },
+                        { "name":"max_total_noise", "type":"number", "sub":"state_defaults" },
+                        { "name":"max_duration", "type":"number", "sub":"state_defaults" },
+                        { "name":"max_total_duration", "type":"number", "sub":"state_defaults" }
                     ];
 
+                var previousValue;
+
                 for(var i=0;i<propertiesToEdit.length;i++){
+
+                    if(propertiesToEdit[i].sub){
+                        previousValue = getData[propertiesToEdit[i].sub][propertiesToEdit[i].name];
+                    }else{
+                        previousValue = getData[propertiesToEdit[i].name];
+                    }
+
                     switch(propertiesToEdit[i].type){
                         case "text":
                             input = "<input "+
                                         "class='custom_swal_input' "+
                                         "type='text' "+
-                                        "value='"+(getData[propertiesToEdit[i].name] || "")+"' "+
+                                        "value='"+ (previousValue || "")+"' "+
                                         "id='input_"+propertiesToEdit[i].name+"' "+
                                     "/>"
                             break;
@@ -417,7 +491,7 @@ define(function(require){
                             input = "<input "+
                                         "class='custom_swal_input' "+
                                         "type='number' "+
-                                        "value='"+(getData[propertiesToEdit[i].name] || "")+"' "+
+                                        "value='"+(previousValue || 0)+"' "+
                                         "id='input_"+propertiesToEdit[i].name+"' "+
                                     "/>"
                             break;
@@ -425,7 +499,7 @@ define(function(require){
                             input = "<input "+
                                         "class='custom_swal_input' "+
                                         "type='checkbox' "+
-                                        (getData[propertiesToEdit[i].name] ? "checked='true' " : "")+
+                                        (previousValue ? "checked='true' " : "")+
                                         "id='input_"+propertiesToEdit[i].name+"' "+
                                     "/>"
                             break;
@@ -476,7 +550,7 @@ define(function(require){
                             input = "<input "+
                                         "class='custom_swal_input' "+
                                         "type='number' "+
-                                        "value='"+(currentState[propertiesToEdit[i].name] || "")+"' "+
+                                        "value='"+(currentState[propertiesToEdit[i].name] || 0)+"' "+
                                         "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
                                     "/>"
                             break;
