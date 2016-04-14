@@ -209,12 +209,20 @@ define(function(require){
                                 swal.showInputError("max_noise cannot be negative");
                                 return false;
                             }
+                            if(newMaxNoise > newMaxTotalNoise){
+                                swal.showInputError("max_noise cannot be > total_max_noise");
+                                return false;
+                            }
                             if(newMaxTotalNoise < 0){
                                 swal.showInputError("max_total_noise cannot be negative");
                                 return false;
                             }
                             if(newMaxDuration < 0){
                                 swal.showInputError("max_duration cannot be negative");
+                                return false;
+                            }
+                            if(newMaxDuration > newMaxTotalDuration){
+                                swal.showInputError("max_duration cannot be > total_max_duration");
                                 return false;
                             }
                             if(newMaxTotalDuration < 0){
@@ -356,12 +364,20 @@ define(function(require){
                             swal.showInputError("max_noise cannot be negative");
                             return false;
                         }
+                        if(newMaxNoise > newMaxTotalNoise){
+                            swal.showInputError("max_noise cannot be > total_max_noise");
+                            return false;
+                        }
                         if(newMaxTotalNoise < 0){
                             swal.showInputError("max_total_noise cannot be negative");
                             return false;
                         }
                         if(newMaxDuration < 0){
                             swal.showInputError("max_duration cannot be negative");
+                            return false;
+                        }
+                        if(newMaxDuration > newMaxTotalDuration){
+                            swal.showInputError("max_duration cannot be > total_max_duration");
                             return false;
                         }
                         if(newMaxTotalDuration < 0){
@@ -586,15 +602,6 @@ define(function(require){
                              }
                             input = "<span class='swal_select_container'>"+
                                         "<span class='swal_select_subcontainer'>"+
-                                            "<span class='sub_label'>silent : </span>"+
-                                            "<input "+
-                                                "class='custom_swal_input' "+
-                                                "type='checkbox' "+
-                                                (isSilent ? "checked='true' " : "")+
-                                                "id='input_"+propertiesToEdit[i].name+"_silent_"+d.index+"' "+
-                                            "/>"+
-                                        "</span>"+
-                                        "<span class='swal_select_subcontainer'>"+
                                             "<select "+
                                                 "class='custom_swal_select' "+
                                                 "id='input_"+propertiesToEdit[i].name+"_target_"+d.index+"' "+
@@ -602,6 +609,15 @@ define(function(require){
                                                 "<option "+( hasSelection ? "" : "selected='true'" )+" value=''>Select a target</option>"+
                                                 options +
                                             "</select>"+
+                                        "</span>"+
+                                        "<span class='swal_select_subcontainer'>"+
+                                            "<span class='sub_label'>silent : </span>"+
+                                            "<input "+
+                                                "class='custom_swal_input' "+
+                                                "type='checkbox' "+
+                                                (isSilent ? "checked='true' " : "")+
+                                                "id='input_"+propertiesToEdit[i].name+"_silent_"+d.index+"' "+
+                                            "/>"+
                                         "</span>"+
                                     "</span>"
 
@@ -628,7 +644,7 @@ define(function(require){
             //transition editing
             function getTransitionEdition(d){    //get new name w/ prompt-like
                 var swalTransitionInfo = swal({
-                    title: "Transition Edition",
+                    title: "Transition edition",
                     text: displayTransitionsAsList(d),
                     html: true,
                     showCancelButton: true,
@@ -689,13 +705,20 @@ define(function(require){
                 })
             }
             function displayTransitionsAsList(d){
-                var html = d.source.name + " ==> " + d.target.name,
+                var html = "<div class='transition_title'>"+d.source.name + " => " + d.target.name+"</div>",
                     conditions = d.condition.split(",");
 
+                html+=" <div class='header_transition'>"+
+                            "<span class='header_condition'>condition</span>"+
+                            "<span class='header_matcher'>matcher</span>"+
+                            "<span class='header_silent'>silent</span>"+
+                        "</div>";
                 conditions.forEach(function(condition,index){
                     html+="<span class='swal_display condition_display condition_display_"+index+"'>"+
                             "<span class='custom_swal_delete' id='delete_condition_"+index+"'>X</span>"+
-                            "<input class='custom_swal_input' type='text' value='"+condition+"' id='input_condition_"+index+"' />"+
+                            "<label><input class='custom_swal_input' type='text' value='"+condition+"' id='input_condition_"+index+"' /></label>"+
+                            "<label><input class='custom_swal_input matcher_input' type='text' /></label>"+
+                            "<label class='checkbox_label'><input class='custom_swal_input' type='checkbox' /></label> "+
                         "</span>";
                 });
 

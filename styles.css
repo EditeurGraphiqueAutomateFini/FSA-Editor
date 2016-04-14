@@ -199,6 +199,41 @@ text.condition{
 .swal_display .custom_swal_input{
     width: 90%;
 }
+/*swal condition*/
+.swal_display.condition_display .custom_swal_input,.swal_display.condition_display label{
+    width: 35%;
+}
+.swal_display.condition_display label.checkbox_label{
+    width: 10%;
+}
+.swal_display.condition_display label .custom_swal_input{
+    width: 80%;
+}
+.swal_display.condition_display .custom_swal_input[type="checkbox"]{
+    height: auto;
+    width: auto;
+}
+.transition_title{
+    margin: 0 0 10px;
+}
+.header_transition{
+    text-align: right;
+}
+.header_condition,.header_matcher,.header_silent{
+    display: inline-block;
+    font-weight: bold;
+    text-align: center;
+}
+.header_condition{
+    width: 45%;
+}
+.header_matcher{
+    width: 25%;
+}
+.header_silent{
+    width: 20%;
+}
+/**/
 .swal_display.state_display .custom_swal_input,.swal_display.global_display .custom_swal_input{
     width: auto;
 }
@@ -232,7 +267,7 @@ text.condition{
 }
 .custom_swal_select{
     display: block;
-    margin: 0 0 0 20px;
+    margin: 0 20px 0 0;
 }
 .swal_select_container{
 }
