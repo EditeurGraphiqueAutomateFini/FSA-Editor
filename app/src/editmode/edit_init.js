@@ -83,13 +83,15 @@ define(function(require){
                             if(rollBack){   //if any action has already been performed
                                 var newLoadedViewMode = viewmode.init(viewmode.extractStates([rollBack]),rollBack,true);
                                 editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
+                                editFrontEndObject();
                             }
                             break;
-                        case 89:    // on key "CTRL + Z" rollback
+                        case 89:    // on key "CTRL + Y" rollforth
                             var rollForth = undo.rollForth();
                             if(rollForth){   //if any action has already been performed
                                 var newLoadedViewMode = viewmode.init(viewmode.extractStates([rollForth]),rollForth,true);
                                 editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
+                                editFrontEndObject();
                             }
                             break;
                         default:

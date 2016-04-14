@@ -42,7 +42,8 @@ define(function(require){
         }else{
             rollingBackCount++;
         }
-            //console.log(rollingBack,undoQueue.length,rollingBackCount,undoQueue);
+
+        
         return _.cloneDeep(undoQueue[(undoQueue.length)-(1+rollingBackCount)]);
     }
     function rollForth(){
