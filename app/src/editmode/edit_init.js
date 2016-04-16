@@ -656,7 +656,7 @@ define(function(require){
                             conditionsToEdit = [],
                             commaError = false;
 
-                        d3.selectAll(".condition_display.user_delete input").each(function(){conditionsToDelete.push(this.value);});
+                        d3.selectAll(".condition_display.user_delete input.condition_input").each(function(){ conditionsToDelete.push(this.value); });
                         d3.selectAll(".condition_display.user_edited input").each(function(){
                             conditionsToEdit.push({
                                 "index":this.id.slice("input_condition_".length),
@@ -727,7 +727,7 @@ define(function(require){
                 conditions.forEach(function(condition,index){
                     html+="<span class='swal_display condition_display condition_display_"+index+"'>"+
                             "<span class='custom_swal_delete' id='delete_condition_"+index+"'>X</span>"+
-                            "<label><input class='custom_swal_input' type='text' value='"+condition.condition+"' id='input_condition_"+index+"' /></label>"+
+                            "<label><input class='custom_swal_input condition_input' type='text' value='"+condition.condition+"' id='input_condition_"+index+"' /></label>"+
                             "<label><input class='custom_swal_input matcher_input' type='text' value='"+
                                 (condition.matcher ? condition.matcher : "") +"'/>"+
                             "</label>"+
