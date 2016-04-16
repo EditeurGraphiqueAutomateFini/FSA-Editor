@@ -14,17 +14,46 @@ define(function(){
                 "marker-end" : "url(#end)"
             });
 
+
+        /* this process is intended to regroup all conditions for a same "source/target" couple */
+        var gatheredLinks = force.links()
+            .map(function(mappingElement,ind,arr){
+                var groupedCondition = mappingElement.condition;
+
+                for(var i = ind+1 ; i<arr.length ; i++){
+                    if(
+                        arr[i].source.index === mappingElement.source.index
+                        && arr[i].target.index === mappingElement.target.index
+                    ){
+                        groupedCondition += ", "+ arr[i].condition;
+                    }
+                }
+
+                mappingElement.condition = groupedCondition;
+
+                return {
+                    "source" : mappingElement.source,
+                    "target" : mappingElement.target,
+                    "condition" : mappingElement.condition
+                };
+            })
+            .filter(function(filteringElement,ind,arr){
+                for(var i = ind-1 ; i>=0 ; i-- ){
+                    if(
+                        arr[i].source.index === filteringElement.source.index
+                        && arr[i].target.index === filteringElement.target.index
+                    ){
+                        return false;
+                    }
+                }
+                return true;
+            });
+
         //create a text for each transition w/ the condition of the transition
         var condition = svg.append("g").classed("condition_container",true).selectAll("text")
-            .data(force.links())
-            .enter() //.append("text")
-            .append(function(d){
-                if(d3.selectAll(".condition.link_"+d.source.index +"_"+d.target.index).size() > 0){
-                    return document.createElementNS("http://www.w3.org/2000/svg","tspan");
-                }else{
-                    return document.createElementNS("http://www.w3.org/2000/svg","text");
-                }
-            })
+            .data(gatheredLinks)
+            .enter()
+            .append("text")
             .attr({
                 "x" : 20,
                 "y" : 0,
@@ -32,7 +61,7 @@ define(function(){
                     return "condition link_"+d.source.index +"_"+d.target.index
                 }
             })
-            .text(function(d){return d.condition;});
+            .text(function(d){ return d.condition; });
 
     }
 });
