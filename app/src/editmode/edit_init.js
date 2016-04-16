@@ -704,21 +704,36 @@ define(function(require){
                         });
                 })
             }
-            function displayTransitionsAsList(d){ console.log(d);
+            function displayTransitionsAsList(d){
                 var html = "<div class='transition_title'>"+d.source.name + " => " + d.target.name+"</div>",
-                    conditions = d.condition.split(",");
+                    //conditions = d.condition.split(",");
+                    conditions = [];
+
+                force.links().forEach(function(condition,ind){
+                    if(
+                        condition.source.index === d.source.index
+                        && condition.target.index === d.target.index
+                    ){
+                        conditions.push(condition);
+                    }
+                });
 
                 html+=" <div class='header_transition'>"+
                             "<span class='header_condition'>condition</span>"+
                             "<span class='header_matcher'>matcher</span>"+
                             "<span class='header_silent'>silent</span>"+
                         "</div>";
+
                 conditions.forEach(function(condition,index){
                     html+="<span class='swal_display condition_display condition_display_"+index+"'>"+
                             "<span class='custom_swal_delete' id='delete_condition_"+index+"'>X</span>"+
-                            "<label><input class='custom_swal_input' type='text' value='"+condition+"' id='input_condition_"+index+"' /></label>"+
-                            "<label><input class='custom_swal_input matcher_input' type='text' /></label>"+
-                            "<label class='checkbox_label'><input class='custom_swal_input' type='checkbox' /></label> "+
+                            "<label><input class='custom_swal_input' type='text' value='"+condition.condition+"' id='input_condition_"+index+"' /></label>"+
+                            "<label><input class='custom_swal_input matcher_input' type='text' value='"+
+                                (condition.matcher ? condition.matcher : "") +"'/>"+
+                            "</label>"+
+                            "<label class='checkbox_label'><input class='custom_swal_input' type='checkbox' "+
+                                (condition.silent ? "checked='true'" : "") +"'/>"+
+                            "</label> "+
                         "</span>";
                 });
 

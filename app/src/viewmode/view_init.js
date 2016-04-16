@@ -82,31 +82,17 @@ define(function(require){
                                             condition : state.transitions[i].condition
                                         };
 
-                                        /*isPresent = false,
-                                        isPresentIndex = 0*/
-
                                         if(state.transitions[i].matcher) newLink.matcher = state.transitions[i].matcher;
                                         if(state.transitions[i].silent) newLink.silent = state.transitions[i].silent;
 
                                         links.push(newLink);
-
-                                        /*for(var j=0; j<links.length;j++){
-                                            if(links[j].source === newLink.source && links[j].target === newLink.target){
-                                                isPresent=true;
-                                                isPresentIndex=j;
-                                            }
-                                        }
-                                        if(isPresent){
-                                            links[isPresentIndex].condition+=","+state.transitions[i].condition;
-                                        }else{
-                                            links.push(newLink);
-                                        }*/
                                     }
                                 }
                             }
                         }
                     }
                 });
+
                 //setPositions(states[0]);
                 if($("svg").size()>0){
                     $("svg").remove();

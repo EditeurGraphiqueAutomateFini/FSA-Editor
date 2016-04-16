@@ -16,7 +16,7 @@ define(function(){
 
 
         /* this process is intended to regroup all conditions for a same "source/target" couple */
-        var gatheredLinks = force.links()
+        var gatheredLinks = _.cloneDeep(force.links())
             .map(function(mappingElement,ind,arr){
                 var groupedCondition = mappingElement.condition;
 
