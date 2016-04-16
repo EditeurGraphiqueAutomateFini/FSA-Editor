@@ -17,9 +17,24 @@ define(function(require){
                 .prependTo("body");
         }
     }
+    closeContainerRight();
+    $("#object_container_close_right").click(closeContainerRight);
+    function closeContainerRight(){
+        $("#object_container_wrapper_right").toggleClass("closed");
+        $(this).toggleClass("panel_closed");
+        if($(this).hasClass("panel_closed")){
+            $("#object_container_close_right")
+                .html("<")
+                .prependTo("#object_container_wrapper_left");
+        }else{
+            $("#object_container_close_right")
+                .html(">")
+                .prependTo("body");
+        }
+    }
 });
-/*
-     $(document).ready(function() {
+
+    /* $(document).ready(function() {
 		$("#cadre-menu").click(function() {
 			$("#cadre-menu").animate({ marginLeft: "90px"  }, 400 );
   		},function(){

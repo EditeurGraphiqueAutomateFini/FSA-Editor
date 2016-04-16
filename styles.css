@@ -239,7 +239,9 @@ text.condition{
 #label_property_default_transition{
     vertical-align: top;
 }
+
 /*tools*/
+/*
 #cadre-menu {
 	position:fixed;
 	left:-114px;
@@ -251,7 +253,6 @@ text.condition{
 }
 #bordure-menu {
 	float:left;
-	background:#D19275;
 	width:115px;
 	margin:0px auto;
 	padding:2px;
@@ -268,11 +269,11 @@ text.condition{
 #bordure-menu ul li {
 
 	padding-top:25px;
-
+*/
     /*vertical-align:middle;
     text-align: center;*/
 
-
+/*
 }
 #bordure-menu ul li a {
 	color:#555;
@@ -285,9 +286,50 @@ text.condition{
 	width:95px;
 	margin:0px;
 	height:193px;
-	background:#A52A2A;
 	font-family: Tahoma;
     padding-top: 55px;
-    /*display: block;*/
+    
 
+}*/
+
+#svg_container,#object_container_wrapper_right{
+    height: 100%;
+    padding: 0 0 20px;
 }
+#object_container_wrapper_right{
+    position: absolute;
+    left: 0;
+    height: :50%;
+    width: 15%;
+    top: 50%;
+}
+#object_container_right{
+    border: 1px solid #e6e6e6;
+    color: #8a6d3b;
+    height: 10%;
+    overflow-y: scroll;
+    padding: 5px;
+    transition: background 0.4s ease-in-out;
+}
+#object_container_close_right{
+    border: 1px solid #e6e6e6;
+    font-weight: bold;
+    right: auto;
+    left: 0;
+    position: absolute ;
+    top: 46.5%;
+    transition: background 0.4s ease-in-out,opacity 0.4s ease-in-out;
+}
+#object_container_wrapper_right #object_container_close_right{
+    right: -34px;
+    left: auto;
+    top: 0;
+    /*transition: top 0.5s ease-in-out 0s;*/
+}
+#object_container_close_right:hover + #object_container_right {
+    background-color: #e6e6e6 !important;
+}
+
+
+
+
