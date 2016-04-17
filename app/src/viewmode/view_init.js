@@ -24,6 +24,21 @@ define(function(require){
                 }
             }
         },
+        getConditions :function(data,source,target){
+            var conditions = [];
+            for(var key in data){
+                if(data.hasOwnProperty(key)){
+                    if(data[key].uniqueId === source && data[key].transitions){
+                        data[key].transitions.forEach(function(transition){
+                            if(transition.target === target){
+                                conditions.push(transition);
+                            }
+                        });
+                    }
+                }
+            }
+            return conditions;
+        },
         // initialisation function : states : array of state objects; getData: initial retrieved data
         init : function(states,getData,reset){
             var create_svg = require("viewmode/create_svg"),
@@ -81,28 +96,22 @@ define(function(require){
                                 if(state.transitions && state.transitions.length>0){
                                     for(var i=0; i<state.transitions.length; i++){
 
-                                        //creating a new link
-                                        var newLink = {
-                                            source : state.uniqueId,
-                                            target : viewmode.getIdFromName(dataset,state.transitions[i].target)
-                                        }
                                         //add the new link if not already present
-                                        var testPresence = links.find(function(el){ return el.source === newLink.source && el.target === newLink.target });
+                                        var testPresence = links.find(function(el){
+                                             return (
+                                                el.source === state.uniqueId
+                                                && el.target === viewmode.getIdFromName(dataset,state.transitions[i].target)
+                                            );
+                                         });
                                         if(!testPresence){
+                                            //creating a new link
+                                            var newLink = {
+                                                "source" : state.uniqueId,
+                                                "target" : viewmode.getIdFromName(dataset,state.transitions[i].target),
+                                                "conditions" : viewmode.getConditions(dataset,state.uniqueId,state.transitions[i].target)
+                                            }
                                             links.push(newLink);
                                         }
-
-                                        //creating a new transition
-                                        var newTransition = {
-                                            source : state.uniqueId,
-                                            target : viewmode.getIdFromName(dataset,state.transitions[i].target),
-                                            condition : state.transitions[i].condition
-                                        };
-
-                                        if(state.transitions[i].matcher) newTransition.matcher = state.transitions[i].matcher;
-                                        if(state.transitions[i].silent) newTransition.silent = state.transitions[i].silent;
-                                        //adding the new transition in any case
-                                        transitionSet.push(newTransition);
                                     }
                                 }
                             }
@@ -111,7 +120,7 @@ define(function(require){
                 });
 
                 //set_positions(states[0]);
-                if($("svg").size()>0){
+                if($("svg").size() > 0){
                     $("svg").remove();
                 }
                 var svg = create_svg("#svg_container"),
@@ -158,8 +167,7 @@ define(function(require){
                 "svg" : svg,
                 "force" : force,
                 "getData" : getData,
-                "links" : links,
-                "transitions" : transitionSet
+                "links" : links
             };
         }
     }

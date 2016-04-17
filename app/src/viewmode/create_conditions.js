@@ -3,46 +3,9 @@ define(function(){
     return function(container,force){
 
         var svg = container;
-        
-        /* this process is intended to regroup all conditions for a same "source/target" couple */
-        /*
-        var gatheredLinks = _.cloneDeep(force.links())
-            .map(function(mappingElement,ind,arr){
-                var groupedCondition = mappingElement.condition;
-
-                for(var i = ind+1 ; i<arr.length ; i++){
-                    if(
-                        arr[i].source.index === mappingElement.source.index
-                        && arr[i].target.index === mappingElement.target.index
-                    ){
-                        groupedCondition += ", "+ arr[i].condition;
-                    }
-                }
-
-                mappingElement.condition = groupedCondition;
-
-                return {
-                    "source" : mappingElement.source,
-                    "target" : mappingElement.target,
-                    "condition" : mappingElement.condition
-                };
-            })
-            .filter(function(filteringElement,ind,arr){
-                for(var i = ind-1 ; i>=0 ; i-- ){
-                    if(
-                        arr[i].source.index === filteringElement.source.index
-                        && arr[i].target.index === filteringElement.target.index
-                    ){
-                        return false;
-                    }
-                }
-                return true;
-            });
-        */
 
         //create a text for each transition w/ the condition of the transition
         var condition = svg.append("g").classed("condition_container",true).selectAll("text")
-            //.data(gatheredLinks)
             .data(force.links())
             .enter()
             .append("text")
@@ -53,8 +16,21 @@ define(function(){
                     return "condition link_"+d.source.index +"_"+d.target.index
                 }
             })
-            //.text(function(d){ return d.condition; });
-            .text(function(d){ return "test"; });
+            .text(function(d){
+                var text = "",
+                    matched = false;
+
+                d.conditions.forEach(function(element){
+                    if(!matched){
+                        matched = true;
+                        text += element.condition;
+                    }else{
+                        text += ", "+element.condition;
+                    }
+                });
+
+                return text;
+             });
 
     }
 });
