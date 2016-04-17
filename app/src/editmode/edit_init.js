@@ -656,28 +656,60 @@ define(function(require){
                     if(inputValue){
                         var conditionsToDelete = [],
                             conditionsToEdit = [],
+                            editedItem = {},
                             commaError = false;
 
                         d3.selectAll(".condition_display.user_delete").each(function(){
-                            var index = this.getAttribute("id").indexOf("condition_display_")+"condition_display_".length;
-                            conditionsToDelete.push(parseInt(this.getAttribute("id").substr(index,1)));
+                            var attribute = 0,
+                                index = 0;
+
+                            attribute = this.getAttribute("id").indexOf("condition_display_")+"condition_display_".length;
+                            index = parseInt(this.getAttribute("id").substr(attribute,1));
+
+                            conditionsToDelete.push(index);
                         });
-                        d3.selectAll(".condition_display.user_edited input.condition_input").each(function(){
+                        d3.selectAll(".condition_display.user_edited").each(function(){
+                            var attribute = 0,
+                                index = 0;
+
+                            attribute = this.getAttribute("id").indexOf("condition_display_")+"condition_display_".length;
+                            index = parseInt(this.getAttribute("id").substr(attribute,1));
+
+                            editedItem = {
+                                "index" : index,
+                                "updatedValues" : {}
+                            };
+
+                            d3.select(this).selectAll("input").each(function(){
+                                var type = d3.select(this).attr("type");
+                                switch (type) {
+                                    case "text" :
+                                        if(d3.select(this).classed("condition_input")){
+                                            editedItem.updatedValues.condition = this.value;
+                                        }else if(d3.select(this).classed("matcher_input")){
+                                            editedItem.updatedValues.matcher = this.value;
+                                        }
+                                        break;
+                                    case "checkbox" :
+                                        if(d3.select(this).classed("silent_input")){
+                                            editedItem.updatedValues.silent = this.checked;
+                                        }
+                                        break;
+                                    default:
+                                }
+                            });
+
                             if(!d3.select(this.parentNode.parentNode).classed("user_delete")){
-                                conditionsToEdit.push({
-                                    "index":this.id.slice("input_condition_".length),
-                                    "updatedValue":this.value
-                                });
+                                conditionsToEdit.push(editedItem);
                             }
                         });
 
-                        if(conditionsToDelete.length > 0){
-                            delete_transition(d,conditionsToDelete,{"svg":svg,"force":force,"getData":getData,"links":links});
-                        }
                         if(conditionsToEdit.length > 0){
                             conditionsToEdit.forEach(function(el){
-                                if(el.updatedValue.indexOf(",")!=-1){
-                                    commaError = true;
+                                if(el.updatedValues){
+                                    if(el.updatedValues.condition.indexOf(",")!=-1){
+                                        commaError = true;
+                                    }
                                 }
                             });
                             if(commaError){
@@ -686,6 +718,10 @@ define(function(require){
                             }else{
                                 edit_transition(d,conditionsToEdit,{"svg":svg,"force":force,"getData":getData,"links":links});
                             }
+                        }
+
+                        if(conditionsToDelete.length > 0){
+                            delete_transition(d,conditionsToDelete,{"svg":svg,"force":force,"getData":getData,"links":links});
                         }
 
                         editFrontEndObject();
