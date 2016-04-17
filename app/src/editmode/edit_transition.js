@@ -6,6 +6,7 @@ define(function(){
             indexes=[], //get transition related to the edition among state transitions
             i = 0, j = 0;
 
+        //console.log(conditionsToEdit);
          conditionsToEdit.forEach(function(element){
              d.conditions[element.index].condition = element.updatedValue;
          });

@@ -2,7 +2,6 @@ define(function(){
     return function(d,conditionsToDelete,context){
         var states = context.getData.states,
             indexesToDelete = [],
-            conditionIndexesToDelete = [],
             i = 0, j = 0;
 
         //delete transitions in global object
@@ -10,18 +9,16 @@ define(function(){
             if(states[state] && states.hasOwnProperty(state)){
                 if(states[state].index === d.source.index){
                     if(states[state].transitions){
-
                         states[state].transitions.forEach(function(object,index){
                             conditionsToDelete.forEach(function(condition){
-                                if(object.condition === condition && object.target === d.target.name){
+                                if(object.condition === d.conditions[condition].condition && object.target === d.target.name){
                                     indexesToDelete.push(index);
                                 }
                             });
                         });
-
                         for(i=0; i<indexesToDelete.length; i++){
                             states[state].transitions.splice(indexesToDelete[i],1);
-                            for(j=0; j<indexesToDelete.length; j++) indexesToDelete[j]--;
+                            for(j=0; j < indexesToDelete.length; j++) indexesToDelete[j]--;
                         }
                     }
                 }
@@ -30,16 +27,9 @@ define(function(){
 
         //delete in d3 links
         if(d.conditions){
-
-            d.conditions.forEach(function(condition,index){
-                if(conditionsToDelete.includes(condition.condition)){
-                    conditionIndexesToDelete.push(index);
-                }
-            });
-
-            for(var i=0; i < conditionIndexesToDelete.length; i++){
-                d.conditions.splice(conditionIndexesToDelete[i],1);
-                for(j=0; j < conditionIndexesToDelete.length; j++) conditionIndexesToDelete[j]--;
+            for(var i=0; i < conditionsToDelete.length; i++){
+                d.conditions.splice(conditionsToDelete[i],1);
+                for(j=0; j < conditionsToDelete.length; j++) conditionsToDelete[j]--;
             }
         }
 

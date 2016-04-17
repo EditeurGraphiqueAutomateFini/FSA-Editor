@@ -658,12 +658,17 @@ define(function(require){
                             conditionsToEdit = [],
                             commaError = false;
 
-                        d3.selectAll(".condition_display.user_delete input.condition_input").each(function(){ conditionsToDelete.push(this.value); });
+                        d3.selectAll(".condition_display.user_delete").each(function(){
+                            var index = this.getAttribute("id").indexOf("condition_display_")+"condition_display_".length;
+                            conditionsToDelete.push(parseInt(this.getAttribute("id").substr(index,1)));
+                        });
                         d3.selectAll(".condition_display.user_edited input.condition_input").each(function(){
-                            conditionsToEdit.push({
-                                "index":this.id.slice("input_condition_".length),
-                                "updatedValue":this.value
-                            });
+                            if(!d3.select(this.parentNode.parentNode).classed("user_delete")){
+                                conditionsToEdit.push({
+                                    "index":this.id.slice("input_condition_".length),
+                                    "updatedValue":this.value
+                                });
+                            }
                         });
 
                         if(conditionsToDelete.length > 0){
@@ -716,13 +721,13 @@ define(function(require){
                         "</div>";
                 if(d.conditions){
                     d.conditions.forEach(function(condition,index){
-                        html += "<span class='swal_display condition_display condition_display_"+index+"'>"+
+                        html += "<span class='swal_display condition_display' id='condition_display_"+index+"'>"+
                                 "<span class='custom_swal_delete' id='delete_condition_"+index+"'>X</span>"+
                                 "<label><input class='custom_swal_input condition_input' type='text' value='"+condition.condition+"' id='input_condition_"+index+"' /></label>"+
                                 "<label><input class='custom_swal_input matcher_input' type='text' value='"+
                                     (condition.matcher ? condition.matcher : "") +"'/>"+
                                 "</label>"+
-                                "<label class='checkbox_label'><input class='custom_swal_input' type='checkbox' "+
+                                "<label class='checkbox_label'><input class='custom_swal_input silent_input' type='checkbox' "+
                                     (condition.silent ? "checked='true'" : "") +"'/>"+
                                 "</label> "+
                             "</span>";
