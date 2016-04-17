@@ -1,5 +1,5 @@
 define(function(){
-    return function(container,force,states,links){
+    return function(container,force){
 
         var svg = container;
 

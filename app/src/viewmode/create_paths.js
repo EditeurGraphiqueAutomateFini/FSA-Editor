@@ -1,6 +1,6 @@
 //create path between states : container : html container /!\D3/!\ selector, states : array of states, links : links array created w/ data array
 define(function(){
-    return function(container,force,links){
+    return function(container,force){
 
         var svg = container;
 
@@ -16,6 +16,7 @@ define(function(){
 
 
         /* this process is intended to regroup all conditions for a same "source/target" couple */
+        /*
         var gatheredLinks = _.cloneDeep(force.links())
             .map(function(mappingElement,ind,arr){
                 var groupedCondition = mappingElement.condition;
@@ -48,10 +49,12 @@ define(function(){
                 }
                 return true;
             });
+        */
 
         //create a text for each transition w/ the condition of the transition
         var condition = svg.append("g").classed("condition_container",true).selectAll("text")
-            .data(gatheredLinks)
+            //.data(gatheredLinks)
+            .data(force.links())
             .enter()
             .append("text")
             .attr({
@@ -61,7 +64,8 @@ define(function(){
                     return "condition link_"+d.source.index +"_"+d.target.index
                 }
             })
-            .text(function(d){ return d.condition; });
+            //.text(function(d){ return d.condition; });
+            .text(function(d){ return "test"; });
 
     }
 });

@@ -1,10 +1,10 @@
 //create d3 force layout
 define(function(require){
-    return function(container,states,links,getData){
+    return function(container,states,links){
         var tick = require("viewmode/tick_helper"),
             utility = require("utility/utility"),
             data_helper = require("viewmode/data_helper");
-            
+
         var containmentWidth = $("#svgbox")[0].getBoundingClientRect().width,
             containmentHeight = $("#svgbox")[0].getBoundingClientRect().height;
         //creating the force layout with states as nodes
@@ -12,7 +12,7 @@ define(function(require){
             .nodes(d3.values(states))
             .links(d3.values(links))
             .size(function(){
-                container.each(function(){return [this.clientWidth,this.clientHeight]});
+                container.each(function(){ return [this.clientWidth,this.clientHeight]; });
             })
             .linkDistance(200)
             .charge(-200)

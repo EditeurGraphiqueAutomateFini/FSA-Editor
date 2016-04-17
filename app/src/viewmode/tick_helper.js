@@ -2,10 +2,10 @@ define(function(){
 
     // Use elliptical arc path segments to doubly-encode directionality.
     return function(e,r,containmentWidth,containmentHeight){
-        var path=d3.selectAll(".link"),
-            condition=d3.selectAll(".condition"),
-            circle=d3.selectAll("circle"),
-            text=d3.selectAll(".state_name");
+        var path = d3.selectAll(".link"),
+            condition = d3.selectAll(".condition"),
+            circle = d3.selectAll("circle"),
+            text = d3.selectAll(".state_name");
 
         path.attr("d",linkArc);
         condition.attr("transform", transformCondition);
@@ -14,10 +14,10 @@ define(function(){
 
         //define new postition of arc between states
         function linkArc(d){
-            var sourceCoordX=getContainmentX(d.source.x),
-                sourceCoordY=getContainmentY(d.source.y),
-                targetCoordX=getContainmentX(d.target.x),
-                targetCoordY=getContainmentY(d.target.y);
+            var sourceCoordX = getContainmentX(d.source.x),
+                sourceCoordY = getContainmentY(d.source.y),
+                targetCoordX = getContainmentX(d.target.x),
+                targetCoordY = getContainmentY(d.target.y);
 
             var dx = targetCoordX - sourceCoordX,
                 dy = targetCoordY - sourceCoordY,
@@ -25,7 +25,7 @@ define(function(){
 
             //if source is pointing toward itself, create a fixed arc
             //optimisé pour 50, a modifier/tester
-            if(d.target===d.source){
+            if(d.target === d.source){
                 var distance = 50,
                     dr1 = "50",
                     dr2 = "33";
@@ -46,18 +46,20 @@ define(function(){
         }
         //define new postition of transition condition
         function transformCondition(d) {
-            var sourceCoordX=getContainmentX(d.source.x),
-                sourceCoordY=getContainmentY(d.source.y),
-                targetCoordX=getContainmentX(d.target.x),
-                targetCoordY=getContainmentY(d.target.y);
+            var sourceCoordX = getContainmentX(d.source.x),
+                sourceCoordY = getContainmentY(d.source.y),
+                targetCoordX = getContainmentX(d.target.x),
+                targetCoordY = getContainmentY(d.target.y);
 
             var translate = "";
+
             //if source is related to itself
-            if(d.source==d.target){ //todo variabiliser le 50
-                translate+="translate(" + (sourceCoordX+50) + "," + (sourceCoordY+50) + ")";
+            if(d.source == d.target){ //todo variabiliser le 50
+                translate += "translate(" + (sourceCoordX+50) + "," + (sourceCoordY+50) + ")";
             }else{
-                translate+="translate(" + ((sourceCoordX+targetCoordX)/2) + "," + ((sourceCoordY+targetCoordY)/2) + ")";
+                translate += "translate(" + ((sourceCoordX+targetCoordX)/2) + "," + ((sourceCoordY+targetCoordY)/2) + ")";
             }
+
             return translate;
         }
 
@@ -65,7 +67,7 @@ define(function(){
             return Math.max(r,Math.min(valX,containmentWidth-r));
         }
         function getContainmentY(valY){
-            return Math.max(r,Math.min(valY,containmentHeight-r))
+            return Math.max(r,Math.min(valY,containmentHeight-r));
         }
     }
 })

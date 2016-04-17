@@ -1,7 +1,7 @@
 define(function(require){
     return{
         //extract states
-        extractStates: function(data){
+        extractStates : function(data){
             var states=[];
             //iterating over states objects in data file (JSON), making a JS array of objects
             if(data){
@@ -13,24 +13,36 @@ define(function(require){
             }
             return states;
         },
+        getIdFromName : function(data,name){
+            for(var key in data){
+                if(data.hasOwnProperty(key)){
+                    if(data[key]){
+                        if(name === data[key].name){
+                            return data[key].uniqueId;
+                        }
+                    }
+                }
+            }
+        },
         // initialisation function : states : array of state objects; getData: initial retrieved data
         init : function(states,getData,reset){
-            var createSVG = require("viewmode/create_svg"),
-                createForceLayout = require("viewmode/create_force_layout"),
-                createCircles = require("viewmode/create_circles"),
-                createPaths = require("viewmode/create_paths"),
+            var create_svg = require("viewmode/create_svg"),
+                create_force_layout = require("viewmode/create_force_layout"),
+                create_circles = require("viewmode/create_circles"),
+                create_paths = require("viewmode/create_paths"),
                 tick = require("viewmode/tick_helper"),
                 data_helper = require("viewmode/data_helper"),
-                setPositions = require("viewmode/set_positions"),
+                set_positions = require("viewmode/set_positions"),
                 viewmode = require("viewmode/view_init"),
                 utility = require("utility/utility"),
                 server = require("utility/server_request"),
                 undo = require("utility/undo");
 
             if(states){
-                var links=[],
-                    dataset=[];
-                // Compute the distinct nodes from the links.
+                var transitionSet = [],
+                    links = [],
+                    dataset = [];
+                // Compute the distinct nodes from the transitionSet.
                 //très moyennement satisfait du bouzin ci-dessous
                 states.forEach(function(data,i){
                     var cpt=0;
@@ -45,7 +57,7 @@ define(function(require){
 
                                 //add graphicEditor values if not set
                                 if(!state.graphicEditor){
-                                    state.graphicEditor={};
+                                    state.graphicEditor = {};
                                 }else{
                                     state.graphicEditor.origCoordX = state.graphicEditor.coordX;
                                     state.graphicEditor.origCoordY = state.graphicEditor.coordY;
@@ -65,27 +77,30 @@ define(function(require){
                             var state = data[key];
                             if(state){
                                 if(state.transitions && state.transitions.length>0){
-                                    for(var i=0;i<state.transitions.length;i++){
+                                    for(var i=0; i<state.transitions.length; i++){
+
+                                        //creating a new link
                                         var newLink = {
                                             source : state.uniqueId,
-                                            target : (function(data){
-                                                for(var key in data){
-                                                    if(data.hasOwnProperty(key)){
-                                                        if(data[key]){
-                                                            if(state.transitions[i].target==data[key].name){
-                                                                return data[key].uniqueId;
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            })(dataset),
+                                            target : viewmode.getIdFromName(dataset,state.transitions[i].target)
+                                        }
+                                        //add the new link if not already present
+                                        var testPresence = links.find(function(el){ return el.source === newLink.source && el.target === newLink.target });
+                                        if(!testPresence){
+                                            links.push(newLink);
+                                        }
+
+                                        //creating a new transition
+                                        var newTransition = {
+                                            source : state.uniqueId,
+                                            target : viewmode.getIdFromName(dataset,state.transitions[i].target),
                                             condition : state.transitions[i].condition
                                         };
 
-                                        if(state.transitions[i].matcher) newLink.matcher = state.transitions[i].matcher;
-                                        if(state.transitions[i].silent) newLink.silent = state.transitions[i].silent;
-
-                                        links.push(newLink);
+                                        if(state.transitions[i].matcher) newTransition.matcher = state.transitions[i].matcher;
+                                        if(state.transitions[i].silent) newTransition.silent = state.transitions[i].silent;
+                                        //adding the new transition in any case
+                                        transitionSet.push(newTransition);
                                     }
                                 }
                             }
@@ -93,15 +108,15 @@ define(function(require){
                     }
                 });
 
-                //setPositions(states[0]);
+                //set_positions(states[0]);
                 if($("svg").size()>0){
                     $("svg").remove();
                 }
-                var svg = createSVG("#svg_container"),
-                    force = createForceLayout(svg,dataset,links,getData);
+                var svg = create_svg("#svg_container"),
+                    force = create_force_layout(svg,dataset,links);
 
-                createPaths(svg,force,links);
-                createCircles(svg,force,dataset,links);
+                create_paths(svg,force);
+                create_circles(svg,force);
 
             }else{
                 //todo : vue par défaut ? basculer vers le mode creation ?
@@ -136,10 +151,11 @@ define(function(require){
             });
 
             return {
-                "svg":svg,
-                "force":force,
-                "getData":getData,
-                "links":links
+                "svg" : svg,
+                "force" : force,
+                "getData" : getData,
+                "links" : links,
+                "transitions" : transitionSet
             };
         }
     }
