@@ -387,6 +387,15 @@ define(function(require){
                             return false;
                         }
 
+                        //max noise cannot be set together with default_transition
+                        if(
+                            parseInt(d3.select("[id^=input_max_noise_]").property("value")) > 0
+                            && parseInt(d3.select("[id^=input_default_transition_target_]").property("selectedIndex")) >0
+                        ){
+                            swal.showInputError("max_noise cannot be set with default_transition");
+                            return false;
+                        }
+
                         //aggregating new values in a single object
                         var newValues = {
                             "newName":newName,

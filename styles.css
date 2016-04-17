@@ -290,6 +290,9 @@ text.condition{
 #label_property_default_transition{
     vertical-align: top;
 }
+#label_property_state_defaults{
+    margin: 0 0 20px;
+}
 
 /*tools*/
 /*

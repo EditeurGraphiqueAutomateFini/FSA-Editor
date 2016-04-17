@@ -1,7 +1,7 @@
 define(function(require){
     return function(newValues,d,context){   //newValues includes newName,newTerminal,newMaxNoise,newMaxTotalNoise,newMaxDuration,newMaxTotalDuration,newDefaultTransition
-        var edit_default_transition = require("editmode/edit_default_transition"),
-            edit_references = require("editmode/edit_references"),
+        var edit_references = require("editmode/edit_references"),
+            edit_state_defaulttransition = require("editmode/edit_state_defaulttransition"),
             edit_state_maxduration = require("editmode/edit_state_maxduration"),
             edit_state_maxtotalduration = require("editmode/edit_state_maxtotalduration"),
             edit_state_maxnoise = require("editmode/edit_state_maxnoise"),
@@ -9,19 +9,6 @@ define(function(require){
             edit_state_name = require("editmode/edit_state_name"),
             edit_state_terminal = require("editmode/edit_state_terminal");
 
-        //edit default_transition if necessary
-        if(newValues.newDefaultTransition){
-            if(d.default_transition){
-                if(
-                    (newValues.newDefaultTransition.silent !== d.default_transition.silent)
-                    || (newValues.newDefaultTransition.target !== d.default_transition.target)
-                ){
-                    edit_default_transition(d,newValues.newDefaultTransition.silent,newValues.newDefaultTransition.target,context);
-                }
-            }else{
-                edit_default_transition(d,newValues.newDefaultTransition.silent,newValues.newDefaultTransition.target,context);
-            }
-        }
         //edit max_duration if necessary
         if(newValues.newMaxDuration !== d.max_duration){
             edit_state_maxduration(d,newValues.newMaxDuration,context);
@@ -51,6 +38,20 @@ define(function(require){
         //edit terminal if necessary
         if(newValues.newTerminal !== d.terminal){
             edit_state_terminal(d,newValues.newTerminal,context);
+        }
+
+        //edit default_transition if necessary
+        if(newValues.newDefaultTransition){
+            if(d.default_transition){
+                if(
+                    (newValues.newDefaultTransition.silent !== d.default_transition.silent)
+                    || (newValues.newDefaultTransition.target !== d.default_transition.target)
+                ){
+                    edit_state_defaulttransition(d,newValues.newDefaultTransition.silent,newValues.newDefaultTransition.target,context);
+                }
+            }else{
+                edit_state_defaulttransition(d,newValues.newDefaultTransition.silent,newValues.newDefaultTransition.target,context);
+            }
         }
 
         //restart force layout w/ new data
