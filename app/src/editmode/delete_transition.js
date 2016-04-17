@@ -1,23 +1,24 @@
 define(function(){
     return function(d,conditionsToDelete,context){
-        var states=context.getData.states,
-            indexesToDelete=[];
+        var states = context.getData.states,
+            indexesToDelete = [],
+            i = 0, j = 0;
 
         //delete transitions in global object
         for(var state in states){
             if(states[state] && states.hasOwnProperty(state)){
-                if(states[state].index===d.source.index){
+                if(states[state].index === d.source.index){
                     if(states[state].transitions){
                         states[state].transitions.forEach(function(object,index){
                             conditionsToDelete.forEach(function(condition){
-                                if(object.condition===condition && object.target===d.target.name){
+                                if(object.condition === d.conditions[condition].condition && object.target === d.target.name){
                                     indexesToDelete.push(index);
                                 }
                             });
                         });
-                        for(var i=0;i<indexesToDelete.length;i++){
+                        for(i=0; i<indexesToDelete.length; i++){
                             states[state].transitions.splice(indexesToDelete[i],1);
-                            for(var j=0;j<indexesToDelete.length;j++) indexesToDelete[j]--;
+                            for(j=0; j < indexesToDelete.length; j++) indexesToDelete[j]--;
                         }
                     }
                 }
@@ -25,21 +26,39 @@ define(function(){
         }
 
         //delete in d3 links
-        var newCondition = [];
-        context.force.links().forEach(function(object){
-            if(object.source.index===d.source.index && object.target.index===d.target.index){
-                for (var i=0;i<object.source.transitions.length;i++){
-                    if(object.source.transitions[i].target===d.target.name){
-                        newCondition.push(object.source.transitions[i].condition);
-                    }
-                }
-                object.condition = newCondition.toString();
+        if(d.conditions){
+            for(var i=0; i < conditionsToDelete.length; i++){
+                d.conditions.splice(conditionsToDelete[i],1);
+                for(j=0; j < conditionsToDelete.length; j++) conditionsToDelete[j]--;
             }
+        }
+
+        //edit html
+        d3.selectAll(".condition.link_"+d.source.index+"_"+d.target.index).text(function(d){  // /!\ probablement à factoriser avec le mode vue ...
+            var text = "",
+                matched = false;
+
+            if(d.conditions){
+                d.conditions.forEach(function(element){
+                    if(!matched){
+                        matched = true;
+                        text += element.condition;
+                    }else{
+                        text += ", "+element.condition;
+                    }
+                });
+            }
+
+            return text;
         });
 
-        //edit d3 html
-        d3.selectAll(".condition.link_"+d.source.index+"_"+d.target.index).html(function(d){return d.condition;});
-        //
+        //checking if no conditions remaining. If so, delete link
+        if(d.conditions){
+            if(d.conditions.length === 0){
+                d3.selectAll(".link_"+d.source.index+"_"+d.target.index).remove();
+                d3.select("#link_"+d.source.index+"_"+d.target.index).remove();
+            }
+        }
 
         //restarting force w/ new nodes and links
         context.force.start();

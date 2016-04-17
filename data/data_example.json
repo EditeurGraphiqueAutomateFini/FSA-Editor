@@ -1,69 +1,73 @@
 {
-    "allow_overlap": true,
-    "state_defaults":{
-        "terminal":false,
-        "max_noise":0,
-        "max_total_noise":1,
-        "max_duration":1,
-        "max_total_duration":2
+    "allow_overlap" : true,
+    "state_defaults" : {
+        "terminal" : false,
+        "max_noise" : 0,
+        "max_total_noise" : 1,
+        "max_duration" : 1,
+        "max_total_duration" : 2
     },
-    "default_matcher":"test",
-    "states": {
-        "start": {
-            "max_noise": 0,
-            "transitions": [
+    "default_matcher" : "test",
+    "states" : {
+        "start" : {
+            "max_noise" : 0,
+            "transitions" : [
                 {
-                    "condition": "a",
-                    "target": "start",
-                    "matcher": "test",
-                    "silent":true
+                    "condition" : "a",
+                    "target" : "start",
+                    "matcher" : "test",
+                    "silent" : true
                 },
                 {
-                    "condition": "a",
-                    "target": "s1"
+                    "condition" : "a",
+                    "target" : "s1"
                 },
                 {
-                    "condition": "d",
-                    "target": "s2"
+                    "condition" : "d",
+                    "target" : "s2"
                 }
             ]
         },
-        "s1": {
-            "transitions": [
+        "s1" : {
+            "transitions" : [
                 {
-                    "condition": "b",
-                    "target": "s1"
+                    "condition" : "b",
+                    "target" : "s1"
                 },
                 {
-                    "condition": "c",
-                    "target": "success"
+                    "condition" : "c",
+                    "target" : "success"
                 },
                 {
-                    "condition": "d",
-                    "target": "error"
+                    "condition" : "d",
+                    "target" : "error"
                 }
             ]
         },
-        "s2": {
-            "max_noise": 4,
-            "transitions": [
+        "s2" : {
+            "max_noise" : 4,
+            "transitions" : [
                 {
-                    "condition": "d",
-                    "target": "success"
+                    "condition" : "d",
+                    "target" : "success"
+                },
+                {
+                    "condition" : "z",
+                    "target" : "start"
                 }
             ]
         },
-        "success": {
-            "terminal": true
+        "success" : {
+            "terminal" : true
         },
-        "error": {
-            "terminal": true,
-            "max_total_noise":7,
-            "max_duration":2,
-            "max_total_duration":2,
-            "default_transition":{
-                "condition": "a",
-                "target": "start"
+        "error" : {
+            "terminal" : true,
+            "max_total_noise" : 7,
+            "max_duration" : 2,
+            "max_total_duration" : 2,
+            "default_transition" : {
+                "target" : "start",
+                "silent" : false
             }
         }
     }

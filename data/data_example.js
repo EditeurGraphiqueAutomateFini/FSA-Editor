@@ -13,6 +13,10 @@ define(function(){
                             "target": "start"
                         },
                         {
+                            "condition": "b",
+                            "target": "start"
+                        },
+                        {
                             "condition": "a",
                             "target": "s1"
                         },

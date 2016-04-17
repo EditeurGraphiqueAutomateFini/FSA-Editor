@@ -1,7 +1,7 @@
 define(function(require){
     return{
         //extract states
-        extractStates: function(data){
+        extractStates : function(data){
             var states=[];
             //iterating over states objects in data file (JSON), making a JS array of objects
             if(data){
@@ -13,24 +13,53 @@ define(function(require){
             }
             return states;
         },
+        getIdFromName : function(data,name){
+            for(var key in data){
+                if(data.hasOwnProperty(key)){
+                    if(data[key]){
+                        if(name === data[key].name){
+                            return data[key].uniqueId;
+                        }
+                    }
+                }
+            }
+        },
+        getConditions :function(data,source,target){
+            var conditions = [];
+            for(var key in data){
+                if(data.hasOwnProperty(key)){
+                    if(data[key].uniqueId === source && data[key].transitions){
+                        data[key].transitions.forEach(function(transition){
+                            if(transition.target === target){
+                                conditions.push(transition);
+                            }
+                        });
+                    }
+                }
+            }
+            return conditions;
+        },
         // initialisation function : states : array of state objects; getData: initial retrieved data
         init : function(states,getData,reset){
-            var createSVG = require("viewmode/create_svg"),
-                createForceLayout = require("viewmode/create_force_layout"),
-                createCircles = require("viewmode/create_circles"),
-                createPaths = require("viewmode/create_paths"),
+            var create_svg = require("viewmode/create_svg"),
+                create_force_layout = require("viewmode/create_force_layout"),
+                create_circles = require("viewmode/create_circles"),
+                create_state_names = require("viewmode/create_state_names"),
+                create_paths = require("viewmode/create_paths"),
+                create_conditions = require("viewmode/create_conditions"),
                 tick = require("viewmode/tick_helper"),
                 data_helper = require("viewmode/data_helper"),
-                setPositions = require("viewmode/set_positions"),
+                set_positions = require("viewmode/set_positions"),
                 viewmode = require("viewmode/view_init"),
                 utility = require("utility/utility"),
                 server = require("utility/server_request"),
                 undo = require("utility/undo");
 
             if(states){
-                var links=[],
-                    dataset=[];
-                // Compute the distinct nodes from the links.
+                var transitionSet = [],
+                    links = [],
+                    dataset = [];
+                // Compute the distinct nodes from the transitionSet.
                 //très moyennement satisfait du bouzin ci-dessous
                 states.forEach(function(data,i){
                     var cpt=0;
@@ -45,7 +74,7 @@ define(function(require){
 
                                 //add graphicEditor values if not set
                                 if(!state.graphicEditor){
-                                    state.graphicEditor={};
+                                    state.graphicEditor = {};
                                 }else{
                                     state.graphicEditor.origCoordX = state.graphicEditor.coordX;
                                     state.graphicEditor.origCoordY = state.graphicEditor.coordY;
@@ -65,34 +94,22 @@ define(function(require){
                             var state = data[key];
                             if(state){
                                 if(state.transitions && state.transitions.length>0){
-                                    for(var i=0;i<state.transitions.length;i++){
-                                        var newLink = {
-                                            source : state.uniqueId,
-                                            target : (function(data){
-                                                for(var key in data){
-                                                    if(data.hasOwnProperty(key)){
-                                                        if(data[key]){
-                                                            if(state.transitions[i].target==data[key].name){
-                                                                return data[key].uniqueId;
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            })(dataset),
-                                            condition : state.transitions[i].condition
-                                        },
-                                        isPresent = false,
-                                        isPresentIndex = 0;
+                                    for(var i=0; i<state.transitions.length; i++){
 
-                                        for(var j=0; j<links.length;j++){
-                                            if(links[j].source === newLink.source && links[j].target === newLink.target){
-                                                isPresent=true;
-                                                isPresentIndex=j;
+                                        //add the new link if not already present
+                                        var testPresence = links.find(function(el){
+                                             return (
+                                                el.source === state.uniqueId
+                                                && el.target === viewmode.getIdFromName(dataset,state.transitions[i].target)
+                                            );
+                                         });
+                                        if(!testPresence){
+                                            //creating a new link
+                                            var newLink = {
+                                                "source" : state.uniqueId,
+                                                "target" : viewmode.getIdFromName(dataset,state.transitions[i].target),
+                                                "conditions" : viewmode.getConditions(dataset,state.uniqueId,state.transitions[i].target)
                                             }
-                                        }
-                                        if(isPresent){
-                                            links[isPresentIndex].condition+=","+state.transitions[i].condition;
-                                        }else{
                                             links.push(newLink);
                                         }
                                     }
@@ -101,15 +118,18 @@ define(function(require){
                         }
                     }
                 });
-                //setPositions(states[0]);
-                if($("svg").size()>0){
+
+                //set_positions(states[0]);
+                if($("svg").size() > 0){
                     $("svg").remove();
                 }
-                var svg = createSVG("#svg_container"),
-                    force = createForceLayout(svg,dataset,links,getData);
+                var svg = create_svg("#svg_container"),
+                    force = create_force_layout(svg,dataset,links);
 
-                createPaths(svg,force,links);
-                createCircles(svg,force,dataset,links);
+                create_paths(svg,force);
+                create_conditions(svg,force);
+                create_circles(svg,force);
+                create_state_names(svg,force);
 
             }else{
                 //todo : vue par défaut ? basculer vers le mode creation ?
@@ -131,7 +151,7 @@ define(function(require){
                                 viewmode.init(viewmode.extractStates([rollBack]),rollBack,true);
                             }
                             break;
-                        case 89:    // on key "CTRL + Z" rollback
+                        case 89:    // on key "CTRL + Y" rollforth
                             var rollForth = undo.rollForth();
                             if(rollForth){   //if any action has already been performed
                                 viewmode.init(viewmode.extractStates([rollForth]),rollForth,true);
@@ -144,10 +164,10 @@ define(function(require){
             });
 
             return {
-                "svg":svg,
-                "force":force,
-                "getData":getData,
-                "links":links
+                "svg" : svg,
+                "force" : force,
+                "getData" : getData,
+                "links" : links
             };
         }
     }
