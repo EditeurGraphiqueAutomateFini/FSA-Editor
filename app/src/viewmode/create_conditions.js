@@ -20,14 +20,16 @@ define(function(){
                 var text = "",
                     matched = false;
 
-                d.conditions.forEach(function(element){
-                    if(!matched){
-                        matched = true;
-                        text += element.condition;
-                    }else{
-                        text += ", "+element.condition;
-                    }
-                });
+                if(d.conditions){
+                    d.conditions.forEach(function(element){
+                        if(!matched){
+                            matched = true;
+                            text += element.condition;
+                        }else{
+                            text += ", "+element.condition;
+                        }
+                    });
+                }
 
                 return text;
              });

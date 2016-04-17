@@ -8,7 +8,7 @@ define(function(require){
                 add_transition = require("editmode/add_transition"),
                 edit_transition = require("editmode/edit_transition"),
                 delete_transition = require("editmode/delete_transition"),
-                edit_path = require("editmode/edit_path"),
+                edit_condition = require("editmode/edit_condition"),
                 edit_state = require("editmode/edit_state"),
                 edit_state_name = require("editmode/edit_state_name"),
                 edit_state_maxnoise = require("editmode/edit_state_maxnoise"),
@@ -295,16 +295,18 @@ define(function(require){
                     if(inputValue){
                         //all condition passed
                         var condition = inputValue;
+
+                        add_transition(force,getData,previouslySelectedState,d,condition);    //add transition to global data object
+
                         if(previouslyExistingLink){
-                            edit_path(svg,force,previouslySelectedState.index,d.index,condition); //edit path
+                            edit_condition(svg,force,previouslySelectedState.index,d.index,condition); //edit path
                         }else{
-                            edit_path(svg,force,previouslySelectedState.index,d.index,condition,"new"); //edit path
+                            edit_condition(svg,force,previouslySelectedState.index,d.index,condition,"new"); //edit path
                             d3.select("text.condition.link_"+previouslySelectedState.index+"_"+d.index)
                                 .on("click",function(d){
                                     getTransitionEdition(d);
                                 });
                         }
-                        add_transition(force,getData,previouslySelectedState,d,condition);    //add transition to global data object
                         //edit visual hints
                         previouslySelectedState.graphicEditor.linking=false;
                         d.graphicEditor.linking=false;
