@@ -21,9 +21,9 @@ define(function(require){
 
     closeContainerRight();
     $("#object_container_close_right").click(closeContainerRight);
-    
+
     function closeContainerRight(){
-        $("#object_container_wrapper_right").toggleClass("closed");
+        $("#object_container_wrapper_left").toggleClass("closed");
         $(this).toggleClass("panel_closed");
         if($(this).hasClass("panel_closed")){
             $("#object_container_close_right")

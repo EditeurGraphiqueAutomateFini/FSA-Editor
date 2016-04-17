@@ -105,13 +105,14 @@ text.condition{
     height: 100%;
     padding: 0 0 20px;
 }
-#object_container_wrapper{
+#object_container_wrapper,#object_container_wrapper_left{
+    height: 100%;
     position: absolute;
     right: 0;
     top: 0;
     width: 25%;
 }
-#object_container_left{
+#object_container_left,#object_container_right{
     border: 1px solid #e6e6e6;
     color: #8a6d3b;
     height: 100%;
@@ -119,7 +120,7 @@ text.condition{
     padding: 5px;
     transition: background 0.4s ease-in-out;
 }
-#object_container_close{
+#object_container_close,#object_container_close_right{
     border: 1px solid #e6e6e6;
     font-weight: bold;
     left: auto;
@@ -128,14 +129,29 @@ text.condition{
     top: 50%;
     transition: background 0.4s ease-in-out,opacity 0.4s ease-in-out;
 }
-#object_container_wrapper #object_container_close{
+#object_container_wrapper #object_container_close,#object_container_wrapper_left #object_container_close_right{
     left: -34px;
     right: auto;
     top: 0;
-    /*transition: top 0.5s ease-in-out 0s;*/
 }
-#object_container_close:hover + #object_container_left {
+#object_container_close:hover + #object_container_left,#object_container_close_right:hover + #object_container_right {
     background-color: #e6e6e6 !important;
+}
+#object_container_right{
+    overflow-y: auto;
+}
+#object_container_wrapper_left{
+    left: 0;
+    width: 15%;
+}
+#object_container_close_right{
+    left: 0;
+    right: auto;
+    top: 46.5%;
+}
+#object_container_wrapper_left #object_container_close_right{
+    left: auto;
+    right: -34px;
 }
 .closed{
     transition: opacity 0.4s ease-in-out, width 0s none 0.5s;
@@ -317,26 +333,6 @@ text.condition{
 }
 */
 
-#svg_container,#object_container_wrapper_right{
-    height: 100%;
-    padding: 0 0 20px;
-}
-#object_container_wrapper_right{
-    position: absolute;
-    left: 0;
-    height: :50%;
-    width: 15%;
-    top: 50%;
-}
-#object_container_right{
-    border: 1px solid #e6e6e6;
-    color: #8a6d3b;
-    height: 10%;
-    overflow-y: scroll;
-    padding: 5px;
-    transition: background 0.4s ease-in-out;
-}
-<<<<<<< HEAD
 /*global properties*/
 #global_properties{
     text-align: center;
@@ -345,27 +341,3 @@ text.condition{
 .button_edit_global_properties{
     margin: 10px 0 0;
 }
-=======
-#object_container_close_right{
-    border: 1px solid #e6e6e6;
-    font-weight: bold;
-    right: auto;
-    left: 0;
-    position: absolute ;
-    top: 46.5%;
-    transition: background 0.4s ease-in-out,opacity 0.4s ease-in-out;
-}
-#object_container_wrapper_right #object_container_close_right{
-    right: -34px;
-    left: auto;
-    top: 0;
-    /*transition: top 0.5s ease-in-out 0s;*/
-}
-#object_container_close_right:hover + #object_container_right {
-    background-color: #e6e6e6 !important;
-}
-
-
-
-
->>>>>>> origin/master
