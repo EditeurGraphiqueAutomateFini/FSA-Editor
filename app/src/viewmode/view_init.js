@@ -29,7 +29,9 @@ define(function(require){
             var create_svg = require("viewmode/create_svg"),
                 create_force_layout = require("viewmode/create_force_layout"),
                 create_circles = require("viewmode/create_circles"),
+                create_state_names = require("viewmode/create_state_names"),
                 create_paths = require("viewmode/create_paths"),
+                create_conditions = require("viewmode/create_conditions"),
                 tick = require("viewmode/tick_helper"),
                 data_helper = require("viewmode/data_helper"),
                 set_positions = require("viewmode/set_positions"),
@@ -116,7 +118,9 @@ define(function(require){
                     force = create_force_layout(svg,dataset,links);
 
                 create_paths(svg,force);
+                create_conditions(svg,force);
                 create_circles(svg,force);
+                create_state_names(svg,force);
 
             }else{
                 //todo : vue par défaut ? basculer vers le mode creation ?
