@@ -2,34 +2,31 @@ define(function(){
     //conditionsToEdit : string array
     return function(d,conditionsToEdit,context){
 
-        var conditions = d.condition.split(","),
-            newConditions=[],
-            indexes=[]; //get transition related to the edition among state transitions
+        var newConditions=[],
+            indexes=[], //get transition related to the edition among state transitions
+            i = 0, j = 0;
 
-         context.getData.states[d.source.name].transitions.forEach(function(transition,index){
-             conditions.forEach(function(condition){
-                 if(transition.condition===condition && transition.target===d.target.name){
-                     indexes.push(index);
+         conditionsToEdit.forEach(function(element){
+             d.conditions[element.index].condition = element.updatedValue;
+         });
+
+         d3.select("text.link_"+d.source.index+"_"+d.target.index)
+             .text(function(d){  // /!\ probablement à factoriser avec le mode vue ...
+                 var text = "",
+                     matched = false;
+
+                 if(d.conditions){
+                     d.conditions.forEach(function(element){
+                         if(!matched){
+                             matched = true;
+                             text += element.condition;
+                         }else{
+                             text += ", "+element.condition;
+                         }
+                     });
                  }
+
+                 return text;
              });
-         });
-
-         var j=0;
-         for(var i=0;i<indexes.length;i++){
-             for(j=0;j<conditionsToEdit.length;j++){
-                 if(conditionsToEdit[j].index==i){
-                     context.getData.states[d.source.name].transitions[indexes[i]].condition = conditionsToEdit[i].updatedValue;
-                 }
-             }
-         }
-
-         indexes.forEach(function(el){
-             newConditions.push(context.getData.states[d.source.name].transitions[el].condition);
-         });
-         d.condition=newConditions.join();
-
-         d3.select("text.link_"+d.source.index+"_"+d.target.index).html(function(d){
-             return d.condition;
-         });
     }
 });

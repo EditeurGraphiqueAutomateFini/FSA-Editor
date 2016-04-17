@@ -659,17 +659,17 @@ define(function(require){
                             commaError = false;
 
                         d3.selectAll(".condition_display.user_delete input.condition_input").each(function(){ conditionsToDelete.push(this.value); });
-                        d3.selectAll(".condition_display.user_edited input").each(function(){
+                        d3.selectAll(".condition_display.user_edited input.condition_input").each(function(){
                             conditionsToEdit.push({
                                 "index":this.id.slice("input_condition_".length),
                                 "updatedValue":this.value
                             });
                         });
 
-                        if(conditionsToDelete.length>0){
+                        if(conditionsToDelete.length > 0){
                             delete_transition(d,conditionsToDelete,{"svg":svg,"force":force,"getData":getData,"links":links});
                         }
-                        if(conditionsToEdit.length>0){
+                        if(conditionsToEdit.length > 0){
                             conditionsToEdit.forEach(function(el){
                                 if(el.updatedValue.indexOf(",")!=-1){
                                     commaError = true;
@@ -702,42 +702,32 @@ define(function(require){
                 d3.selectAll(".condition_display input").each(function(){
                     d3.select(this)
                         .on("change",function(){
-                            d3.select(this.parentNode).classed("user_edited",true);
+                            d3.select(this.parentNode.parentNode).classed("user_edited",true);
                         });
                 })
             }
             function displayTransitionsAsList(d){
-                var html = "<div class='transition_title'>"+d.source.name + " => " + d.target.name+"</div>",
-                    //conditions = d.condition.split(",");
-                    conditions = [];
+                var html = "<div class='transition_title'>"+d.source.name + " => " + d.target.name+"</div>";
 
-                force.links().forEach(function(condition,ind){
-                    if(
-                        condition.source.index === d.source.index
-                        && condition.target.index === d.target.index
-                    ){
-                        conditions.push(condition);
-                    }
-                });
-
-                html+=" <div class='header_transition'>"+
+                html += " <div class='header_transition'>"+
                             "<span class='header_condition'>condition</span>"+
                             "<span class='header_matcher'>matcher</span>"+
                             "<span class='header_silent'>silent</span>"+
                         "</div>";
-
-                conditions.forEach(function(condition,index){
-                    html+="<span class='swal_display condition_display condition_display_"+index+"'>"+
-                            "<span class='custom_swal_delete' id='delete_condition_"+index+"'>X</span>"+
-                            "<label><input class='custom_swal_input condition_input' type='text' value='"+condition.condition+"' id='input_condition_"+index+"' /></label>"+
-                            "<label><input class='custom_swal_input matcher_input' type='text' value='"+
-                                (condition.matcher ? condition.matcher : "") +"'/>"+
-                            "</label>"+
-                            "<label class='checkbox_label'><input class='custom_swal_input' type='checkbox' "+
-                                (condition.silent ? "checked='true'" : "") +"'/>"+
-                            "</label> "+
-                        "</span>";
-                });
+                if(d.conditions){
+                    d.conditions.forEach(function(condition,index){
+                        html += "<span class='swal_display condition_display condition_display_"+index+"'>"+
+                                "<span class='custom_swal_delete' id='delete_condition_"+index+"'>X</span>"+
+                                "<label><input class='custom_swal_input condition_input' type='text' value='"+condition.condition+"' id='input_condition_"+index+"' /></label>"+
+                                "<label><input class='custom_swal_input matcher_input' type='text' value='"+
+                                    (condition.matcher ? condition.matcher : "") +"'/>"+
+                                "</label>"+
+                                "<label class='checkbox_label'><input class='custom_swal_input' type='checkbox' "+
+                                    (condition.silent ? "checked='true'" : "") +"'/>"+
+                                "</label> "+
+                            "</span>";
+                    });
+                }
 
                 return html;
             }
