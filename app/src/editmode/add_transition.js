@@ -8,11 +8,12 @@ define(function(){
                 "condition" : condition,
                 "target" : target.name
             };
-
-        if(state.hasOwnProperty("transitions")){
-            state.transitions.push(transition);
-        }else{
-            object.states[source.name]["transitions"]=[transition];
+        if(state){
+            if(state.transitions){
+                state.transitions.push(transition);
+            }else{
+                state.transitions = [transition];
+            }
         }
 
         //edit links

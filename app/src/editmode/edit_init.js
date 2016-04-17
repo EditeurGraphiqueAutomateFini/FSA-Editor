@@ -280,6 +280,10 @@ define(function(require){
                         swal.showInputError("You need to write a condition");
                         return false;
                     }
+                    if(inputValue.indexOf(",") !== -1){
+                        swal.showInputError("\',\' is not allowed for transitions");
+                        return false;
+                    }
                     if(d3.select(linkingTestID).data()[0].hasOwnProperty("transitions")){   //if link alreay exists width the condition, error message
                         d3.select(linkingTestID).data()[0].transitions.forEach(function(el,ind,arr){
                             if(el.target===d.name){
@@ -387,6 +391,25 @@ define(function(require){
                             return false;
                         }
 
+                        //max noise cannot be set together with default_transition
+                        if(
+                            parseInt(d3.select("[id^=input_max_noise_]").property("value")) > 0
+                            && parseInt(d3.select("[id^=input_default_transition_target_]").property("selectedIndex")) >0
+                        ){
+                            swal.showInputError("max_noise cannot be set with default_transition");
+                            return false;
+                        }
+
+                        //check if name already exists
+                        for(var state in getData.states){
+                            if(getData.states.hasOwnProperty(state) && getData.states[state]){
+                                if(newName === getData.states[state].name && getData.states[state].index !== d.index){
+                                    swal.showInputError("A state with this name already exists");
+                                    return false;
+                                }
+                            }
+                        }
+
                         //aggregating new values in a single object
                         var newValues = {
                             "newName":newName,
@@ -424,16 +447,27 @@ define(function(require){
                     animation: "slide-from-top"
                 },function(inputValue){
                     if(inputValue){  //edit state name if confirmed
-                        edit_references(getData,d.name,inputValue);
-                        edit_state_name(d,inputValue,{"svg":svg,"force":force,"getData":getData,"links":links});
-                        cancelSelection(d);
-                        editFrontEndObject();
-                        undo.addToStack(getData);
+                        if(inputValue !== d.name){
+                            //check if name already exists
+                            for(var state in getData.states){
+                                if(getData.states.hasOwnProperty(state) && getData.states[state]){
+                                    if(inputValue === getData.states[state].name && getData.states[state].index !== d.index){
+                                        swal.showInputError("A state with this name already exists");
+                                        return false;
+                                    }
+                                }
+                            }
+                            edit_references(getData,d.name,inputValue);
+                            edit_state_name(d,inputValue,{"svg":svg,"force":force,"getData":getData,"links":links});
+                            cancelSelection(d);
+                            editFrontEndObject();
+                            undo.addToStack(getData);
+                        }
                         swal.close();   //close sweetalert prompt window
-                    }else if(inputValue===false){  //cancel
+                    }else if(inputValue === false){  //cancel
                         cancelSelection(d);
                         return false;
-                    }else if(inputValue===""){  //empty new state name
+                    }else if(inputValue === ""){  //empty new state name
                         swal.showInputError("Please enter a state name");
                         return false;
                     }

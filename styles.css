@@ -147,7 +147,6 @@ text.condition{
 #object_container_close_right{
     left: 0;
     right: auto;
-    top: 46.5%;
 }
 #object_container_wrapper_left #object_container_close_right{
     left: auto;
@@ -289,6 +288,9 @@ text.condition{
 }
 #label_property_default_transition{
     vertical-align: top;
+}
+#label_property_state_defaults{
+    margin: 0 0 20px;
 }
 
 /*tools*/

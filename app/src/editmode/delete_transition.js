@@ -2,6 +2,7 @@ define(function(){
     return function(d,conditionsToDelete,context){
         var states = context.getData.states,
             indexesToDelete = [],
+            indexeToDelete,
             i = 0, j = 0;
 
         //delete transitions in global object
@@ -57,6 +58,12 @@ define(function(){
             if(d.conditions.length === 0){
                 d3.selectAll(".link_"+d.source.index+"_"+d.target.index).remove();
                 d3.select("#link_"+d.source.index+"_"+d.target.index).remove();
+                context.force.links().forEach(function(link,index){
+                    if(link.source.index === d.source.index && link.target.index === d.target.index){
+                        indexeToDelete = index;
+                    }
+                });
+                context.force.links().splice(indexeToDelete,1);
             }
         }
 
