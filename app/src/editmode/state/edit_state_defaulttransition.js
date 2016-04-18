@@ -4,7 +4,7 @@ define(function(){
             newTargetName = "",
             state;
 
-        if(d.max_noise > 0){    //cannot be set together w/ max_noise
+        if(d.max_noise > 0){    // cannot be set together w/ max_noise
             d.default_transition = undefined;
             for(state in states){
                 if(states.hasOwnProperty(state) && states[state]){

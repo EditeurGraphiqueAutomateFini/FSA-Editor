@@ -26,23 +26,23 @@ define(function(require){
                             "target":0
                         };
 
-                    //name
+                    // name
                     newName = d3.select("#input_name_"+d.index).property("value");
-                    //terminal
+                    // terminal
                     newTerminal = d3.select("#input_terminal_"+d.index).property("checked");
-                    //max_noise
+                    // max_noise
                     newMaxNoise = parseInt(d3.select("#input_max_noise_"+d.index).property("value"));
-                    //max_total_noise
+                    // max_total_noise
                     newMaxTotalNoise = parseInt(d3.select("#input_max_total_noise_"+d.index).property("value"));
-                    //max_duration
+                    // max_duration
                     newMaxDuration = parseInt(d3.select("#input_max_duration_"+d.index).property("value"));
-                    //max_total_duration
+                    // max_total_duration
                     newMaxTotalDuration = parseInt(d3.select("#input_max_total_duration_"+d.index).property("value"));
-                    //default_transition
+                    // default_transition
                     newDefaultTransition.silent = d3.select("#input_default_transition_silent_"+d.index).property("checked");
                     newDefaultTransition.target = d3.select("#input_default_transition_target_"+d.index).property("value");
 
-                    //tests
+                    // tests
                     if(newMaxNoise < 0){
                         swal.showInputError("max_noise cannot be negative");
                         return false;
@@ -68,7 +68,7 @@ define(function(require){
                         return false;
                     }
 
-                    //max noise cannot be set together with default_transition
+                    // max noise cannot be set together with default_transition
                     if(
                         parseInt(d3.select("[id^=input_max_noise_]").property("value")) > 0
                         && parseInt(d3.select("[id^=input_default_transition_target_]").property("selectedIndex")) > 0
@@ -77,7 +77,7 @@ define(function(require){
                         return false;
                     }
 
-                    //check if name already exists
+                    // check if name already exists
                     for(var state in context.getData.states){
                         if(context.getData.states.hasOwnProperty(state) && context.getData.states[state]){
                             if(newName === context.getData.states[state].name && context.getData.states[state].index !== d.index){
@@ -87,7 +87,7 @@ define(function(require){
                         }
                     }
 
-                    //aggregating new values in a single object
+                    // aggregating new values in a single object
                     newValues = {
                         "newName":newName,
                         "newTerminal":newTerminal,
@@ -103,8 +103,8 @@ define(function(require){
                     cancel_selection(d);
                     edit_frontend_object(context.getData);
                     undo.addToStack(context.getData);
-                    swal.close();   //close sweetalert prompt window
-                }else if(inputValue === false){  //cancel
+                    swal.close();   // close sweetalert prompt window
+                }else if(inputValue === false){  // cancel
                     cancel_selection(d);
                     return false;
                 }else if(inputValue === ""){

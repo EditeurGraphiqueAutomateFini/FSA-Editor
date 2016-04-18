@@ -1,6 +1,6 @@
 define(function(require){
     return{
-        //obtain data, use it to load a mode. mode : string representing the mode to load
+        // obtain data, use it to load a mode. mode : string representing the mode to load
         getRequest : function(mode){
             var viewmode = require("viewmode/view_init"),
                 data_helper = require("viewmode/data_helper"),
@@ -29,30 +29,30 @@ define(function(require){
             function succesFunction(getData,mode){
                 if(getData){
                     var parsedData = JSON.parse(getData);
-                    var parsedDataSolid = _.cloneDeep(parsedData); //cloning parsed data to keep it untouched for a later reset
-                    //display object
+                    var parsedDataSolid = _.cloneDeep(parsedData); // cloning parsed data to keep it untouched for a later reset
+                    // display object
                     utility.frontEndObject([parsedData]);
                     undo.addToStack(parsedData);
                     switch (mode) {
                         case "view":
-                            //initiate viewmode
+                            // initiate viewmode
                             viewmode.init(viewmode.extractStates([parsedData]),parsedData);
-                            //handel reset
+                            // handel reset
                             $("button.reset").click(function(){
-                                var parsedDataLiquid = _.cloneDeep(parsedDataSolid);   //cloning untouched cloned data
-                                //re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
+                                var parsedDataLiquid = _.cloneDeep(parsedDataSolid);   // cloning untouched cloned data
+                                // re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
                                 viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,true);
-                                //reseting front-end object display
+                                // reseting front-end object display
                                 utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
                                 $("#object_container_left").css("background","transparent");
                             });
                             break;
                         case "edit":
-                            //loading view mode
+                            // loading view mode
                             var loadedViewMode = viewmode.init(viewmode.extractStates([parsedData]),parsedData);
-                            //loading edit mode from previously loaded viewmode
+                            // loading edit mode from previously loaded viewmode
                             editmode.init(loadedViewMode.svg,loadedViewMode.force,loadedViewMode.getData,loadedViewMode.links);
-                            //handling reset (same as edit mode)
+                            // handling reset (same as edit mode)
                             $("button.reset").click(function(){
                                 var parsedDataLiquid = _.cloneDeep(parsedDataSolid);
                                 var newLoadedViewMode = viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid);
@@ -65,7 +65,7 @@ define(function(require){
                             viewmode.init(viewmode.extractStates([parsedData]),parsedData);
                     }
 
-                    //handle saving (posting edited data)
+                    // handle saving (posting edited data)
                     $("button.save").click(function(){
                         var endPostData = data_helper.cleanData(parsedData);
                         server.postRequest(endPostData,mode);
@@ -73,35 +73,35 @@ define(function(require){
                 }
             }
             function errorFunction(mode){
-                //there has been an error w/ ajax request
+                // there has been an error w/ ajax request
                 console.log("/!\\ ajax : error retrieving data from server, local data loaded");
 
-                //thus loading local data (probablement a modifier)
+                // thus loading local data (probablement a modifier)
                 var data = require("data/data_example");
                 var dataSolid = _.cloneDeep(data);
-                //display object
+                // display object
                 utility.frontEndObject(data);
-                //intiate view mode w/ static data
+                // intiate view mode w/ static data
                 switch (mode) {
                     case "view":
-                        //initiate viewmode
+                        // initiate viewmode
                         viewmode.init(viewmode.extractStates(data),data);
-                        //handel reset
+                        // handel reset
                         $("button.reset").click(function(){
-                            var parsedDataLiquid = _.cloneDeep(dataSolid);   //cloning untouched cloned data
-                            //re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
+                            var parsedDataLiquid = _.cloneDeep(dataSolid);   // cloning untouched cloned data
+                            // re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
                             viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,true);
-                            //reseting front-end object display
+                            // reseting front-end object display
                             utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
                             $("#object_container_left").css("background","transparent");
                         });
                         break;
                     case "edit":
-                        //loading view mode
+                        // loading view mode
                         var loadedViewMode = viewmode.init(viewmode.extractStates(data),data);
-                        //loading edit mode from previously loaded viewmode
+                        // loading edit mode from previously loaded viewmode
                         editmode.init(loadedViewMode.svg,loadedViewMode.force,loadedViewMode.getData,loadedViewMode.links);
-                        //handling reset (same as edit mode)
+                        // handling reset (same as edit mode)
                         $("button.reset").click(function(){
                             var parsedDataLiquid = _.cloneDeep(dataSolid);
                             var newLoadedViewMode = viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid);
@@ -115,7 +115,7 @@ define(function(require){
                 }
             }
         },
-        //post data to overwrite JSON file server-side
+        // post data to overwrite JSON file server-side
         postRequest: function(postData,mode){
             var viewmode = require("viewmode/view_init"),
             data_helper = require("viewmode/data_helper"),
@@ -135,9 +135,9 @@ define(function(require){
                       d3.selectAll(".new_link").classed("new_link",false);
                       switch (mode) {
                           case "view":
-                              //re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
+                              // re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
                               viewmode.init(viewmode.extractStates([postData]),postData,true);
-                              //reseting front-end object display
+                              // reseting front-end object display
                               utility.frontEndObject([data_helper.cleanData(postData)]);
                           break;
                           case "edit":

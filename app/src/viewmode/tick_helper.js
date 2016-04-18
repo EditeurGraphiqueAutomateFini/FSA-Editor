@@ -10,7 +10,7 @@ define(function(){
         circle.attr("transform", transform);
         text.attr("transform", transform);
 
-        //define new postition of arc between states
+        // define new postition of arc between states
         function linkArc(d){
             var sourceCoordX = getContainmentX(d.source.x),
                 sourceCoordY = getContainmentY(d.source.y),
@@ -21,8 +21,8 @@ define(function(){
                 dy = targetCoordY - sourceCoordY,
                 dr = Math.sqrt(dx * dx + dy * dy);
 
-            //if source is pointing toward itself, create a fixed arc
-            //optimisé pour 50, a modifier/tester
+            // if source is pointing toward itself, create a fixed arc
+            // optimisé pour 50, a modifier/tester
             if(d.target === d.source){
                 var distance = 50,
                     dr1 = "50",
@@ -33,7 +33,7 @@ define(function(){
                 return "M" + sourceCoordX + "," + sourceCoordY + " A" + dr + "," + dr + " 0 0,1 " + targetCoordX + "," + targetCoordY;
             }
         }
-        //define new postition
+        // define new postition
         function transform(d) {
             var coordX = getContainmentX(d.x),
                 coordY = getContainmentY(d.y);
@@ -42,7 +42,7 @@ define(function(){
             d.graphicEditor.coordY = coordY;
             return "translate(" + coordX + "," + coordY + ")";
         }
-        //define new postition of transition condition
+        // define new postition of transition condition
         function transformCondition(d) {
             var sourceCoordX = getContainmentX(d.source.x),
                 sourceCoordY = getContainmentY(d.source.y),
@@ -51,7 +51,7 @@ define(function(){
 
             var translate = "";
 
-            //if source is related to itself
+            // if source is related to itself
             if(d.source == d.target){ //todo variabiliser le 50
                 translate += "translate(" + (sourceCoordX+50) + "," + (sourceCoordY+50) + ")";
             }else{

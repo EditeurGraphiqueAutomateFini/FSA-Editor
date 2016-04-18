@@ -28,5 +28,7 @@
   "bugs": {
     "url": "https://github.com/EditeurGraphiqueAutomateFini/EditeurGraphiqueAutomateFini/issues"
   },
-  "homepage": "https://github.com/EditeurGraphiqueAutomateFini/EditeurGraphiqueAutomateFini#readme"
+  "homepage": "https://github.com/EditeurGraphiqueAutomateFini/EditeurGraphiqueAutomateFini#readme",
+  "devDependencies": {
+  }
 }

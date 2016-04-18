@@ -1,5 +1,5 @@
 define(function(require){
-        return function (d,context){    //get new name w/ prompt-like
+        return function (d,context){    // get new name w/ prompt-like
             var edit_transition = require("editmode/transition/edit_transition"),
                 delete_transition = require("editmode/transition/delete_transition"),
                 undo = require("utility/undo"),
@@ -88,8 +88,8 @@ define(function(require){
 
                     edit_frontend_object(context.getData);
                     undo.addToStack(context.getData);
-                    swal.close();   //close sweetalert prompt window
-                }else if(inputValue === false){  //cancel
+                    swal.close();   // close sweetalert prompt window
+                }else if(inputValue === false){  // cancel
                     return false;
                 }else if(inputValue === ""){
                     swal.showInputError("error");

@@ -1,9 +1,9 @@
 define(function(require){
     return{
-        //extract states
+        // extract states
         extractStates : function(data){
             var states = [];
-            //iterating over states objects in data file (JSON), making a JS array of objects
+            // iterating over states objects in data file (JSON), making a JS array of objects
             if(data){
                 for(var i=0; i<data.length; i++){
                     if(data[i].states){
@@ -76,7 +76,7 @@ define(function(require){
                                 state.index = cpt;
                                 state.name = key;
 
-                                //add graphicEditor values if not set
+                                // add graphicEditor values if not set
                                 if(!state.graphicEditor){
                                     state.graphicEditor = {};
                                 }else{
@@ -87,7 +87,7 @@ define(function(require){
                                 state.x = state.graphicEditor.coordX || 0;   //known position or 0
                                 state.y = state.graphicEditor.coordY || 0;
 
-                                //push state
+                                // push state
                                 dataset.push(state);
                                 cpt++;
                             }
@@ -99,7 +99,7 @@ define(function(require){
                             if(state){
                                 if(state.transitions && state.transitions.length > 0){
                                     for(i=0; i < state.transitions.length; i++){
-                                        //add the new link if not already present
+                                        // add the new link if not already present
                                         testPresence = links.find(function(el){
                                              return (
                                                 el.source === state.uniqueId
@@ -107,7 +107,7 @@ define(function(require){
                                             );
                                         });
                                         if(!testPresence){
-                                            //creating a new link
+                                            // creating a new link
                                             newLink = {
                                                 "source" : state.uniqueId,
                                                 "target" : viewmode.getIdFromName(dataset,state.transitions[i].target),
@@ -122,7 +122,7 @@ define(function(require){
                     }
                 });
 
-                //set_positions(states[0]);
+                // set_positions(states[0]);
                 if($("svg").size() > 0){
                     $("svg").remove();
                 }
@@ -135,28 +135,28 @@ define(function(require){
                 create_state_names(svg,force);
 
             }else{
-                //todo : vue par défaut ? basculer vers le mode creation ?
+                // todo : vue par défaut ? basculer vers le mode creation ?
             }
 
-            //add state save on dragend
+            // add state save on dragend
             force.drag().on("dragend",function(){
                 undo.addToStack(getData);
             });
 
-            //key bindings
+            // key bindings
             d3.select(document).on("keyup",function(){
-                //ajouter un preventdefault pour les actions de base du nav ?
+                // ajouter un preventdefault pour les actions de base du nav ?
                 if(d3.event.ctrlKey){
                     switch (d3.event.keyCode) {
                         case 90:    // on key "CTRL + Z" rollback
                             var rollBack = undo.rollBack();
-                            if(rollBack){   //if any action has already been performed
+                            if(rollBack){   // if any action has already been performed
                                 viewmode.init(viewmode.extractStates([rollBack]),rollBack,true);
                             }
                             break;
                         case 89:    // on key "CTRL + Y" rollforth
                             var rollForth = undo.rollForth();
-                            if(rollForth){   //if any action has already been performed
+                            if(rollForth){   // if any action has already been performed
                                 viewmode.init(viewmode.extractStates([rollForth]),rollForth,true);
                             }
                             break;

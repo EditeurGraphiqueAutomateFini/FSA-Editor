@@ -1,4 +1,4 @@
-//create svg container w/ marker in a html container
+// create svg container w/ marker in a html container
 define(function(){
     return function(container){
         if(container){
@@ -27,7 +27,7 @@ define(function(){
                 .append("path")
                 .attr("d","M0,-5L10,0L0,5");
 
-        }else{  //if no container is supplied
+        }else{  // if no container is supplied
             var svg="";
         }
 

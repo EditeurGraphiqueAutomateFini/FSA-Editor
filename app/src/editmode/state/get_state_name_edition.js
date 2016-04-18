@@ -1,5 +1,5 @@
 define(function(require){
-    return function (d,context){    //get new name w/ prompt-like
+    return function (d,context){    // get new name w/ prompt-like
         var edit_references = require("editmode/state/edit_references"),
             edit_state_name = require("editmode/state/edit_state_name"),
             cancel_selection = require("editmode/cancel_selection"),
@@ -15,10 +15,10 @@ define(function(require){
             closeOnConfirm : false,
             animation : "slide-from-top"
         },function(inputValue){
-            if(inputValue){  //edit state name if confirmed
+            if(inputValue){  // edit state name if confirmed
                 if(inputValue !== d.name){
 
-                    //check if name already exists
+                    // check if name already exists
                     for(var state in context.getData.states){
                         if(context.getData.states.hasOwnProperty(state) && context.getData.states[state]){
                             if(inputValue === context.getData.states[state].name && context.getData.states[state].index !== d.index){
@@ -34,11 +34,11 @@ define(function(require){
                     edit_frontend_object(context.getData);
                     undo.addToStack(context.getData);
                 }
-                swal.close();   //close sweetalert prompt window
-            }else if(inputValue === false){  //cancel
+                swal.close();   // close sweetalert prompt window
+            }else if(inputValue === false){  // cancel
                 cancel_selection(d);
                 return false;
-            }else if(inputValue === ""){  //empty new state name
+            }else if(inputValue === ""){  // empty new state name
                 swal.showInputError("Please enter a state name");
                 return false;
             }

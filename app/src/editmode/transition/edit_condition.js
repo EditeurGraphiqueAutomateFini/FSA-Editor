@@ -1,11 +1,11 @@
 define(function(){
-    //create a link between two states
+    // create a link between two states
     return function(svg,force,sourceID,targetID,condition,isNew){
 
         var condition_list = require("viewmode/condition_list");
 
-        if(isNew === "new"){    //create new transition (path+text)
-            //adding a path for the newly created link
+        if(isNew === "new"){    // create new transition (path+text)
+            // adding a path for the newly created link
             var newPath = svg.select("g.path_container").selectAll("path")
                 .data(force.links()).enter()
                 .append("path")
@@ -14,7 +14,7 @@ define(function(){
                     "id" : function(d) { return "link_"+sourceID +"_"+targetID; },
                     "marker-end" : "url(#end)"
                 });
-            //adding a condition text for the newly created link
+            // adding a condition text for the newly created link
             var newCondition = svg.select("g.condition_container").selectAll("text")
                 .data(force.links()).enter()
                 .append("text")
@@ -24,14 +24,14 @@ define(function(){
                     "class" : function(d){ return "condition link_"+sourceID +"_"+targetID+" new_link"; }
                 })
                 .text(condition_list);
-        }else{  //simply render the new condition (transition already exists) (only text)
+        }else{  // simply render the new condition (transition already exists) (only text)
 
             svg.select(".condition.link_"+sourceID+"_"+targetID)
                 .text(condition_list)
                 .classed("new_condition",true);
         }
 
-        //restart force layout w/ new data
+        // restart force layout w/ new data
         force.start();
     }
 });

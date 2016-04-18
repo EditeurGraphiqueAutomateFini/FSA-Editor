@@ -1,4 +1,4 @@
-//fonction pour positionner les cercles sans coordonnées
+// fonction pour positionner les cercles sans coordonnées
 define(function(){
     return function(states){
 

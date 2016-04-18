@@ -1,5 +1,5 @@
 define(function(){
-    //edit selected state's properties
+    // edit selected state's properties
     return function(d,inputValue,context){
         var oldValue = d.max_noise;
 
@@ -9,7 +9,7 @@ define(function(){
           return d.max_noise > 0 ? "["+d.max_noise+"]" : "";
         });
 
-        //restart force layout w/ new data
+        // restart force layout w/ new data
         context.force.start();
     }
 });

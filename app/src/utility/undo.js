@@ -1,7 +1,7 @@
-//attention ici on essaie de créer un concept bâtard entre pile et file
-//"pfile" ou "fpile" ? "FLIFO" ? moment difficile...
+// attention ici on essaie de créer un concept bâtard entre pile et file
+// "pfile" ou "fpile" ? "FLIFO" ? moment difficile...
 define(function(require){
-    //private
+    // private
     var maxStateSave = 50,
         rollingBack = false,
         rollingBackCount = 0,
@@ -14,7 +14,7 @@ define(function(require){
         return (stack.length === 0);
     }
 
-    //public
+    // public
     function displayStack(){
         console.log(undoQueue);
     }
@@ -57,7 +57,7 @@ define(function(require){
         return true;
     }
 
-    //return (reveal) public methods
+    // return (reveal) public methods
     return{
         "displayStack" : displayStack,
         "addToStack" : addToStack,

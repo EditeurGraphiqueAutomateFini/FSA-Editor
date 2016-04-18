@@ -1,5 +1,5 @@
 define(function(){
-    //edit selected state's properties
+    // edit selected state's properties
     return function(d,newTerminal,context){
         d.terminal = newTerminal;
         context.getData.states[d.name].terminal = newTerminal;

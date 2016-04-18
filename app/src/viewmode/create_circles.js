@@ -3,7 +3,7 @@ define(function(){
 
         var svg = container;
 
-        //create a circle for each state and apply D3 drag system
+        // create a circle for each state and apply D3 drag system
         var circle = svg.append("g").classed("state_container",true).selectAll("circle")
             .data(force.nodes()).enter()
             .append("circle")

@@ -1,6 +1,6 @@
 define(function(){
     return{
-        //cleans the set of data to obtain sendable/displayable data
+        // cleans the set of data to obtain sendable/displayable data
         cleanData : function(getData){
             var endPostData = {
                 states : {}
@@ -15,7 +15,7 @@ define(function(){
                     endPostData.states[state] = {};
                     for(key in getData.states[state]){
                         if(getData.states[state].hasOwnProperty(key)){
-                            //condition giving the set of properties we want to keep for each state
+                            // condition giving the set of properties we want to keep for each state
                             if(
                                 key === "default_transition" ||
                                 key === "graphicEditor" ||

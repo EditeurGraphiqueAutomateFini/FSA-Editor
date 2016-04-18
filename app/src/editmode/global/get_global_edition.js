@@ -22,22 +22,22 @@ define(function(require){
                             newMaxTotalDuration = 0,
                             newValues;
 
-                        //overlap
+                        // overlap
                         newOverlap = d3.select("#input_allow_overlap").property("checked");
-                        //default_matcher
+                        // default_matcher
                         newDefaultMatcher = d3.select("#input_default_matcher").property("value");
-                        //terminal
+                        // terminal
                         newTerminal = d3.select("#input_terminal").property("checked");
-                        //max_noise
+                        // max_noise
                         newMaxNoise = parseInt(d3.select("#input_max_noise").property("value"));
-                        //max_total_noise
+                        // max_total_noise
                         newMaxTotalNoise = parseInt(d3.select("#input_max_total_noise").property("value"));
-                        //max_duration
+                        // max_duration
                         newMaxDuration = parseInt(d3.select("#input_max_duration").property("value"));
-                        //max_total_duration
+                        // max_total_duration
                         newMaxTotalDuration = parseInt(d3.select("#input_max_total_duration").property("value"));
 
-                        //tests
+                        // tests
                         if(newMaxNoise < 0){
                             swal.showInputError("max_noise cannot be negative");
                             return false;
@@ -63,7 +63,7 @@ define(function(require){
                             return false;
                         }
 
-                        //values assignment
+                        // values assignment
                         newValues = {
                             "newOverlap" : newOverlap,
                             "newDefaultMatcher" : newDefaultMatcher,
@@ -78,8 +78,8 @@ define(function(require){
 
                         edit_frontend_object(context.getData);
                         undo.addToStack(context.getData);
-                        swal.close();   //close sweetalert prompt window
-                    }else if(inputValue === false){  //cancel
+                        swal.close();   // close sweetalert prompt window
+                    }else if(inputValue === false){  // cancel
                         return false;
                     }else if(inputValue === ""){
                         swal.showInputError("error");
@@ -87,7 +87,7 @@ define(function(require){
                     }
             });
 
-            //display form with properties list
+            // display form with properties list
             function displayGlobalPropertiesAsList(){
                 var html = "",
                     input = "",

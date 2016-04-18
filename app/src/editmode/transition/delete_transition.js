@@ -6,7 +6,7 @@ define(function(){
             indexToDelete,
             i = 0, j = 0;
 
-        //delete transitions in global object
+        // delete transitions in global object
         for(var state in states){
             if(states.hasOwnProperty(state) && states[state]){
                 if(states[state].index === d.source.index){
@@ -27,7 +27,7 @@ define(function(){
             }
         }
 
-        //delete in d3 links
+        // delete in d3 links
         if(d.conditions){
             for(i=0; i < conditionsToDelete.length; i++){
                 d.conditions.splice(conditionsToDelete[i],1);
@@ -35,11 +35,11 @@ define(function(){
             }
         }
 
-        //edit html
+        // edit html
         d3.selectAll(".condition.link_"+d.source.index+"_"+d.target.index)
             .text(condition_list);
 
-        //checking if no conditions remaining. If so, delete link
+        // checking if no conditions remaining. If so, delete link
         if(d.conditions){
             if(d.conditions.length === 0){
                 d3.selectAll(".link_"+d.source.index+"_"+d.target.index).remove();
@@ -53,7 +53,7 @@ define(function(){
             }
         }
 
-        //restarting force w/ new nodes and links
+        // restarting force w/ new nodes and links
         context.force.start();
     }
 });

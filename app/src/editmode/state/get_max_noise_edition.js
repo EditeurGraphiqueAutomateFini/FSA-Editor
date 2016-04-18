@@ -15,8 +15,8 @@ define(function(require){
             closeOnConfirm : false,
             animation : "slide-from-top"
         },function(inputValue){
-            if(inputValue){  //edit state name if confirmed
-                if(parseInt(inputValue) < 0){ //negative noise
+            if(inputValue){  // edit state name if confirmed
+                if(parseInt(inputValue) < 0){ // negative noise
                     swal.showInputError("max_noise cannot be negative");
                     return false;
                 }else if(parseInt(inputValue) > parseInt(d.max_total_noise)){
@@ -27,12 +27,12 @@ define(function(require){
                     cancel_selection(d);
                     edit_frontend_object(context.getData);
                     undo.addToStack(context.getData);
-                    swal.close();   //close sweetalert prompt window
+                    swal.close();   // close sweetalert prompt window
                 }
-            }else if(inputValue === false){  //cancel
+            }else if(inputValue === false){  // cancel
                 cancel_selection(d);
                 return false;
-            }else if(inputValue === ""){  //empty noise
+            }else if(inputValue === ""){  // empty noise
                 swal.showInputError("Please enter a value");
                 return false;
             }

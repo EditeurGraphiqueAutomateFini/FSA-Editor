@@ -1,10 +1,10 @@
-//create path between states : container : html container /!\D3/!\ selector, states : array of states, links : links array created w/ data array
+// create path between states : container : html container /!\D3/!\ selector, states : array of states, links : links array created w/ data array
 define(function(){
     return function(container,force){
 
         var svg = container;
 
-        //create a path for each link/transition
+        // create a path for each link/transition
         var path = svg.append("g").classed("path_container",true).selectAll("path")
             .data(force.links()).enter()
             .append("path")
