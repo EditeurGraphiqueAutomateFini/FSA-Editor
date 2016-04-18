@@ -196,13 +196,13 @@ define(function(require){
                             //terminal
                             newTerminal = d3.select("#input_terminal").property("checked");
                             //max_noise
-                            newMaxNoise = d3.select("#input_max_noise").property("value");
+                            newMaxNoise = parseInt(d3.select("#input_max_noise").property("value"));
                             //max_total_noise
-                            newMaxTotalNoise = d3.select("#input_max_total_noise").property("value");
+                            newMaxTotalNoise = parseInt(d3.select("#input_max_total_noise").property("value"));
                             //max_duration
-                            newMaxDuration = d3.select("#input_max_duration").property("value");
+                            newMaxDuration = parseInt(d3.select("#input_max_duration").property("value"));
                             //max_total_duration
-                            newMaxTotalDuration = d3.select("#input_max_total_duration").property("value");
+                            newMaxTotalDuration = parseInt(d3.select("#input_max_total_duration").property("value"));
 
                             //tests
                             if(newMaxNoise < 0){
@@ -352,15 +352,15 @@ define(function(require){
                         //name
                         newName = d3.select("#input_name_"+d.index).property("value");
                         //terminal
-                        newTerminal = d3.select("#input_terminal_"+d.index).property("checked");
+                        newTerminal = parseInt(d3.select("#input_terminal_"+d.index).property("checked"));
                         //max_noise
-                        newMaxNoise = d3.select("#input_max_noise_"+d.index).property("value");
+                        newMaxNoise = parseInt(d3.select("#input_max_noise_"+d.index).property("value"));
                         //max_total_noise
-                        newMaxTotalNoise = d3.select("#input_max_total_noise_"+d.index).property("value");
+                        newMaxTotalNoise = parseInt(d3.select("#input_max_total_noise_"+d.index).property("value"));
                         //max_duration
-                        newMaxDuration = d3.select("#input_max_duration_"+d.index).property("value");
+                        newMaxDuration = parseInt(d3.select("#input_max_duration_"+d.index).property("value"));
                         //max_total_duration
-                        newMaxTotalDuration = d3.select("#input_max_total_duration_"+d.index).property("value");
+                        newMaxTotalDuration = parseInt(d3.select("#input_max_total_duration_"+d.index).property("value"));
                         //default_transition
                         newDefaultTransition.silent = d3.select("#input_default_transition_silent_"+d.index).property("checked");
                         newDefaultTransition.target = d3.select("#input_default_transition_target_"+d.index).property("value");
@@ -370,8 +370,8 @@ define(function(require){
                             swal.showInputError("max_noise cannot be negative");
                             return false;
                         }
-                        if(newMaxNoise > newMaxTotalNoise){
-                            swal.showInputError("max_noise cannot be > total_max_noise");
+                        if(newMaxNoise > newMaxTotalNoise){ console.log(newMaxNoise,newMaxTotalNoise);
+                            swal.showInputError("max_noise cannot be > max_total_noise");
                             return false;
                         }
                         if(newMaxTotalNoise < 0){
@@ -383,7 +383,7 @@ define(function(require){
                             return false;
                         }
                         if(newMaxDuration > newMaxTotalDuration){
-                            swal.showInputError("max_duration cannot be > total_max_duration");
+                            swal.showInputError("max_duration cannot be > max_total_duration");
                             return false;
                         }
                         if(newMaxTotalDuration < 0){
@@ -485,8 +485,11 @@ define(function(require){
                     animation: "slide-from-top"
                 },function(inputValue){
                     if(inputValue){  //edit state name if confirmed
-                        if(parseInt(inputValue)<0){ //negative noise
+                        if(parseInt(inputValue) < 0){ //negative noise
                             swal.showInputError("max_noise cannot be negative");
+                            return false;
+                        }else if(parseInt(inputValue) > parseInt(d.max_total_noise)){
+                            swal.showInputError("max_noise cannot be > max_total_noise ("+d.max_total_noise+")");
                             return false;
                         }else{
                             edit_state_maxnoise(d,inputValue,{"svg":svg,"force":force,"getData":getData,"links":links});
@@ -495,10 +498,10 @@ define(function(require){
                             undo.addToStack(getData);
                             swal.close();   //close sweetalert prompt window
                         }
-                    }else if(inputValue===false){  //cancel
+                    }else if(inputValue === false){  //cancel
                         cancelSelection(d);
                         return false;
-                    }else if(inputValue===""){  //empty noise
+                    }else if(inputValue === ""){  //empty noise
                         swal.showInputError("Please enter a value");
                         return false;
                     }
