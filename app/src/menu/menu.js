@@ -1,10 +1,10 @@
 define(function(require){
     var server = require("utility/server_request")
     //return menu value (view : viewmode, edit: editmode)
-    if(location.href.indexOf("edit")!=-1){  //pour éviter d'avoir le menu en test, ajouter "?edit=1" au bout de son url
+    if(location.href.indexOf("edit") != -1){  //pour éviter d'avoir le menu en test, ajouter "?edit=1" au bout de son url
         //exemple file:///D:/Martin/_Cours/IUT/Projet%20tuteur%C3%A9/Editeur_graphique_projet/index.html?edit=1
         server.getRequest("edit"); // Editor mode
-    }else if(location.href.indexOf("view")!=-1){
+    }else if(location.href.indexOf("view") != -1){
         server.getRequest("view");
     }else{
         //code ici pour définir le menu
@@ -21,13 +21,15 @@ define(function(require){
                 "</ul>"
             );
 
-    		var li = document.getElementById("menu").getElementsByTagName("li");
-    		for(var i=0;i<li.length;i++){
-        		var liItem = document.getElementById(li[i].id);
+    		var li = document.getElementById("menu").getElementsByTagName("li"),
+                liItem,id;
+
+    		for(var i=0; i < li.length; i++){
+        		liItem = document.getElementById(li[i].id);
         		liItem.addEventListener("click",function(e){
-                    var id = this.id;
+                    id = this.id;
             		e.preventDefault(); // blocks the click event
-                    switch (id) {   //checking clicked element's id value
+                    switch(id){   //checking clicked element's id value
                         case "view":
                             server.getRequest("view");  // View mode
                             break;
