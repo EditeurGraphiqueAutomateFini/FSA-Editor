@@ -1,25 +1,27 @@
 // require configuration
-requirejs.config({
+require.config({
     baseUrl: "app/src/",    // all scripts will be called from this path
     paths: {
-        data: "../../data", // except for local datas (for local testing)
-        test: "../test/",    // and tests
-        jquery : "http://code.jquery.com/jquery-2.1.4.min"  // defining jquery as a module
-    },
-    shim:{
-        "../main":"jquery"
+        data: "../../data" // except for local datas (for local testing)
+        ,test: "../test/"    // and tests
+        ,jquery : "http://code.jquery.com/jquery-2.1.4.min"  // defining jquery as a module
+        ,swal: "../../res/js/sweetalert.min"
     }
+    /*,shim:{
+        "../main": "jquery"
+    }*/
 });
 // calling main function
-requirejs(
+require(
     [
         // libs first
         // jQuery
-        "jquery"
+        //"jquery"
+        "http://code.jquery.com/jquery-2.1.4.min.js"
         // lodash (mostly for object cloning)
         ,"https://cdn.jsdelivr.net/lodash/3.10.1/lodash.js"
         // sweetalert (for alerts and prompts)
-        ,"res/js/sweetalert.min.js"
+        ,"swal"
         // jQuery UI
         ,"https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"
         // QUnit
