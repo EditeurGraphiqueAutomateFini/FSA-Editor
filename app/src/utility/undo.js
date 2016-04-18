@@ -2,16 +2,16 @@
 //"pfile" ou "fpile" ? "FLIFO" ? moment difficile...
 define(function(require){
     //private
-    var maxStateSave = 50;
-    var rollingBack = false,
-        rollingBackCount = 0;
-    var undoQueue = [];
+    var maxStateSave = 50,
+        rollingBack = false,
+        rollingBackCount = 0,
+        undoQueue = [];
 
     function stackFull(stack){
-        return (stack.length===maxStateSave);
+        return (stack.length === maxStateSave);
     }
     function stackEmpty(){
-        return (stack.length===0);
+        return (stack.length === 0);
     }
 
     //public
@@ -25,6 +25,7 @@ define(function(require){
             rollingBack = false;
             rollingBackCount = 0;
         }
+
         var stateClone = _.cloneDeep(state);
 
         if(stackFull(undoQueue)){
@@ -37,18 +38,16 @@ define(function(require){
         if(!rollingBack){
             rollingBack = true;
         }
-        if( rollingBackCount >= undoQueue.length-1 ){
+        if(rollingBackCount >= undoQueue.length-1){
             rollingBackCount = undoQueue.length-1;
         }else{
             rollingBackCount++;
         }
-
-        
         return _.cloneDeep(undoQueue[(undoQueue.length)-(1+rollingBackCount)]);
     }
     function rollForth(){
         if(rollingBack){
-            if( rollingBackCount <= 0 ){
+            if(rollingBackCount <= 0){
                 rollingBackCount = 0;
             }else{
                 rollingBackCount--;
@@ -57,7 +56,6 @@ define(function(require){
         }
         return true;
     }
-
 
     //return (reveal) public methods
     return{
