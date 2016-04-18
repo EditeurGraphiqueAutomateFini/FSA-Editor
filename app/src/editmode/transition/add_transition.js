@@ -8,6 +8,7 @@ define(function(){
                 "condition" : condition,
                 "target" : target.name
             };
+
         if(state){
             if(state.transitions){
                 state.transitions.push(transition);

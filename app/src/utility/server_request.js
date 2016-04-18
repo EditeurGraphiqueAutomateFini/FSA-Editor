@@ -7,15 +7,15 @@ define(function(require){
                 editmode = require("editmode/edit_init"),
                 utility = require("utility/utility"),
                 undo = require("utility/undo"),
-                server=require("utility/server_request");
+                server = require("utility/server_request");
 
             var ajaxRequest = $.ajax({
-                  type: 'GET',
-                  url: 'http://www.fsaeditor.com',
-                  success: function(data){
+                  type : 'GET',
+                  url : 'http://www.fsaeditor.com',
+                  success : function(data){
                       return succesFunction(data,mode);
                   },
-                  error: function(){
+                  error : function(){
                       return errorFunction(mode);
                   },
                   beforeSend : function(){
@@ -29,7 +29,7 @@ define(function(require){
             function succesFunction(getData,mode){
                 if(getData){
                     var parsedData = JSON.parse(getData);
-                    var parsedDataSolid =  _.cloneDeep(parsedData); //cloning parsed data to keep it untouched for a later reset
+                    var parsedDataSolid = _.cloneDeep(parsedData); //cloning parsed data to keep it untouched for a later reset
                     //display object
                     utility.frontEndObject([parsedData]);
                     undo.addToStack(parsedData);
@@ -39,7 +39,7 @@ define(function(require){
                             viewmode.init(viewmode.extractStates([parsedData]),parsedData);
                             //handel reset
                             $("button.reset").click(function(){
-                                var parsedDataLiquid =  _.cloneDeep(parsedDataSolid);   //cloning untouched cloned data
+                                var parsedDataLiquid = _.cloneDeep(parsedDataSolid);   //cloning untouched cloned data
                                 //re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
                                 viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,true);
                                 //reseting front-end object display
@@ -54,7 +54,7 @@ define(function(require){
                             editmode.init(loadedViewMode.svg,loadedViewMode.force,loadedViewMode.getData,loadedViewMode.links);
                             //handling reset (same as edit mode)
                             $("button.reset").click(function(){
-                                var parsedDataLiquid =  _.cloneDeep(parsedDataSolid);
+                                var parsedDataLiquid = _.cloneDeep(parsedDataSolid);
                                 var newLoadedViewMode = viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid);
                                 editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
                                 utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
@@ -88,7 +88,7 @@ define(function(require){
                         viewmode.init(viewmode.extractStates(data),data);
                         //handel reset
                         $("button.reset").click(function(){
-                            var parsedDataLiquid =  _.cloneDeep(dataSolid);   //cloning untouched cloned data
+                            var parsedDataLiquid = _.cloneDeep(dataSolid);   //cloning untouched cloned data
                             //re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
                             viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,true);
                             //reseting front-end object display
@@ -100,11 +100,10 @@ define(function(require){
                         //loading view mode
                         var loadedViewMode = viewmode.init(viewmode.extractStates(data),data);
                         //loading edit mode from previously loaded viewmode
-
                         editmode.init(loadedViewMode.svg,loadedViewMode.force,loadedViewMode.getData,loadedViewMode.links);
                         //handling reset (same as edit mode)
                         $("button.reset").click(function(){
-                            var parsedDataLiquid =  _.cloneDeep(dataSolid);
+                            var parsedDataLiquid = _.cloneDeep(dataSolid);
                             var newLoadedViewMode = viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid);
                             editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
                             utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
@@ -124,36 +123,34 @@ define(function(require){
             utility = require("utility/utility");
 
             var ajaxRequest = $.ajax({
-                  type: 'POST',
-                  data : {graphicEditorFSA:JSON.stringify(postData)},
-                  url: 'http://www.fsaeditor.com',
+                  type : 'POST',
+                  data : { graphicEditorFSA : JSON.stringify(postData) },
+                  url : 'http://www.fsaeditor.com',
                   beforeSend : function(){
                       $(".load_helper").fadeIn();
                   },
-                  complete:function(){
+                  complete : function(){
                       $(".load_helper").fadeOut();
                       $("#object_container_left").css("background","transparent");
                       d3.selectAll(".new_link").classed("new_link",false);
                       switch (mode) {
                           case "view":
-                              //var parsedData =  _.cloneDeep(postData);   //cloning untouched cloned data
                               //re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
                               viewmode.init(viewmode.extractStates([postData]),postData,true);
                               //reseting front-end object display
                               utility.frontEndObject([data_helper.cleanData(postData)]);
                           break;
                           case "edit":
-                              //var parsedData =  _.cloneDeep(postData);
                               var newLoadedViewMode = viewmode.init(viewmode.extractStates([postData]),postData);
                               editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
                               utility.frontEndObject([data_helper.cleanData(postData)]);
                           default:
                       }
                   },
-                  success: function(data){
+                  success : function(data){
                      swal("Saved!", "JSON file successfully overwritten", "success");
                   },
-                  error: function(){
+                  error : function(){
                       console.log("send error");
                   }
             });

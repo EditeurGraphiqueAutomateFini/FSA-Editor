@@ -1,19 +1,22 @@
 //delete references to "name" (string, name of a state) parameter in "object" (object) parameter. Designed to clean data that are being sent
 define(function(){
     return function(object,name){
-        var states=object.states;
+        var states = object.states,
+            indexToDelete = [],
+            i = 0, j = 0;
+        
         for(var state in states){
-            if(states[state] && states.hasOwnProperty(state)){
+            if(states.hasOwnProperty(state) && states[state]){
                 if(states[state].transitions){  //remove transitions that we do not want anymore. Errors otherwise
-                    var indexToDelete=[];
-                    states[state].transitions.forEach(function(el,i,arr){
-                        if(el.target==name){
-                            indexToDelete.push(i);
+                    indexToDelete = [];
+                    states[state].transitions.forEach(function(el,index){
+                        if(el.target == name){
+                            indexToDelete.push(index);
                         }
                     });
-                    for(var i=0;i<indexToDelete.length;i++){
+                    for(i=0; i < indexToDelete.length; i++){
                         states[state].transitions.splice(indexToDelete[i],1);
-                        for(var j=0;j<indexToDelete.length;j++) indexToDelete[j]--;
+                        for(j=0; j < indexToDelete.length; j++) indexToDelete[j]--;
                     }
                 }
             }

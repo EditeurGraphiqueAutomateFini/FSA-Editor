@@ -1,6 +1,4 @@
 define(function(){
-
-    // Use elliptical arc path segments to doubly-encode directionality.
     return function(e,r,containmentWidth,containmentHeight){
         var path = d3.selectAll(".link"),
             condition = d3.selectAll(".condition"),
@@ -63,11 +61,7 @@ define(function(){
             return translate;
         }
 
-        function getContainmentX(valX){
-            return Math.max(r,Math.min(valX,containmentWidth-r));
-        }
-        function getContainmentY(valY){
-            return Math.max(r,Math.min(valY,containmentHeight-r));
-        }
+        function getContainmentX(valX){ return Math.max(r,Math.min(valX,containmentWidth-r)); }
+        function getContainmentY(valY){ return Math.max(r,Math.min(valY,containmentHeight-r)); }
     }
 })

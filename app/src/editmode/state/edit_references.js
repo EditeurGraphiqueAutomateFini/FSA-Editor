@@ -1,14 +1,16 @@
 //dit references to "name" (string) parameter in "object" (object) parameter. Designed to clean data that are being sent
 define(function(){
     return function(object,name,newName){
-        var states=object.states;
+        var states = object.states,
+            indexToDelete = [];
+
         for(var state in states){
-            if(states[state] && states.hasOwnProperty(state)){
+            if(states.hasOwnProperty(state) && states[state]){
                 if(states[state].transitions){  //remove transitions that we do not want anymore. Errors otherwise
-                    var indexToDelete=[];
-                    states[state].transitions.forEach(function(el,i,arr){
-                        if(el.target==name){
-                            el.target=newName;
+                    indexToDelete = [];
+                    states[state].transitions.forEach(function(el){
+                        if(el.target == name){
+                            el.target = newName;
                         }
                     });
                 }

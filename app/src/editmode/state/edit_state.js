@@ -1,13 +1,13 @@
 define(function(require){
     return function(newValues,d,context){   //newValues includes newName,newTerminal,newMaxNoise,newMaxTotalNoise,newMaxDuration,newMaxTotalDuration,newDefaultTransition
-        var edit_references = require("editmode/edit_references"),
-            edit_state_defaulttransition = require("editmode/edit_state_defaulttransition"),
-            edit_state_maxduration = require("editmode/edit_state_maxduration"),
-            edit_state_maxtotalduration = require("editmode/edit_state_maxtotalduration"),
-            edit_state_maxnoise = require("editmode/edit_state_maxnoise"),
-            edit_state_maxtotalnoise = require("editmode/edit_state_maxtotalnoise"),
-            edit_state_name = require("editmode/edit_state_name"),
-            edit_state_terminal = require("editmode/edit_state_terminal");
+        var edit_references = require("editmode/state/edit_references"),
+            edit_state_defaulttransition = require("editmode/state/edit_state_defaulttransition"),
+            edit_state_maxduration = require("editmode/state/edit_state_maxduration"),
+            edit_state_maxtotalduration = require("editmode/state/edit_state_maxtotalduration"),
+            edit_state_maxnoise = require("editmode/state/edit_state_maxnoise"),
+            edit_state_maxtotalnoise = require("editmode/state/edit_state_maxtotalnoise"),
+            edit_state_name = require("editmode/state/edit_state_name"),
+            edit_state_terminal = require("editmode/state/edit_state_terminal");
 
         //edit max_duration if necessary
         if(newValues.newMaxDuration !== d.max_duration){
@@ -44,8 +44,8 @@ define(function(require){
         if(newValues.newDefaultTransition){
             if(d.default_transition){
                 if(
-                    (newValues.newDefaultTransition.silent !== d.default_transition.silent)
-                    || (newValues.newDefaultTransition.target !== d.default_transition.target)
+                    newValues.newDefaultTransition.silent !== d.default_transition.silent
+                    || newValues.newDefaultTransition.target !== d.default_transition.target
                 ){
                     edit_state_defaulttransition(d,newValues.newDefaultTransition.silent,newValues.newDefaultTransition.target,context);
                 }
