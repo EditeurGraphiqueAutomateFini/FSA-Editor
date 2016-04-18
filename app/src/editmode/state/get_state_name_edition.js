@@ -7,16 +7,17 @@ define(function(require){
             edit_frontend_object = require("editmode/edit_frontend_object");
 
         var swalStateInfo = swal({
-            title: "State Edition",
-            text: "Write a new name",
-            type: "input",
-            inputValue: d.name,
-            showCancelButton: true,
-            closeOnConfirm: false,
-            animation: "slide-from-top"
+            title : "State Edition",
+            text : "Write a new name",
+            type : "input",
+            inputValue : d.name,
+            showCancelButton : true,
+            closeOnConfirm : false,
+            animation : "slide-from-top"
         },function(inputValue){
             if(inputValue){  //edit state name if confirmed
                 if(inputValue !== d.name){
+
                     //check if name already exists
                     for(var state in context.getData.states){
                         if(context.getData.states.hasOwnProperty(state) && context.getData.states[state]){
@@ -26,6 +27,7 @@ define(function(require){
                             }
                         }
                     }
+
                     edit_references(context.getData,d.name,inputValue);
                     edit_state_name(d,inputValue,context);
                     cancel_selection(d);

@@ -6,22 +6,25 @@ define(function(require){
                 edit_frontend_object = require("editmode/edit_frontend_object");
 
             var swalTransitionInfo = swal({
-                title: "Transition edition",
-                text: displayTransitionsAsList(d),
-                html: true,
-                showCancelButton: true,
-                closeOnConfirm: false,
-                animation: "slide-from-top"
+                title : "Transition edition",
+                text : displayTransitionsAsList(d),
+                html : true,
+                showCancelButton : true,
+                closeOnConfirm : false,
+                animation : "slide-from-top"
             },function(inputValue){
                 if(inputValue){
                     var conditionsToDelete = [],
                         conditionsToEdit = [],
                         editedItem = {},
-                        commaError = false;
+                        commaError = false,
+                        attribute = 0,
+                        index = 0,
+                        type = "";
 
                     d3.selectAll(".condition_display.user_delete").each(function(){
-                        var attribute = 0,
-                            index = 0;
+                        attribute = 0;
+                        index = 0;
 
                         attribute = this.getAttribute("id").indexOf("condition_display_")+"condition_display_".length;
                         index = parseInt(this.getAttribute("id").substr(attribute,1));
@@ -29,8 +32,8 @@ define(function(require){
                         conditionsToDelete.push(index);
                     });
                     d3.selectAll(".condition_display.user_edited").each(function(){
-                        var attribute = 0,
-                            index = 0;
+                        attribute = 0,
+                        index = 0;
 
                         attribute = this.getAttribute("id").indexOf("condition_display_")+"condition_display_".length;
                         index = parseInt(this.getAttribute("id").substr(attribute,1));
@@ -41,7 +44,7 @@ define(function(require){
                         };
 
                         d3.select(this).selectAll("input").each(function(){
-                            var type = d3.select(this).attr("type");
+                            type = d3.select(this).attr("type");
                             switch (type) {
                                 case "text" :
                                     if(d3.select(this).classed("condition_input")){
@@ -67,7 +70,7 @@ define(function(require){
                     if(conditionsToEdit.length > 0){
                         conditionsToEdit.forEach(function(el){
                             if(el.updatedValues){
-                                if(el.updatedValues.condition.indexOf(",")!=-1){
+                                if(el.updatedValues.condition.indexOf(",") != -1){
                                     commaError = true;
                                 }
                             }
@@ -79,7 +82,6 @@ define(function(require){
                             edit_transition(d,conditionsToEdit,context);
                         }
                     }
-
                     if(conditionsToDelete.length > 0){
                         delete_transition(d,conditionsToDelete,context);
                     }
@@ -87,9 +89,9 @@ define(function(require){
                     edit_frontend_object(context.getData);
                     undo.addToStack(context.getData);
                     swal.close();   //close sweetalert prompt window
-                }else if(inputValue===false){  //cancel
+                }else if(inputValue === false){  //cancel
                     return false;
-                }else if(inputValue===""){
+                }else if(inputValue === ""){
                     swal.showInputError("error");
                     return false;
                 }
@@ -107,15 +109,15 @@ define(function(require){
                     });
             });
 
-
             function displayTransitionsAsList(d){
-                var html = "<div class='transition_title'>"+d.source.name + " => " + d.target.name+"</div>";
+                var html = "<div class='transition_title'>"+d.source.name + " => "+d.target.name+"</div>";
 
-                html += " <div class='header_transition'>"+
+                html += "<div class='header_transition'>"+
                             "<span class='header_condition'>condition</span>"+
                             "<span class='header_matcher'>matcher</span>"+
                             "<span class='header_silent'>silent</span>"+
                         "</div>";
+
                 if(d.conditions){
                     d.conditions.forEach(function(condition,index){
                         html += "<span class='swal_display condition_display' id='condition_display_"+index+"'>"+

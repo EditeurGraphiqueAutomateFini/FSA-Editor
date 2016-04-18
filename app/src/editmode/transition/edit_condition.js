@@ -4,7 +4,7 @@ define(function(){
 
         var condition_list = require("viewmode/condition_list");
 
-        if( isNew === "new"){    //create new transition (path+text)
+        if(isNew === "new"){    //create new transition (path+text)
             //adding a path for the newly created link
             var newPath = svg.select("g.path_container").selectAll("path")
                 .data(force.links()).enter()

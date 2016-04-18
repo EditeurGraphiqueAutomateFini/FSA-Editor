@@ -1,18 +1,16 @@
 define(function(require){
-
-        //global properties editing
         return function(context){
             var edit_global = require("editmode/global/edit_global"),
                 undo = require("utility/undo"),
                 edit_frontend_object = require("editmode/edit_frontend_object");
 
             var swalGlobalEdition = swal({
-                title: "Edit global properties",
-                text: displayGlobalPropertiesAsList(),
-                html: true,
-                showCancelButton: true,
-                closeOnConfirm: false,
-                animation: "slide-from-top"
+                title : "Edit global properties",
+                text : displayGlobalPropertiesAsList(),
+                html : true,
+                showCancelButton : true,
+                closeOnConfirm : false,
+                animation : "slide-from-top"
             },function(inputValue){
                     if(inputValue){
                         var newOverlap = false,
@@ -21,7 +19,8 @@ define(function(require){
                             newMaxNoise = 0,
                             newMaxTotalNoise = 0,
                             newMaxDuration = 0,
-                            newMaxTotalDuration = 0;
+                            newMaxTotalDuration = 0,
+                            newValues;
 
                         //overlap
                         newOverlap = d3.select("#input_allow_overlap").property("checked");
@@ -65,14 +64,14 @@ define(function(require){
                         }
 
                         //values assignment
-                        var newValues = {
-                            "newOverlap":newOverlap,
-                            "newDefaultMatcher":newDefaultMatcher,
-                            "newTerminal":newTerminal,
-                            "newMaxNoise":newMaxNoise,
-                            "newMaxTotalNoise":newMaxTotalNoise,
-                            "newMaxDuration":newMaxDuration,
-                            "newMaxTotalDuration":newMaxTotalDuration
+                        newValues = {
+                            "newOverlap" : newOverlap,
+                            "newDefaultMatcher" : newDefaultMatcher,
+                            "newTerminal" : newTerminal,
+                            "newMaxNoise" : newMaxNoise,
+                            "newMaxTotalNoise" : newMaxTotalNoise,
+                            "newMaxDuration" : newMaxDuration,
+                            "newMaxTotalDuration" : newMaxTotalDuration
                         }
 
                         edit_global(newValues,context);
@@ -80,9 +79,9 @@ define(function(require){
                         edit_frontend_object(context.getData);
                         undo.addToStack(context.getData);
                         swal.close();   //close sweetalert prompt window
-                    }else if(inputValue===false){  //cancel
+                    }else if(inputValue === false){  //cancel
                         return false;
-                    }else if(inputValue===""){
+                    }else if(inputValue === ""){
                         swal.showInputError("error");
                         return false;
                     }
@@ -91,7 +90,7 @@ define(function(require){
             //display form with properties list
             function displayGlobalPropertiesAsList(){
                 var html = "",
-                    input="",
+                    input = "",
                     propertiesToEdit=[
                         { "name":"allow_overlap", "type":"check" },
                         { "name":"default_matcher", "type":"text" },
@@ -101,11 +100,10 @@ define(function(require){
                         { "name":"max_total_noise", "type":"number", "sub":"state_defaults" },
                         { "name":"max_duration", "type":"number", "sub":"state_defaults" },
                         { "name":"max_total_duration", "type":"number", "sub":"state_defaults" }
-                    ];
+                    ],
+                    previousValue;
 
-                var previousValue;
-
-                for(var i=0;i<propertiesToEdit.length;i++){
+                for(var i=0; i < propertiesToEdit.length; i++){
 
                     if(propertiesToEdit[i].sub){
                         previousValue = context.getData[propertiesToEdit[i].sub][propertiesToEdit[i].name];
@@ -142,7 +140,7 @@ define(function(require){
                             input="";
                             break;
                     }
-                    html+="<span class='swal_display global_display'>"+
+                    html += "<span class='swal_display global_display'>"+
                                 "<label "+
                                     "class='custom_swal_label' "+
                                     "for='input_"+propertiesToEdit[i].name+"' "+

@@ -6,14 +6,14 @@ define(function(require){
             edit_frontend_object = require("editmode/edit_frontend_object");
 
         var swalStateInfo = swal({
-            title: "Max noise edition",
-            text: "Write a new value",
-            type: "input",
-            "inputType":"number",
-            inputValue: d.max_noise,
-            showCancelButton: true,
-            closeOnConfirm: false,
-            animation: "slide-from-top"
+            title : "Max noise edition",
+            text : "Write a new value",
+            type : "input",
+            inputType : "number",
+            inputValue : d.max_noise,
+            showCancelButton : true,
+            closeOnConfirm : false,
+            animation : "slide-from-top"
         },function(inputValue){
             if(inputValue){  //edit state name if confirmed
                 if(parseInt(inputValue) < 0){ //negative noise

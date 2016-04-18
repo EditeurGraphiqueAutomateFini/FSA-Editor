@@ -9,13 +9,13 @@ define(function(require){
         var linkingTestID = "#state_"+previouslySelectedState.index;
         var previouslyExistingLink = false;
         var swalCondition = swal({
-            title: "Condition",
-            text: "Write a condition for this new transition",
-            type: "input",
-            showCancelButton: true,
-            closeOnConfirm: false,
-            animation: "slide-from-top",
-            inputPlaceholder: "condition"
+            title : "Condition",
+            text : "Write a condition for this new transition",
+            type : "input",
+            showCancelButton : true,
+            closeOnConfirm : false,
+            animation : "slide-from-top",
+            inputPlaceholder : "condition"
         },function(inputValue,confirmed){
             if (inputValue === false){  //on cancel
                 //edit visual hints
@@ -42,7 +42,7 @@ define(function(require){
                     }
                 });
             }
-            if(d3.selectAll("path.link#link_"+previouslySelectedState.index+"_"+d.index).size()>0){   //if path already exist
+            if(d3.selectAll("path.link#link_"+previouslySelectedState.index+"_"+d.index).size() > 0){   //if path already exist
                 previouslyExistingLink = true;
             }
             if(inputValue){

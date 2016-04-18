@@ -5,14 +5,13 @@ define(function(require){
                 undo = require("utility/undo"),
                 edit_frontend_object = require("editmode/edit_frontend_object");
 
-
             var swalTransitionInfo = swal({
-                title: d.name,
-                text: displayStateAsList(d),
-                html: true,
-                showCancelButton: true,
-                closeOnConfirm: false,
-                animation: "slide-from-top"
+                title : d.name,
+                text : displayStateAsList(d),
+                html : true,
+                showCancelButton : true,
+                closeOnConfirm : false,
+                animation : "slide-from-top"
             },function(inputValue){
                 if(inputValue){
                     var newName = "",
@@ -21,10 +20,12 @@ define(function(require){
                         newMaxTotalNoise = 0,
                         newMaxDuration = 0,
                         newMaxTotalDuration = 0,
+                        newValues,
                         newDefaultTransition = {
                             "condition":"",
                             "target":0
                         };
+
                     //name
                     newName = d3.select("#input_name_"+d.index).property("value");
                     //terminal
@@ -70,7 +71,7 @@ define(function(require){
                     //max noise cannot be set together with default_transition
                     if(
                         parseInt(d3.select("[id^=input_max_noise_]").property("value")) > 0
-                        && parseInt(d3.select("[id^=input_default_transition_target_]").property("selectedIndex")) >0
+                        && parseInt(d3.select("[id^=input_default_transition_target_]").property("selectedIndex")) > 0
                     ){
                         swal.showInputError("max_noise cannot be set with default_transition");
                         return false;
@@ -87,7 +88,7 @@ define(function(require){
                     }
 
                     //aggregating new values in a single object
-                    var newValues = {
+                    newValues = {
                         "newName":newName,
                         "newTerminal":newTerminal,
                         "newMaxNoise":newMaxNoise,
@@ -103,10 +104,10 @@ define(function(require){
                     edit_frontend_object(context.getData);
                     undo.addToStack(context.getData);
                     swal.close();   //close sweetalert prompt window
-                }else if(inputValue===false){  //cancel
+                }else if(inputValue === false){  //cancel
                     cancel_selection(d);
                     return false;
-                }else if(inputValue===""){
+                }else if(inputValue === ""){
                     swal.showInputError("error");
                     return false;
                 }
@@ -124,9 +125,13 @@ define(function(require){
                         { "name":"max_duration", "type":"number" },
                         { "name":"max_total_duration", "type":"number" },
                         { "name":"default_transition", "type":"transition" }
-                    ];
+                    ],
+                    options = "",
+                    hasSelection = false,
+                    state,
+                    isSilent = false;
 
-                for(var i=0;i<propertiesToEdit.length;i++){
+                for(var i=0; i < propertiesToEdit.length; i++){
                     switch(propertiesToEdit[i].type){
                         case "text":
                             input = "<input "+
@@ -153,15 +158,16 @@ define(function(require){
                                     "/>"
                             break;
                         case "transition":
-                            options = "",
-                            hasSelection=false;
-                            for(var state in context.getData.states){
+                            options = "";
+                            hasSelection = false;
+
+                            for(state in context.getData.states){
                                 if(context.getData.states.hasOwnProperty(state) && context.getData.states[state] !== undefined){
-                                    if( currentState[propertiesToEdit[i].name] !== undefined && currentState[propertiesToEdit[i].name].target == context.getData.states[state].name ){
-                                        hasSelection=context.getData.states[state].index;
+                                    if(currentState[propertiesToEdit[i].name] !== undefined && currentState[propertiesToEdit[i].name].target == context.getData.states[state].name){
+                                        hasSelection = context.getData.states[state].index;
                                     }
-                                     options+="<option "+
-                                                    (hasSelection===context.getData.states[state].index ? "selected='true'" : "")+
+                                     options += "<option "+
+                                                    (hasSelection === context.getData.states[state].index ? "selected='true'" : "")+
                                                     "value='"+context.getData.states[state].index+
                                                 "'>"+
                                                     state+
@@ -169,7 +175,7 @@ define(function(require){
                                 }
                              }
 
-                             var isSilent;
+                             isSilent = false;
                              if(currentState[propertiesToEdit[i].name]){
                                  isSilent = currentState[propertiesToEdit[i].name].silent;
                              }else{
@@ -181,7 +187,7 @@ define(function(require){
                                                 "class='custom_swal_select' "+
                                                 "id='input_"+propertiesToEdit[i].name+"_target_"+d.index+"' "+
                                             ">"+
-                                                "<option "+( hasSelection ? "" : "selected='true'" )+" value=''>Select a target</option>"+
+                                                "<option "+(hasSelection ? "" : "selected='true'")+" value=''>Select a target</option>"+
                                                 options +
                                             "</select>"+
                                         "</span>"+
@@ -198,10 +204,10 @@ define(function(require){
 
                             break;
                         default:
-                            input="";
+                            input = "";
                             break;
                     }
-                    html+="<span class='swal_display state_display state_display_"+d.index+"'>"+
+                    html += "<span class='swal_display state_display state_display_"+d.index+"'>"+
                                 "<label "+
                                     "class='custom_swal_label' "+
                                     "for='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+

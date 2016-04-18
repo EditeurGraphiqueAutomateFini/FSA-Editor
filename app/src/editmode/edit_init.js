@@ -19,19 +19,18 @@ define(function(require){
             //transition
             var get_condition = require("editmode/transition/get_condition"),
                 get_transition_edition = require("editmode/transition/get_transition_edition");
-
+            //defining context object w/ usefull variable to pass when invoking functions
             var context = {"svg":svg,"force":force,"getData":getData,"links":links};
 
             //generate global edition button
             d3.select("#global_properties").html("<button class='btn btn-primary button_edit_global_properties'>Edit global properties</button>");
             d3.selectAll("#global_properties button").on("click",function(){
-                get_global_edition({"force":force,"getData":getData});
+                get_global_edition(context);
             });
 
             //on click on background cancel state selection
             d3.select("#svgbox").on("click",cancel_all_selections);
-            force.drag().on("drag",function(d){d.graphicEditor.unselectable=true;});
-            force.drag().on("dragend",function(){});    //cancel context saving on drag/click
+            force.drag().on("drag",function(d){ d.graphicEditor.unselectable=true; });
 
             //iterates over svg circles (representing states)
             d3.selectAll("circle").each(function(){
@@ -55,7 +54,7 @@ define(function(require){
                         if(!d.graphicEditor.unselectable){
                             selectState(d);
                         }else{
-                            d.graphicEditor.unselectable=false;
+                            d.graphicEditor.unselectable = false;
                         }
                     });
             });
@@ -81,7 +80,9 @@ define(function(require){
             //key bingings
             d3.select(document).on("keyup",function(){
                 //ajouter un preventdefault pour les actions de base du nav ?
-                if(d3.event.ctrlKey){   // key "CTRL" is pressed
+
+                // key "CTRL" is pressed
+                if(d3.event.ctrlKey){
                     switch (d3.event.keyCode) {
                         case 90:    // on key "CTRL + Z" rollback
                             var rollBack = undo.rollBack();
@@ -102,7 +103,8 @@ define(function(require){
                         default:
                             break;
                     }
-                }else{  // key "CTRL" is not pressed
+                // key "CTRL" is not pressed
+                }else{
                     switch(d3.event.keyCode){
                         case 27:    //on key "ECHAP" cancel all linking process
                             cancel_all_selections();
@@ -135,22 +137,24 @@ define(function(require){
                 }
             });
 
-            //delete state w/ confirmation
+            //delete state
             function deleteState(d){
+
                 delete_state(d.index,context);
                 delete_references(getData,d.name);
+
                 //edit fe object
                 edit_frontend_object(getData);
                 undo.addToStack(getData);
             }
-            //create a new link
+            // select state - tries to create a new link if a state is already selected
             function selectState(d){
                 var previouslySelectedState = false,
                     currentStateId = "#state_"+d.index;
 
                 d3.selectAll("circle").each(function(d){    //testing if a first state is selected (being linked)
                     if(d.graphicEditor.linking){
-                        previouslySelectedState=d;
+                        previouslySelectedState = d;
                     }
                 });
                 if(previouslySelectedState){    //if a first state is selected, create new transition
@@ -163,15 +167,11 @@ define(function(require){
             }
             //test if a state is eligible for alteration
             function isEligible(d){
-                if( //if linking edit state
+                return (
                     d.graphicEditor.linking
-                    && (d3.select("#state_"+d.index).classed("editing")===false)
-                    && (d3.selectAll(".linking").size()===1)
-                 ){
-                     return true;
-                 }else{
-                     return false;
-                 }
+                    && (d3.select("#state_"+d.index).classed("editing") === false)
+                    && (d3.selectAll(".linking").size() === 1)
+                );
             }
         }
     }
