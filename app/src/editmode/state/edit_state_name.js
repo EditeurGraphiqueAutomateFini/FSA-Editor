@@ -1,5 +1,5 @@
 define(function(){
-    //edit selected state's properties
+    // edit selected state's properties
     return function(d,inputValue,context){
         var oldName = d.name;
 
@@ -10,7 +10,7 @@ define(function(){
             return d.name;
         });
 
-        //restart force layout w/ new data
+        // restart force layout w/ new data
         context.force.start();
     }
 });

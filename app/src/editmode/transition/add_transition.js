@@ -1,8 +1,8 @@
-//add transition array to the global object
+// add transition array to the global object
 define(function(){
     return function(force,object,source,target,condition){
 
-        //edit global object
+        // edit global object
         var state = object.states[source.name],
             transition = {
                 "condition" : condition,
@@ -17,7 +17,7 @@ define(function(){
             }
         }
 
-        //edit links
+        // edit links
         var testPresence = force.links().find(function(el){ return el.source.index === source.index && el.target.index === target.index; });
         if(testPresence){
             force.links().forEach(function(link){
@@ -36,7 +36,7 @@ define(function(){
             });
         }
 
-        //restart force layout
+        // restart force layout
         force.start();
     }
 });

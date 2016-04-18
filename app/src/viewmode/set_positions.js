@@ -1,4 +1,4 @@
-//fonction pour positionner les cercles sans coordonnées
+// fonction pour positionner les cercles sans coordonnées
 define(function(){
     return function(states){
 
@@ -13,11 +13,11 @@ define(function(){
         for(var state in states){
 
 
-			console.log(states[state].name+"("+states[state].x+";"+states[state].y+")");
+			// console.log(states[state].name+"("+states[state].x+";"+states[state].y+")");
 
 			if(states[state].name != "success" && states[state].name != "error") {
 
-				console.log("Nombre de transition de "+states[state].name+" : "+states[state].transitions.length);
+				// console.log("Nombre de transition de "+states[state].name+" : "+states[state].transitions.length);
 
 				for(i=0; i < states[state].transitions.length; i++) {
 
@@ -33,7 +33,7 @@ define(function(){
 						} else {
 							states[states[state].transitions[i].target].y = states[state].y;
 						}
-						console.log(i+" : "+states[states[state].transitions[i].target].name);
+						// console.log(i+" : "+states[states[state].transitions[i].target].name);
 
 					}else{
 						nbRecursive++;
@@ -51,7 +51,7 @@ define(function(){
 					states[state].x = lastX;
 				}
 			}
-			console.log("------------------");
+			// console.log("------------------");
         }
     }
 });

@@ -1,23 +1,20 @@
-//attention ici on essaie de créer un concept bâtard entre pile et file
-//"pfile" ou "fpile" ? "FLIFO" ? moment difficile...
-define(function(require){
-    //private
+// attention ici on essaie de créer un concept bâtard entre pile et file
+// "pfile" ou "fpile" ? "FLIFO" ? moment difficile...
+define(function(){
+    // private
     var maxStateSave = 50,
         rollingBack = false,
         rollingBackCount = 0,
         undoQueue = [];
 
-    function stackFull(stack){
-        return (stack.length === maxStateSave);
+    function stackFull(){
+        return (undoQueue.length === maxStateSave);
     }
     function stackEmpty(){
-        return (stack.length === 0);
+        return (undoQueue.length === 0);
     }
 
-    //public
-    function displayStack(){
-        console.log(undoQueue);
-    }
+    // public
     function addToStack(state){
         if(rollingBack){
             var reroll = _.cloneDeep(undoQueue[(undoQueue.length)-(1+rollingBackCount)]);
@@ -33,7 +30,6 @@ define(function(require){
         }
         undoQueue.push(stateClone);
     }
-    function deleteFromStack(){}
     function rollBack(){
         if(!rollingBack){
             rollingBack = true;
@@ -57,12 +53,12 @@ define(function(require){
         return true;
     }
 
-    //return (reveal) public methods
+    // return (reveal) public methods
     return{
-        "displayStack" : displayStack,
         "addToStack" : addToStack,
         "rollBack" : rollBack,
-        "rollForth" : rollForth
+        "rollForth" : rollForth,
+        "stackEmpty" : stackEmpty
     }
 
 });

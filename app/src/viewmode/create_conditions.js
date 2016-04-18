@@ -3,8 +3,8 @@ define(function(require){
         var condition_list = require("viewmode/condition_list");
         var svg = container;
 
-        //create a text for each transition w/ the condition of the transition
-        var condition = svg.append("g").classed("condition_container",true).selectAll("text")
+        // create a text for each transition w/ the condition of the transition
+        svg.append("g").classed("condition_container",true).selectAll("text")
             .data(force.links()).enter()
             .append("text")
             .attr({

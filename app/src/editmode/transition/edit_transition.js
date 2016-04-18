@@ -1,10 +1,7 @@
 define(function(){
-    //conditionsToEdit : string array
-    return function(d,conditionsToEdit,context){
+    // conditionsToEdit : string array
+    return function(d,conditionsToEdit){
         var condition_list = require("viewmode/condition_list");
-        var newConditions = [],
-            indexes = [], //get transition related to the edition among state transitions
-            i = 0, j = 0;
 
          conditionsToEdit.forEach(function(element){
              if(d.conditions){
