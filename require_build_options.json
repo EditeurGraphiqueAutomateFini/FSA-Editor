@@ -7,5 +7,6 @@
         ,"data": "../../data"
         ,"test": "../test/"
         ,"swal": "../../res/js/sweetalert.min"
-    }
+    },
+    "optimize": "none"
 }

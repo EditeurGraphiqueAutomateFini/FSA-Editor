@@ -23,7 +23,7 @@
     "graphs",
     "graph"
   ],
-  "author": "Martin Bolot",
+  "author": "Martin Bolot - Christophe Badet - Jean-Sebastien Fonta - Remy Fischer",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/EditeurGraphiqueAutomateFini/EditeurGraphiqueAutomateFini/issues"
@@ -34,6 +34,7 @@
     "eslint-plugin-promise": "^1.1.0",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
+    "grunt-contrib-watch": "^1.0.0",
     "requirejs": "^2.2.0"
   }
 }

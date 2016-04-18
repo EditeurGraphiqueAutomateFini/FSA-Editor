@@ -7,9 +7,6 @@ require.config({
         ,jquery : "http://code.jquery.com/jquery-2.1.4.min"  // defining jquery as a module
         ,swal: "../../res/js/sweetalert.min"
     }
-    /*,shim:{
-        "../main": "jquery"
-    }*/
 });
 // calling main function
 require(

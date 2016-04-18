@@ -1,6 +1,12 @@
 module.exports = function(grunt){
     grunt.initConfig({
-        "pkg": grunt.file.readJSON('package.json')
+        "pkg": grunt.file.readJSON('package.json'),
+        watch: {
+            scripts: {
+                files: ["app.js","app/*.js"],
+                tasks: ["build-dist"]
+            }
+        }
     });
 
     grunt.registerTask("build-dist","Building distribution file from sources with require-js",function(){
@@ -16,6 +22,8 @@ module.exports = function(grunt){
             grunt.fatal( "Main build failure: " + err );
         });
     });
+
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask("default",["build-dist"]);
 };
