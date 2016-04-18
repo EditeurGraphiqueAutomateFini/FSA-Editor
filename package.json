@@ -1,0 +1,32 @@
+{
+  "name": "fsa_editor",
+  "version": "0.0.1",
+  "description": "A JavaScript editor for Finished State Automata",
+  "main": "app.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EditeurGraphiqueAutomateFini/EditeurGraphiqueAutomateFini.git"
+  },
+  "keywords": [
+    "fsa",
+    "automata",
+    "automaton",
+    "finished",
+    "state",
+    "editor",
+    "graphs",
+    "graph"
+  ],
+  "author": "Martin Bolot",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EditeurGraphiqueAutomateFini/EditeurGraphiqueAutomateFini/issues"
+  },
+  "homepage": "https://github.com/EditeurGraphiqueAutomateFini/EditeurGraphiqueAutomateFini#readme"
+}
