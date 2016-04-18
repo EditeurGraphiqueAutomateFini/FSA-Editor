@@ -4,7 +4,8 @@ define(function(){
         cleanData : function(getData){
             var endPostData = {
                 states : {}
-            };
+            },
+            state,key;
 
             if(getData.allow_overlap){ endPostData.allow_overlap = getData.allow_overlap; }
             if(getData.state_defaults){ endPostData.state_defaults = getData.state_defaults; }

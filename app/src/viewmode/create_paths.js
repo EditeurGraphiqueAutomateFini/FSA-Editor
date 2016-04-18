@@ -5,7 +5,7 @@ define(function(){
         var svg = container;
 
         // create a path for each link/transition
-        var path = svg.append("g").classed("path_container",true).selectAll("path")
+        svg.append("g").classed("path_container",true).selectAll("path")
             .data(force.links()).enter()
             .append("path")
             .attr({

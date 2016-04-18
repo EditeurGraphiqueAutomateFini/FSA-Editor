@@ -1,4 +1,4 @@
-define(function(require){
+define(function(){
     return function(newValues,context){
 
         // edit allow_overlap
@@ -28,7 +28,7 @@ define(function(require){
                 "max_noise" : newValues.newMaxNoise,
                 "max_total_noise" : newValues.newMaxTotalNoise,
                 "max_duration" : newValues.newMaxDuration,
-                "max_total_duration" : newValues.newMaxTotalDuration,
+                "max_total_duration" : newValues.newMaxTotalDuration
             }
         }
     }

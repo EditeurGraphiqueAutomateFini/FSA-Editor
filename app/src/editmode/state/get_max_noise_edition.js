@@ -5,7 +5,7 @@ define(function(require){
             undo = require("utility/undo"),
             edit_frontend_object = require("editmode/edit_frontend_object");
 
-        var swalStateInfo = swal({
+        swal({
             title : "Max noise edition",
             text : "Write a new value",
             type : "input",

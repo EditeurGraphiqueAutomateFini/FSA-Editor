@@ -8,7 +8,7 @@ define(function(require){
 
         var linkingTestID = "#state_"+previouslySelectedState.index;
         var previouslyExistingLink = false;
-        var swalCondition = swal({
+        swal({
             title : "Condition",
             text : "Write a condition for this new transition",
             type : "input",
@@ -16,7 +16,7 @@ define(function(require){
             closeOnConfirm : false,
             animation : "slide-from-top",
             inputPlaceholder : "condition"
-        },function(inputValue,confirmed){
+        },function(inputValue){
             if (inputValue === false){  // on cancel
                 // edit visual hints
                 previouslySelectedState.graphicEditor.linking = false;

@@ -1,7 +1,17 @@
 {
     "env" : {
         "browser" : true,
-        "amd" : true    
+        "amd" : true,
+        "commonjs" : true,
+        "jquery" : true,
+        "qunit" : true
+    },
+    "globals" : {
+        "console" : true,
+        "requirejs" : true,
+        "d3" : true,
+        "swal" : true,
+        "_" : true
     },
     "parser": "espree",
     "ecmaFeatures": {},
@@ -15,7 +25,7 @@
         "no-class-assign": "error",
         "no-cond-assign": "error",
         "no-confusing-arrow": "off",
-        "no-console": "error",
+        "no-console": "warn",
         "no-const-assign": "error",
         "no-constant-condition": "error",
         "no-continue": "off",

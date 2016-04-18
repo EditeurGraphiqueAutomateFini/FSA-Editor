@@ -4,7 +4,7 @@ define(function(require){
                 undo = require("utility/undo"),
                 edit_frontend_object = require("editmode/edit_frontend_object");
 
-            var swalGlobalEdition = swal({
+            swal({
                 title : "Edit global properties",
                 text : displayGlobalPropertiesAsList(),
                 html : true,

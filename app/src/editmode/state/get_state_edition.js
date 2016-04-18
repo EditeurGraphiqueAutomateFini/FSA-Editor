@@ -5,7 +5,7 @@ define(function(require){
                 undo = require("utility/undo"),
                 edit_frontend_object = require("editmode/edit_frontend_object");
 
-            var swalTransitionInfo = swal({
+            swal({
                 title : d.name,
                 text : displayStateAsList(d),
                 html : true,

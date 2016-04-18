@@ -6,7 +6,7 @@ define(function(require){
             undo = require("utility/undo"),
             edit_frontend_object = require("editmode/edit_frontend_object");
 
-        var swalStateInfo = swal({
+        swal({
             title : "State Edition",
             text : "Write a new name",
             type : "input",

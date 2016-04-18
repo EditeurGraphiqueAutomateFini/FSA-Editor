@@ -83,11 +83,12 @@ define(function(require){
 
                 // key "CTRL" is pressed
                 if(d3.event.ctrlKey){
+                    var newLoadedViewMode;
                     switch (d3.event.keyCode) {
                         case 90:    // on key "CTRL + Z" rollback
                             var rollBack = undo.rollBack();
                             if(rollBack){   //if any action has already been performed
-                                var newLoadedViewMode = viewmode.init(viewmode.extractStates([rollBack]),rollBack,true);
+                                newLoadedViewMode = viewmode.init(viewmode.extractStates([rollBack]),rollBack,true);
                                 editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
                                 edit_frontend_object(getData);
                             }
@@ -95,7 +96,7 @@ define(function(require){
                         case 89:    // on key "CTRL + Y" rollforth
                             var rollForth = undo.rollForth();
                             if(rollForth){   // if any action has already been performed
-                                var newLoadedViewMode = viewmode.init(viewmode.extractStates([rollForth]),rollForth,true);
+                                newLoadedViewMode = viewmode.init(viewmode.extractStates([rollForth]),rollForth,true);
                                 editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
                                 edit_frontend_object(getData);
                             }
@@ -131,6 +132,7 @@ define(function(require){
                                     get_max_noise_edition(d,context);
                                 }
                             });
+                            break;
                         default:
                             break;
                     }

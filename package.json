@@ -30,5 +30,6 @@
   },
   "homepage": "https://github.com/EditeurGraphiqueAutomateFini/EditeurGraphiqueAutomateFini#readme",
   "devDependencies": {
+      "eslint": "^2.8.0"
   }
 }

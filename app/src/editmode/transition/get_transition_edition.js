@@ -5,7 +5,7 @@ define(function(require){
                 undo = require("utility/undo"),
                 edit_frontend_object = require("editmode/edit_frontend_object");
 
-            var swalTransitionInfo = swal({
+            swal({
                 title : "Transition edition",
                 text : displayTransitionsAsList(d),
                 html : true,
@@ -79,7 +79,7 @@ define(function(require){
                             swal.showInputError("\',\' is not allowed for transitions");
                             return false;
                         }else{
-                            edit_transition(d,conditionsToEdit,context);
+                            edit_transition(d,conditionsToEdit);
                         }
                     }
                     if(conditionsToDelete.length > 0){

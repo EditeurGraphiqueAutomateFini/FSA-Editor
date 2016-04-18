@@ -4,7 +4,7 @@ define(function(require){
         var svg = container;
 
         // create a text for each transition w/ the condition of the transition
-        var condition = svg.append("g").classed("condition_container",true).selectAll("text")
+        svg.append("g").classed("condition_container",true).selectAll("text")
             .data(force.links()).enter()
             .append("text")
             .attr({

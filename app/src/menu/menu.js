@@ -21,29 +21,29 @@ define(function(require){
                 "</ul>"
             );
 
-    		var li = document.getElementById("menu").getElementsByTagName("li"),
-                liItem,id;
+            var li = document.getElementById("menu").getElementsByTagName("li"),
+            liItem,id;
 
-    		for(var i=0; i < li.length; i++){
-        		liItem = document.getElementById(li[i].id);
-        		liItem.addEventListener("click",function(e){
-                    id = this.id;
-            		e.preventDefault(); // blocks the click event
-                    switch(id){   // checking clicked element's id value
-                        case "view":
-                            server.getRequest("view");  // View mode
-                            break;
-                        case "edit":
-    		                server.getRequest("edit"); // Editor mode
-                            break;
-                        case "create":
-                            break;
-                        default:
-                            server.getRequest("view");
-                    }
-                    $(".menu").hide();
-    	       });
-    	    }
+            for(var i=0; i < li.length; i++){
+            liItem = document.getElementById(li[i].id);
+            liItem.addEventListener("click",function(e){
+                id = this.id;
+                e.preventDefault(); // blocks the click event
+                switch(id){   // checking clicked element's id value
+                    case "view":
+                        server.getRequest("view");  // View mode
+                        break;
+                    case "edit":
+                        server.getRequest("edit"); // Editor mode
+                        break;
+                    case "create":
+                        break;
+                    default:
+                        server.getRequest("view");
+                }
+                $(".menu").hide();
+            });
+            }
         });
     }
 });

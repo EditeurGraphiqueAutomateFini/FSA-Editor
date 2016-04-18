@@ -9,7 +9,7 @@ define(function(require){
                 undo = require("utility/undo"),
                 server = require("utility/server_request");
 
-            var ajaxRequest = $.ajax({
+            $.ajax({
                   type : 'GET',
                   url : 'http://www.fsaeditor.com',
                   success : function(data){
@@ -21,7 +21,7 @@ define(function(require){
                   beforeSend : function(){
                       $(".load_helper").show();
                   },
-                  complete : function(data){
+                  complete : function(){
                       $(".load_helper").fadeOut();
                       $("#object_container_left").css("background","transparent");
                   }
@@ -122,7 +122,7 @@ define(function(require){
             editmode = require("editmode/edit_init"),
             utility = require("utility/utility");
 
-            var ajaxRequest = $.ajax({
+            $.ajax({
                   type : 'POST',
                   data : { graphicEditorFSA : JSON.stringify(postData) },
                   url : 'http://www.fsaeditor.com',
@@ -139,15 +139,16 @@ define(function(require){
                               viewmode.init(viewmode.extractStates([postData]),postData,true);
                               // reseting front-end object display
                               utility.frontEndObject([data_helper.cleanData(postData)]);
-                          break;
+                              break;
                           case "edit":
                               var newLoadedViewMode = viewmode.init(viewmode.extractStates([postData]),postData);
                               editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
                               utility.frontEndObject([data_helper.cleanData(postData)]);
+                              break;
                           default:
                       }
                   },
-                  success : function(data){
+                  success : function(){
                      swal("Saved!", "JSON file successfully overwritten", "success");
                   },
                   error : function(){

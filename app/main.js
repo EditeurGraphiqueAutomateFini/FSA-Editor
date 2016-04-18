@@ -1,6 +1,6 @@
 // main function
 define(function(require){
-    var menu = require("menu/menu");
+    require("menu/menu");
 
     //right panel
     closeContainer("#object_container_wrapper","#object_container_close","left");

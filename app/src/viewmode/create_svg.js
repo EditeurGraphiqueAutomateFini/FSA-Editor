@@ -3,9 +3,6 @@ define(function(){
     return function(container){
         if(container){
 
-            var width = 300,
-                height = 300;
-
             var svg = d3.select(container).insert("svg",".buttons");
 
             svg.attr({
@@ -28,7 +25,7 @@ define(function(){
                 .attr("d","M0,-5L10,0L0,5");
 
         }else{  // if no container is supplied
-            var svg="";
+            svg="";
         }
 
         return svg;

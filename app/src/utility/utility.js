@@ -63,7 +63,7 @@ define(function(){
                 // removing last coma
                 if(objString.charAt(objString.length-6) == ','){
                     objString = objString.slice(0,-6)+objString.slice(-5);
-                };
+                }
                 // removing last backspace
                 if(objString.slice(-5) == "<br/>"){
                     objString = objString.slice(0,-5);
