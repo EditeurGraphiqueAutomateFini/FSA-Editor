@@ -1,13 +1,13 @@
 define(function(require){
     return function(newValues,d,context){   //newValues includes newName,newTerminal,newMaxNoise,newMaxTotalNoise,newMaxDuration,newMaxTotalDuration,newDefaultTransition
-        var edit_references = require("editmode/edit_references"),
-            edit_state_defaulttransition = require("editmode/edit_state_defaulttransition"),
-            edit_state_maxduration = require("editmode/edit_state_maxduration"),
-            edit_state_maxtotalduration = require("editmode/edit_state_maxtotalduration"),
-            edit_state_maxnoise = require("editmode/edit_state_maxnoise"),
-            edit_state_maxtotalnoise = require("editmode/edit_state_maxtotalnoise"),
-            edit_state_name = require("editmode/edit_state_name"),
-            edit_state_terminal = require("editmode/edit_state_terminal");
+        var edit_references = require("editmode/state/edit_references"),
+            edit_state_defaulttransition = require("editmode/state/edit_state_defaulttransition"),
+            edit_state_maxduration = require("editmode/state/edit_state_maxduration"),
+            edit_state_maxtotalduration = require("editmode/state/edit_state_maxtotalduration"),
+            edit_state_maxnoise = require("editmode/state/edit_state_maxnoise"),
+            edit_state_maxtotalnoise = require("editmode/state/edit_state_maxtotalnoise"),
+            edit_state_name = require("editmode/state/edit_state_name"),
+            edit_state_terminal = require("editmode/state/edit_state_terminal");
 
         //edit max_duration if necessary
         if(newValues.newMaxDuration !== d.max_duration){

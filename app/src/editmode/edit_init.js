@@ -2,20 +2,24 @@ define(function(require){
     return{
         init: function(svg,force,getData,links){
             var context_menu = require("menu/context_menu"),
-                delete_state = require("editmode/delete_state"),
-                delete_references = require("editmode/delete_references"),
-                edit_references = require("editmode/edit_references"),
-                add_transition = require("editmode/add_transition"),
-                edit_transition = require("editmode/edit_transition"),
-                delete_transition = require("editmode/delete_transition"),
-                edit_condition = require("editmode/edit_condition"),
-                edit_state = require("editmode/edit_state"),
-                edit_state_name = require("editmode/edit_state_name"),
-                edit_state_maxnoise = require("editmode/edit_state_maxnoise"),
-                edit_global = require("editmode/edit_global"),
                 editmode = require("editmode/edit_init"),
                 viewmode = require("viewmode/view_init"),
                 undo = require("utility/undo");
+
+            //global
+            var edit_global = require("editmode/global/edit_global");
+            //state
+            var delete_state = require("editmode/state/delete_state"),
+                edit_state = require("editmode/state/edit_state"),
+                edit_state_name = require("editmode/state/edit_state_name"),
+                edit_state_maxnoise = require("editmode/state/edit_state_maxnoise"),
+                edit_references = require("editmode/state/edit_references"),
+                delete_references = require("editmode/state/delete_references");
+            //transition
+            var add_transition = require("editmode/transition/add_transition"),
+                edit_transition = require("editmode/transition/edit_transition"),
+                delete_transition = require("editmode/transition/delete_transition"),
+                edit_condition = require("editmode/transition/edit_condition");
 
             //generate global edition button
             d3.select("#global_properties").html("<button class='btn btn-primary button_edit_global_properties'>Edit global properties</button>");
