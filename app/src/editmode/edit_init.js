@@ -352,7 +352,7 @@ define(function(require){
                         //name
                         newName = d3.select("#input_name_"+d.index).property("value");
                         //terminal
-                        newTerminal = parseInt(d3.select("#input_terminal_"+d.index).property("checked"));
+                        newTerminal = d3.select("#input_terminal_"+d.index).property("checked");
                         //max_noise
                         newMaxNoise = parseInt(d3.select("#input_max_noise_"+d.index).property("value"));
                         //max_total_noise

@@ -44,8 +44,8 @@ define(function(require){
         if(newValues.newDefaultTransition){
             if(d.default_transition){
                 if(
-                    (newValues.newDefaultTransition.silent !== d.default_transition.silent)
-                    || (newValues.newDefaultTransition.target !== d.default_transition.target)
+                    newValues.newDefaultTransition.silent !== d.default_transition.silent
+                    || newValues.newDefaultTransition.target !== d.default_transition.target
                 ){
                     edit_state_defaulttransition(d,newValues.newDefaultTransition.silent,newValues.newDefaultTransition.target,context);
                 }
