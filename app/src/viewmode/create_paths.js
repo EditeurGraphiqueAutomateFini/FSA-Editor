@@ -6,11 +6,11 @@ define(function(){
 
         //create a path for each link/transition
         var path = svg.append("g").classed("path_container",true).selectAll("path")
-            .data(force.links())
-            .enter().append("path")
+            .data(force.links()).enter()
+            .append("path")
             .attr({
                 "class" : "link",
-                "id" : function(d){return "link_"+d.source.index +"_"+d.target.index;},
+                "id" : function(d){ return "link_"+d.source.index +"_"+d.target.index; },
                 "marker-end" : "url(#end)"
             });
 

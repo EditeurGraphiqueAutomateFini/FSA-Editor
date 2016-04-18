@@ -1,12 +1,14 @@
 //create d3 force layout
 define(function(require){
     return function(container,states,links){
+
         var tick = require("viewmode/tick_helper"),
             utility = require("utility/utility"),
             data_helper = require("viewmode/data_helper");
 
         var containmentWidth = $("#svgbox")[0].getBoundingClientRect().width,
             containmentHeight = $("#svgbox")[0].getBoundingClientRect().height;
+
         //creating the force layout with states as nodes
         var force = d3.layout.force()
             .nodes(d3.values(states))
@@ -21,15 +23,6 @@ define(function(require){
                 tick(e,r,containmentWidth,containmentHeight);
             })
             .start();
-
-        //add a modification of the frond-end displayed data on drag
-        var drag = force.drag()
-            .on("dragstart", function(){
-            })
-            .on("drag",function(d){
-            })
-            .on("dragend",function(){
-            });
 
         return force;
 

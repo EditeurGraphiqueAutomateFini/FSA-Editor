@@ -6,16 +6,16 @@ define(function(){
                 states : {}
             };
 
-            if(getData.allow_overlap){endPostData.allow_overlap=getData.allow_overlap;}
-            if(getData.state_defaults){endPostData.state_defaults=getData.state_defaults;}
-            if(getData.default_matcher){endPostData.default_matcher=getData.default_matcher;}
+            if(getData.allow_overlap){ endPostData.allow_overlap = getData.allow_overlap; }
+            if(getData.state_defaults){ endPostData.state_defaults = getData.state_defaults; }
+            if(getData.default_matcher){ endPostData.default_matcher = getData.default_matcher; }
 
             for(state in getData.states){
-                if(getData.states[state] && getData.states.hasOwnProperty(state)){
-                    endPostData.states[state]={};
+                if(getData.states.hasOwnProperty(state) && getData.states[state]){
+                    endPostData.states[state] = {};
                     for(key in getData.states[state]){
                         if(getData.states[state].hasOwnProperty(key)){
-                            //condition giving the set of properties we want to keep
+                            //condition giving the set of properties we want to keep for each state
                             if(
                                 key === "default_transition" ||
                                 key === "graphicEditor" ||

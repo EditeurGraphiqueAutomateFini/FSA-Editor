@@ -5,28 +5,18 @@ define(function(){
 
         //create a circle for each state and apply D3 drag system
         var circle = svg.append("g").classed("state_container",true).selectAll("circle")
-            .data(force.nodes())
-            .enter().append("circle")
+            .data(force.nodes()).enter()
+            .append("circle")
             .attr({
-                "r":"15",
+                "r" : "15",
                 "class" : function(d){
-                    if(d.terminal){return "terminal"}
-                    else{return "";}
+                    if(d.terminal){ return "terminal"; }
+                    else{ return ""; }
                 },
                 "id" : function(d){
                     return "state_"+d.index;
                 },
-                "fill" : function(d){return d.fill;},
-                "title": "el.name"
-            })
-            //add a tooltip to each circle
-            .each(function(el){
-                $(this).attr('title','');
-                //bien mais pas de possibilite de click, a revoir
-                /*$("#state_"+el.index).tooltip({
-                    position: { my: "left+30 center", at: "right center" },
-                    content : el.name
-                });*/
+                "fill" : function(d){ return d.fill; }
             })
             .call(force.drag);
       }

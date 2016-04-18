@@ -2,10 +2,10 @@ define(function(require){
     return{
         //extract states
         extractStates : function(data){
-            var states=[];
+            var states = [];
             //iterating over states objects in data file (JSON), making a JS array of objects
             if(data){
-                for(var i=0;i<data.length;i++){
+                for(var i=0; i<data.length; i++){
                     if(data[i].states){
                         states.push(data[i].states);
                     }
@@ -27,7 +27,7 @@ define(function(require){
         getConditions :function(data,source,target){
             var conditions = [];
             for(var key in data){
-                if(data.hasOwnProperty(key)){
+                if(data.hasOwnProperty(key) && data[key]){
                     if(data[key].uniqueId === source && data[key].transitions){
                         data[key].transitions.forEach(function(transition){
                             if(transition.target === target){
@@ -58,14 +58,18 @@ define(function(require){
             if(states){
                 var transitionSet = [],
                     links = [],
-                    dataset = [];
-                // Compute the distinct nodes from the transitionSet.
-                //très moyennement satisfait du bouzin ci-dessous
-                states.forEach(function(data,i){
-                    var cpt=0;
-                    for(var key in data){
+                    dataset = [],
+                    newLink = {},
+                    key,sate,
+                    testPresence = false,
+                    i = 0, cpt = 0;
+
+                // compute the distinct nodes from the transitionSet
+                states.forEach(function(data){
+                    cpt = 0;
+                    for(key in data){
                         if(data.hasOwnProperty(key)){
-                            var state = data[key];
+                            state = data[key];
                             if(state){
                                 state.fixed = true;
                                 state.uniqueId = cpt;
@@ -80,7 +84,7 @@ define(function(require){
                                     state.graphicEditor.origCoordY = state.graphicEditor.coordY;
                                 }
 
-                                state.x = state.graphicEditor.coordX || 0;   //known position or random
+                                state.x = state.graphicEditor.coordX || 0;   //known position or 0
                                 state.y = state.graphicEditor.coordY || 0;
 
                                 //push state
@@ -89,23 +93,22 @@ define(function(require){
                             }
                         }
                     }
-                    for(var key in data){
+                    for(key in data){
                         if(data.hasOwnProperty(key)){
-                            var state = data[key];
+                            state = data[key];
                             if(state){
-                                if(state.transitions && state.transitions.length>0){
-                                    for(var i=0; i<state.transitions.length; i++){
-
+                                if(state.transitions && state.transitions.length > 0){
+                                    for(i=0; i < state.transitions.length; i++){
                                         //add the new link if not already present
-                                        var testPresence = links.find(function(el){
+                                        testPresence = links.find(function(el){
                                              return (
                                                 el.source === state.uniqueId
                                                 && el.target === viewmode.getIdFromName(dataset,state.transitions[i].target)
                                             );
-                                         });
+                                        });
                                         if(!testPresence){
                                             //creating a new link
-                                            var newLink = {
+                                            newLink = {
                                                 "source" : state.uniqueId,
                                                 "target" : viewmode.getIdFromName(dataset,state.transitions[i].target),
                                                 "conditions" : viewmode.getConditions(dataset,state.uniqueId,state.transitions[i].target)
