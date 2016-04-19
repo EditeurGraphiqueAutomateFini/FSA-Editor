@@ -12,5 +12,5 @@ define(function(){
 
         // restart force layout w/ new data
         context.force.start();
-    }
+    };
 });

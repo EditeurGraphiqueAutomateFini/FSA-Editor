@@ -63,5 +63,5 @@ define(function(){
 
         function getContainmentX(valX){ return Math.max(r,Math.min(valX,containmentWidth-r)); }
         function getContainmentY(valY){ return Math.max(r,Math.min(valY,containmentHeight-r)); }
-    }
-})
+    };
+});

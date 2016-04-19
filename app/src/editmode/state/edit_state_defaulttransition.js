@@ -29,7 +29,7 @@ define(function(){
                 d.default_transition = {
                     "silent" : newSilent,
                     "target" : newTargetName
-                }
+                };
             }
 
             for(state in states){
@@ -42,11 +42,11 @@ define(function(){
                             states[state].default_transition = {
                                 "silent" : newSilent,
                                 "target" : newTargetName
-                            }
+                            };
                         }
                     }
                 }
             }
         }
-    }
+    };
 });

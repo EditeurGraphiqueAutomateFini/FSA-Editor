@@ -33,5 +33,5 @@ define(function(){
 
         // restart force layout w/ new data
         force.start();
-    }
+    };
 });

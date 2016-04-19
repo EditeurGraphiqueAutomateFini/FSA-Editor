@@ -14,5 +14,5 @@ define(function(){
                 "marker-end" : "url(#end)"
             });
 
-    }
+    };
 });

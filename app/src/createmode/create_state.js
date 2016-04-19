@@ -38,5 +38,5 @@ define(function(require){
         editmode.init(context.svg,context.force,context.getData,context.links);
         //restarting force layout
         context.force.start();
-    }
+    };
 });

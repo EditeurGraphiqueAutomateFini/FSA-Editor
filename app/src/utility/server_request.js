@@ -160,5 +160,5 @@ define(function(require){
                   }
             });
         }
-    }
+    };
 });

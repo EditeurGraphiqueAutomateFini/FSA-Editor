@@ -67,5 +67,5 @@ define(function(require){
 
         // delete references
         delete_references(context.getData,d.name);
-    }
+    };
 });

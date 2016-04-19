@@ -38,5 +38,5 @@ define(function(){
 
         // restart force layout
         force.start();
-    }
+    };
 });

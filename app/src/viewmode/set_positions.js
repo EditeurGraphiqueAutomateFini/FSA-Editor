@@ -44,7 +44,7 @@ define(function(){
 
 			}else{
 				if(states[state].name == "error") {
-					states[state].y = states["start"].y
+					states[state].y = states["start"].y;
 					states[state].x = lastX;
 				}else{
 					states[state].y = states["start"].y + gap;
@@ -53,5 +53,5 @@ define(function(){
 			}
 			// console.log("------------------");
         }
-    }
+    };
 });

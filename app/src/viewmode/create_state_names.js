@@ -31,5 +31,5 @@ define(function(){
                 .text(function(d){ return d.max_noise > 0 ? "["+d.max_noise+"]" : ""; })
                 .attr("dx",3)
                 .classed("state_name_maxnoise",true);
-      }
+      };
 });

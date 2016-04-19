@@ -174,5 +174,5 @@ define(function(require){
                 );
             }
         }
-    }
+    };
 });

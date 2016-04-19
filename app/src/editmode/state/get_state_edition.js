@@ -101,7 +101,7 @@ define(function(require){
                         "newMaxDuration":newMaxDuration,
                         "newMaxTotalDuration":newMaxTotalDuration,
                         "newDefaultTransition":newDefaultTransition
-                    }
+                    };
 
                     edit_state(newValues,d,context);
 
@@ -150,7 +150,7 @@ define(function(require){
                                         "type='text' "+
                                         "value='"+(currentState[propertiesToEdit[i].name] || "")+"' "+
                                         "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
-                                    "/>"
+                                    "/>";
                             break;
                         case "number":
                             input = "<input "+
@@ -158,7 +158,7 @@ define(function(require){
                                         "type='number' "+
                                         "value='"+(currentState[propertiesToEdit[i].name] || 0)+"' "+
                                         "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
-                                    "/>"
+                                    "/>";
                             break;
                         case "check":
                             input = "<input "+
@@ -166,7 +166,7 @@ define(function(require){
                                         "type='checkbox' "+
                                         (currentState[propertiesToEdit[i].name] ? "checked='true' " : "")+
                                         "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
-                                    "/>"
+                                    "/>";
                             break;
                         case "transition":
                             options = "";
@@ -211,7 +211,7 @@ define(function(require){
                                                 "id='input_"+propertiesToEdit[i].name+"_silent_"+d.index+"' "+
                                             "/>"+
                                         "</span>"+
-                                    "</span>"
+                                    "</span>";
 
                             break;
                         default:
@@ -232,5 +232,5 @@ define(function(require){
 
                 return html;
             }
-        }
+        };
 });

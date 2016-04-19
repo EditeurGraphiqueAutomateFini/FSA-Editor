@@ -59,6 +59,5 @@ define(function(){
         "rollBack" : rollBack,
         "rollForth" : rollForth,
         "stackEmpty" : stackEmpty
-    }
-
+    };
 });

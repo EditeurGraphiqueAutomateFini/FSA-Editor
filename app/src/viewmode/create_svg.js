@@ -29,5 +29,5 @@ define(function(){
         }
 
         return svg;
-    }
-})
+    };
+});

@@ -28,5 +28,5 @@ define(function(){
                 "fill" : function(d){ return d.fill; }
             })
             .call(force.drag);
-      }
+      };
 });
