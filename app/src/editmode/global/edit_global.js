@@ -29,7 +29,7 @@ define(function(){
                 "max_total_noise" : newValues.newMaxTotalNoise,
                 "max_duration" : newValues.newMaxDuration,
                 "max_total_duration" : newValues.newMaxTotalDuration
-            }
+            };
         }
-    }
+    };
 });

@@ -4,5 +4,5 @@ define(function(){
         if(context.getData.states[d.name]){
             context.getData.states[d.name].max_duration = parseInt(newMaxDuration) || 0;
         }
-    }
+    };
 });

@@ -56,5 +56,5 @@ define(function(require){
 
         // restart force layout w/ new data
         context.force.start();
-    }
+    };
 });

@@ -21,5 +21,5 @@ define(function(){
 
          d3.select("text.link_"+d.source.index+"_"+d.target.index)
              .text(condition_list);
-    }
+    };
 });

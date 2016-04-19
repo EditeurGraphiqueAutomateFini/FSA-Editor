@@ -5,5 +5,5 @@ define(function(require){
             displayableData = data_helper.cleanData(data);
 
         utility.frontEndObject([displayableData]);
-    }
+    };
 });

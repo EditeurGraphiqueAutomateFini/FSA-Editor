@@ -55,5 +55,5 @@ define(function(){
 
         // restarting force w/ new nodes and links
         context.force.start();
-    }
+    };
 });

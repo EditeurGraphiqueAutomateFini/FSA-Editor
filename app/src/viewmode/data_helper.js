@@ -36,5 +36,5 @@ define(function(){
 
             return endPostData;
         }
-    }
+    };
 });

@@ -5,5 +5,5 @@ define(function(){
             d.graphicEditor.linking = false;
             d3.select("#state_"+d.index).classed("linking",false);
         }
-    }
+    };
 });

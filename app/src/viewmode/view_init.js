@@ -107,7 +107,7 @@ define(function(require){
                                                 "source" : state.uniqueId,
                                                 "target" : viewmode.getIdFromName(dataset,state.transitions[i].target),
                                                 "conditions" : viewmode.getConditions(dataset,state.uniqueId,state.transitions[i].target)
-                                            }
+                                            };
                                             links.push(newLink);
                                         }
                                     }
@@ -168,5 +168,5 @@ define(function(require){
                 "links" : links
             };
         }
-    }
+    };
 });

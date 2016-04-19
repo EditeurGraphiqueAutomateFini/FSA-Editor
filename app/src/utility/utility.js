@@ -90,5 +90,5 @@ define(function(){
                 });
             }
         }
-    }
+    };
 });

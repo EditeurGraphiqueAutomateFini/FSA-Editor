@@ -16,5 +16,5 @@ define(function(require){
             })
             .text(condition_list);
 
-    }
+    };
 });

@@ -24,5 +24,5 @@ define(function(require){
 
         return force;
 
-    }
+    };
 });

@@ -6,5 +6,5 @@ define(function(){
                 d3.select("#state_"+d.index).classed("linking",false);
             }
         });
-    }
+    };
 });

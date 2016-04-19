@@ -1,11 +1,23 @@
 {
     "baseUrl": "app/src/",
-    "name": "app",
+    "name": "../../res/js/almond",
+    "include" : ["app","jquery"],
+    "insertRequire" : ["app","jquery"],
+    "exclude": ["d3"],
+    "wrap" : {
+        "startFile": "res/js/start.frag.js",
+        "endFile": "res/js/end.frag.js"
+    },
+    "findNestedDependencies" : true,
     "out": "./dist/fsa_editor.js",
     "paths": {
         "app": "../../app"
         ,"data": "../../data"
         ,"test": "../test/"
+        ,"jquery": "../../res/js/jquery"
+        ,"lodash": "../../res/js/lodash"
+        ,"qunit": "../../res/js/qunit"
+        ,"d3": "../../res/js/d3"
         ,"swal": "../../res/js/sweetalert.min"
     },
     "optimize": "uglify"

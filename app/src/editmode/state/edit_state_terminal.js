@@ -6,5 +6,5 @@ define(function(){
         d3.select("circle#state_"+d.index).classed("terminal",function(){
             return d.terminal;
         });
-    }
+    };
 });

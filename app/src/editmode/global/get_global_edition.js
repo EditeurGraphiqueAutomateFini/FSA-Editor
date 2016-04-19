@@ -72,7 +72,7 @@ define(function(require){
                             "newMaxTotalNoise" : newMaxTotalNoise,
                             "newMaxDuration" : newMaxDuration,
                             "newMaxTotalDuration" : newMaxTotalDuration
-                        }
+                        };
 
                         edit_global(newValues,context);
 
@@ -118,7 +118,7 @@ define(function(require){
                                         "type='text' "+
                                         "value='"+ (previousValue || "")+"' "+
                                         "id='input_"+propertiesToEdit[i].name+"' "+
-                                    "/>"
+                                    "/>";
                             break;
                         case "number":
                             input = "<input "+
@@ -126,7 +126,7 @@ define(function(require){
                                         "type='number' "+
                                         "value='"+(previousValue || 0)+"' "+
                                         "id='input_"+propertiesToEdit[i].name+"' "+
-                                    "/>"
+                                    "/>";
                             break;
                         case "check":
                             input = "<input "+
@@ -134,7 +134,7 @@ define(function(require){
                                         "type='checkbox' "+
                                         (previousValue ? "checked='true' " : "")+
                                         "id='input_"+propertiesToEdit[i].name+"' "+
-                                    "/>"
+                                    "/>";
                             break;
                         default:
                             input="";
@@ -154,5 +154,5 @@ define(function(require){
 
                 return html;
             }
-        }
+        };
 });
