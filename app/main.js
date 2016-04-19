@@ -1,7 +1,6 @@
 // main function
 define(function(require){
-    return window.fsa_editor = function(data,mode,options){
-        console.log(data,mode,options);
+    return window.fsa_editor = function(){
 
         var menu = require("menu/menu");
         menu();

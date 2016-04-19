@@ -2,7 +2,14 @@ define(function(require){
     return{
         init: function(context){
             var create_state = require("createmode/create_state"),
-                edit_frontend_object = require("editmode/edit_frontend_object");
+                edit_frontend_object = require("editmode/edit_frontend_object"),
+                get_global_edition = require("editmode/global/get_global_edition");
+
+
+
+            if(context.getData.length === 0){
+                get_global_edition(context);
+            }
 
             var container = d3.select("#object_container_right").append("div").classed("dummy_container",true),
                 drag = d3.behavior.drag(),

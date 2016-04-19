@@ -91,7 +91,7 @@ define(function(require){
             function displayGlobalPropertiesAsList(){
                 var html = "",
                     input = "",
-                    propertiesToEdit=[
+                    propertiesToEdit = [
                         { "name":"allow_overlap", "type":"check" },
                         { "name":"default_matcher", "type":"text" },
                         { "name":"state_defaults", "type":"" },
@@ -106,7 +106,9 @@ define(function(require){
                 for(var i=0; i < propertiesToEdit.length; i++){
 
                     if(propertiesToEdit[i].sub){
-                        previousValue = context.getData[propertiesToEdit[i].sub][propertiesToEdit[i].name];
+                        if(context.getData[propertiesToEdit[i].sub]){
+                            previousValue = context.getData[propertiesToEdit[i].sub][propertiesToEdit[i].name];
+                        }
                     }else{
                         previousValue = context.getData[propertiesToEdit[i].name];
                     }

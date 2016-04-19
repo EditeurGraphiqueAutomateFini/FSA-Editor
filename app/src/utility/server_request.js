@@ -3,6 +3,7 @@ define(function(require){
         // obtain data, use it to load a mode. mode : string representing the mode to load
         getRequest : function(mode){
             var viewmode = require("viewmode/view_init"),
+                createmode = require("createmode/create_init"),
                 data_helper = require("viewmode/data_helper"),
                 editmode = require("editmode/edit_init"),
                 utility = require("utility/utility"),
@@ -53,7 +54,6 @@ define(function(require){
                             // loading edit mode from previously loaded viewmode
                             editmode.init(loadedViewMode.svg,loadedViewMode.force,loadedViewMode.getData,loadedViewMode.links);
                             // createmode
-                            var createmode = require("createmode/create_init");
                             var context = {"svg":loadedViewMode.svg,"force":loadedViewMode.force,"getData":loadedViewMode.getData,"links":loadedViewMode.links};
                             createmode.init(context);
                             // handling reset (same as edit mode)
@@ -81,7 +81,8 @@ define(function(require){
                 console.log("/!\\ ajax : error retrieving data from server, local data loaded");
 
                 // thus loading local data (probablement a modifier)
-                var data = require("data/data_example");
+                //var data = require("data/data_example");
+                var data = [];
                 var dataSolid = _.cloneDeep(data);
                 // display object
                 utility.frontEndObject(data);
@@ -105,6 +106,9 @@ define(function(require){
                         var loadedViewMode = viewmode.init(viewmode.extractStates(data),data);
                         // loading edit mode from previously loaded viewmode
                         editmode.init(loadedViewMode.svg,loadedViewMode.force,loadedViewMode.getData,loadedViewMode.links);
+                        //create mode
+                        var context = {"svg":loadedViewMode.svg,"force":loadedViewMode.force,"getData":loadedViewMode.getData,"links":loadedViewMode.links};
+                        createmode.init(context);
                         // handling reset (same as edit mode)
                         $("button.reset").click(function(){
                             var parsedDataLiquid = _.cloneDeep(dataSolid);
@@ -156,7 +160,7 @@ define(function(require){
                      swal("Saved!", "JSON file successfully overwritten", "success");
                   },
                   error : function(){
-                      console.log("send error");
+                      console.log("An error occured when sending the json file");
                   }
             });
         }
