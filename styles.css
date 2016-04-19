@@ -7,18 +7,15 @@ html,body{
     margin: 0;
     padding: 0;
 }
-h1{
-    /*position: absolute;*/
-}
+h1{}
 /*svg*/
-svg{
+svg#svgbox{
     display: block;
     height: 90%;
     width: 100%;
 }
 /*svg - circles (states)*/
 .circle,circle{
-    border-radius: 100%;
     cursor: pointer;
     display: block;
     position: absolute;
@@ -35,7 +32,6 @@ svg{
     stroke-width:3px;
 }
 .linking{
-    /*fill: #f5e79e;*/
     fill:#FFF;
     stroke: black;
     stroke-width:3px;
@@ -62,18 +58,11 @@ text:hover tspan{
     fill:#000;
     cursor: default;
 }
-text.new_link{
-}
-text.new_condition{
-}
-text.condition{
-}
-.state_name tspan{
-
-}
-.state_name .state_name_label{
-
-}
+text.new_link{}
+text.new_condition{}
+text.condition{}
+.state_name tspan{}
+.state_name .state_name_label{}
 /*containers*/
 #svg_container,#object_container_wrapper,#object_textarea{
     display: inline-block;
@@ -138,7 +127,7 @@ text.condition{
     background-color: #e6e6e6 !important;
 }
 #object_container_right{
-    overflow-y: auto;
+    overflow: visible;
 }
 #object_container_wrapper_left{
     left: 0;
@@ -292,49 +281,6 @@ text.condition{
 #label_property_state_defaults{
     margin: 0 0 20px;
 }
-
-/*tools*/
-/*
-#cadre-menu {
-	position:fixed;
-	left:-114px;
-	overflow:hidden;
-	top:40%;
-	width:210px;
-	font:12px Arial;
-}
-#bordure-menu {
-	float:left;
-	width:115px;
-	margin:0px auto;
-	padding:2px;
-	border:5px solid #000000;
-	border-left:none;
-	font-family: Tahoma;
-    height: 193px;
-}
-#bordure-menu ul {
-	list-style: square inside;
-}
-#bordure-menu ul li {
-	padding-top:25px;
-}
-#bordure-menu ul li a {
-	color:#555;
-}
-#bordure-menu ul li a:hover {
-	text-decoration:underline;
-}
-#bouton-menu {
-	float:right;
-	width:95px;
-	margin:0px;
-	height:193px;
-	font-family: Tahoma;
-    padding-top: 55px;
-}
-*/
-
 /*global properties*/
 #global_properties{
     text-align: center;
@@ -342,4 +288,18 @@ text.condition{
 }
 .button_edit_global_properties{
     margin: 10px 0 0;
+}
+/*create mode*/
+.dummy_container{
+    position: relative;
+}
+.dummy_container circle{
+    left: auto;
+    top: auto;
+}
+.dummy_container svg,.dummy_container svg:not(:root){
+    display: block;
+    height: 90%;
+    overflow: visible;
+    width: 100%;
 }

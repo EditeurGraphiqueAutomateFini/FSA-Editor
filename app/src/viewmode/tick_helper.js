@@ -2,7 +2,7 @@ define(function(){
     return function(e,r,containmentWidth,containmentHeight){
         var path = d3.selectAll(".link"),
             condition = d3.selectAll(".condition"),
-            circle = d3.selectAll("circle"),
+            circle = d3.selectAll(".state_container circle"),
             text = d3.selectAll(".state_name");
 
         path.attr("d",linkArc);

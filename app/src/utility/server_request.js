@@ -23,7 +23,7 @@ define(function(require){
                   },
                   complete : function(){
                       $(".load_helper").fadeOut();
-                      $("#object_container_left").css("background","transparent");
+                      $("#object_container_left").css("background","#FFF");
                   }
             });
             function succesFunction(getData,mode){
@@ -44,7 +44,7 @@ define(function(require){
                                 viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,true);
                                 // reseting front-end object display
                                 utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
-                                $("#object_container_left").css("background","transparent");
+                                $("#object_container_left").css("background","#FFF");
                             });
                             break;
                         case "edit":
@@ -52,13 +52,17 @@ define(function(require){
                             var loadedViewMode = viewmode.init(viewmode.extractStates([parsedData]),parsedData);
                             // loading edit mode from previously loaded viewmode
                             editmode.init(loadedViewMode.svg,loadedViewMode.force,loadedViewMode.getData,loadedViewMode.links);
+                            // createmode
+                            var createmode = require("createmode/create_init");
+                            var context = {"svg":loadedViewMode.svg,"force":loadedViewMode.force,"getData":loadedViewMode.getData,"links":loadedViewMode.links};
+                            createmode.init(context);
                             // handling reset (same as edit mode)
                             $("button.reset").click(function(){
                                 var parsedDataLiquid = _.cloneDeep(parsedDataSolid);
                                 var newLoadedViewMode = viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid);
                                 editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
                                 utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
-                                $("#object_container_left").css("background","transparent");
+                                $("#object_container_left").css("background","#FFF");
                             });
                             break;
                         default:
@@ -93,7 +97,7 @@ define(function(require){
                             viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,true);
                             // reseting front-end object display
                             utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
-                            $("#object_container_left").css("background","transparent");
+                            $("#object_container_left").css("background","#FFF");
                         });
                         break;
                     case "edit":
@@ -107,7 +111,7 @@ define(function(require){
                             var newLoadedViewMode = viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid);
                             editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
                             utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
-                            $("#object_container_left").css("background","transparent");
+                            $("#object_container_left").css("background","#FFF");
                         });
                         break;
                     default:
@@ -131,7 +135,7 @@ define(function(require){
                   },
                   complete : function(){
                       $(".load_helper").fadeOut();
-                      $("#object_container_left").css("background","transparent");
+                      $("#object_container_left").css("background","#FFF");
                       d3.selectAll(".new_link").classed("new_link",false);
                       switch (mode) {
                           case "view":
