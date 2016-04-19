@@ -1,10 +1,19 @@
 define(function(){
     return function(container,force){
 
-        var svg = container;
+        var svg = container,
+            state_container;
+
+        // test if we need to create a container from the start
+        // or if we are simply adding a new state to the existing container
+        if(d3.select(".state_container").size() > 0){
+            state_container = d3.select(".state_container");
+        }else{
+            state_container = svg.append("g").classed("state_container",true);
+        }
 
         // create a circle for each state and apply D3 drag system
-        svg.append("g").classed("state_container",true).selectAll("circle")
+        state_container.selectAll("circle")
             .data(force.nodes()).enter()
             .append("circle")
             .attr({

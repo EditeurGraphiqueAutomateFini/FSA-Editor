@@ -118,8 +118,8 @@ define(function(require){
                 });
 
                 // set_positions(states[0]);    // uncomment variable set_positions to activate again
-                if($("svg").size() > 0){
-                    $("svg").remove();
+                if($("svg#svgbox").size() > 0){
+                    $("svg#svgbox").remove();
                 }
                 var svg = create_svg("#svg_container"),
                     force = create_force_layout(svg,dataset,links);

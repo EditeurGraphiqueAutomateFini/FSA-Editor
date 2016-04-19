@@ -12,7 +12,6 @@ define(function(require){
             var get_global_edition = require("editmode/global/get_global_edition");
             // state
             var delete_state = require("editmode/state/delete_state"),
-                delete_references = require("editmode/state/delete_references"),
                 get_state_edition = require("editmode/state/get_state_edition"),
                 get_state_name_edition = require("editmode/state/get_state_name_edition"),
                 get_max_noise_edition = require("editmode/state/get_max_noise_edition");
@@ -33,7 +32,7 @@ define(function(require){
             force.drag().on("drag",function(d){ d.graphicEditor.unselectable=true; });
 
             // iterates over svg circles (representing states)
-            d3.selectAll("circle").each(function(){
+            d3.selectAll(".state_container circle").each(function(){
                 d3.select(this)
                     // on right click, call a context menu to delete or edit state
                     .on("contextmenu",function(d){
@@ -111,14 +110,14 @@ define(function(require){
                             cancel_all_selections();
                             break;
                         case 46:    // on key "SUPPR" delete state
-                            d3.selectAll("circle").each(function(d){
+                            d3.selectAll(".state_container circle").each(function(d){
                                 if(isEligible(d)){
                                     deleteState(d);
                                 }
                             });
                             break;
                         case 69:    // on key "E" edit state name
-                            d3.selectAll("circle").each(function(d){    // testing if a state is being linked
+                            d3.selectAll(".state_container circle").each(function(d){    // testing if a state is being linked
                                 if(isEligible(d)){
                                     d3.select("#state_"+d.index).classed("editing",true);
                                     get_state_edition(d,context);
@@ -126,7 +125,7 @@ define(function(require){
                             });
                             break;
                         case 77:    // on key "M" edit max_noise
-                            d3.selectAll("circle").each(function(d){    //t esting if a state is being linked
+                            d3.selectAll(".state_container circle").each(function(d){    // testing if a state is being linked
                                 if(isEligible(d)){
                                     d3.select("#state_"+d.index).classed("editing",true);
                                     get_max_noise_edition(d,context);
@@ -142,8 +141,7 @@ define(function(require){
             // delete state
             function deleteState(d){
 
-                delete_state(d.index,context);
-                delete_references(getData,d.name);
+                delete_state(d,context);
 
                 // edit fe object
                 edit_frontend_object(getData);
@@ -154,7 +152,7 @@ define(function(require){
                 var previouslySelectedState = false,
                     currentStateId = "#state_"+d.index;
 
-                d3.selectAll("circle").each(function(d){    // testing if a first state is selected (being linked)
+                d3.selectAll(".state_container circle").each(function(d){    // testing if a first state is selected (being linked)
                     if(d.graphicEditor.linking){
                         previouslySelectedState = d;
                     }

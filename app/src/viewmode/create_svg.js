@@ -25,7 +25,7 @@ define(function(){
                 .attr("d","M0,-5L10,0L0,5");
 
         }else{  // if no container is supplied
-            svg="";
+            svg = "";
         }
 
         return svg;

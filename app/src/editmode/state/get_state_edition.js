@@ -1,12 +1,13 @@
 define(function(require){
         return function (d,context){
             var edit_state = require("editmode/state/edit_state"),
+                delete_state = require("editmode/state/delete_state"),
                 cancel_selection = require("editmode/cancel_selection"),
                 undo = require("utility/undo"),
                 edit_frontend_object = require("editmode/edit_frontend_object");
 
             swal({
-                title : d.name,
+                title : (d.name ? d.name : "New state"),
                 text : displayStateAsList(d),
                 html : true,
                 showCancelButton : true,
@@ -43,6 +44,10 @@ define(function(require){
                     newDefaultTransition.target = d3.select("#input_default_transition_target_"+d.index).property("value");
 
                     // tests
+                    if(newName === ""){
+                        swal.showInputError("a state must have a name");
+                        return false;
+                    }
                     if(newMaxNoise < 0){
                         swal.showInputError("max_noise cannot be negative");
                         return false;
@@ -106,6 +111,12 @@ define(function(require){
                     swal.close();   // close sweetalert prompt window
                 }else if(inputValue === false){  // cancel
                     cancel_selection(d);
+                    if(d.name === ""){  // if the state was being created
+                        delete_state(d,context);
+                        // edit fe object
+                        edit_frontend_object(context.getData);
+                        undo.addToStack(context.getData);
+                    }
                     return false;
                 }else if(inputValue === ""){
                     swal.showInputError("error");
