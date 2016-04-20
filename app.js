@@ -23,7 +23,7 @@ require(
         ,"swal"
         // main
         ,"../main"
-    ],function(jquery,_,qunit,d3,swal,fsa_editor){
+    ],function(jquery,_,qunit,swal,d3,fsa_editor){
         fsa_editor();
     }
 );
