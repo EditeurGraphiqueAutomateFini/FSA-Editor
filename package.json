@@ -35,6 +35,13 @@
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-watch": "^1.0.0",
+    "qunit": "^0.9.1",
     "requirejs": "^2.2.0"
+  },
+  "dependencies": {
+    "d3": "^3.5.16",
+    "jquery": "^2.2.3",
+    "lodash": "^4.11.1",
+    "sweetalert": "^1.1.3"
   }
 }

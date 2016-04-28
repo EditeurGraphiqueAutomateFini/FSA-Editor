@@ -5,7 +5,7 @@ define(function(require){
             var states = [];
             // iterating over states objects in data file (JSON), making a JS array of objects
             if(data){
-                for(var i=0; i<data.length; i++){
+                for(var i=0; i < data.length; i++){
                     if(data[i].states){
                         states.push(data[i].states);
                     }
