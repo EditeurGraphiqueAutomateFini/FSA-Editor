@@ -1,5 +1,6 @@
+/*
 define(function(require){
-    return function(){
+    return function(mode){
         var $ = require("jquery");
         var server = require("../utility/server_request");
         // return menu value (view : viewmode, edit: editmode)

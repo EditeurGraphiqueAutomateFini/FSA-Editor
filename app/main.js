@@ -1,8 +1,8 @@
 // main function
-module.exports = function(){
+module.exports = function(object,mode){
         var $ = require("jquery");
-        var menu = require("./src/menu/menu");
-        menu();
+        var server = require("./src/utility/server_request");
+        server.getRequest(mode);
 
         //right panel
         closeContainer("#object_container_wrapper","#object_container_close","left");
