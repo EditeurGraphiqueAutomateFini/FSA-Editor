@@ -1,9 +1,9 @@
 define(function(require){
         return function (d,context){    // get new name w/ prompt-like
-            var edit_transition = require("editmode/transition/edit_transition"),
-                delete_transition = require("editmode/transition/delete_transition"),
-                undo = require("utility/undo"),
-                edit_frontend_object = require("editmode/edit_frontend_object");
+            var edit_transition = require("./edit_transition"),
+                delete_transition = require("./delete_transition"),
+                undo = require("../../utility/undo"),
+                edit_frontend_object = require("../edit_frontend_object");
 
             swal({
                 title : "Transition edition",

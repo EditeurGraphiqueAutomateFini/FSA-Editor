@@ -1,10 +1,10 @@
 define(function(require){
     return function (d,context){    // get new name w/ prompt-like
-        var edit_references = require("editmode/state/edit_references"),
-            edit_state_name = require("editmode/state/edit_state_name"),
-            cancel_selection = require("editmode/cancel_selection"),
-            undo = require("utility/undo"),
-            edit_frontend_object = require("editmode/edit_frontend_object");
+        var edit_references = require("./edit_references"),
+            edit_state_name = require("./edit_state_name"),
+            cancel_selection = require("../cancel_selection"),
+            undo = require("../../utility/undo"),
+            edit_frontend_object = require("../edit_frontend_object");
 
         swal({
             title : "State Edition",

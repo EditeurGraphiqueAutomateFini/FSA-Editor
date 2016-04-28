@@ -41,15 +41,16 @@ define(function(require){
         },
         // initialisation function : states : array of state objects; getData: initial retrieved data
         init : function(states,getData){
-            var create_svg = require("viewmode/create_svg"),
-                create_force_layout = require("viewmode/create_force_layout"),
-                create_circles = require("viewmode/create_circles"),
-                create_state_names = require("viewmode/create_state_names"),
-                create_paths = require("viewmode/create_paths"),
-                create_conditions = require("viewmode/create_conditions"),
-                // set_positions = require("viewmode/set_positions"),
-                viewmode = require("viewmode/view_init"),
-                undo = require("utility/undo");
+            var $ = require("jquery");
+            var create_svg = require("./create_svg"),
+                create_force_layout = require("./create_force_layout"),
+                create_circles = require("./create_circles"),
+                create_state_names = require("./create_state_names"),
+                create_paths = require("./create_paths"),
+                create_conditions = require("./create_conditions"),
+                // set_positions = require("./set_positions"),
+                viewmode = require("./view_init"),
+                undo = require("../utility/undo");
 
             if(states){
                 var links = [],

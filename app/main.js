@@ -1,8 +1,7 @@
 // main function
-define(function(require){
-    return window.fsa_editor = function(){
-
-        var menu = require("menu/menu");
+module.exports = function(){
+        var $ = require("jquery");
+        var menu = require("./src/menu/menu");
         menu();
 
         //right panel
@@ -30,5 +29,5 @@ define(function(require){
             }
             $(button).toggleClass("panel_closed");
         }
+
     };
-});

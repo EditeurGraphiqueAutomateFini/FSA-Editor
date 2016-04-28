@@ -1,10 +1,10 @@
 define(function(require){
         return function (d,context){
-            var edit_state = require("editmode/state/edit_state"),
-                delete_state = require("editmode/state/delete_state"),
-                cancel_selection = require("editmode/cancel_selection"),
-                undo = require("utility/undo"),
-                edit_frontend_object = require("editmode/edit_frontend_object");
+            var edit_state = require("./edit_state"),
+                delete_state = require("./delete_state"),
+                cancel_selection = require("../cancel_selection"),
+                undo = require("../../utility/undo"),
+                edit_frontend_object = require("../edit_frontend_object");
 
             swal({
                 title : (d.name ? d.name : "New state"),

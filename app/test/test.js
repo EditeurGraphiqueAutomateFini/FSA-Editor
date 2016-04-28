@@ -1,15 +1,15 @@
 define(function(require){
-
-    var menu = require("menu/menu");
-    var utility = require("utility/utility");
+    var $ = require("jquery");
+    var menu = require("../src/menu/menu");
+    var utility = require("../src/utility/utility");
     //var server_request = require("utility/server_request");
     //var create_circles = require("viewmode/create_circles");
-    var create_force_layout = require("viewmode/create_force_layout");
+    var create_force_layout = require("../src/viewmode/create_force_layout");
     //var create_paths = require("viewmode/create_paths");
-    var create_svg = require("viewmode/create_svg");
-    var data_helper = require("viewmode/data_helper");
-    var tick_helper = require("viewmode/tick_helper");
-    var view_init = require("viewmode/view_init");
+    var create_svg = require("../src/viewmode/create_svg");
+    var data_helper = require("../src/viewmode/data_helper");
+    var tick_helper = require("../src/viewmode/tick_helper");
+    var view_init = require("../src/viewmode/view_init");
 
     $("#qunit").show();
     //QUnit.config({hidepasse:true});

@@ -1,6 +1,6 @@
 define(function(){
     return function(d,conditionsToDelete,context){
-        var condition_list = require("viewmode/condition_list");
+        var condition_list = require("../../viewmode/condition_list");
         var states = context.getData.states,
             indexesToDelete = [],
             indexToDelete,

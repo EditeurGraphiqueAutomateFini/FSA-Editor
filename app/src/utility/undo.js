@@ -2,6 +2,7 @@
 // "pfile" ou "fpile" ? "FLIFO" ? moment difficile...
 define(function(){
     // private
+    var _ = require("lodash");
     var maxStateSave = 50,
         rollingBack = false,
         rollingBackCount = 0,

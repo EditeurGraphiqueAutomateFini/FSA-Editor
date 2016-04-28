@@ -3,7 +3,7 @@ define(function(require){
     // "context" parameter is containing "svg" object, "getData" original datas, "force" d3 current force layout object
     // makes global data sendable to the server
     return function(d,context){
-        var delete_references = require("editmode/state/delete_references");
+        var delete_references = require("./delete_references");
 
         var states = context.getData.states,
             delete_link_id = [],

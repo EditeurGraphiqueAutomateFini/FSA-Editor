@@ -1,8 +1,8 @@
 define(function(require){
         return function(context){
-            var edit_global = require("editmode/global/edit_global"),
-                undo = require("utility/undo"),
-                edit_frontend_object = require("editmode/edit_frontend_object");
+            var edit_global = require("./edit_global"),
+                undo = require("../../utility/undo"),
+                edit_frontend_object = require("../../editmode/edit_frontend_object");
 
             swal({
                 title : "Edit global properties",

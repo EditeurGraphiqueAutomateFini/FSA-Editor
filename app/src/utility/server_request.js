@@ -2,13 +2,15 @@ define(function(require){
     return{
         // obtain data, use it to load a mode. mode : string representing the mode to load
         getRequest : function(mode){
-            var viewmode = require("viewmode/view_init"),
-                createmode = require("createmode/create_init"),
-                data_helper = require("viewmode/data_helper"),
-                editmode = require("editmode/edit_init"),
-                utility = require("utility/utility"),
-                undo = require("utility/undo"),
-                server = require("utility/server_request");
+            var $ = require("jquery");
+            var _ = require("lodash");
+            var viewmode = require("../viewmode/view_init"),
+                createmode = require("../createmode/create_init"),
+                data_helper = require("../viewmode/data_helper"),
+                editmode = require("../editmode/edit_init"),
+                utility = require("./utility"),
+                undo = require("./undo"),
+                server = require("./server_request");
 
             $.ajax({
                   type : 'GET',
@@ -81,8 +83,8 @@ define(function(require){
                 console.log("/!\\ ajax : error retrieving data from server, local data loaded");
 
                 // thus loading local data (probablement a modifier)
-                //var data = require("data/data_example");
-                var data = [];
+                var data = require("../../../data/data_example");
+                //var data = [];
                 var dataSolid = _.cloneDeep(data);
                 // display object
                 utility.frontEndObject(data);
@@ -125,10 +127,11 @@ define(function(require){
         },
         // post data to overwrite JSON file server-side
         postRequest: function(postData,mode){
-            var viewmode = require("viewmode/view_init"),
-            data_helper = require("viewmode/data_helper"),
-            editmode = require("editmode/edit_init"),
-            utility = require("utility/utility");
+            var $ = require("jquery");
+            var viewmode = require("../viewmode/view_init"),
+            data_helper = require("../viewmode/data_helper"),
+            editmode = require("../editmode/edit_init"),
+            utility = require("./utility");
 
             $.ajax({
                   type : 'POST',

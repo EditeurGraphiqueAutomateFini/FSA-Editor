@@ -1,6 +1,7 @@
 define(function(require){
     return function(){
-        var server = require("utility/server_request");
+        var $ = require("jquery");
+        var server = require("../utility/server_request");
         // return menu value (view : viewmode, edit: editmode)
         if(location.href.indexOf("edit") != -1){  //pour éviter d'avoir le menu en test, ajouter "?edit=1" au bout de son url
             // exemple file:///D:/Martin/_Cours/IUT/Projet%20tuteur%C3%A9/Editeur_graphique_projet/index.html?edit=1
