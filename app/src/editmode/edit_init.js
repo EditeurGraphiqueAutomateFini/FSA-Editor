@@ -22,7 +22,7 @@ define(function(require){
             var context = {"svg":svg,"force":force,"getData":getData,"links":links};
 
             // generate global edition button
-            d3.select("#global_properties").html("<button class='btn btn-primary button_edit_global_properties'>Edit global properties</button>");
+            d3.select("#global_properties").html("<button class='btn btn-secondary button_edit_global_properties'>Edit global properties</button>");
             d3.selectAll("#global_properties button").on("click",function(){
                 get_global_edition(context);
             });
