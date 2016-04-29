@@ -1,6 +1,6 @@
 define(function(require){
     return function(container,force){
-        var condition_list = require("viewmode/condition_list");
+        var condition_list = require("./condition_list");
         var svg = container;
 
         // create a text for each transition w/ the condition of the transition

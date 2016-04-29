@@ -1,10 +1,10 @@
 define(function(require){
     return function(d,previouslySelectedState,thisID,context){
-        var add_transition = require("editmode/transition/add_transition"),
-            edit_condition = require("editmode/transition/edit_condition"),
-            get_transition_edition = require("editmode/transition/get_transition_edition"),
-            undo = require("utility/undo"),
-            edit_frontend_object = require("editmode/edit_frontend_object");
+        var add_transition = require("./add_transition"),
+            edit_condition = require("./edit_condition"),
+            get_transition_edition = require("./get_transition_edition"),
+            undo = require("../../utility/undo"),
+            edit_frontend_object = require("../edit_frontend_object");
 
         var linkingTestID = "#state_"+previouslySelectedState.index;
         var previouslyExistingLink = false;

@@ -1,9 +1,9 @@
 define(function(require){
-    return{
+    return {
         init: function(context){
-            var create_state = require("createmode/create_state"),
-                edit_frontend_object = require("editmode/edit_frontend_object"),
-                get_global_edition = require("editmode/global/get_global_edition");
+            var create_state = require("./create_state"),
+                edit_frontend_object = require("../editmode/edit_frontend_object"),
+                get_global_edition = require("../editmode/global/get_global_edition");
 
 
 
@@ -44,5 +44,5 @@ define(function(require){
                     });
                 });
         }
-    };
+    }
 });

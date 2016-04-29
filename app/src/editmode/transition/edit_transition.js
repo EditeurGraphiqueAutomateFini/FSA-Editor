@@ -1,7 +1,7 @@
 define(function(){
     // conditionsToEdit : string array
     return function(d,conditionsToEdit){
-        var condition_list = require("viewmode/condition_list");
+        var condition_list = require("../../viewmode/condition_list");
 
          conditionsToEdit.forEach(function(element){
              if(d.conditions){

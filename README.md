@@ -7,6 +7,8 @@ To install and work on the project :
 ```
 git clone https://github.com/EditeurGraphiqueAutomateFini/FSA-Editor.git && cd FSA-Editor
 npm install
+npm start
+go to your favorite web browser at the address : http://localhost:3000
 ```
 
-Please run "grunt" or "grunt build-dist" in order to build the optimized file in "/dist"
+Please run ```"npm run production"``` in order ton build the production file in "/dist"

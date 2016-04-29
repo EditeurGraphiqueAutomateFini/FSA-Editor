@@ -1,9 +1,12 @@
 // main function
-define(function(require){
-    return window.fsa_editor = function(){
+module.exports = function(object,mode){
+        var server = require("./src/utility/server_request");
 
-        var menu = require("menu/menu");
-        menu();
+        if(typeof(object) === "string"){
+            server.getRequest(object,mode);
+        }else{
+            console.log("else");
+        }
 
         //right panel
         closeContainer("#object_container_wrapper","#object_container_close","left");
@@ -30,5 +33,5 @@ define(function(require){
             }
             $(button).toggleClass("panel_closed");
         }
+
     };
-});

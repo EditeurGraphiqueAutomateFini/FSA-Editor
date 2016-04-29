@@ -1,9 +1,9 @@
 define(function(require){
     return function(context,x,y){
-        var editmode = require("editmode/edit_init"),
-            get_state_edition = require("editmode/state/get_state_edition"),
-            create_circles = require("viewmode/create_circles"),
-            create_state_names = require("viewmode/create_state_names");
+        var editmode = require("../editmode/edit_init"),
+            get_state_edition = require("../editmode/state/get_state_edition"),
+            create_circles = require("../viewmode/create_circles"),
+            create_state_names = require("../viewmode/create_state_names");
 
 
         var newMaxId = context.force.nodes().length,

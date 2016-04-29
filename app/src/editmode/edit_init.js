@@ -2,22 +2,22 @@ define(function(require){
     return{
         init: function(svg,force,getData,links){
             // utilities
-            var context_menu = require("menu/context_menu"),
-                editmode = require("editmode/edit_init"),
-                viewmode = require("viewmode/view_init"),
-                cancel_all_selections = require("editmode/cancel_all_selections"),
-                undo = require("utility/undo"),
-                edit_frontend_object = require("editmode/edit_frontend_object");
+            var context_menu = require("../menu/context_menu"),
+                editmode = require("./edit_init"),
+                viewmode = require("../viewmode/view_init"),
+                cancel_all_selections = require("./cancel_all_selections"),
+                undo = require("../utility/undo"),
+                edit_frontend_object = require("./edit_frontend_object");
             // global
-            var get_global_edition = require("editmode/global/get_global_edition");
+            var get_global_edition = require("./global/get_global_edition");
             // state
-            var delete_state = require("editmode/state/delete_state"),
-                get_state_edition = require("editmode/state/get_state_edition"),
-                get_state_name_edition = require("editmode/state/get_state_name_edition"),
-                get_max_noise_edition = require("editmode/state/get_max_noise_edition");
+            var delete_state = require("./state/delete_state"),
+                get_state_edition = require("./state/get_state_edition"),
+                get_state_name_edition = require("./state/get_state_name_edition"),
+                get_max_noise_edition = require("./state/get_max_noise_edition");
             // transition
-            var get_condition = require("editmode/transition/get_condition"),
-                get_transition_edition = require("editmode/transition/get_transition_edition");
+            var get_condition = require("./transition/get_condition"),
+                get_transition_edition = require("./transition/get_transition_edition");
             // defining context object w/ usefull variable to pass when invoking functions
             var context = {"svg":svg,"force":force,"getData":getData,"links":links};
 

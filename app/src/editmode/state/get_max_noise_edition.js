@@ -1,9 +1,9 @@
 define(function(require){
     return function (d,context){
-        var edit_state_maxnoise = require("editmode/state/edit_state_maxnoise"),
-            cancel_selection = require("editmode/cancel_selection"),
-            undo = require("utility/undo"),
-            edit_frontend_object = require("editmode/edit_frontend_object");
+        var edit_state_maxnoise = require("./edit_state_maxnoise"),
+            cancel_selection = require("../cancel_selection"),
+            undo = require("../../utility/undo"),
+            edit_frontend_object = require("../edit_frontend_object");
 
         swal({
             title : "Max noise edition",

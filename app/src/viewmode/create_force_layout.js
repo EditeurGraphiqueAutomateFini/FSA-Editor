@@ -2,7 +2,8 @@
 define(function(require){
     return function(container,states,links){
 
-        var tick = require("viewmode/tick_helper");
+        var $ = require("jquery");
+        var tick = require("./tick_helper");
 
         var containmentWidth = $("#svgbox")[0].getBoundingClientRect().width,
             containmentHeight = $("#svgbox")[0].getBoundingClientRect().height;

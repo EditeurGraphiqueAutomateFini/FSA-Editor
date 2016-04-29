@@ -2,7 +2,7 @@ define(function(){
     // create a link between two states
     return function(svg,force,sourceID,targetID,condition,isNew){
 
-        var condition_list = require("viewmode/condition_list");
+        var condition_list = require("../../viewmode/condition_list");
 
         if(isNew === "new"){    // create new transition (path+text)
             // adding a path for the newly created link
