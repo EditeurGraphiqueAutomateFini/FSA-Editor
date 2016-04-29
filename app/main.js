@@ -1,8 +1,12 @@
 // main function
 module.exports = function(object,mode){
-        var $ = require("jquery");
         var server = require("./src/utility/server_request");
-        server.getRequest(mode);
+
+        if(typeof(object) === "string"){
+            server.getRequest(object,mode);
+        }else{
+            console.log("else");
+        }
 
         //right panel
         closeContainer("#object_container_wrapper","#object_container_close","left");
