@@ -1,11 +1,12 @@
 // main function
 module.exports = function(object,mode){
         var server = require("./src/utility/server_request");
+        var local_data_hangling = require("./src/utility/local_data_handling");
 
         if(typeof(object) === "string"){
             server.getRequest(object,mode);
         }else{
-            console.log("else");
+            local_data_hangling(object,mode);
         }
 
         //right panel

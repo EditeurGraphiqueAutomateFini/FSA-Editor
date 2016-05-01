@@ -86,7 +86,6 @@ define(function(require){
         },
         // post data to overwrite JSON file server-side
         postRequest: function(postData,mode){
-            var $ = require("jquery");
             var viewmode = require("../viewmode/view_init"),
             data_helper = require("../viewmode/data_helper"),
             editmode = require("../editmode/edit_init"),

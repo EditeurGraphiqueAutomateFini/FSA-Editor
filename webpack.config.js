@@ -27,9 +27,10 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.ProvidePlugin({
-        jquery:'$',
+        jquery: '$',
         d3: "d3",
-        swal: "sweetalert"
+        swal: "sweetalert",
+        _: "lodash"
     })
   ],
   module: {
