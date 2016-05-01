@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EditeurGraphiqueAutomateFini/EditeurGraphiqueAutomateFini.git"
+    "url": "git+https://github.com/EditeurGraphiqueAutomateFini/FSA-Editor.git"
   },
   "keywords": [
     "fsa",
@@ -28,9 +28,9 @@
   "author": "Martin Bolot - Christophe Badet - Jean-Sebastien Fonta - Remy Fischer",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/EditeurGraphiqueAutomateFini/EditeurGraphiqueAutomateFini/issues"
+    "url": "https://github.com/EditeurGraphiqueAutomateFini/FSA-Editor/issues"
   },
-  "homepage": "https://github.com/EditeurGraphiqueAutomateFini/EditeurGraphiqueAutomateFini#readme",
+  "homepage": "https://github.com/EditeurGraphiqueAutomateFini/FSA-Editor#readme",
   "devDependencies": {
     "eslint": "^2.8.0",
     "eslint-plugin-promise": "^1.1.0",
