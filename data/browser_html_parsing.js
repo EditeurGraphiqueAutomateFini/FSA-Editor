@@ -5,7 +5,8 @@ var browser_html_parsing = {
             "start": {
                 transitions: [
                     {
-                        target:"data"
+                        target:"data",
+                        condition:"*"
                     }
                 ]
             },
