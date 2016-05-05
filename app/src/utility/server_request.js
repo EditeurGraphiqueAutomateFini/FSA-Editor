@@ -94,7 +94,7 @@ define(function(require){
             $.ajax({
                   type : 'POST',
                   data : { graphicEditorFSA : JSON.stringify(postData) },
-                  url : 'http://www.fsaeditor.com',
+                  url : object,
                   beforeSend : function(){
                       $(".load_helper").fadeIn();
                   },
