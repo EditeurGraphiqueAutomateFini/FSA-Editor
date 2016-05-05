@@ -8,13 +8,14 @@ define(function(require){
 
             $(".load_helper").fadeOut();
             $("#object_container_left").css("background","#FFF");
+            $("button.save").attr("disabled",true);
 
             var data = [object];
             var dataSolid = _.cloneDeep(data);
               // display object
               utility.frontEndObject(data);
               // intiate view mode w/ static data
-              switch (mode) {
+              switch(mode) {
                   case "view":
                       // initiate viewmode
                       viewmode.init(viewmode.extractStates(data),data);
@@ -22,9 +23,11 @@ define(function(require){
                       $("button.reset").click(function(){
                           var parsedDataLiquid = _.cloneDeep(dataSolid);   // cloning untouched cloned data
                           // re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
-                          viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,true);
+                          viewmode.init(viewmode.extractStates(parsedDataLiquid),parsedDataLiquid);
                           // reseting front-end object display
-                          utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
+                          for(var i = 0; i < parsedDataLiquid.length; i++){
+                              utility.frontEndObject([data_helper.cleanData(parsedDataLiquid[i])]);
+                          }
                           $("#object_container_left").css("background","#FFF");
                       });
                       break;
@@ -39,9 +42,11 @@ define(function(require){
                       // handling reset (same as edit mode)
                       $("button.reset").click(function(){
                           var parsedDataLiquid = _.cloneDeep(dataSolid);
-                          var newLoadedViewMode = viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid);
+                          var newLoadedViewMode = viewmode.init(viewmode.extractStates(parsedDataLiquid),parsedDataLiquid);
                           editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
-                          utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
+                          for(var i = 0; i < parsedDataLiquid.length; i++){
+                              utility.frontEndObject([data_helper.cleanData(parsedDataLiquid[i])]);
+                          }
                           $("#object_container_left").css("background","#FFF");
                       });
                       break;
