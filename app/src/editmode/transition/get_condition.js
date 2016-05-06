@@ -22,6 +22,7 @@ define(function(require){
                 previouslySelectedState.graphicEditor.linking = false;
                 d.graphicEditor.linking = false;
                 d3.select(linkingTestID).classed("linking",false);
+                d3.select(linkingTestID).classed("editing",false);
                 d3.select(thisID).classed("linking",false);
                 return false;
             }
@@ -64,6 +65,7 @@ define(function(require){
                 previouslySelectedState.graphicEditor.linking = false;
                 d.graphicEditor.linking = false;
                 d3.select(linkingTestID).classed("linking",false);
+                d3.select(linkingTestID).classed("editing",false);
                 d3.select(thisID).classed("linking",false);
                 // edit fe object
                 edit_frontend_object(context.getData);

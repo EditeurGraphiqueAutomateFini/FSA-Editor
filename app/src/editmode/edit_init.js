@@ -159,9 +159,10 @@ define(function(require){
                 });
                 if(previouslySelectedState){    // if a first state is selected, create new transition
                     d3.select(currentStateId).classed("linking",true);
+                    d3.select(currentStateId).classed("editing",true);
                     get_condition(d,previouslySelectedState,currentStateId,context);
                 }else{  // first selection of state
-                    d.graphicEditor.linking=true;
+                    d.graphicEditor.linking = true;
                     d3.select(currentStateId).classed("linking",true);
                 }
             }
