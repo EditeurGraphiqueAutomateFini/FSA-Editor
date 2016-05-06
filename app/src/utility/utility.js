@@ -78,7 +78,6 @@ define(function(){
         },
         // display the given object in a html container by calling "displayObject" method
         frontEndObject : function(data){
-            var $ = require("jquery");
             var displayZone = "#object_container_left";
             $(displayZone).html('{<br/>'+this.displayObject(data,0)+'<br/>}');
             if($(displayZone).parents().find('textarea#objectArea').size() > 0){   // display object in a textarea (for copy/paste)

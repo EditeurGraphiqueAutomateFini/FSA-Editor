@@ -1,6 +1,8 @@
 define(function(require){
     return function(container,force){
         var condition_list = require("./condition_list");
+        var position_condition = require("./position_condition");
+
         var svg = container;
 
         // create a text for each transition w/ the condition of the transition
@@ -8,13 +10,12 @@ define(function(require){
             .data(force.links()).enter()
             .append("text")
             .attr({
-                "x" : 20,
-                "y" : 0,
+                "x" : position_condition.setXPosition,
+                "y" : position_condition.setYPosition,
                 "class" : function(d){
                     return "condition link_"+d.source.index +"_"+d.target.index;
                 }
             })
             .text(condition_list);
-
     };
 });

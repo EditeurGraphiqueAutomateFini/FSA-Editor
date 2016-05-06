@@ -3,6 +3,7 @@ define(function(){
     return function(svg,force,sourceID,targetID,condition,isNew){
 
         var condition_list = require("../../viewmode/condition_list");
+        var position_condition = require("../../viewmode/position_condition");
 
         if(isNew === "new"){    // create new transition (path+text)
             // adding a path for the newly created link
@@ -19,8 +20,8 @@ define(function(){
                 .data(force.links()).enter()
                 .append("text")
                 .attr({
-                    "x" : 20,
-                    "y" : 0,
+                    "x" : position_condition.setXPosition,
+                    "y" : position_condition.setYPosition,
                     "class" : function(){ return "condition link_"+sourceID +"_"+targetID+" new_link"; }
                 })
                 .text(condition_list);

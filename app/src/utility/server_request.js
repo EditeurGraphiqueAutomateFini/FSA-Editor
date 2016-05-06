@@ -74,7 +74,7 @@ define(function(require){
                     // handle saving (posting edited data)
                     $("button.save").click(function(){
                         var endPostData = data_helper.cleanData(parsedData);
-                        server.postRequest(endPostData,mode);
+                        server.postRequest(endPostData,object,mode);
                     });
                 }
             }
@@ -85,8 +85,7 @@ define(function(require){
             }
         },
         // post data to overwrite JSON file server-side
-        postRequest: function(postData,mode){
-            var $ = require("jquery");
+        postRequest: function(postData,object,mode){
             var viewmode = require("../viewmode/view_init"),
             data_helper = require("../viewmode/data_helper"),
             editmode = require("../editmode/edit_init"),
@@ -95,7 +94,7 @@ define(function(require){
             $.ajax({
                   type : 'POST',
                   data : { graphicEditorFSA : JSON.stringify(postData) },
-                  url : 'http://www.fsaeditor.com',
+                  url : object,
                   beforeSend : function(){
                       $(".load_helper").fadeIn();
                   },

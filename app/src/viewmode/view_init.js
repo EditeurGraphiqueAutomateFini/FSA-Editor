@@ -48,7 +48,7 @@ define(function(require){
                 create_state_names = require("./create_state_names"),
                 create_paths = require("./create_paths"),
                 create_conditions = require("./create_conditions"),
-                // set_positions = require("./set_positions"),
+                 set_positions = require("./set_positions"),
                 viewmode = require("./view_init"),
                 undo = require("../utility/undo");
 
@@ -118,10 +118,14 @@ define(function(require){
                     }
                 });
 
-                // set_positions(states[0]);    // uncomment variable set_positions to activate again
+                for(i = 0; i < states.length; i++){
+                    set_positions(states[i]);
+                }
+
                 if($("svg#svgbox").size() > 0){
                     $("svg#svgbox").remove();
                 }
+
                 var svg = create_svg("#svg_container"),
                     force = create_force_layout(svg,dataset,links);
 
