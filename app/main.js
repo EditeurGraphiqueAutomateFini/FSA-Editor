@@ -1,4 +1,7 @@
-// main function
+/**
+*   main module
+*   @exports {function} fsa_editor(object,mode)
+*/
 module.exports = function(object,mode){
         var server = require("./src/utility/server_request");
         var local_data_hangling = require("./src/utility/local_data_handling");
@@ -6,7 +9,7 @@ module.exports = function(object,mode){
         // if <div id='fsa_editor'> is not present, do not proceed
         if($("#fsa_editor").size() <= 0) return 0;
 
-        //templating
+        // templating
         $("#fsa_editor").html(function(){
             var html = ""+
                 "<div id='svg_container'>"+
@@ -48,6 +51,12 @@ module.exports = function(object,mode){
             closeContainer("#object_container_wrapper_left","#object_container_close_right","right");
         });
 
+        /**
+        *   a function to handle closing container event
+        *   @param {string} wrapper - the id of the wrapper element
+        *   @param {string} button - the id of the closing button
+        *   @param {string} orientation - the orientation of the arrow
+        */
         function closeContainer(wrapper,button,orientation){
             $(wrapper).toggleClass("closed");
             if($(button).hasClass("panel_closed")){
