@@ -127,6 +127,7 @@ text.condition{}
     background-color: #e6e6e6 !important;
 }
 #object_container_right{
+    background: #FFF;
     overflow: visible;
 }
 #object_container_wrapper_left{
