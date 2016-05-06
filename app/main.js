@@ -3,6 +3,30 @@ module.exports = function(object,mode){
         var server = require("./src/utility/server_request");
         var local_data_hangling = require("./src/utility/local_data_handling");
 
+        //templating
+        $("#fsa_editor").html(function(){
+            var html = ""+
+                "<div id='svg_container'>"+
+                    "<div id='global_properties'></div>"+
+                    "<div class='buttons'>"+
+                        "<button class='reset btn btn-danger'>Reset</button>"+
+                        "<button class='save btn btn-success'>Save</button>"+
+                    "</div>"+
+                 "</div>"+
+                 "<div id='object_container_wrapper_left'>"+
+                      "<div id='object_container_right'></div>"+
+                      "<div id='object_container_close_right' class='reset btn btn-default'>></div>"+
+                  "</div>"+
+                 "<div id='object_container_wrapper'>"+
+                     "<div id='object_container_close' class='reset btn btn-default'>></div>"+
+                     "<div id='object_container_left'></div>"+
+                 "</div>"+
+                 "<div class='load_helper'></div>"
+            ;
+
+            return html;
+        });
+
         if(typeof(object) === "string"){
             server.getRequest(object,mode);
         }else{
