@@ -3,6 +3,9 @@ module.exports = function(object,mode){
         var server = require("./src/utility/server_request");
         var local_data_hangling = require("./src/utility/local_data_handling");
 
+        // if <div id='fsa_editor'> is not present, do not proceed
+        if($("#fsa_editor").size() <= 0) return 0;
+
         //templating
         $("#fsa_editor").html(function(){
             var html = ""+

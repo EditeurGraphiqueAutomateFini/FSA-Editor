@@ -41,7 +41,6 @@ define(function(require){
         },
         // initialisation function : states : array of state objects; getData: initial retrieved data
         init : function(states,getData){
-            var $ = require("jquery");
             var create_svg = require("./create_svg"),
                 create_force_layout = require("./create_force_layout"),
                 create_circles = require("./create_circles"),
