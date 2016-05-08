@@ -1,15 +1,24 @@
+/**
+*   delete a state
+*   @module editmode/state/delete_state - delete a state having a given index
+*/
 define(function(require){
-    // delete a state having index == d.index
-    // "context" parameter is containing "svg" object, "getData" original datas, "force" d3 current force layout object
-    // makes global data sendable to the server
+    /**
+    *   @constructor
+    *   @alias module:editmode/state/delete_state
+    *   @param {Object} d - data for the state, supplied by D3
+    *   @param {Object} context - "context" parameter is containing "svg" object, "getData" original datas, "force" d3 current force layout object
+    */
     return function(d,context){
         var delete_references = require("./delete_references");
 
-        var states = context.getData.states,
-            delete_link_id = [],
-            delete_node_id = [],
-            sourceIndex,targetIndex,
-            i = 0, j = 0;
+        var states = context.getData.states;
+        var delete_link_id = [];
+        var delete_node_id = [];
+        var sourceIndex;
+        var targetIndex;
+        var i = 0;
+        var j = 0;
 
         // delete links w/ source or target pointing at d.index
         context.force.links().forEach(function(el,ind){
@@ -17,10 +26,11 @@ define(function(require){
                 delete_link_id.push(ind);
             }
         });
-        for(i=0; i < delete_link_id.length; i++){
+        for(i = 0; i < delete_link_id.length; i++){
             context.force.links().splice(delete_link_id[i],1);
-            for(j=0; j < delete_link_id.length; j++) delete_link_id[j]--;
+            for(j = 0; j < delete_link_id.length; j++) delete_link_id[j]--;
         }
+
         // suppress node at index d.index
         context.force.nodes().forEach(function(el,ind){
             if(el.index == d.index){
@@ -28,12 +38,14 @@ define(function(require){
                 d3.select("#state_"+d.index).remove();
             }
         });
-        for(i=0; i < delete_node_id.length; i++){
+        for(i = 0; i < delete_node_id.length; i++){
             context.force.nodes().splice(delete_node_id[i],1);
-            for(j=0; j < delete_node_id.length; j++) delete_node_id[j]--;
+            for(j = 0; j < delete_node_id.length; j++) delete_node_id[j]--;
         }
+
         // delete state name
         d3.select("#state_name_"+d.index).remove();
+
         // delete links w/ target or source set to the element
         d3.selectAll("path.link").each(function(data){
             sourceIndex = data.source.index;
@@ -49,6 +61,7 @@ define(function(require){
                 ).remove();
             }
         });
+
         // deleting state
         for(var key in states){
             if(states.hasOwnProperty(key) && states[key]){
@@ -57,8 +70,10 @@ define(function(require){
                 }
             }
         }
+
         // restarting force w/ new nodes and links
         context.force.start();
+
         // editing classes and ids on svg elements which index was modified
         d3.selectAll(".state_container circle").attr("id",function(data){ return "state_"+data.index; });
         d3.selectAll("text.state_name").attr("id",function(data){ return "state_name_"+data.index; });

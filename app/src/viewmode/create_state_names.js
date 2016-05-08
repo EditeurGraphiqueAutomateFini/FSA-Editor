@@ -1,6 +1,15 @@
+/**
+*   create state names
+*   @module viewmode/create_state_names - a module to create state names
+*/
 define(function(){
+    /**
+    *   @constructor
+    *   @alias module:viewmode/create_state_names
+    *   @param {Object} container - a D3 element (d3.select) for the container
+    *   @returns {Object} force - the generated D3 force layout
+    */
     return function(container,force){
-
         var svg = container,
             name_container;
 

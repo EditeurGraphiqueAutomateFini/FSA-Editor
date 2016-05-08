@@ -1,11 +1,20 @@
+/**
+*   functions to handle data
+*   @module viewmode/data_helper - a module to provide data cleaning functions
+*/
 define(function(){
     return{
-        // cleans the set of data to obtain sendable/displayable data
+        /**
+        *   @exports {function} cleanData - cleans the set of data to obtain sendable/displayable data
+        *   @param {Object} getData - the data to clean
+        *   @returns {Object} endPostData - the cleaned data
+        */
         cleanData : function(getData){
             var endPostData = {
                 states : {}
-            },
-            state,key;
+            };
+            var state;
+            var key;
 
             if(getData.allow_overlap){ endPostData.allow_overlap = getData.allow_overlap; }
             if(getData.state_defaults){ endPostData.state_defaults = getData.state_defaults; }

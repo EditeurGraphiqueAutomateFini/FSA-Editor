@@ -1,8 +1,17 @@
-// create d3 force layout
+/**
+*   create D3 force layout
+*   @module viewmode/create_force_layout - a module to create a force layout
+*/
 define(function(require){
+    /**
+    *   @constructor
+    *   @alias module:viewmode/create_force_layout
+    *   @param {Object} container - a D3 element (d3.select) for the container
+    *   @param {Object} states - the object containing the states
+    *   @param {Object} links - the object containing the transitions
+    *   @returns {Object} force - the generated D3 force layout
+    */
     return function(container,states,links){
-
-        var $ = require("jquery");
         var tick = require("./tick_helper");
 
         var containmentWidth = $("#svgbox")[0].getBoundingClientRect().width,

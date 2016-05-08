@@ -1,10 +1,20 @@
+/**
+*   sweetalert prompt for state name edition
+*   @module editmode/state/get_state_name_edition - a module that prompts for name property edition
+*/
 define(function(require){
-    return function (d,context){    // get new name w/ prompt-like
-        var edit_references = require("./edit_references"),
-            edit_state_name = require("./edit_state_name"),
-            cancel_selection = require("../cancel_selection"),
-            undo = require("../../utility/undo"),
-            edit_frontend_object = require("../edit_frontend_object");
+    /**
+    *   @constructor
+    *   @alias module:editmode/state/get_state_name_edition
+    *   @param {Object} d - data for the state, supplied by D3
+    *   @param {Object} context - the global application context (svg,force,getData,links)
+    */
+    return function (d,context){
+        var edit_references = require("./edit_references");
+        var edit_state_name = require("./edit_state_name");
+        var cancel_selection = require("../cancel_selection");
+        var undo = require("../../utility/undo");
+        var edit_frontend_object = require("../edit_frontend_object");
 
         swal({
             title : "State Edition",
@@ -15,12 +25,14 @@ define(function(require){
             closeOnConfirm : false,
             animation : "slide-from-top"
         },function(inputValue){
-            if(inputValue){  // edit state name if confirmed
+            // edit state name if confirmed
+            if(inputValue){
                 if(inputValue !== d.name){
 
                     // check if name already exists
                     for(var state in context.getData.states){
                         if(context.getData.states.hasOwnProperty(state) && context.getData.states[state]){
+                            // error : the name already exists
                             if(inputValue === context.getData.states[state].name && context.getData.states[state].index !== d.index){
                                 swal.showInputError("A state with this name already exists");
                                 return false;
@@ -34,11 +46,15 @@ define(function(require){
                     edit_frontend_object(context.getData);
                     undo.addToStack(context.getData);
                 }
-                swal.close();   // close sweetalert prompt window
-            }else if(inputValue === false){  // cancel
+
+                // close sweetalert prompt window
+                swal.close();
+            // on cancel
+            }else if(inputValue === false){
                 cancel_selection(d);
                 return false;
-            }else if(inputValue === ""){  // empty new state name
+            // on empty new state name
+            }else if(inputValue === ""){
                 swal.showInputError("Please enter a state name");
                 return false;
             }

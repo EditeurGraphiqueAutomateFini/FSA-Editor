@@ -1,4 +1,14 @@
+/**
+*   create conditions for links
+*   @module viewmode/create_conditions - a module to create conditions for links
+*/
 define(function(require){
+    /**
+    *   @constructor
+    *   @alias module:viewmode/create_conditions
+    *   @param {Object} container - a D3 element (d3.select) for the container
+    *   @param {Object} force - the D3 force layout
+    */
     return function(container,force){
         var condition_list = require("./condition_list");
         var position_condition = require("./position_condition");

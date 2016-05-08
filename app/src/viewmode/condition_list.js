@@ -1,7 +1,17 @@
+/**
+*   generate a list of condition
+*   @module viewmode/condition_list - a module to generate a list of condition
+*/
 define(function(){
+    /**
+    *   @constructor
+    *   @alias module:viewmode/condition_list
+    *   @param {Object} d - data for the link, supplied by D3
+    *   @returns {string} text - the condition list
+    */
     return function(d){
-        var text = "",
-            matched = false;
+        var text = "";
+        var matched = false;
 
         if(d.conditions){
             d.conditions.forEach(function(element){

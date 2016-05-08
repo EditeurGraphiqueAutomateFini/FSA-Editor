@@ -1,8 +1,18 @@
+/**
+*   create svg circles to represent state
+*   @module viewmode/create_circles - a module to create svg circles to represent state
+*/
 define(function(){
+    /**
+    *   @constructor
+    *   @alias module:viewmode/create_circles
+    *   @param {Object} container - a D3 element (d3.select) for the container
+    *   @param {Object} force - the D3 force layout
+    */
     return function(container,force){
 
-        var svg = container,
-            state_container;
+        var svg = container;
+        var state_container;
 
         // test if we need to create a container from the start
         // or if we are simply adding a new state to the existing container

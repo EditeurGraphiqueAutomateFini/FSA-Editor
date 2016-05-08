@@ -1,13 +1,25 @@
-// add transition array to the global object
+/**
+*   add transition array to the global object
+*   @module editmode/transition/add_transition - a module that adds a transition to the global object
+*/
 define(function(){
+    /**
+    *   @constructor
+    *   @alias module:editmode/transition/add_transition
+    *   @param {Object} force - current D3 force layout
+    *   @param {Object} object - the global getData object
+    *   @param {Object} source - the source state object
+    *   @param {Object} target - the target state object
+    *   @param {string} condition - the new condition
+    */
     return function(force,object,source,target,condition){
 
         // edit global object
-        var state = object.states[source.name],
-            transition = {
-                "condition" : condition,
-                "target" : target.name
-            };
+        var state = object.states[source.name];
+        var transition = {
+            "condition" : condition,
+            "target" : target.name
+        };
 
         if(state){
             if(state.transitions){

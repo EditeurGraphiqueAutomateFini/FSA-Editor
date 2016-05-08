@@ -1,14 +1,22 @@
+/**
+*   handle server request (get and post)
+*   @module utility/server_request - handle server request
+*/
 define(function(require){
     return{
-        // obtain data, use it to load a mode. mode : string representing the mode to load
+        /**
+        *   @exports {function} getRequest - request the data from a given url
+        *   @param {Object} object - the url that was passed to the function
+        *   @param {string} mode - the mode in which the application must launch
+        */
         getRequest : function(object,mode){
-            var viewmode = require("../viewmode/view_init"),
-                createmode = require("../createmode/create_init"),
-                data_helper = require("../viewmode/data_helper"),
-                editmode = require("../editmode/edit_init"),
-                utility = require("./utility"),
-                undo = require("./undo"),
-                server = require("./server_request");
+            var viewmode = require("../viewmode/view_init");
+            var createmode = require("../createmode/create_init");
+            var data_helper = require("../viewmode/data_helper");
+            var editmode = require("../editmode/edit_init");
+            var utility = require("./utility");
+            var undo = require("./undo");
+            var server = require("./server_request");
 
             $.ajax({
                   type : 'GET',
@@ -28,7 +36,12 @@ define(function(require){
                   }
             });
 
-            /* function definition */
+            /**
+            *   success function for ajax GET
+            *   @param {Object} getData : data retrieved from the server
+            *   @param {string} mode - the mode in which the application must launch
+            *   @see module:utility/server_request
+            */
             function succesFunction(getData,mode){
                 if(getData){
                     var parsedData = JSON.parse(getData);
@@ -78,18 +91,29 @@ define(function(require){
                     });
                 }
             }
+
+            /**
+            *   error function for ajax GET
+            *   @see module:utility/server_request
+            */
             function errorFunction(){
                 // there has been an error w/ ajax request
                 console.log("/!\\ ajax : error retrieving data from server");
                 throw new Error("An error occured when retrieving data from server");
             }
         },
-        // post data to overwrite JSON file server-side
+
+        /**
+        *   @exports {function} postRequest - post data to overwrite JSON file server-side
+        *   @param {Object} postData - data to post
+        *   @param {Object} object - the url that was passed to the function
+        *   @param {string} mode - the mode in which the application must launch
+        */
         postRequest: function(postData,object,mode){
-            var viewmode = require("../viewmode/view_init"),
-            data_helper = require("../viewmode/data_helper"),
-            editmode = require("../editmode/edit_init"),
-            utility = require("./utility");
+            var viewmode = require("../viewmode/view_init");
+            var data_helper = require("../viewmode/data_helper");
+            var editmode = require("../editmode/edit_init");
+            var utility = require("./utility");
 
             $.ajax({
                   type : 'POST',
