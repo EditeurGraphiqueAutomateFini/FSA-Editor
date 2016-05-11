@@ -9,7 +9,7 @@ define(function(require){
         *   @param {Object} object - the url that was passed to the function
         *   @param {string} mode - the mode in which the application must launch
         */
-        getRequest : function(object,mode){
+        getRequest : function(object,mode,options){
             var viewmode = require("../viewmode/view_init");
             var createmode = require("../createmode/create_init");
             var data_helper = require("../viewmode/data_helper");
@@ -22,10 +22,10 @@ define(function(require){
                   type : 'GET',
                   url : object,
                   success : function(data){
-                      return succesFunction(data,mode);
+                      return succesFunction(data,mode,options);
                   },
                   error : function(){
-                      return errorFunction(mode);
+                      return errorFunction();
                   },
                   beforeSend : function(){
                       $(".load_helper").show();
@@ -42,7 +42,7 @@ define(function(require){
             *   @param {string} mode - the mode in which the application must launch
             *   @see module:utility/server_request
             */
-            function succesFunction(getData,mode){
+            function succesFunction(getData,mode,options){
                 if(getData){
                     var parsedData = JSON.parse(getData);
                     var parsedDataSolid = _.cloneDeep(parsedData); // cloning parsed data to keep it untouched for a later reset
@@ -52,12 +52,12 @@ define(function(require){
                     switch (mode) {
                         case "view":
                             // initiate viewmode
-                            viewmode.init(viewmode.extractStates([parsedData]),parsedData);
+                            viewmode.init(viewmode.extractStates([parsedData]),parsedData,options);
                             // handel reset
                             $("button.reset").click(function(){
                                 var parsedDataLiquid = _.cloneDeep(parsedDataSolid);   // cloning untouched cloned data
                                 // re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
-                                viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,true);
+                                viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,options);
                                 // reseting front-end object display
                                 utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
                                 $("#object_container_left").css("background","#FFF");
@@ -65,7 +65,7 @@ define(function(require){
                             break;
                         case "edit":
                             // loading view mode
-                            var loadedViewMode = viewmode.init(viewmode.extractStates([parsedData]),parsedData);
+                            var loadedViewMode = viewmode.init(viewmode.extractStates([parsedData]),parsedData,options);
                             // loading edit mode from previously loaded viewmode
                             editmode.init(loadedViewMode.svg,loadedViewMode.force,loadedViewMode.getData,loadedViewMode.links);
                             // createmode
@@ -74,14 +74,14 @@ define(function(require){
                             // handling reset (same as edit mode)
                             $("button.reset").click(function(){
                                 var parsedDataLiquid = _.cloneDeep(parsedDataSolid);
-                                var newLoadedViewMode = viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid);
+                                var newLoadedViewMode = viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,options);
                                 editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
                                 utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
                                 $("#object_container_left").css("background","#FFF");
                             });
                             break;
                         default:
-                            viewmode.init(viewmode.extractStates([parsedData]),parsedData);
+                            viewmode.init(viewmode.extractStates([parsedData]),parsedData,options);
                     }
 
                     // handle saving (posting edited data)

@@ -11,11 +11,11 @@ define(function(require){
     *   @param {Object} links - the object containing the transitions
     *   @returns {Object} force - the generated D3 force layout
     */
-    return function(container,states,links){
+    return function(container,states,links,options){
         var tick = require("./tick_helper");
 
-        var containmentWidth = $("#svgbox")[0].getBoundingClientRect().width,
-            containmentHeight = $("#svgbox")[0].getBoundingClientRect().height;
+        var containmentWidth = options.width || $("#svgbox")[0].getBoundingClientRect().width,
+            containmentHeight = options.height || $("#svgbox")[0].getBoundingClientRect().height;
 
         // creating the force layout with states as nodes
         var force = d3.layout.force()

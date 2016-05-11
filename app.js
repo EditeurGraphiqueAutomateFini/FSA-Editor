@@ -4,10 +4,8 @@
 */
 // requiring main stylesheet
 require("./styles.css");
-// requiring main stylesheet
+// requiring sweetalert stylesheet
 require("./res/css/sweetalert.css");
-// requiring main stylesheet
-require("./res/css/bootstrap.css");
 
 // requiring app
 var app = require("./app/main.js");

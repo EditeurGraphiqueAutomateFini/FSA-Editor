@@ -2,12 +2,16 @@
 *   main module
 *   @exports {function} fsa_editor(object,mode)
 */
-module.exports = function(object,mode){
+module.exports = function(object,mode,options){
         var server = require("./src/utility/server_request");
         var local_data_hangling = require("./src/utility/local_data_handling");
 
         // if <div id='fsa_editor'> is not present, do not proceed
         if($("#fsa_editor").size() <= 0) return 0;
+
+        if(!options){
+            options = {};
+        }
 
         // templating
         $("#fsa_editor").html(function(){
@@ -34,9 +38,9 @@ module.exports = function(object,mode){
         });
 
         if(typeof(object) === "string"){
-            server.getRequest(object,mode);
+            server.getRequest(object,mode,options);
         }else{
-            local_data_hangling(object,mode);
+            local_data_hangling(object,mode,options);
         }
 
         //right panel

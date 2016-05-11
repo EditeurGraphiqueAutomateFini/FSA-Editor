@@ -70,7 +70,7 @@ define(function(require){
         *   @param {Object} getData - data retrieved from server or client, will be the global data object for the application
         *   @returns {Object} - an object containing the application informations for loaded viewmode
         */
-        init : function(states,getData){
+        init : function(states,getData,options){
             var create_svg = require("./create_svg"),
                 create_force_layout = require("./create_force_layout"),
                 create_circles = require("./create_circles"),
@@ -156,7 +156,7 @@ define(function(require){
                 }
 
                 var svg = create_svg("#svg_container"),
-                    force = create_force_layout(svg,dataset,links);
+                    force = create_force_layout(svg,dataset,links,options);
 
                 create_paths(svg,force);
                 create_conditions(svg,force);
