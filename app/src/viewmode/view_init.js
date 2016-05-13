@@ -1,6 +1,6 @@
 /**
-*   initiate viewmode
-*   @module viewmode/view_init - a module to initiate viewmode
+*   Initiate viewmode
+*   @module viewmode/view_init
 */
 define(function(require){
     return{

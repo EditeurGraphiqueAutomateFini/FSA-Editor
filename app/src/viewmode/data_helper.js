@@ -1,6 +1,6 @@
 /**
-*   functions to handle data
-*   @module viewmode/data_helper - a module to provide data cleaning functions
+*   Functions to handle data cleaning
+*   @module viewmode/data_helper
 */
 define(function(){
     return{

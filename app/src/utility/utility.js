@@ -1,6 +1,6 @@
 /**
-*   stack to undo or redo changes
-*   @module utility/undo - a module that handle a stack of the application states
+*   A set of utility functions
+*   @module utility/utility
 */
 define(function(){
     // TODO optimisation du code
@@ -112,7 +112,7 @@ define(function(){
             if($(displayZone).parents().find('textarea#objectArea').size() > 0){
                 $(displayZone).parents().find('textarea#objectArea').val(function(){
                     var text = "";
-                    
+
                     for(var i=0; i < data.length; i++){
                         text += JSON.stringify(data[i]);
                     }

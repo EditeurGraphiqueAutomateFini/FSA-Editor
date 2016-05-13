@@ -1,6 +1,6 @@
 /**
-*   edit global automaton properties
-*   @module editmode/global/edit_global - a module that edits global automaton properties
+*   Edit global automaton properties
+*   @module editmode/global/edit_global
 */
 define(function(){
     /**
@@ -33,7 +33,7 @@ define(function(){
 
             // edit max_total_duration
             context.getData.state_defaults.max_total_duration = parseInt(newValues.newMaxTotalDuration) || 0;
-            
+
         // if a state_defaults property is not defined, we create it
         }else{
             context.getData.state_defaults = {

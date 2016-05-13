@@ -1,6 +1,6 @@
 /**
-*   add transition array to the global object
-*   @module editmode/transition/add_transition - a module that adds a transition to the global object
+*   Add transition array to the global object
+*   @module editmode/transition/add_transition
 */
 define(function(){
     /**

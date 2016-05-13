@@ -1,6 +1,6 @@
 /**
-*   edit a transition
-*   @module editmode/transition/edit_transition - a module that edits a transition
+*   Edit a transition
+*   @module editmode/transition/edit_transition
 */
 define(function(){
     /**

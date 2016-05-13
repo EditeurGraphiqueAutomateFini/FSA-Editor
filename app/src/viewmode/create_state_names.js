@@ -1,6 +1,6 @@
 /**
-*   create state names
-*   @module viewmode/create_state_names - a module to create state names
+*   Create state names
+*   @module viewmode/create_state_names
 */
 define(function(){
     /**

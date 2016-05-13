@@ -1,6 +1,6 @@
 /**
-*   sweetalert prompt for global state properties edition
-*   @module editmode/state/get_state_edition - a module that prompts for global state properties edition
+*   Sweetalert prompt for global state properties edition
+*   @module editmode/state/get_state_edition
 */
 define(function(require){
     /**

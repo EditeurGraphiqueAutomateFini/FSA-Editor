@@ -1,6 +1,6 @@
 /**
-*   edit the global object that is displayed front-end (right panel)
-*   @module editmode/edit_frontend_object - a module that edits displayed global object
+*   Edit the global object that is displayed front-end (right panel)
+*   @module editmode/edit_frontend_object
 */
 define(function(require){
     /**

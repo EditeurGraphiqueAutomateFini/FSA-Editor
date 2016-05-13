@@ -1,6 +1,6 @@
 /**
-*   create svg circles to represent state
-*   @module viewmode/create_circles - a module to create svg circles to represent state
+*   Create svg circles to represent state
+*   @module viewmode/create_circles
 */
 define(function(){
     /**

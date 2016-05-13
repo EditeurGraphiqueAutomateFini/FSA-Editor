@@ -1,6 +1,6 @@
 /**
-*   create path between states
-*   @module viewmode/create_paths - a module to create pathes
+*   Create path between states
+*   @module viewmode/create_paths
 */
 define(function(){
     /**

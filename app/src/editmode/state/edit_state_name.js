@@ -1,6 +1,6 @@
 /**
-*   edit name property for a state
-*   @module editmode/state/edit_state_name - a module that edits a state's name property
+*   Edit name property for a state
+*   @module editmode/state/edit_state_name
 */
 define(function(){
     /**

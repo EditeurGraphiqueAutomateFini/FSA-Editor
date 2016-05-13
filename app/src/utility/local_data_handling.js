@@ -1,6 +1,6 @@
 /**
-*   handle data if a JS object has been passed to fsa_editor lib
-*   @module utility/local_data_handling - a module to handle JS object data
+*   Handle data if a JS object has been passed to fsa_editor lib
+*   @module utility/local_data_handling
 */
 define(function(require){
     /**

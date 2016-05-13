@@ -1,6 +1,6 @@
 /**
-*   sweetalert prompt for transition edition
-*   @module editmode/transition/get_transition_edition - a module that prompts for transition edition
+*   Sweetalert prompt for transition edition
+*   @module editmode/transition/get_transition_edition
 */
 define(function(require){
     /**

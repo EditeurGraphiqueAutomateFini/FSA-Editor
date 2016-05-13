@@ -1,6 +1,6 @@
 /**
-*   stack to undo or redo changes
-*   @module utility/undo - a module that handle a stack of the application states
+*   Stack to undo or redo changes of the application states
+*   @module utility/undo
 */
 define(function(){
     /** the maximum number of state save*/

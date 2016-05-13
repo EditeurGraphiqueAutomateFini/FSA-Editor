@@ -1,6 +1,6 @@
 /**
-*   generate a list of condition
-*   @module viewmode/condition_list - a module to generate a list of condition
+*   Generate a list of condition
+*   @module viewmode/condition_list
 */
 define(function(){
     /**

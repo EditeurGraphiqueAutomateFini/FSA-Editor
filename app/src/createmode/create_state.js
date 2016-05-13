@@ -1,6 +1,6 @@
 /**
-*   state creation module
-*   @module createmode/create_state - a module to create a new state
+*   State creation module
+*   @module createmode/create_state
 */
 define(function(require){
     /**

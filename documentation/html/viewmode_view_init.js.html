@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: viewmode/view_init.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: viewmode/view_init.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+*   initiate viewmode
+*   @module viewmode/view_init - a module to initiate viewmode
+*/
+define(function(require){
+    return{
+        /**
+        *   @exports {function} extractStates - extract states from given object
+        *   @param {Object} data - data retrieved from server or client
+        *   @returns {Object} states - the operational object representing states
+        */
+        extractStates : function(data){
+            var states = [];
+            // iterating over states objects in data file (JSON), making a JS array of objects
+            if(data){
+                for(var i=0; i &lt; data.length; i++){
+                    if(data[i].states){
+                        states.push(data[i].states);
+                    }
+                }
+            }
+            return states;
+        },
+
+        /**
+        *   @exports {function} getIdFromName - get an id from a given state name
+        *   @param {Object} data - data retrieved from server or client
+        *   @returns {string} name - the name to look for
+        */
+        getIdFromName : function(data,name){
+            for(var key in data){
+                if(data.hasOwnProperty(key)){
+                    if(data[key]){
+                        if(name === data[key].name){
+                            return data[key].uniqueId;
+                        }
+                    }
+                }
+            }
+        },
+
+        /**
+        *   @exports {function} getConditions - get a condition array for a given (source,target) couple
+        *   @param {Object} data - data retrieved from server or client
+        *   @returns {number} source - the id of the source state
+        *   @returns {string} target - the name of the target state
+        */
+        getConditions :function(data,source,target){
+            var conditions = [];
+
+            for(var key in data){
+                if(data.hasOwnProperty(key) &amp;&amp; data[key]){
+                    if(data[key].uniqueId === source &amp;&amp; data[key].transitions){
+                        data[key].transitions.forEach(function(transition){
+                            if(transition.target === target){
+                                conditions.push(transition);
+                            }
+                        });
+                    }
+                }
+            }
+
+            return conditions;
+        },
+
+        /**
+        *   @constructor
+        *   @exports {function} init - initialisation function
+        *   @param {Object[]} states - array of state objects
+        *   @param {Object} getData - data retrieved from server or client, will be the global data object for the application
+        *   @returns {Object} - an object containing the application informations for loaded viewmode
+        */
+        init : function(states,getData,options){
+            var create_svg = require("./create_svg"),
+                create_force_layout = require("./create_force_layout"),
+                create_circles = require("./create_circles"),
+                create_state_names = require("./create_state_names"),
+                create_paths = require("./create_paths"),
+                create_conditions = require("./create_conditions"),
+                 set_positions = require("./set_positions"),
+                viewmode = require("./view_init"),
+                undo = require("../utility/undo");
+
+            if(states){
+                var links = [],
+                    dataset = [],
+                    newLink = {},
+                    key,state,
+                    testPresence = false,
+                    i = 0, cpt = 0;
+
+                // compute the distinct nodes from the transitionSet
+                states.forEach(function(data){
+                    cpt = 0;
+                    for(key in data){
+                        if(data.hasOwnProperty(key)){
+                            state = data[key];
+                            if(state){
+                                state.fixed = true;
+                                state.uniqueId = cpt;
+                                state.index = cpt;
+                                state.name = key;
+
+                                // add graphicEditor values if not set
+                                if(!state.graphicEditor){
+                                    state.graphicEditor = {};
+                                }else{
+                                    state.graphicEditor.origCoordX = state.graphicEditor.coordX;
+                                    state.graphicEditor.origCoordY = state.graphicEditor.coordY;
+                                }
+
+                                state.x = state.graphicEditor.coordX || 0;   //known position or 0
+                                state.y = state.graphicEditor.coordY || 0;
+
+                                // push state
+                                dataset.push(state);
+                                cpt++;
+                            }
+                        }
+                    }
+                    for(key in data){
+                        if(data.hasOwnProperty(key)){
+                            state = data[key];
+                            if(state){
+                                if(state.transitions &amp;&amp; state.transitions.length > 0){
+                                    for(i=0; i &lt; state.transitions.length; i++){
+                                        // add the new link if not already present
+                                        testPresence = links.find(function(el){
+                                             return (
+                                                el.source === state.uniqueId
+                                                &amp;&amp; el.target === viewmode.getIdFromName(dataset,state.transitions[i].target)
+                                            );
+                                        });
+                                        if(!testPresence){
+                                            // creating a new link
+                                            newLink = {
+                                                "source" : state.uniqueId,
+                                                "target" : viewmode.getIdFromName(dataset,state.transitions[i].target),
+                                                "conditions" : viewmode.getConditions(dataset,state.uniqueId,state.transitions[i].target)
+                                            };
+                                            links.push(newLink);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                for(i = 0; i &lt; states.length; i++){
+                    set_positions(states[i]);
+                }
+
+                if($("svg#svgbox").size() > 0){
+                    $("svg#svgbox").remove();
+                }
+
+                var svg = create_svg("#svg_container"),
+                    force = create_force_layout(svg,dataset,links,options);
+
+                create_paths(svg,force);
+                create_conditions(svg,force);
+                create_circles(svg,force);
+                create_state_names(svg,force);
+
+            }else{
+                // todo : vue par défaut ? basculer vers le mode creation ?
+            }
+
+            // add state save on dragend
+            force.drag().on("dragend",function(){
+                undo.addToStack(getData);
+            });
+
+            // key bindings
+            d3.select(document).on("keyup",function(){
+                // ajouter un preventdefault pour les actions de base du nav ?
+                if(d3.event.ctrlKey){
+                    switch (d3.event.keyCode) {
+                        case 90:    // on key "CTRL + Z" rollback
+                            var rollBack = undo.rollBack();
+                            if(rollBack){   // if any action has already been performed
+                                viewmode.init(viewmode.extractStates([rollBack]),rollBack,true);
+                            }
+                            break;
+                        case 89:    // on key "CTRL + Y" rollforth
+                            var rollForth = undo.rollForth();
+                            if(rollForth){   // if any action has already been performed
+                                viewmode.init(viewmode.extractStates([rollForth]),rollForth,true);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+
+            return {
+                "svg" : svg,
+                "force" : force,
+                "getData" : getData,
+                "links" : links
+            };
+        }
+    };
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-createmode_create_init%2520-%2520a%2520module%2520to%2520initiate%2520createmode.html">createmode/create_init - a module to initiate createmode</a></li><li><a href="module-createmode_create_state%2520-%2520a%2520module%2520to%2520create%2520a%2520new%2520state.html">createmode/create_state - a module to create a new state</a></li><li><a href="module-editmode_cancell_all_selection%2520-%2520a%2520module%2520that%2520cancels%2520all%2520state%2520selection.html">editmode/cancell_all_selection - a module that cancels all state selection</a></li><li><a href="module-editmode_cancell_selection%2520-%2520a%2520module%2520that%2520cancels%2520a%2520state%2520selection.html">editmode/cancell_selection - a module that cancels a state selection</a></li><li><a href="module-editmode_edit_frontend_object%2520-%2520a%2520module%2520that%2520edits%2520displayed%2520global%2520object.html">editmode/edit_frontend_object - a module that edits displayed global object</a></li><li><a href="module-editmode_edit_init%2520-%2520a%2520module%2520that%2520initiates%2520the%2520edit%2520mode.html">editmode/edit_init - a module that initiates the edit mode</a></li><li><a href="module-editmode_global_edit_global%2520-%2520a%2520module%2520that%2520edits%2520global%2520automaton%2520properties.html">editmode/global/edit_global - a module that edits global automaton properties</a></li><li><a href="module-editmode_global_get_global_edition%2520-%2520a%2520module%2520that%2520prompts%2520for%2520global%2520properties%2520edition.html">editmode/global/get_global_edition - a module that prompts for global properties edition</a></li><li><a href="module-editmode_state_delete_references%2520-%2520a%2520module%2520designed%2520to%2520clean%2520data%2520that%2520are%2520being%2520sent.html">editmode/state/delete_references - a module designed to clean data that are being sent</a></li><li><a href="module-editmode_state_delete_state%2520-%2520delete%2520a%2520state%2520having%2520a%2520given%2520index.html">editmode/state/delete_state - delete a state having a given index</a></li><li><a href="module-editmode_state_edit_references%2520-%2520a%2520module%2520that%2520edits%2520references%2520to%2520a%2520given%2520name%2520in%2520a%2520given%2520object.html">editmode/state/edit_references - a module that edits references to a given name in a given object</a></li><li><a href="module-editmode_state_edit_state%2520-%2520a%2520module%2520that%2520edits%2520a%2520state_s%2520properties.html">editmode/state/edit_state - a module that edits a state's properties</a></li><li><a href="module-editmode_state_edit_state_defaulttransition%2520-%2520a%2520module%2520that%2520edits%2520a%2520state_s%2520default_transition%2520property.html">editmode/state/edit_state_defaulttransition - a module that edits a state's default_transition property</a></li><li><a href="module-editmode_state_edit_state_maxduration%2520-%2520a%2520module%2520that%2520edits%2520a%2520state_s%2520max_duration%2520property.html">editmode/state/edit_state_maxduration - a module that edits a state's max_duration property</a></li><li><a href="module-editmode_state_edit_state_maxnoise%2520-%2520a%2520module%2520that%2520edits%2520a%2520state_s%2520max_noise%2520property.html">editmode/state/edit_state_maxnoise - a module that edits a state's max_noise property</a></li><li><a href="module-editmode_state_edit_state_maxtotalduration%2520-%2520a%2520module%2520that%2520edits%2520a%2520state_s%2520max_total_duration%2520property.html">editmode/state/edit_state_maxtotalduration - a module that edits a state's max_total_duration property</a></li><li><a href="module-editmode_state_edit_state_maxtotalnoise%2520-%2520a%2520module%2520that%2520edits%2520a%2520state_s%2520max_total_duration%2520property.html">editmode/state/edit_state_maxtotalnoise - a module that edits a state's max_total_duration property</a></li><li><a href="module-editmode_state_edit_state_name%2520-%2520a%2520module%2520that%2520edits%2520a%2520state_s%2520name%2520property.html">editmode/state/edit_state_name - a module that edits a state's name property</a></li><li><a href="module-editmode_state_edit_state_terminal%2520-%2520a%2520module%2520that%2520edits%2520a%2520state_s%2520terminal%2520property.html">editmode/state/edit_state_terminal - a module that edits a state's terminal property</a></li><li><a href="module-editmode_state_get_max_noise_edition%2520-%2520a%2520module%2520that%2520prompts%2520for%2520max_noise%2520property%2520edition.html">editmode/state/get_max_noise_edition - a module that prompts for max_noise property edition</a></li><li><a href="module-editmode_state_get_state_edition%2520-%2520a%2520module%2520that%2520prompts%2520for%2520global%2520state%2520properties%2520edition.html">editmode/state/get_state_edition - a module that prompts for global state properties edition</a></li><li><a href="module-editmode_state_get_state_name_edition%2520-%2520a%2520module%2520that%2520prompts%2520for%2520name%2520property%2520edition.html">editmode/state/get_state_name_edition - a module that prompts for name property edition</a></li><li><a href="module-editmode_transition_add_transition%2520-%2520a%2520module%2520that%2520adds%2520a%2520transition%2520to%2520the%2520global%2520object.html">editmode/transition/add_transition - a module that adds a transition to the global object</a></li><li><a href="module-editmode_transition_delete_transition%2520-%2520a%2520module%2520that%2520removes%2520a%2520set%2520transition%2520from%2520the%2520global%2520object.html">editmode/transition/delete_transition - a module that removes a set transition from the global object</a></li><li><a href="module-editmode_transition_edit_condition%2520-%2520a%2520module%2520that%2520edits%2520a%2520condition.html">editmode/transition/edit_condition - a module that edits a condition</a></li><li><a href="module-editmode_transition_edit_transition%2520-%2520a%2520module%2520that%2520edits%2520a%2520transition.html">editmode/transition/edit_transition - a module that edits a transition</a></li><li><a href="module-editmode_transition_get_condition%2520-%2520a%2520module%2520that%2520prompts%2520for%2520condition%2520edition.html">editmode/transition/get_condition - a module that prompts for condition edition</a></li><li><a href="module-editmode_transition_get_transition_edition%2520-%2520a%2520module%2520that%2520prompts%2520for%2520transition%2520edition.html">editmode/transition/get_transition_edition - a module that prompts for transition edition</a></li><li><a href="module-utility_local_data_handling%2520-%2520a%2520module%2520to%2520handle%2520JS%2520object%2520data.html">utility/local_data_handling - a module to handle JS object data</a></li><li><a href="module-utility_server_request%2520-%2520handle%2520server%2520request.html">utility/server_request - handle server request</a></li><li><a href="module-utility_undo%252520-%252520a%252520module%252520that%252520handle%252520a%252520stack%252520of%252520the%252520application%252520states.html">utility/undo - a module that handle a stack of the application states</a></li><li><a href="module-viewmode_condition_list%2520-%2520a%2520module%2520to%2520generate%2520a%2520list%2520of%2520condition.html">viewmode/condition_list - a module to generate a list of condition</a></li><li><a href="module-viewmode_create_circles%2520-%2520a%2520module%2520to%2520create%2520svg%2520circles%2520to%2520represent%2520state.html">viewmode/create_circles - a module to create svg circles to represent state</a></li><li><a href="module-viewmode_create_conditions%2520-%2520a%2520module%2520to%2520create%2520conditions%2520for%2520links.html">viewmode/create_conditions - a module to create conditions for links</a></li><li><a href="module-viewmode_create_force_layout%2520-%2520a%2520module%2520to%2520create%2520a%2520force%2520layout.html">viewmode/create_force_layout - a module to create a force layout</a></li><li><a href="module-viewmode_create_paths%2520-%2520a%2520module%2520to%2520create%2520pathes.html">viewmode/create_paths - a module to create pathes</a></li><li><a href="module-viewmode_create_state_names%2520-%2520a%2520module%2520to%2520create%2520state%2520names.html">viewmode/create_state_names - a module to create state names</a></li><li><a href="module-viewmode_create_svg%2520-%2520a%2520module%2520to%2520create%2520a%2520svg%2520tag%2520with%2520markers.html">viewmode/create_svg - a module to create a svg tag with markers</a></li><li><a href="module-viewmode_data_helper%2520-%2520a%2520module%2520to%2520provide%2520data%2520cleaning%2520functions.html">viewmode/data_helper - a module to provide data cleaning functions</a></li><li><a href="module-viewmode_position_condition%2520-%2520a%2520module%2520to%2520set%2520positions%2520for%2520conditions.html">viewmode/position_condition - a module to set positions for conditions</a></li><li><a href="module-viewmode_set_positions%2520-%2520a%2520module%2520to%2520set%2520a%2520position%2520for%2520circles%2520without%2520existing%2520coordinates.html">viewmode/set_positions - a module to set a position for circles without existing coordinates</a></li><li><a href="module-viewmode_tick_helper%2520-%2520a%2520module%2520to%2520tick%2520(drag)%2520-%2520_!_%2520executed%2520repeatedly%2520at%2520launch%2520and%2520for%2520each%2520drag.html">viewmode/tick_helper - a module to tick (drag) - /!\ executed repeatedly at launch and for each drag</a></li><li><a href="module-viewmode_view_init%2520-%2520a%2520module%2520to%2520initiate%2520viewmode.html">viewmode/view_init - a module to initiate viewmode</a></li><li><a href="module-%25252525252525252525257Bfunction%25252525252525252525257D.html">{function}</a></li></ul><h3>Classes</h3><ul><li><a href="module-editmode_edit_init%2520-%2520a%2520module%2520that%2520initiates%2520the%2520edit%2520mode-init.html">init</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri May 13 2016 22:36:21 GMT+0200 (Paris, Madrid (heure d’été))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 /**
-*   sweetalert prompt for global properties edition
-*   @module editmode/global/get_global_edition - a module that prompts for global properties edition
+*   Sweetalert prompt for global properties edition
+*   @module editmode/global/get_global_edition
 */
 define(function(require){
         /**

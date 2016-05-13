@@ -1,6 +1,6 @@
 /**
-*   set a position for circles without existing coordinates
-*   @module viewmode/set_positions - a module to set a position for circles without existing coordinates
+*   Set a position for circles without existing coordinates
+*   @module viewmode/set_positions
 */
 define(function(){
     /**

@@ -1,6 +1,6 @@
 /**
-*   sweetalert prompt for max_noise property edition
-*   @module editmode/state/get_max_noise_edition - a module that prompts for max_noise property edition
+*   Sweetalert prompt for max_noise property edition
+*   @module editmode/state/get_max_noise_edition
 */
 define(function(require){
     /**

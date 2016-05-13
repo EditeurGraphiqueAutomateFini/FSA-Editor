@@ -1,6 +1,6 @@
 /**
-*   edit max_noise property for a state
-*   @module editmode/state/edit_state_maxnoise - a module that edits a state's max_noise property
+*   Edit max_noise property for a state
+*   @module editmode/state/edit_state_maxnoise
 */
 define(function(){
     /**

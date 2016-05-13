@@ -1,6 +1,6 @@
 /**
-*   initiates the edit mode
-*   @module editmode/edit_init - a module that initiates the edit mode
+*   Initiates the edit mode
+*   @module editmode/edit_init
 *   @exports {function} init - the initialisation function
 */
 define(function(require){

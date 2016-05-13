@@ -1,6 +1,6 @@
 /**
-*   creation module
-*   @module createmode/create_init - a module to initiate createmode
+*   Creation module
+*   @module createmode/create_init
 */
 define(function(require){
     return {

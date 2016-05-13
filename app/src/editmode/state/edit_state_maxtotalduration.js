@@ -1,6 +1,6 @@
 /**
-*   edit max_total_duration property for a state
-*   @module editmode/state/edit_state_maxtotalduration - a module that edits a state's max_total_duration property
+*   Edit max_total_duration property for a state
+*   @module editmode/state/edit_state_maxtotalduration
 */
 define(function(){
     /**

@@ -1,6 +1,6 @@
 /**
-*   sweetalert prompt for state name edition
-*   @module editmode/state/get_state_name_edition - a module that prompts for name property edition
+*   Sweetalert prompt for state name edition
+*   @module editmode/state/get_state_name_edition
 */
 define(function(require){
     /**

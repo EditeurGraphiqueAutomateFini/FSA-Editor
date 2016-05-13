@@ -1,6 +1,6 @@
 /**
-*   cancel a sepecific state selection
-*   @module editmode/cancell_selection - a module that cancels a state selection
+*   Cancel a sepecific state selection
+*   @module editmode/cancell_selection
 */
 define(function(){
     /**

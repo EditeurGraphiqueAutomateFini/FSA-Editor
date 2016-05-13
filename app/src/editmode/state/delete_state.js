@@ -1,6 +1,6 @@
 /**
-*   delete a state
-*   @module editmode/state/delete_state - delete a state having a given index
+*   Delete a state
+*   @module editmode/state/delete_state
 */
 define(function(require){
     /**

@@ -1,6 +1,6 @@
 /**
-*   a module for ticking function - /!\ executed repeatedly at launch and for each drag
-*   @module viewmode/tick_helper - a module to tick (drag) - /!\ executed repeatedly at launch and for each drag
+*   A module for ticking function - /!\ executed repeatedly at launch and for each drag
+*   @module viewmode/tick_helper
 */
 define(function(){
     /**

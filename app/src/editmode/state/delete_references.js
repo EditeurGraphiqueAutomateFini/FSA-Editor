@@ -1,6 +1,6 @@
 /**
-*   delete references to "name" (string, name of a state) parameter in "object" (object) parameter.
-*   @module editmode/state/delete_references - a module designed to clean data that are being sent
+*   Delete references to "name" (string, name of a state) parameter in "object" (object) parameter.
+*   @module editmode/state/delete_references
 */
 define(function(){
     /**

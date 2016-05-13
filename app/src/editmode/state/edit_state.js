@@ -1,6 +1,6 @@
 /**
-*   edit all properties for a state
-*   @module editmode/state/edit_state - a module that edits a state's properties
+*   Edit all properties for a state
+*   @module editmode/state/edit_state
 */
 define(function(require){
     /**

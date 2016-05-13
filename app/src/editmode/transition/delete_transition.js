@@ -1,6 +1,6 @@
 /**
-*   delete one or more transition
-*   @module editmode/transition/delete_transition - a module that removes a set transition from the global object
+*   Delete one or more transition
+*   @module editmode/transition/delete_transition
 */
 define(function(){
     /**

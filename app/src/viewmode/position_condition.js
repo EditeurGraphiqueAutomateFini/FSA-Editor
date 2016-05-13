@@ -1,8 +1,8 @@
 var coefficient = 0.2;
 
 /**
-*   functions to set positions for conditions
-*   @module viewmode/position_condition - a module to set positions for conditions
+*   Functions to set positions for conditions
+*   @module viewmode/position_condition
 */
 module.exports = {
     /**

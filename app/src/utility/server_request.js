@@ -1,6 +1,6 @@
 /**
-*   handle server request (get and post)
-*   @module utility/server_request - handle server request
+*   Handle server request (get and post)
+*   @module utility/server_request
 */
 define(function(require){
     return{

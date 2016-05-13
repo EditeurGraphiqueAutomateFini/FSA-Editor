@@ -1,5 +1,5 @@
 /**
-*   main module
+*   Main module
 *   @exports {function} fsa_editor(object,mode)
 */
 module.exports = function(object,mode,options){

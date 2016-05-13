@@ -1,6 +1,6 @@
 /**
-*   create conditions for links
-*   @module viewmode/create_conditions - a module to create conditions for links
+*   Create conditions for links
+*   @module viewmode/create_conditions
 */
 define(function(require){
     /**

@@ -1,6 +1,6 @@
 /**
-*   sweetalert prompt for condition edition
-*   @module editmode/transition/get_condition - a module that prompts for condition edition
+*   Sweetalert prompt for condition edition
+*   @module editmode/transition/get_condition
 */
 define(function(require){
     /**

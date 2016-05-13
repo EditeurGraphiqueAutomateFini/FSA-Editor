@@ -1,6 +1,6 @@
 /**
-*   edit terminal property for a state
-*   @module editmode/state/edit_state_terminal - a module that edits a state's terminal property
+*   Edit terminal property for a state
+*   @module editmode/state/edit_state_terminal
 */
 define(function(){
     /**

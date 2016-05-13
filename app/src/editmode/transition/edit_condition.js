@@ -1,6 +1,6 @@
 /**
-*   edit a condition
-*   @module editmode/transition/edit_condition - a module that edits a condition
+*   Edit a condition
+*   @module editmode/transition/edit_condition
 */
 define(function(){
     /**

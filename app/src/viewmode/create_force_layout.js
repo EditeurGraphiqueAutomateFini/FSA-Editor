@@ -1,6 +1,6 @@
 /**
-*   create D3 force layout
-*   @module viewmode/create_force_layout - a module to create a force layout
+*   Create D3 force layout
+*   @module viewmode/create_force_layout
 */
 define(function(require){
     /**

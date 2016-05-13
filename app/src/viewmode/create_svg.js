@@ -1,6 +1,6 @@
 /**
-*   create svg container
-*   @module viewmode/create_svg - a module to create a svg tag with markers
+*   Create svg container
+*   @module viewmode/create_svg
 */
 define(function(){
     /**

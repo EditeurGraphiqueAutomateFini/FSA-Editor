@@ -1,6 +1,6 @@
 /**
-*   edit max_duration property for a state
-*   @module editmode/state/edit_state_maxduration - a module that edits a state's max_duration property
+*   Edit max_duration property for a state
+*   @module editmode/state/edit_state_maxduration
 */
 define(function(){
     /**

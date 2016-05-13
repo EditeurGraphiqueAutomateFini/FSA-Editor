@@ -1,6 +1,6 @@
 /**
-*   edit references to a given name in a given object
-*   @module editmode/state/edit_references - a module that edits references to a given name in a given object
+*   Edit references to a given name in a given object
+*   @module editmode/state/edit_references
 */
 define(function(){
     /**

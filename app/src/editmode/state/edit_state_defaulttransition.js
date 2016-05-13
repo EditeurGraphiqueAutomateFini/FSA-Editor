@@ -1,6 +1,6 @@
 /**
-*   edit default_transition property for a state
-*   @module editmode/state/edit_state_defaulttransition - a module that edits a state's default_transition property
+*   Edit default_transition property for a state
+*   @module editmode/state/edit_state_defaulttransition
 */
 define(function(){
     /**

@@ -1,6 +1,6 @@
 /**
-*   edit max_total_noise property for a state
-*   @module editmode/state/edit_state_maxtotalnoise - a module that edits a state's max_total_duration property
+*   Edit max_total_noise property for a state
+*   @module editmode/state/edit_state_maxtotalnoise
 */
 define(function(){
     /**
