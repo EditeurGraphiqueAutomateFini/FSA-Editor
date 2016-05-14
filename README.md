@@ -103,6 +103,6 @@ npm start
 go to http://localhost:3000
 ```
 
-Please run ```"npm run production"``` in order ton build the production file in the "/dist" directory
+Please run ```"npm run production"``` in order to build the production file in the "/dist" directory
 
 Please run ```"npm run documentation"``` in order to generate the jsdoc documentation (HTML) in the "/documentation" folder
