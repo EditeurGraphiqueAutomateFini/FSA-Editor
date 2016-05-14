@@ -2,26 +2,20 @@
 
 A graphic editor to display and edit a Finished State Automaton
 
-To install the project and start working on it :
-
-```
-git clone https://github.com/EditeurGraphiqueAutomateFini/FSA-Editor.git && cd FSA-Editor
-npm install
-npm start
-go to http://localhost:3000
-```
-
-Please run ```"npm run production"``` in order ton build the production file in the "/dist" directory
-
 Usage : ```fsa_editor(object,mode)``` where ```object``` is either a JS object or a URL leading to a JSON object, and ```mode``` is a string (```"view"``` or ```"edit"```) stating the mode in which the editor must launch.
 
 jQuery and D3JS must be include in the page, along with fsa_editor.js
-An example can be found in ```index.html```
+An example can be found in ```index.html```.
+
 Sample code :
 ```
-    .
-    .
-    .
+    .   // html document here
+    .   // html document here
+    .   // html document here
+
+        <!-- the div that will be filled with the editor -->
+        <div id="fsa_editor"></div>
+
         <!-- jquery is needed -->
         <script src="http://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
         <!-- d3js is needed -->
@@ -97,3 +91,18 @@ Sample code :
     </body>
 </html>
 ```
+
+
+
+## To install the project and start working on it :
+
+```
+git clone https://github.com/EditeurGraphiqueAutomateFini/FSA-Editor.git && cd FSA-Editor
+npm install
+npm start
+go to http://localhost:3000
+```
+
+Please run ```"npm run production"``` in order ton build the production file in the "/dist" directory
+
+Please run ```"npm run documentation"``` in order to generate the jsdoc documentation (HTML) in the "/documentation" folder
