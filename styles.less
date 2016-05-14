@@ -1,0 +1,304 @@
+/*general styles*/
+
+// here we encapsulate our styles for a "fsa_editor" id
+#fsa_editor{
+    /*svg*/
+    svg#svgbox{
+        display: block;
+        height: 90%;
+        width: 100%;
+    }
+    /*svg - circles (states)*/
+    .circle,circle{
+        cursor: pointer;
+        display: block;
+        position: absolute;
+        transition: fill 0.2s ease-in-out;
+    }
+    .circle:hover,circle:hover{
+        fill: #444;
+    }
+    .circle.linking:hover,circle.linking:hover{
+        fill: #e6e6e6;
+    }
+    .terminal{
+        stroke:grey;
+        stroke-width:3px;
+    }
+    .linking{
+        fill:#FFF;
+        stroke: black;
+        stroke-width:3px;
+    }
+    /*svg - paths (links)*/
+    .link {
+      fill: none;
+      stroke: #666;
+      stroke-width: 1.5px;
+    }
+    .new_link{
+        stroke-dasharray: 7px;
+    }
+    /*svg - texts (names,conditions)*/
+    text{
+        fill:#000;
+    }
+    text:hover,text:hover tspan:hover{
+        fill:#999;
+        cursor:pointer;
+        transition: fill 0.2s ease-in-out;
+    }
+    text:hover tspan{
+        fill:#000;
+        cursor: default;
+    }
+    text.new_link{}
+    text.new_condition{}
+    text.condition{}
+    .state_name tspan{}
+    .state_name .state_name_label{}
+    /*containers*/
+    #svg_container,#object_container_wrapper,#object_textarea{
+        display: inline-block;
+        vertical-align: top;
+    }
+    #object_textarea{
+        height: 20%;
+        margin: 20px 0 0;
+        width: 100%;
+        text-align: center;
+    }
+    #object_textarea label{
+        cursor: pointer;
+        display: inline-block;
+        font-size: 100%;
+        margin: 0 0 10px;
+    }
+    #object_textarea label:hover + textarea{
+        color: #333;
+        background-color: #e6e6e6;
+        border-color: #adadad;
+    }
+    #object_textarea textarea{
+        border: 1px solid #ccc;
+        height: 77%;
+        width: 92%;
+    }
+    #svg_container,#object_container_wrapper{
+        height: 100%;
+        padding: 0 0 20px;
+    }
+    #object_container_wrapper,#object_container_wrapper_left{
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 25%;
+    }
+    #object_container_left,#object_container_right{
+        border: 1px solid #e6e6e6;
+        color: #8a6d3b;
+        height: 100%;
+        overflow-y: scroll;
+        padding: 5px;
+        transition: background 0.4s ease-in-out;
+    }
+    #object_container_close,#object_container_close_right{
+        border: 1px solid #e6e6e6;
+        font-weight: bold;
+        left: auto;
+        right: 0;
+        position: absolute;
+        top: 50%;
+        transition: background 0.4s ease-in-out,opacity 0.4s ease-in-out;
+    }
+    #object_container_wrapper #object_container_close,#object_container_wrapper_left #object_container_close_right{
+        left: -34px;
+        right: auto;
+        top: 0;
+    }
+    #object_container_close:hover + #object_container_left,#object_container_close_right:hover + #object_container_right {
+        background-color: #e6e6e6 !important;
+    }
+    #object_container_right{
+        background: #FFF;
+        overflow: visible;
+    }
+    #object_container_wrapper_left{
+        left: 0;
+        width: 15%;
+    }
+    #object_container_close_right{
+        left: 0;
+        right: auto;
+    }
+    #object_container_wrapper_left #object_container_close_right{
+        left: auto;
+        right: -34px;
+    }
+    .closed{
+        transition: opacity 0.4s ease-in-out, width 0s none 0.5s;
+        opacity: 0;
+        overflow: hidden;
+        width: 0 !important;
+    }
+    #svg_container{
+        width: 100%;
+    }
+    /*buttons*/
+    .buttons{
+        text-align: center;
+    }
+    .reset{
+        margin: 0 10px 0 0;
+    }
+    /*load_helper*/
+    .load_helper{
+        background: url("res/images/loading.gif") no-repeat scroll center center #FFF;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+    /*menu*/
+    .menu{
+        background:#FFF;
+        height:100%;
+        left:0;
+        padding:300px;
+        position:absolute;
+        top:0;
+        width:100%;
+        z-index:10;
+    }
+    #menu li{
+        text-align: center;
+    }
+    /*others*/
+    #qunit{
+        display: none;
+    }
+    /*tooltip*/
+    .ui-tooltip{
+        font-family: Arial, sans-serif;
+    	font-size: 4px;
+    	line-height: 26px;
+    	padding: 28px 10px;
+    	overflow: hidden;
+        font-style: italic;
+        font-weight: bold;
+        background-color: blueviolet;
+
+    }
+    /*sweet alert*/
+    .condition_display,.state_display,.global_display{
+        display: block;
+    }
+    .swal_display .custom_swal_input,.swal_display .custom_swal_delete{
+        display: inline-block;
+    }
+    .swal_display .custom_swal_input{
+        width: 90%;
+    }
+    /*swal condition*/
+    .swal_display.condition_display .custom_swal_input,.swal_display.condition_display label{
+        width: 35%;
+    }
+    .swal_display.condition_display label.checkbox_label{
+        width: 10%;
+    }
+    .swal_display.condition_display label .custom_swal_input{
+        width: 80%;
+    }
+    .swal_display.condition_display .custom_swal_input[type="checkbox"]{
+        height: auto;
+        width: auto;
+    }
+    .transition_title{
+        margin: 0 0 10px;
+    }
+    .header_transition{
+        text-align: right;
+    }
+    .header_condition,.header_matcher,.header_silent{
+        display: inline-block;
+        font-weight: bold;
+        text-align: center;
+    }
+    .header_condition{
+        width: 45%;
+    }
+    .header_matcher{
+        width: 25%;
+    }
+    .header_silent{
+        width: 20%;
+    }
+    /**/
+    .swal_display.state_display .custom_swal_input,.swal_display.global_display .custom_swal_input{
+        width: auto;
+    }
+    .swal_display.state_display .custom_swal_input[type="checkbox"],.swal_display.global_display .custom_swal_input[type="checkbox"]{
+        height: auto;
+        margin: 0 0 17px 10px;
+        width: auto;
+    }
+    .swal_display .custom_swal_delete{
+        width: 10%;
+    }
+    .swal_display .custom_swal_delete:hover{
+        color: #d9534f;
+        cursor: pointer;
+    }
+    .user_delete{
+        display: none;
+    }
+    .state_display,.global_display{
+        text-align: left;
+    }
+    .state_display .custom_swal_label,.global_display .custom_swal_label{
+        font-weight: bold;
+        width: 40%;
+    }
+    .state_display .custom_swal_delete,.global_display .custom_swal_delete{
+        text-align: center;
+    }
+    .swal_select_container,.swal_select_subcontainer{
+        display: inline-block;
+    }
+    .custom_swal_select{
+        display: block;
+        margin: 0 20px 0 0;
+    }
+    .swal_select_container{
+    }
+    #label_property_default_transition{
+        vertical-align: top;
+    }
+    #label_property_state_defaults{
+        margin: 0 0 20px;
+    }
+    /*global properties*/
+    #global_properties{
+        text-align: center;
+        width: 100%;
+    }
+    .button_edit_global_properties{
+        margin: 10px 0 0;
+    }
+    /*create mode*/
+    .dummy_container{
+        position: relative;
+    }
+    .dummy_container circle{
+        left: auto;
+        top: auto;
+    }
+    .dummy_container svg,.dummy_container svg:not(:root){
+        display: block;
+        height: 90%;
+        overflow: visible;
+        width: 100%;
+    }
+}

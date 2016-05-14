@@ -1,5 +1,0 @@
-/* a css stylesheet for testing purpose (webcomponent mainly) */
-/* will be required in the main script : don't forget to remove it for production */
-*{
-    background: aqua;
-}
