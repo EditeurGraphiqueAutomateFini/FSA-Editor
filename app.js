@@ -6,6 +6,8 @@
 require("./styles.css");
 // requiring sweetalert stylesheet
 require("./res/css/sweetalert.css");
+// requiring test stylesheet - must be removed in production
+require("./res/css/tests.css");
 
 // requiring app
 var app = require("./app/main.js");
