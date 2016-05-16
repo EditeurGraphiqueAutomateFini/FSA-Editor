@@ -87,7 +87,7 @@ define(function(require){
                     // handle saving (posting edited data)
                     $("button.save").click(function(){
                         var endPostData = data_helper.cleanData(parsedData);
-                        server.postRequest(endPostData,object,mode);
+                        server.postRequest(endPostData,object,mode,options);
                     });
                 }
             }
@@ -109,7 +109,7 @@ define(function(require){
         *   @param {Object} object - the url that was passed to the function
         *   @param {string} mode - the mode in which the application must launch
         */
-        postRequest: function(postData,object,mode){
+        postRequest: function(postData,object,mode,options){
             var viewmode = require("../viewmode/view_init");
             var data_helper = require("../viewmode/data_helper");
             var editmode = require("../editmode/edit_init");
@@ -129,12 +129,12 @@ define(function(require){
                       switch (mode) {
                           case "view":
                               // re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
-                              viewmode.init(viewmode.extractStates([postData]),postData,true);
+                              viewmode.init(viewmode.extractStates([postData]),postData,options);
                               // reseting front-end object display
                               utility.frontEndObject([data_helper.cleanData(postData)]);
                               break;
                           case "edit":
-                              var newLoadedViewMode = viewmode.init(viewmode.extractStates([postData]),postData);
+                              var newLoadedViewMode = viewmode.init(viewmode.extractStates([postData]),postData,options);
                               editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
                               utility.frontEndObject([data_helper.cleanData(postData)]);
                               break;
