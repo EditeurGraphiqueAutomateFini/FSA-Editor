@@ -70,7 +70,7 @@ module.exports = function(object,mode,options){
             }else{
                 $(button)
                     .html((orientation === "left" ? "<" : ">"))
-                    .prependTo("body");
+                    .prependTo("#fsa_editor");
             }
             $(button).toggleClass("panel_closed");
         }
