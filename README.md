@@ -1,6 +1,6 @@
 # FSA Graphic Editor
 
-A graphic editor to display and edit a Finished State Automaton
+## A graphic editor to display and edit a Finished State Automaton
 
 Usage : ```fsa_editor(object,mode)``` where ```object``` is either a JS object or a URL leading to a JSON object, and ```mode``` is a string (```"view"``` or ```"edit"```) stating the mode in which the editor must launch.
 
