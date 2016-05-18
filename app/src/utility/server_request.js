@@ -1,23 +1,31 @@
+/**
+*   Handle server request (get and post)
+*   @module utility/server_request
+*/
 define(function(require){
     return{
-        // obtain data, use it to load a mode. mode : string representing the mode to load
-        getRequest : function(object,mode){
-            var viewmode = require("../viewmode/view_init"),
-                createmode = require("../createmode/create_init"),
-                data_helper = require("../viewmode/data_helper"),
-                editmode = require("../editmode/edit_init"),
-                utility = require("./utility"),
-                undo = require("./undo"),
-                server = require("./server_request");
+        /**
+        *   @exports {function} getRequest - request the data from a given url
+        *   @param {Object} object - the url that was passed to the function
+        *   @param {string} mode - the mode in which the application must launch
+        */
+        getRequest : function(object,mode,options){
+            var viewmode = require("../viewmode/view_init");
+            var createmode = require("../createmode/create_init");
+            var data_helper = require("../viewmode/data_helper");
+            var editmode = require("../editmode/edit_init");
+            var utility = require("./utility");
+            var undo = require("./undo");
+            var server = require("./server_request");
 
             $.ajax({
                   type : 'GET',
                   url : object,
                   success : function(data){
-                      return succesFunction(data,mode);
+                      return succesFunction(data,mode,options);
                   },
                   error : function(){
-                      return errorFunction(mode);
+                      return errorFunction();
                   },
                   beforeSend : function(){
                       $(".load_helper").show();
@@ -28,8 +36,13 @@ define(function(require){
                   }
             });
 
-            /* function definition */
-            function succesFunction(getData,mode){
+            /**
+            *   success function for ajax GET
+            *   @param {Object} getData : data retrieved from the server
+            *   @param {string} mode - the mode in which the application must launch
+            *   @see module:utility/server_request
+            */
+            function succesFunction(getData,mode,options){
                 if(getData){
                     var parsedData = JSON.parse(getData);
                     var parsedDataSolid = _.cloneDeep(parsedData); // cloning parsed data to keep it untouched for a later reset
@@ -39,12 +52,12 @@ define(function(require){
                     switch (mode) {
                         case "view":
                             // initiate viewmode
-                            viewmode.init(viewmode.extractStates([parsedData]),parsedData);
+                            viewmode.init(viewmode.extractStates([parsedData]),parsedData,options);
                             // handel reset
                             $("button.reset").click(function(){
                                 var parsedDataLiquid = _.cloneDeep(parsedDataSolid);   // cloning untouched cloned data
                                 // re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
-                                viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,true);
+                                viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,options);
                                 // reseting front-end object display
                                 utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
                                 $("#object_container_left").css("background","#FFF");
@@ -52,7 +65,7 @@ define(function(require){
                             break;
                         case "edit":
                             // loading view mode
-                            var loadedViewMode = viewmode.init(viewmode.extractStates([parsedData]),parsedData);
+                            var loadedViewMode = viewmode.init(viewmode.extractStates([parsedData]),parsedData,options);
                             // loading edit mode from previously loaded viewmode
                             editmode.init(loadedViewMode.svg,loadedViewMode.force,loadedViewMode.getData,loadedViewMode.links);
                             // createmode
@@ -61,35 +74,46 @@ define(function(require){
                             // handling reset (same as edit mode)
                             $("button.reset").click(function(){
                                 var parsedDataLiquid = _.cloneDeep(parsedDataSolid);
-                                var newLoadedViewMode = viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid);
+                                var newLoadedViewMode = viewmode.init(viewmode.extractStates([parsedDataLiquid]),parsedDataLiquid,options);
                                 editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
                                 utility.frontEndObject([data_helper.cleanData(parsedDataLiquid)]);
                                 $("#object_container_left").css("background","#FFF");
                             });
                             break;
                         default:
-                            viewmode.init(viewmode.extractStates([parsedData]),parsedData);
+                            viewmode.init(viewmode.extractStates([parsedData]),parsedData,options);
                     }
 
                     // handle saving (posting edited data)
                     $("button.save").click(function(){
                         var endPostData = data_helper.cleanData(parsedData);
-                        server.postRequest(endPostData,object,mode);
+                        server.postRequest(endPostData,object,mode,options);
                     });
                 }
             }
+
+            /**
+            *   error function for ajax GET
+            *   @see module:utility/server_request
+            */
             function errorFunction(){
                 // there has been an error w/ ajax request
                 console.log("/!\\ ajax : error retrieving data from server");
                 throw new Error("An error occured when retrieving data from server");
             }
         },
-        // post data to overwrite JSON file server-side
-        postRequest: function(postData,object,mode){
-            var viewmode = require("../viewmode/view_init"),
-            data_helper = require("../viewmode/data_helper"),
-            editmode = require("../editmode/edit_init"),
-            utility = require("./utility");
+
+        /**
+        *   @exports {function} postRequest - post data to overwrite JSON file server-side
+        *   @param {Object} postData - data to post
+        *   @param {Object} object - the url that was passed to the function
+        *   @param {string} mode - the mode in which the application must launch
+        */
+        postRequest: function(postData,object,mode,options){
+            var viewmode = require("../viewmode/view_init");
+            var data_helper = require("../viewmode/data_helper");
+            var editmode = require("../editmode/edit_init");
+            var utility = require("./utility");
 
             $.ajax({
                   type : 'POST',
@@ -105,12 +129,12 @@ define(function(require){
                       switch (mode) {
                           case "view":
                               // re-initiate viewmode with cloned data, adding a "true" parameter which indicates we are reseting
-                              viewmode.init(viewmode.extractStates([postData]),postData,true);
+                              viewmode.init(viewmode.extractStates([postData]),postData,options);
                               // reseting front-end object display
                               utility.frontEndObject([data_helper.cleanData(postData)]);
                               break;
                           case "edit":
-                              var newLoadedViewMode = viewmode.init(viewmode.extractStates([postData]),postData);
+                              var newLoadedViewMode = viewmode.init(viewmode.extractStates([postData]),postData,options);
                               editmode.init(newLoadedViewMode.svg,newLoadedViewMode.force,newLoadedViewMode.getData,newLoadedViewMode.links);
                               utility.frontEndObject([data_helper.cleanData(postData)]);
                               break;

@@ -1,9 +1,19 @@
+/**
+*   Sweetalert prompt for global properties edition
+*   @module editmode/global/get_global_edition
+*/
 define(function(require){
+        /**
+        *   @constructor
+        *   @alias module:editmode/global/get_global_edition
+        *   @param {Object} context - the global application context (svg,force,getData,links)
+        */
         return function(context){
-            var edit_global = require("./edit_global"),
-                undo = require("../../utility/undo"),
-                edit_frontend_object = require("../../editmode/edit_frontend_object");
+            var edit_global = require("./edit_global");
+            var undo = require("../../utility/undo");
+            var edit_frontend_object = require("../../editmode/edit_frontend_object");
 
+            // here we define sweetalert prompt
             swal({
                 title : "Edit global properties",
                 text : displayGlobalPropertiesAsList(),
@@ -13,14 +23,15 @@ define(function(require){
                 animation : "slide-from-top"
             },function(inputValue){
                     if(inputValue){
-                        var newOverlap = false,
-                            newDefaultMatcher = "",
-                            newTerminal = false,
-                            newMaxNoise = 0,
-                            newMaxTotalNoise = 0,
-                            newMaxDuration = 0,
-                            newMaxTotalDuration = 0,
-                            newValues;
+                        // defining default value for each field
+                        var newOverlap = false;
+                        var newDefaultMatcher = "";
+                        var newTerminal = false;
+                        var newMaxNoise = 0;
+                        var newMaxTotalNoise = 0;
+                        var newMaxDuration = 0;
+                        var newMaxTotalDuration = 0;
+                        var newValues;
 
                         // overlap
                         newOverlap = d3.select("#input_allow_overlap").property("checked");
@@ -37,7 +48,7 @@ define(function(require){
                         // max_total_duration
                         newMaxTotalDuration = parseInt(d3.select("#input_max_total_duration").property("value"));
 
-                        // tests
+                        // test if user input is correct
                         if(newMaxNoise < 0){
                             swal.showInputError("max_noise cannot be negative");
                             return false;
@@ -74,37 +85,52 @@ define(function(require){
                             "newMaxTotalDuration" : newMaxTotalDuration
                         };
 
+                        // call global edition module
                         edit_global(newValues,context);
 
+                        // edit front-end object and add new state to the stack
                         edit_frontend_object(context.getData);
                         undo.addToStack(context.getData);
-                        swal.close();   // close sweetalert prompt window
-                    }else if(inputValue === false){  // cancel
+
+                        // close sweetalert prompt window
+                        swal.close();
+
+                    // on cancel
+                    }else if(inputValue === false){
                         return false;
+                    // this should never happen
                     }else if(inputValue === ""){
                         swal.showInputError("error");
                         return false;
                     }
             });
 
-            // display form with properties list
+            /**
+            *   display form with properties list - iterates over each propertie to return a complete form for the sweetalert prompt
+            *   @return {string} html - the complete html form for the sweetalert prompt of global properties
+            */
             function displayGlobalPropertiesAsList(){
-                var html = "",
-                    input = "",
-                    propertiesToEdit = [
-                        { "name":"allow_overlap", "type":"check" },
-                        { "name":"default_matcher", "type":"text" },
-                        { "name":"state_defaults", "type":"" },
-                        { "name":"terminal", "type":"check", "sub":"state_defaults" },
-                        { "name":"max_noise", "type":"number", "sub":"state_defaults" },
-                        { "name":"max_total_noise", "type":"number", "sub":"state_defaults" },
-                        { "name":"max_duration", "type":"number", "sub":"state_defaults" },
-                        { "name":"max_total_duration", "type":"number", "sub":"state_defaults" }
-                    ],
-                    previousValue;
+                var html = "";
+                var input = "";
+                var previousValue;
 
+                // defining each property to edit with a name and a type
+                // state_defaults properties have a "sub" field because they are "sub-properties" of state_defaults
+                var propertiesToEdit = [
+                    { "name":"allow_overlap", "type":"check" },
+                    { "name":"default_matcher", "type":"text" },
+                    { "name":"state_defaults", "type":"" },
+                    { "name":"terminal", "type":"check", "sub":"state_defaults" },
+                    { "name":"max_noise", "type":"number", "sub":"state_defaults" },
+                    { "name":"max_total_noise", "type":"number", "sub":"state_defaults" },
+                    { "name":"max_duration", "type":"number", "sub":"state_defaults" },
+                    { "name":"max_total_duration", "type":"number", "sub":"state_defaults" }
+                ];
+
+                // iterating over each property
                 for(var i=0; i < propertiesToEdit.length; i++){
 
+                    // retrieve the previous value of the property to edit, if it existed previously
                     if(propertiesToEdit[i].sub){
                         if(context.getData[propertiesToEdit[i].sub]){
                             previousValue = context.getData[propertiesToEdit[i].sub][propertiesToEdit[i].name];
@@ -113,7 +139,9 @@ define(function(require){
                         previousValue = context.getData[propertiesToEdit[i].name];
                     }
 
+                    // treat each type of property differently, generating a different input
                     switch(propertiesToEdit[i].type){
+                        // in case the type is "text", diplay a <input type="text"> tag
                         case "text":
                             input = "<input "+
                                         "class='custom_swal_input' "+
@@ -122,6 +150,7 @@ define(function(require){
                                         "id='input_"+propertiesToEdit[i].name+"' "+
                                     "/>";
                             break;
+                        // in case the type is "number", diplay a <input type="number"> tag
                         case "number":
                             input = "<input "+
                                         "class='custom_swal_input' "+
@@ -130,6 +159,7 @@ define(function(require){
                                         "id='input_"+propertiesToEdit[i].name+"' "+
                                     "/>";
                             break;
+                        // in case the type is "check", diplay a <input type="checkbox"> tag
                         case "check":
                             input = "<input "+
                                         "class='custom_swal_input' "+
@@ -142,6 +172,8 @@ define(function(require){
                             input="";
                             break;
                     }
+
+                    // in any case, add a label for the field and wrap it in a <span> tag
                     html += "<span class='swal_display global_display'>"+
                                 "<label "+
                                     "class='custom_swal_label' "+

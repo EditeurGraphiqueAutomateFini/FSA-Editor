@@ -1,8 +1,16 @@
-// create svg container w/ marker in a html container
+/**
+*   Create svg container
+*   @module viewmode/create_svg
+*/
 define(function(){
+    /**
+    *   @constructor
+    *   @alias module:viewmode/create_svg
+    *   @param {Object} container - a D3 element (d3.select) for the container
+    *   @returns {Object} svg - the D3 selection containing the svg element
+    */
     return function(container){
         if(container){
-
             var svg = d3.select(container).insert("svg",".buttons");
 
             svg.attr({
@@ -24,7 +32,8 @@ define(function(){
                 .append("path")
                 .attr("d","M0,-5L10,0L0,5");
 
-        }else{  // if no container is supplied
+        // if no container is supplied
+        }else{
             svg = "";
         }
 

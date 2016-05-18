@@ -1,5 +1,15 @@
+/**
+*   Edit name property for a state
+*   @module editmode/state/edit_state_name
+*/
 define(function(){
-    // edit selected state's properties
+    /**
+    *   @constructor
+    *   @alias module:editmode/state/edit_state_name
+    *   @param {Object} d - data for the state, supplied by D3
+    *   @param {string} inputValue - the new name property
+    *   @param {Object} context - the global application context (svg,force,getData,links)
+    */
     return function(d,inputValue,context){
         var oldName = d.name;
 

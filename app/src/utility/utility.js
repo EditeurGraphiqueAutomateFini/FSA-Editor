@@ -1,30 +1,49 @@
-// global utility functions
-// code à optimiser
+/**
+*   A set of utility functions
+*   @module utility/utility
+*/
 define(function(){
+    // TODO optimisation du code
     return{
-         // displays a JS object on screen; object : array of object to display
-         // todo reussir a se passer du param level, trouver un moyen de compter les appels recursif (demander a jeanseba le roi de lalgo)
+        /**
+        *   @exports {function} displayObject - displays a JS object on screen (right pannel)
+        *   @param {Object} object - array of object to display
+        *   @param {number} level - current level of recursivity
+        *   @returns {string} objString - the html content to render
+        */
+         // TODO reussir a se passer du parametre "level", trouver un moyen de compter les appels recursif
         displayObject : function(object,level){
-            var objString = '',     // string which will contain the written object
-                indent = 20,    // indent in px
-                key,arrayItem,arrayItemType,
-                j = 0;
+            // string which will contain the written object
+            var objString = '';
+            // indent in px
+            var indent = 20;
+            var key;
+            var arrayItem;
+            var arrayItemType;
+            var j = 0;
 
             level++;
 
-            for(var i=0; i < object.length; i++){   // iteration over the object array
-                 // each object in the object array begins with a curl
+            // iteration over the object array
+            for(var i=0; i < object.length; i++){
+                // each object in the object array begins with a curl
                 objString += '<span style="padding-left:'+indent+'px'+';"></span>{<br/>';
                 for (key in object[i]){
                     if(object[i].hasOwnProperty(key)){
-                        var objProperty = object[i][key];   // the property
-                        if(key != "graphicEditor"){   // we don't want to display "graphicEditor" property to keep it simple
+                        // the property
+                        var objProperty = object[i][key];
+
+                        // we don't want to display "graphicEditor" property to keep it simple
+                        if(key != "graphicEditor"){
                             objString += '<span style="padding-left:'+(indent*level+indent)+'px'+';"></span>';
-                            if(typeof(objProperty) == 'string'){    // display a string w/ simple quotes
+                            // display a string w/ simple quotes
+                            if(typeof(objProperty) == 'string'){
                                 objString += key+' : '+'\''+objProperty+'\'';
-                            }else if(Object.prototype.toString.call(objProperty) == '[object Object]'){ // recursively display the content of a litteral object
+                            // recursively display the content of a litteral object
+                            }else if(Object.prototype.toString.call(objProperty) == '[object Object]'){
                                 objString += key+' : '+this.displayObject([objProperty],level);
-                            }else if(Object.prototype.toString.call(objProperty)=='[object Array]'){    // displays an array
+                            // displays an array
+                            }else if(Object.prototype.toString.call(objProperty)=='[object Array]'){
                                 objString += key+' : ['+'<br/><span style="padding-left:'+(indent*(level+2))+'px'+';"></span>';
                                 for(j=0; j < objProperty.length; j++){
 
@@ -60,14 +79,17 @@ define(function(){
                         }
                     }
                 }
+
                 // removing last coma
                 if(objString.charAt(objString.length-6) == ','){
                     objString = objString.slice(0,-6)+objString.slice(-5);
                 }
+
                 // removing last backspace
                 if(objString.slice(-5) == "<br/>"){
                     objString = objString.slice(0,-5);
                 }
+
                 // each object in the object array ends with a curl
                 objString += '<br/><span style="padding-left:'+(indent*level)+'px'+';"></span> }';
                 if(i != object.length-1){
@@ -76,13 +98,21 @@ define(function(){
             }
             return objString;
         },
-        // display the given object in a html container by calling "displayObject" method
+
+        /**
+        *   @exports {function} frontEndObject - display the given object in a html container by calling "displayObject" method
+        *   @param {Object} data - the global data to display
+        */
         frontEndObject : function(data){
             var displayZone = "#object_container_left";
+
             $(displayZone).html('{<br/>'+this.displayObject(data,0)+'<br/>}');
-            if($(displayZone).parents().find('textarea#objectArea').size() > 0){   // display object in a textarea (for copy/paste)
+
+            // display object in a textarea (for copy/paste)
+            if($(displayZone).parents().find('textarea#objectArea').size() > 0){
                 $(displayZone).parents().find('textarea#objectArea').val(function(){
                     var text = "";
+
                     for(var i=0; i < data.length; i++){
                         text += JSON.stringify(data[i]);
                     }

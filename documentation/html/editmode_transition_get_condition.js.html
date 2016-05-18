@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: editmode/transition/get_condition.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: editmode/transition/get_condition.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+*   Sweetalert prompt for condition edition
+*   @module editmode/transition/get_condition
+*/
+define(function(require){
+    /**
+    *   @constructor
+    *   @alias module:editmode/transition/get_condition
+    *   @param {Object} d - data for the state, supplied by D3
+    *   @param {Object} previouslySelectedState - the source state (previously selected)
+    *   @param {string} thisID - a string containing the html id of the target state (e.g. : "#state_1");
+    *   @param {Object} context - the global application context (svg,force,getData,links)
+    */
+    return function(d,previouslySelectedState,thisID,context){
+        var add_transition = require("./add_transition");
+        var edit_condition = require("./edit_condition");
+        var get_transition_edition = require("./get_transition_edition");
+        var undo = require("../../utility/undo");
+        var edit_frontend_object = require("../edit_frontend_object");
+
+        var linkingTestID = "#state_"+previouslySelectedState.index;
+        var previouslyExistingLink = false;
+
+        swal({
+            title : "Condition",
+            text : "Write a condition for this new transition",
+            type : "input",
+            showCancelButton : true,
+            closeOnConfirm : false,
+            animation : "slide-from-top",
+            inputPlaceholder : "condition"
+        },function(inputValue){
+            // on cancel
+            if (inputValue === false){
+                // edit visual hints
+                previouslySelectedState.graphicEditor.linking = false;
+                d.graphicEditor.linking = false;
+                d3.select(linkingTestID).classed("linking",false);
+                d3.select(linkingTestID).classed("editing",false);
+                d3.select(thisID).classed("linking",false);
+                return false;
+            }
+            // if no value is entered
+            if (inputValue === "") {
+                swal.showInputError("You need to write a condition");
+                return false;
+            }
+            // if there is a comma (",") in the input value
+            if(inputValue.indexOf(",") !== -1){
+                swal.showInputError("\',\' is not allowed for transitions");
+                return false;
+            }
+            // error : if link alreay exists with the condition
+            if(d3.select(linkingTestID).data()[0].hasOwnProperty("transitions")){
+                d3.select(linkingTestID).data()[0].transitions.forEach(function(el){
+                    if(el.target === d.name){
+                        if(el.condition === inputValue){
+                            inputValue = false;
+                        }
+                    }
+                });
+            }
+            // if path already exist
+            if(d3.selectAll("path.link#link_"+previouslySelectedState.index+"_"+d.index).size() > 0){
+                previouslyExistingLink = true;
+            }
+            // all test has passed
+            if(inputValue){
+                var condition = inputValue;
+
+                // add transition to global data object
+                add_transition(context.force,context.getData,previouslySelectedState,d,condition);
+
+                if(previouslyExistingLink){
+                    // edit path
+                    edit_condition(context.svg,context.force,previouslySelectedState.index,d.index,condition);
+                }else{
+                    // edit path
+                    edit_condition(context.svg,context.force,previouslySelectedState.index,d.index,condition,"new");
+                    d3.select("text.condition.link_"+previouslySelectedState.index+"_"+d.index)
+                        .on("click",function(d){
+                            get_transition_edition(d,context);
+                        });
+                }
+
+                // edit visual hints
+                previouslySelectedState.graphicEditor.linking = false;
+                d.graphicEditor.linking = false;
+                d3.select(linkingTestID).classed("linking",false);
+                d3.select(linkingTestID).classed("editing",false);
+                d3.select(thisID).classed("linking",false);
+
+                // edit fe object
+                edit_frontend_object(context.getData);
+                undo.addToStack(context.getData);
+
+                // close sweetalert prompt window
+                swal.close();
+            // error : transition already exists w/ the same condition
+            }else{
+                swal.showInputError("This condition already exists for the same transition");
+                return false;
+            }
+        });
+    };
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-createmode_create_init.html">createmode/create_init</a></li><li><a href="module-createmode_create_state.html">createmode/create_state</a></li><li><a href="module-editmode_cancell_all_selection.html">editmode/cancell_all_selection</a></li><li><a href="module-editmode_cancell_selection.html">editmode/cancell_selection</a></li><li><a href="module-editmode_edit_frontend_object.html">editmode/edit_frontend_object</a></li><li><a href="module-editmode_edit_init.html">editmode/edit_init</a></li><li><a href="module-editmode_global_edit_global.html">editmode/global/edit_global</a></li><li><a href="module-editmode_global_get_global_edition.html">editmode/global/get_global_edition</a></li><li><a href="module-editmode_state_delete_references.html">editmode/state/delete_references</a></li><li><a href="module-editmode_state_delete_state.html">editmode/state/delete_state</a></li><li><a href="module-editmode_state_edit_references.html">editmode/state/edit_references</a></li><li><a href="module-editmode_state_edit_state.html">editmode/state/edit_state</a></li><li><a href="module-editmode_state_edit_state_defaulttransition.html">editmode/state/edit_state_defaulttransition</a></li><li><a href="module-editmode_state_edit_state_maxduration.html">editmode/state/edit_state_maxduration</a></li><li><a href="module-editmode_state_edit_state_maxnoise.html">editmode/state/edit_state_maxnoise</a></li><li><a href="module-editmode_state_edit_state_maxtotalduration.html">editmode/state/edit_state_maxtotalduration</a></li><li><a href="module-editmode_state_edit_state_maxtotalnoise.html">editmode/state/edit_state_maxtotalnoise</a></li><li><a href="module-editmode_state_edit_state_name.html">editmode/state/edit_state_name</a></li><li><a href="module-editmode_state_edit_state_terminal.html">editmode/state/edit_state_terminal</a></li><li><a href="module-editmode_state_get_max_noise_edition.html">editmode/state/get_max_noise_edition</a></li><li><a href="module-editmode_state_get_state_edition.html">editmode/state/get_state_edition</a></li><li><a href="module-editmode_state_get_state_name_edition.html">editmode/state/get_state_name_edition</a></li><li><a href="module-editmode_transition_add_transition.html">editmode/transition/add_transition</a></li><li><a href="module-editmode_transition_delete_transition.html">editmode/transition/delete_transition</a></li><li><a href="module-editmode_transition_edit_condition.html">editmode/transition/edit_condition</a></li><li><a href="module-editmode_transition_edit_transition.html">editmode/transition/edit_transition</a></li><li><a href="module-editmode_transition_get_condition.html">editmode/transition/get_condition</a></li><li><a href="module-editmode_transition_get_transition_edition.html">editmode/transition/get_transition_edition</a></li><li><a href="module-utility_local_data_handling.html">utility/local_data_handling</a></li><li><a href="module-utility_server_request.html">utility/server_request</a></li><li><a href="module-utility_undo.html">utility/undo</a></li><li><a href="module-utility_utility.html">utility/utility</a></li><li><a href="module-viewmode_condition_list.html">viewmode/condition_list</a></li><li><a href="module-viewmode_create_circles.html">viewmode/create_circles</a></li><li><a href="module-viewmode_create_conditions.html">viewmode/create_conditions</a></li><li><a href="module-viewmode_create_force_layout.html">viewmode/create_force_layout</a></li><li><a href="module-viewmode_create_paths.html">viewmode/create_paths</a></li><li><a href="module-viewmode_create_state_names.html">viewmode/create_state_names</a></li><li><a href="module-viewmode_create_svg.html">viewmode/create_svg</a></li><li><a href="module-viewmode_data_helper.html">viewmode/data_helper</a></li><li><a href="module-viewmode_position_condition.html">viewmode/position_condition</a></li><li><a href="module-viewmode_set_positions.html">viewmode/set_positions</a></li><li><a href="module-viewmode_tick_helper.html">viewmode/tick_helper</a></li><li><a href="module-viewmode_view_init.html">viewmode/view_init</a></li><li><a href="module-%25252525252525252525257Bfunction%25252525252525252525257D.html">{function}</a></li></ul><h3>Classes</h3><ul><li><a href="module-editmode_edit_init-init.html">init</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri May 13 2016 22:52:27 GMT+0200 (Paris, Madrid (heure d’été))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

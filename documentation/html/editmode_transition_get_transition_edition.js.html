@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: editmode/transition/get_transition_edition.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: editmode/transition/get_transition_edition.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+*   Sweetalert prompt for transition edition
+*   @module editmode/transition/get_transition_edition
+*/
+define(function(require){
+    /**
+    *   @constructor
+    *   @alias module:editmode/transition/get_transition_edition
+    *   @param {Object} d - data for the state, supplied by D3
+    *   @param {Object} context - the global application context (svg,force,getData,links)
+    */
+    return function (d,context){
+        var edit_transition = require("./edit_transition");
+        var delete_transition = require("./delete_transition");
+        var undo = require("../../utility/undo");
+        var edit_frontend_object = require("../edit_frontend_object");
+
+        swal({
+            title : "Transition edition",
+            text : displayTransitionsAsList(d),
+            html : true,
+            showCancelButton : true,
+            closeOnConfirm : false,
+            animation : "slide-from-top"
+        },function(inputValue){
+            if(inputValue){
+                var conditionsToDelete = [];
+                var conditionsToEdit = [];
+                var editedItem = {};
+                var commaError = false;
+                var attribute = 0;
+                var index = 0;
+                var type = "";
+
+                // get indexes of conditions that were deleted
+                d3.selectAll(".condition_display.user_delete").each(function(){
+                    attribute = 0;
+                    index = 0;
+
+                    attribute = this.getAttribute("id").indexOf("condition_display_")+"condition_display_".length;
+                    index = parseInt(this.getAttribute("id").substr(attribute,1));
+
+                    conditionsToDelete.push(index);
+                });
+
+                // get indexes of conditions that were edited
+                d3.selectAll(".condition_display.user_edited").each(function(){
+                    attribute = 0;
+                    index = 0;
+
+                    attribute = this.getAttribute("id").indexOf("condition_display_")+"condition_display_".length;
+                    index = parseInt(this.getAttribute("id").substr(attribute,1));
+
+                    editedItem = {
+                        "index" : index,
+                        "updatedValues" : {}
+                    };
+
+                    // iterating over each inpu field
+                    d3.select(this).selectAll("input").each(function(){
+                        // retrieve its type
+                        type = d3.select(this).attr("type");
+                        // according to the type, get the right value
+                        switch (type) {
+                            // in case of an input of type "text", gets either condition or matcher
+                            case "text" :
+                                if(d3.select(this).classed("condition_input")){
+                                    editedItem.updatedValues.condition = this.value;
+                                }else if(d3.select(this).classed("matcher_input")){
+                                    editedItem.updatedValues.matcher = this.value;
+                                }
+                                break;
+                            // in case of an input of type "checkbox", get the silent attribute value
+                            case "checkbox" :
+                                if(d3.select(this).classed("silent_input")){
+                                    editedItem.updatedValues.silent = this.checked;
+                                }
+                                break;
+                            default:
+                        }
+                    });
+
+                    // add the index to the array only if the condition was not deleted (no need to edit in this case)
+                    if(!d3.select(this.parentNode.parentNode).classed("user_delete")){
+                        conditionsToEdit.push(editedItem);
+                    }
+                });
+
+                // checking new conditions values for unauthorized commas (",")
+                if(conditionsToEdit.length > 0){
+                    conditionsToEdit.forEach(function(el){
+                        if(el.updatedValues){
+                            if(el.updatedValues.condition.indexOf(",") != -1){
+                                commaError = true;
+                            }
+                        }
+                    });
+                    if(commaError){
+                        swal.showInputError("\',\' is not allowed for transitions");
+                        return false;
+                    }else{
+                        edit_transition(d,conditionsToEdit);
+                    }
+                }
+
+                // delete conditions
+                if(conditionsToDelete.length > 0){
+                    delete_transition(d,conditionsToDelete,context);
+                }
+
+                // update front-end object and add the current application state to the stack
+                edit_frontend_object(context.getData);
+                undo.addToStack(context.getData);
+
+                // close sweetalert prompt window
+                swal.close();
+            // on cancel
+            }else if(inputValue === false){
+                return false;
+            // this should not happen
+            }else if(inputValue === ""){
+                swal.showInputError("error");
+                return false;
+            }
+        });
+
+        // add "user_delete" class to the element if the cross ("X") was clicked
+        d3.selectAll(".custom_swal_delete").each(function(){
+            d3.select(this)
+                .on("click",function(){
+                    d3.select(this.parentNode).classed("user_delete",true);
+                });
+        });
+
+        // on input change, add "user_edited" class to the parent wrapper element
+        d3.selectAll(".condition_display input").each(function(){
+            d3.select(this)
+                .on("change",function(){
+                    d3.select(this.parentNode.parentNode).classed("user_edited",true);
+                });
+        });
+
+        /**
+        *   display form with properties list - iterates over each propertie to return a complete form for the sweetalert prompt
+        *   @returns {string} html - the complete html form for the sweetalert prompt of transition properties
+        */
+        function displayTransitionsAsList(d){
+            // creating a title
+            var html = "&lt;div class='transition_title'>"+d.source.name + " => "+d.target.name+"&lt;/div>";
+
+            // creating a table-like header
+            html += "&lt;div class='header_transition'>"+
+                        "&lt;span class='header_condition'>condition&lt;/span>"+
+                        "&lt;span class='header_matcher'>matcher&lt;/span>"+
+                        "&lt;span class='header_silent'>silent&lt;/span>"+
+                    "&lt;/div>";
+
+            if(d.conditions){
+                // iterating over each condition
+                d.conditions.forEach(function(condition,index){
+                    // adding an element with the condition properties
+                    html += "&lt;span class='swal_display condition_display' id='condition_display_"+index+"'>"+
+                            "&lt;span class='custom_swal_delete' id='delete_condition_"+index+"'>X&lt;/span>"+
+                            "&lt;label>&lt;input class='custom_swal_input condition_input' type='text' value='"+condition.condition+"' id='input_condition_"+index+"' />&lt;/label>"+
+                            "&lt;label>&lt;input class='custom_swal_input matcher_input' type='text' value='"+
+                                (condition.matcher ? condition.matcher : "") +"'/>"+
+                            "&lt;/label>"+
+                            "&lt;label class='checkbox_label'>&lt;input class='custom_swal_input silent_input' type='checkbox' "+
+                                (condition.silent ? "checked='true'" : "") +"'/>"+
+                            "&lt;/label> "+
+                        "&lt;/span>";
+                });
+            }
+
+            return html;
+        }
+    };
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-createmode_create_init.html">createmode/create_init</a></li><li><a href="module-createmode_create_state.html">createmode/create_state</a></li><li><a href="module-editmode_cancell_all_selection.html">editmode/cancell_all_selection</a></li><li><a href="module-editmode_cancell_selection.html">editmode/cancell_selection</a></li><li><a href="module-editmode_edit_frontend_object.html">editmode/edit_frontend_object</a></li><li><a href="module-editmode_edit_init.html">editmode/edit_init</a></li><li><a href="module-editmode_global_edit_global.html">editmode/global/edit_global</a></li><li><a href="module-editmode_global_get_global_edition.html">editmode/global/get_global_edition</a></li><li><a href="module-editmode_state_delete_references.html">editmode/state/delete_references</a></li><li><a href="module-editmode_state_delete_state.html">editmode/state/delete_state</a></li><li><a href="module-editmode_state_edit_references.html">editmode/state/edit_references</a></li><li><a href="module-editmode_state_edit_state.html">editmode/state/edit_state</a></li><li><a href="module-editmode_state_edit_state_defaulttransition.html">editmode/state/edit_state_defaulttransition</a></li><li><a href="module-editmode_state_edit_state_maxduration.html">editmode/state/edit_state_maxduration</a></li><li><a href="module-editmode_state_edit_state_maxnoise.html">editmode/state/edit_state_maxnoise</a></li><li><a href="module-editmode_state_edit_state_maxtotalduration.html">editmode/state/edit_state_maxtotalduration</a></li><li><a href="module-editmode_state_edit_state_maxtotalnoise.html">editmode/state/edit_state_maxtotalnoise</a></li><li><a href="module-editmode_state_edit_state_name.html">editmode/state/edit_state_name</a></li><li><a href="module-editmode_state_edit_state_terminal.html">editmode/state/edit_state_terminal</a></li><li><a href="module-editmode_state_get_max_noise_edition.html">editmode/state/get_max_noise_edition</a></li><li><a href="module-editmode_state_get_state_edition.html">editmode/state/get_state_edition</a></li><li><a href="module-editmode_state_get_state_name_edition.html">editmode/state/get_state_name_edition</a></li><li><a href="module-editmode_transition_add_transition.html">editmode/transition/add_transition</a></li><li><a href="module-editmode_transition_delete_transition.html">editmode/transition/delete_transition</a></li><li><a href="module-editmode_transition_edit_condition.html">editmode/transition/edit_condition</a></li><li><a href="module-editmode_transition_edit_transition.html">editmode/transition/edit_transition</a></li><li><a href="module-editmode_transition_get_condition.html">editmode/transition/get_condition</a></li><li><a href="module-editmode_transition_get_transition_edition.html">editmode/transition/get_transition_edition</a></li><li><a href="module-utility_local_data_handling.html">utility/local_data_handling</a></li><li><a href="module-utility_server_request.html">utility/server_request</a></li><li><a href="module-utility_undo.html">utility/undo</a></li><li><a href="module-utility_utility.html">utility/utility</a></li><li><a href="module-viewmode_condition_list.html">viewmode/condition_list</a></li><li><a href="module-viewmode_create_circles.html">viewmode/create_circles</a></li><li><a href="module-viewmode_create_conditions.html">viewmode/create_conditions</a></li><li><a href="module-viewmode_create_force_layout.html">viewmode/create_force_layout</a></li><li><a href="module-viewmode_create_paths.html">viewmode/create_paths</a></li><li><a href="module-viewmode_create_state_names.html">viewmode/create_state_names</a></li><li><a href="module-viewmode_create_svg.html">viewmode/create_svg</a></li><li><a href="module-viewmode_data_helper.html">viewmode/data_helper</a></li><li><a href="module-viewmode_position_condition.html">viewmode/position_condition</a></li><li><a href="module-viewmode_set_positions.html">viewmode/set_positions</a></li><li><a href="module-viewmode_tick_helper.html">viewmode/tick_helper</a></li><li><a href="module-viewmode_view_init.html">viewmode/view_init</a></li><li><a href="module-%25252525252525252525257Bfunction%25252525252525252525257D.html">{function}</a></li></ul><h3>Classes</h3><ul><li><a href="module-editmode_edit_init-init.html">init</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri May 13 2016 22:52:27 GMT+0200 (Paris, Madrid (heure d’été))
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,4 +1,14 @@
+/**
+*   Edit global automaton properties
+*   @module editmode/global/edit_global
+*/
 define(function(){
+    /**
+    *   @constructor
+    *   @alias module:editmode/global/edit_global
+    *   @param {Object} newValues - a key:value object with new properties (keys are "newDefaultMatcher", "newMaxDuration", "newMaxNoise", "newMaxTotalDuration", "newMaxTotalNoise", "newOverlap", "newTerminal"
+    *   @param {Object} context - the global application context (svg,force,getData,links)
+    */
     return function(newValues,context){
 
         // edit allow_overlap
@@ -7,6 +17,7 @@ define(function(){
         // edit default_matcher
         context.getData.default_matcher = newValues.newDefaultMatcher;
 
+        // if a state_defaults property is defined
         if(context.getData.state_defaults){
             // edit terminal
             context.getData.state_defaults.terminal = newValues.newTerminal;
@@ -22,6 +33,8 @@ define(function(){
 
             // edit max_total_duration
             context.getData.state_defaults.max_total_duration = parseInt(newValues.newMaxTotalDuration) || 0;
+
+        // if a state_defaults property is not defined, we create it
         }else{
             context.getData.state_defaults = {
                 "terminal" : newValues.newTerminal,
