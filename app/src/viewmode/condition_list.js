@@ -5,6 +5,9 @@
 *   @returns {string} text - the condition list
 */
 define(function(){
+    /**
+    *   @alias module:viewmode/condition_list
+    */
     var condition_list = function(d){
         var text = "";
         var matched = false;

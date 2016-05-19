@@ -4,6 +4,9 @@
 *   @param {Object} data - data to display, the global object (getData)
 */
 define(function(require){
+    /**
+    *   @alias module:editmode/edit_frontend_object
+    */
     var edit_frontend_object = function(data){
         var utility = require("../utility/utility");
         var data_helper = require("../viewmode/data_helper");

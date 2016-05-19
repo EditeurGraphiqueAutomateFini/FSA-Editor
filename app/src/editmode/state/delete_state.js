@@ -5,6 +5,10 @@
 *   @param {Object} context - "context" parameter is containing "svg" object, "getData" original datas, "force" d3 current force layout object
 */
 define(function(require){
+    /**
+    *   @constructor
+    *   @alias module:editmode/state/delete_state
+    */
     var delete_state = function(d,context){
         var delete_references = require("./delete_references");
 

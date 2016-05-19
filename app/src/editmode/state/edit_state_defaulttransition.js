@@ -7,6 +7,9 @@
 *   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(){
+    /**
+    *   @alias module:editmode/state/edit_state_defaulttransition
+    */
     var edit_state_defaulttransition = function(d,newSilent,newTarget,context){
         var states = context.getData.states;
         var newTargetName = "";

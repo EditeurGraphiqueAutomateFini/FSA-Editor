@@ -5,6 +5,9 @@
 *   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(require){
+    /**
+    *   @alias module:editmode/state/get_state_edition
+    */
     var get_state_edition = function (d,context){
         var edit_state = require("./edit_state");
         var delete_state = require("./delete_state");

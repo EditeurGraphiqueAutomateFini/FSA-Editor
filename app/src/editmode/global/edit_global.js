@@ -5,6 +5,9 @@
 *   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(){
+    /**
+    *   @alias module:editmode/global/edit_global
+    */
     var edit_global = function(newValues,context){
 
         // edit allow_overlap

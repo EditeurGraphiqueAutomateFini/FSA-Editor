@@ -1,9 +1,12 @@
 /**
 *   Cancel a sepecific state selection
 *   @module editmode/cancel_selection
-*   @param {Object} d : data for the state, supplied by D3
+*   @param {Object} d - data for the state, supplied by D3
 */
 define(function(){
+    /**
+    *   @alias module:editmode/cancel_selection
+    */
     var cancell_selection = function(d){
         // if D3 data has correctly been supplied, cancel selection
         if(d){

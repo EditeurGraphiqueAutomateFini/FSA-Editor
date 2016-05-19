@@ -10,6 +10,9 @@
 *   @param {boolean} conditionsToEdit[].updatedValues.silent - the updated silent property
 */
 define(function(){
+    /**
+    *   @alias module:editmode/transition/edit_transition
+    */
     var edit_transition = function(d,conditionsToEdit){
         var condition_list = require("../../viewmode/condition_list");
 

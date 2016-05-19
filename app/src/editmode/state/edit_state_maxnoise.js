@@ -6,6 +6,9 @@
 *   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(){
+    /**
+    *   @alias module:editmode/state/edit_state_maxnoise
+    */
     var edit_state_maxnoise = function(d,inputValue,context){
         d.max_noise = inputValue;
         context.getData.states[d.name].max_noise = parseInt(inputValue) || 0;

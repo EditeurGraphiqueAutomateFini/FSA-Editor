@@ -5,6 +5,9 @@
 *   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(require){
+    /**
+    *   @alias module:editmode/state/get_max_noise_edition
+    */
     var get_max_noise_edition = function (d,context){
         var edit_state_maxnoise = require("./edit_state_maxnoise");
         var cancel_selection = require("../cancel_selection");

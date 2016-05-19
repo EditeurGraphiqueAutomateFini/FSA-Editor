@@ -4,6 +4,9 @@
 *   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(require){
+    /**
+    *   @alias module:editmode/global/get_global_edition
+    */
     var get_global_edition = function(context){
         var edit_global = require("./edit_global");
         var undo = require("../../utility/undo");

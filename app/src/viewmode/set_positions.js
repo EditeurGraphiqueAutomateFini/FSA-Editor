@@ -4,6 +4,9 @@
 *   @param {Object} states - the set of states object to position
 */
 define(function(){
+    /**
+    *   @alias module:viewmode/set_positions
+    */
     var set_positions = function(states){
 
         var gap = 200;

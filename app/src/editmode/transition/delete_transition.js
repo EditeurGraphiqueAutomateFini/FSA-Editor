@@ -6,6 +6,9 @@
 *   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(){
+    /**
+    *   @alias module:editmode/transition/delete_transition
+    */
     var delete_transition = function(d,conditionsToDelete,context){
         var condition_list = require("../../viewmode/condition_list");
 

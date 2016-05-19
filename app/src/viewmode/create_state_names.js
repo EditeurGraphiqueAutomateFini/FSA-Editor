@@ -5,6 +5,9 @@
 *   @returns {Object} force - the generated D3 force layout
 */
 define(function(){
+    /**
+    *   @alias module:viewmode/create_state_names
+    */
     var create_state_names = function(container,force){
         var svg = container,
             name_container;

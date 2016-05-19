@@ -6,6 +6,9 @@
 *   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(){
+    /**
+    *   @alias module:editmode/state/edit_state_terminal
+    */
     var edit_state_terminal = function(d,newTerminal,context){
         d.terminal = newTerminal;
         context.getData.states[d.name].terminal = newTerminal;

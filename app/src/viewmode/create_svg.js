@@ -5,6 +5,9 @@
 *   @returns {Object} svg - the D3 selection containing the svg element
 */
 define(function(){
+    /**
+    *   @alias module:viewmode/create_svg
+    */
     var create_svg = function(container){
         if(container){
             var svg = d3.select(container).insert("svg",".buttons");

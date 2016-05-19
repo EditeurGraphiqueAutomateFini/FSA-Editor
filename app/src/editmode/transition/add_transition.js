@@ -8,6 +8,9 @@
 *   @param {string} condition - the new condition
 */
 define(function(){
+    /**
+    *   @alias module:editmode/transition/add_transition
+    */
     var add_transition = function(force,object,source,target,condition){
 
         // edit global object

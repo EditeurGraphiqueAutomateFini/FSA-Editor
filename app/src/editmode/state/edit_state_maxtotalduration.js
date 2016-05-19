@@ -6,6 +6,9 @@
 *   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(){
+    /**
+    *   @alias module:editmode/state/edit_state_maxtotalduration
+    */
     var edit_state_maxtotalduration = function(d,newMaxTotalDuration,context){
         d.max_total_duration = newMaxTotalDuration;
         if(context.getData.states[d.name]){

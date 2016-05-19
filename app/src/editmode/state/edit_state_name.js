@@ -6,6 +6,9 @@
 *   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(){
+    /**
+    *   @alias module:editmode/state/edit_state_name
+    */
     var edit_state_name = function(d,inputValue,context){
         var oldName = d.name;
 

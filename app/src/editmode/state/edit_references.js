@@ -6,6 +6,9 @@
 *   @param {string} newName - the new name
 */
 define(function(){
+    /**
+    *   @alias module:editmode/state/edit_references
+    */
     var edit_references = function(object,name,newName){
         var states = object.states;
 

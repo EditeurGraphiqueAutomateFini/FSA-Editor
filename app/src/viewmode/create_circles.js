@@ -5,6 +5,9 @@
 *   @param {Object} force - the D3 force layout
 */
 define(function(){
+    /**
+    *   @alias module:viewmode/create_circles
+    */
     var create_circles = function(container,force){
 
         var svg = container;

@@ -7,6 +7,9 @@
 *   @returns {Object} force - the generated D3 force layout
 */
 define(function(require){
+    /**
+    *   @alias module:viewmode/create_force_layout
+    */
     var create_force_layout = function(container,states,links,options){
         var tick = require("./tick_helper");
 

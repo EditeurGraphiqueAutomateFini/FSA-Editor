@@ -3,6 +3,9 @@
 *   @module editmode/cancel_all_selection
 */
 define(function(){
+    /**
+    *   @alias module:editmode/cancel_all_selection
+    */
     var cancell_all_selection = function(){
         // testing if a state is being selected
         d3.selectAll(".state_container circle").each(function(d){

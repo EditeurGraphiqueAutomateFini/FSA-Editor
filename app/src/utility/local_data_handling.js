@@ -5,6 +5,9 @@
 *   @param {string} mode - the mode in which the application must launch
 */
 define(function(require){
+    /**
+    *   @alias module:utility/local_data_handling
+    */
     var local_data_handling = function(object,mode,options){
         var viewmode = require("../viewmode/view_init");
         var createmode = require("../createmode/create_init");

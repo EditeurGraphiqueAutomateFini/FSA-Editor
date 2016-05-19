@@ -7,6 +7,9 @@
 *   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(require){
+    /**
+    *   @alias module:editmode/transition/get_condition
+    */
     var get_condition = function(d,previouslySelectedState,thisID,context){
         var add_transition = require("./add_transition");
         var edit_condition = require("./edit_condition");

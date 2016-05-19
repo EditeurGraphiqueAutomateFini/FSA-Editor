@@ -8,6 +8,9 @@
 */
 define(function(require){
     return{
+        /**
+        *   @alias module:editmode/edit_init
+        */
         init: function(svg,force,getData,links){
             // utilities
             var context_menu = require("../menu/context_menu");
@@ -154,7 +157,7 @@ define(function(require){
 
             /**
             *   a function to delete a state and edit the front-end object
-            *   @param {Object} d : data for the state, supplied by D3
+            *   @param {Object} d - data for the state, supplied by D3
             *   @see module:editmode/state/delete_state
             */
             function deleteState(d){
@@ -168,7 +171,7 @@ define(function(require){
 
             /**
             *   a function that tries to create a new link if a state is already selected
-            *   @param {Object} d : data for the state, supplied by D3
+            *   @param {Object} d - data for the state, supplied by D3
             *   @see module:editmode/transition/get_condition
             */
             function selectState(d){
@@ -196,8 +199,8 @@ define(function(require){
 
             /**
             *   a function that tests if a state is eligible for alteration
-            *   @param {Object} d : data for the state, supplied by D3
-            *   @return {boolean} - true if the state is eligible (not currently being linked or edited )
+            *   @param {Object} d - data for the state, supplied by D3
+            *   @return {boolean} true if the state is eligible (not currently being linked or edited )
             */
             function isEligible(d){
                 return (

@@ -5,6 +5,9 @@
 *   @param {Object} name - the name that we do not want anymore
 */
 define(function(){
+    /**
+    *   @alias module:editmode/state/delete_references
+    */
     var delete_references = function(object,name){
         var states = object.states;
         var indexToDelete = [];

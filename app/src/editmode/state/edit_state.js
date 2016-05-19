@@ -6,6 +6,9 @@
 *   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(require){
+    /**
+    *   @alias module:editmode/state/edit_state
+    */
     var edit_state = function(newValues,d,context){
         var edit_references = require("./edit_references");
         var edit_state_defaulttransition = require("./edit_state_defaulttransition");

@@ -5,6 +5,9 @@
 *   @param {Object} force - the D3 force layout
 */
 define(function(require){
+    /**
+    *   @alias module:viewmode/create_conditions
+    */
     var create_conditions = function(container,force){
         var condition_list = require("./condition_list");
         var position_condition = require("./position_condition");

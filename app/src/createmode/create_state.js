@@ -6,6 +6,9 @@
 *   @param {number} y - y-axis coordinates for the new state
 */
 define(function(require){
+    /**
+    *   @alias module:createmode/create_state
+    */
     var create_state = function(context,x,y){
         var editmode = require("../editmode/edit_init");
         var get_state_edition = require("../editmode/state/get_state_edition");

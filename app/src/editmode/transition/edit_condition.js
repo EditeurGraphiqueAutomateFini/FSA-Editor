@@ -9,6 +9,9 @@
 *   @param {string} [isNew] - a string === "new" if the transition does not already exist (optional)
 */
 define(function(){
+    /**
+    *   @alias module:editmode/transition/edit_condition
+    */
     var edit_condition = function(svg,force,sourceID,targetID,condition,isNew){
         var condition_list = require("../../viewmode/condition_list");
         var position_condition = require("../../viewmode/position_condition");

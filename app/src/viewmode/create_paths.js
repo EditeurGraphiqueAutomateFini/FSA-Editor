@@ -5,6 +5,9 @@
 *   @returns {Object} force - the generated D3 force layout
 */
 define(function(){
+    /**
+    *   @alias module:viewmode/create_paths
+    */
     var create_paths = function(container,force){
         var svg = container;
 
