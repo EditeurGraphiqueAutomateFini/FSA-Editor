@@ -49,6 +49,10 @@
                 <script>
                     fsa_editor('http://www.fsaeditor.com',"edit");
                     //fsa_editor(browser_html_parsing,"edit");
+
+                    window.addEventListener("fsa_changed",function(e){
+                        console.log(e.detail);
+                    });
                 </script>
     </body>
 </html>
