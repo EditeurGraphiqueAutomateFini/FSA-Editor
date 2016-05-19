@@ -8,7 +8,7 @@ define(function(require){
     *   @alias module:editmode/edit_frontend_object
     *   @param {Object} data : data to display, the global object (getData)
     */
-    return function(data){
+    var edit_frontend_object = function(data){
         var utility = require("../utility/utility");
         var data_helper = require("../viewmode/data_helper");
 
@@ -18,4 +18,5 @@ define(function(require){
         // display the data thanks to the utility module
         utility.frontEndObject([displayableData]);
     };
+    return edit_frontend_object;
 });

@@ -11,7 +11,7 @@ define(function(){
     *   @param {number} newTarget - the new default_transition.target property (the id of a state)
     *   @param {Object} context - the global application context (svg,force,getData,links)
     */
-    return function(d,newSilent,newTarget,context){
+    var edit_state_defaulttransition = function(d,newSilent,newTarget,context){
         var states = context.getData.states;
         var newTargetName = "";
         var state;
@@ -69,4 +69,5 @@ define(function(){
             }
         }
     };
+    return edit_state_defaulttransition;
 });

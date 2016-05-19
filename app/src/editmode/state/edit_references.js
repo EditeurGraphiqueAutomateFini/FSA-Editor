@@ -10,7 +10,7 @@ define(function(){
     *   @param {string} name - the name of the state to edit
     *   @param {string} newName - the new name
     */
-    return function(object,name,newName){
+    var edit_references = function(object,name,newName){
         var states = object.states;
 
         for(var state in states){
@@ -26,4 +26,5 @@ define(function(){
             }
         }
     };
+    return edit_references;
 });

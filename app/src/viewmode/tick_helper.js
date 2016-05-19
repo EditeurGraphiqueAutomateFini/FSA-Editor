@@ -11,7 +11,7 @@ define(function(){
     *   @param {number} containmentWidth - the container width
     *   @param {number} containmentHeight - the container height
     */
-    return function(e,r,containmentWidth,containmentHeight){
+    var tick_helper = function(e,r,containmentWidth,containmentHeight){
         var path = d3.selectAll(".link");
         var condition = d3.selectAll(".condition");
         var circle = d3.selectAll(".state_container circle");
@@ -101,4 +101,5 @@ define(function(){
         */
         function getContainmentY(valY){ return Math.max(r,Math.min(valY,containmentHeight-r)); }
     };
+    return tick_helper;
 });

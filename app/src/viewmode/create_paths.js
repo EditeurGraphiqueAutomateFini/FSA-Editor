@@ -9,7 +9,7 @@ define(function(){
     *   @param {Object} container - a D3 element (d3.select) for the container
     *   @returns {Object} force - the generated D3 force layout
     */
-    return function(container,force){
+    var create_paths = function(container,force){
         var svg = container;
 
         // create a path for each link/transition
@@ -22,4 +22,5 @@ define(function(){
                 "marker-end" : "url(#end)"
             });
     };
+    return create_paths;
 });

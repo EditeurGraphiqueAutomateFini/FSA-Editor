@@ -9,7 +9,7 @@ define(function(){
     *   @param {Object} object - the object to clear
     *   @param {Object} name - the name that we do not want anymore
     */
-    return function(object,name){
+    var delete_references = function(object,name){
         var states = object.states;
         var indexToDelete = [];
         var i = 0;
@@ -39,4 +39,5 @@ define(function(){
             }
         }
     };
+    return delete_references;
 });

@@ -9,7 +9,7 @@ define(function(require){
     *   @param {Object} container - a D3 element (d3.select) for the container
     *   @param {Object} force - the D3 force layout
     */
-    return function(container,force){
+    var create_conditions = function(container,force){
         var condition_list = require("./condition_list");
         var position_condition = require("./position_condition");
 
@@ -28,4 +28,5 @@ define(function(require){
             })
             .text(condition_list);
     };
+    return create_conditions;
 });

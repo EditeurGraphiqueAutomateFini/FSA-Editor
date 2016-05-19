@@ -10,7 +10,7 @@ define(function(){
     *   @param {number} inputValue - the new max_noise property
     *   @param {Object} context - the global application context (svg,force,getData,links)
     */
-    return function(d,inputValue,context){
+    var edit_state_maxnoise = function(d,inputValue,context){
         d.max_noise = inputValue;
         context.getData.states[d.name].max_noise = parseInt(inputValue) || 0;
         d3.select("text#state_name_"+d.index+" tspan.state_name_maxnoise").html(function(d){
@@ -20,4 +20,5 @@ define(function(){
         // restart force layout w/ new data
         context.force.start();
     };
+    return edit_state_maxnoise;
 });

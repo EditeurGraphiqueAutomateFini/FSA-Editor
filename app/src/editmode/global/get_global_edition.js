@@ -8,7 +8,7 @@ define(function(require){
         *   @alias module:editmode/global/get_global_edition
         *   @param {Object} context - the global application context (svg,force,getData,links)
         */
-        return function(context){
+        var get_global_edition = function(context){
             var edit_global = require("./edit_global");
             var undo = require("../../utility/undo");
             var edit_frontend_object = require("../../editmode/edit_frontend_object");
@@ -189,4 +189,5 @@ define(function(require){
                 return html;
             }
         };
+        return get_global_edition;
 });

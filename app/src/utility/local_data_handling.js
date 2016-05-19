@@ -9,7 +9,7 @@ define(function(require){
     *   @param {Object} object - the object that was passed to the function
     *   @param {string} mode - the mode in which the application must launch
     */
-    return function(object,mode,options){
+    var local_data_handling = function(object,mode,options){
         var viewmode = require("../viewmode/view_init");
         var createmode = require("../createmode/create_init");
         var data_helper = require("../viewmode/data_helper");
@@ -64,4 +64,5 @@ define(function(require){
                   viewmode.init(viewmode.extractStates(data),data,options);
           }
       };
+      return local_data_handling;
 });

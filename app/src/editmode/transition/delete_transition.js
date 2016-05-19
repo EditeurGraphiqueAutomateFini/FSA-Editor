@@ -10,7 +10,7 @@ define(function(){
     *   @param {array} conditionsToDelete - an array containing the condition indexes to delete
     *   @param {Object} context - the global application context (svg,force,getData,links)
     */
-    return function(d,conditionsToDelete,context){
+    var delete_transition = function(d,conditionsToDelete,context){
         var condition_list = require("../../viewmode/condition_list");
 
         var states = context.getData.states;
@@ -69,4 +69,5 @@ define(function(){
         // restarting force w/ new nodes and links
         context.force.start();
     };
+    return delete_transition;
 });

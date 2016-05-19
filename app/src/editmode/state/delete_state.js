@@ -9,7 +9,7 @@ define(function(require){
     *   @param {Object} d - data for the state, supplied by D3
     *   @param {Object} context - "context" parameter is containing "svg" object, "getData" original datas, "force" d3 current force layout object
     */
-    return function(d,context){
+    var delete_state = function(d,context){
         var delete_references = require("./delete_references");
 
         var states = context.getData.states;
@@ -83,4 +83,5 @@ define(function(require){
         // delete references
         delete_references(context.getData,d.name);
     };
+    return delete_state;
 });

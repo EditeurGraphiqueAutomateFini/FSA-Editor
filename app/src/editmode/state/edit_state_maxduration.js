@@ -10,10 +10,11 @@ define(function(){
     *   @param {number} newMaxDuration - the new max_duration property
     *   @param {Object} context - the global application context (svg,force,getData,links)
     */
-    return function(d,newMaxDuration,context){
+    var edit_state_maxduration = function(d,newMaxDuration,context){
         d.max_duration = newMaxDuration;
         if(context.getData.states[d.name]){
             context.getData.states[d.name].max_duration = parseInt(newMaxDuration) || 0;
         }
     };
+    return edit_state_maxduration;
 });

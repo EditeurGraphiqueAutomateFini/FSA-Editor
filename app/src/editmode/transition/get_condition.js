@@ -11,7 +11,7 @@ define(function(require){
     *   @param {string} thisID - a string containing the html id of the target state (e.g. : "#state_1");
     *   @param {Object} context - the global application context (svg,force,getData,links)
     */
-    return function(d,previouslySelectedState,thisID,context){
+    var get_condition = function(d,previouslySelectedState,thisID,context){
         var add_transition = require("./add_transition");
         var edit_condition = require("./edit_condition");
         var get_transition_edition = require("./get_transition_edition");
@@ -103,4 +103,5 @@ define(function(require){
             }
         });
     };
+    return get_condition;
 });

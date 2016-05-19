@@ -8,7 +8,7 @@ define(function(){
     *   @alias module:viewmode/set_positions
     *   @param {Object} states - the set of states object to position
     */
-    return function(states){
+    var set_positions = function(states){
 
         var gap = 200;
 		var nbRecursive = 0;
@@ -53,4 +53,5 @@ define(function(){
             }
         }
     };
+    return set_positions;
 });

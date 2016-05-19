@@ -10,7 +10,7 @@ define(function(require){
     *   @param {number} x - x-axis coordinates for the new state
     *   @param {number} y - y-axis coordinates for the new state
     */
-    return function(context,x,y){
+    var create_state = function(context,x,y){
         var editmode = require("../editmode/edit_init");
         var get_state_edition = require("../editmode/state/get_state_edition");
         var create_circles = require("../viewmode/create_circles");
@@ -57,4 +57,5 @@ define(function(require){
         //restarting force layout
         context.force.start();
     };
+    return create_state;
 });

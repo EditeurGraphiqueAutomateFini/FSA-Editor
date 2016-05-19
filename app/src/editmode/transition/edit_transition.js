@@ -14,7 +14,7 @@ define(function(){
     *   @param {string} conditionsToEdit[].updatedValues.matcher - the updated matcher
     *   @param {boolean} conditionsToEdit[].updatedValues.silent - the updated silent property
     */
-    return function(d,conditionsToEdit){
+    var edit_transition = function(d,conditionsToEdit){
         var condition_list = require("../../viewmode/condition_list");
 
         // iterating over conditions to edit
@@ -41,4 +41,5 @@ define(function(){
          d3.select("text.link_"+d.source.index+"_"+d.target.index)
              .text(condition_list);
     };
+    return edit_transition;
 });

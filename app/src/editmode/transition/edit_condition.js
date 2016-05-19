@@ -13,7 +13,7 @@ define(function(){
     *   @param {string} condition - the new condition
     *   @param {string} [isNew] - a string === "new" if the transition does not already exist (optional)
     */
-    return function(svg,force,sourceID,targetID,condition,isNew){
+    var edit_condition = function(svg,force,sourceID,targetID,condition,isNew){
         var condition_list = require("../../viewmode/condition_list");
         var position_condition = require("../../viewmode/position_condition");
 
@@ -49,4 +49,5 @@ define(function(){
         // restart force layout w/ new data
         force.start();
     };
+    return edit_condition;
 });
