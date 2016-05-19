@@ -58,16 +58,6 @@
         </ul>
     </nav>
 
-    <!-- Header -->
-    <header id="top" class="header">
-        <div class="text-vertical-center">
-            <h1>Start Bootstrap</h1>
-            <h3>Free Bootstrap Themes &amp; Templates</h3>
-            <br>
-            <a href="#about" class="btn btn-dark btn-lg">Find Out More</a>
-        </div>
-    </header>
-
     <!-- About -->
     <section id="about" class="about">
         <div class="container">
@@ -212,17 +202,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h3>The buttons below are impossible to resist.</h3>
-                    <a href="#" class="btn btn-lg btn-light">Click Me!</a>
-                    <a href="#" class="btn btn-lg btn-dark">Look at Me!</a>
+                    <textarea id="fsa_textarea" style="color:#000; width: 100%; height :100px;"></textarea>
                 </div>
             </div>
         </div>
     </aside>
 
     <!-- Map -->
-    <section id="fsa_editor" class="">
-    </section>
+    <section id="fsa_editor" class="" style="width:100%;height:300px;"></section>
 
     <!-- Footer -->
     <footer>
@@ -260,9 +247,14 @@
     <script src="js/jquery.js"></script>
     <script src="http://d3js.org/d3.v3.min.js" type="text/javascript"></script>
     <script src="../dist/fsa-editor.js" type="text/javascript"></script>
+
     <script>
         fsa_editor('http://www.fsaeditor.com',"edit");
         //fsa_editor(browser_html_parsing,"edit");
+        window.addEventListener("fsa_changed",function(e){
+            var fsa_textarea = document.getElementById("fsa_textarea");
+            fsa_textarea.value = JSON.stringify(e.detail);
+        });
     </script>
 
     <!-- Bootstrap Core JavaScript -->
