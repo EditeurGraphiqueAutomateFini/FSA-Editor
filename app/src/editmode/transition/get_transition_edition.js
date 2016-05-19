@@ -1,13 +1,10 @@
 /**
 *   Sweetalert prompt for transition edition
 *   @module editmode/transition/get_transition_edition
+*   @param {Object} d - data for the state, supplied by D3
+*   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(require){
-    /**
-    *   @alias module:editmode/transition/get_transition_edition
-    *   @param {Object} d - data for the state, supplied by D3
-    *   @param {Object} context - the global application context (svg,force,getData,links)
-    */
     var get_transition_edition = function (d,context){
         var edit_transition = require("./edit_transition");
         var delete_transition = require("./delete_transition");

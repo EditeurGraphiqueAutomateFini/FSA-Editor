@@ -1,13 +1,10 @@
 /**
 *   Delete references to "name" (string, name of a state) parameter in "object" (object) parameter.
 *   @module editmode/state/delete_references
+*   @param {Object} object - the object to clear
+*   @param {Object} name - the name that we do not want anymore
 */
 define(function(){
-    /**
-    *   @alias module:editmode/state/delete_references
-    *   @param {Object} object - the object to clear
-    *   @param {Object} name - the name that we do not want anymore
-    */
     var delete_references = function(object,name){
         var states = object.states;
         var indexToDelete = [];

@@ -1,13 +1,10 @@
 /**
 *   Create svg container
 *   @module viewmode/create_svg
+*   @param {Object} container - a D3 element (d3.select) for the container
+*   @returns {Object} svg - the D3 selection containing the svg element
 */
 define(function(){
-    /**
-    *   @alias module:viewmode/create_svg
-    *   @param {Object} container - a D3 element (d3.select) for the container
-    *   @returns {Object} svg - the D3 selection containing the svg element
-    */
     var create_svg = function(container){
         if(container){
             var svg = d3.select(container).insert("svg",".buttons");

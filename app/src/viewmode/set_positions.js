@@ -1,12 +1,9 @@
 /**
 *   Set a position for circles without existing coordinates
 *   @module viewmode/set_positions
+*   @param {Object} states - the set of states object to position
 */
 define(function(){
-    /**
-    *   @alias module:viewmode/set_positions
-    *   @param {Object} states - the set of states object to position
-    */
     var set_positions = function(states){
 
         var gap = 200;

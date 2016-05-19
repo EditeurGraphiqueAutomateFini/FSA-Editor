@@ -1,14 +1,11 @@
 /**
 *   Edit references to a given name in a given object
 *   @module editmode/state/edit_references
+*   @param {Object} object - the object where the references to the state need to be edited
+*   @param {string} name - the name of the state to edit
+*   @param {string} newName - the new name
 */
 define(function(){
-    /**
-    *   @alias module:editmode/state/edit_references
-    *   @param {Object} object - the object where the references to the state need to be edited
-    *   @param {string} name - the name of the state to edit
-    *   @param {string} newName - the new name
-    */
     var edit_references = function(object,name,newName){
         var states = object.states;
 

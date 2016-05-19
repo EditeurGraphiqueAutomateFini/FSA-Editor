@@ -1,13 +1,10 @@
 /**
 *   Create path between states
 *   @module viewmode/create_paths
+*   @param {Object} container - a D3 element (d3.select) for the container
+*   @returns {Object} force - the generated D3 force layout
 */
 define(function(){
-    /**
-    *   @alias module:viewmode/create_paths
-    *   @param {Object} container - a D3 element (d3.select) for the container
-    *   @returns {Object} force - the generated D3 force layout
-    */
     var create_paths = function(container,force){
         var svg = container;
 

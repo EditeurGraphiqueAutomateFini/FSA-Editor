@@ -1,13 +1,10 @@
 /**
 *   Delete a state
 *   @module editmode/state/delete_state
+*   @param {Object} d - data for the state, supplied by D3
+*   @param {Object} context - "context" parameter is containing "svg" object, "getData" original datas, "force" d3 current force layout object
 */
 define(function(require){
-    /**
-    *   @alias module:editmode/state/delete_state
-    *   @param {Object} d - data for the state, supplied by D3
-    *   @param {Object} context - "context" parameter is containing "svg" object, "getData" original datas, "force" d3 current force layout object
-    */
     var delete_state = function(d,context){
         var delete_references = require("./delete_references");
 

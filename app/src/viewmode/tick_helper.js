@@ -1,14 +1,14 @@
 /**
 *   A module for ticking function - /!\ executed repeatedly at launch and for each drag
 *   @module viewmode/tick_helper
+*   @param {Object} e - the object representing the event
+*   @param {number} r - the radius
+*   @param {number} containmentWidth - the container width
+*   @param {number} containmentHeight - the container height
 */
 define(function(){
     /**
     *   @alias module:viewmode/tick_helper
-    *   @param {Object} e - the object representing the event
-    *   @param {number} r - the radius
-    *   @param {number} containmentWidth - the container width
-    *   @param {number} containmentHeight - the container height
     */
     var tick_helper = function(e,r,containmentWidth,containmentHeight){
         var path = d3.selectAll(".link");

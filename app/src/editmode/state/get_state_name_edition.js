@@ -1,13 +1,10 @@
 /**
 *   Sweetalert prompt for state name edition
 *   @module editmode/state/get_state_name_edition
+*   @param {Object} d - data for the state, supplied by D3
+*   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(require){
-    /**
-    *   @alias module:editmode/state/get_state_name_edition
-    *   @param {Object} d - data for the state, supplied by D3
-    *   @param {Object} context - the global application context (svg,force,getData,links)
-    */
     var get_state_name_edition = function (d,context){
         var edit_references = require("./edit_references");
         var edit_state_name = require("./edit_state_name");

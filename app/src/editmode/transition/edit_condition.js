@@ -1,17 +1,14 @@
 /**
 *   Edit a condition
 *   @module editmode/transition/edit_condition
+*   @param {array} svg - a D3.select svg element
+*   @param {Object} force - current D3 force layout
+*   @param {number} sourceID - the id of the source state
+*   @param {number} targetID - the id of the target state
+*   @param {string} condition - the new condition
+*   @param {string} [isNew] - a string === "new" if the transition does not already exist (optional)
 */
 define(function(){
-    /**
-    *   @alias module:editmode/transition/edit_condition
-    *   @param {array} svg - a D3.select svg element
-    *   @param {Object} force - current D3 force layout
-    *   @param {number} sourceID - the id of the source state
-    *   @param {number} targetID - the id of the target state
-    *   @param {string} condition - the new condition
-    *   @param {string} [isNew] - a string === "new" if the transition does not already exist (optional)
-    */
     var edit_condition = function(svg,force,sourceID,targetID,condition,isNew){
         var condition_list = require("../../viewmode/condition_list");
         var position_condition = require("../../viewmode/position_condition");

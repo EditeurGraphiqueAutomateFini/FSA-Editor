@@ -1,13 +1,10 @@
 /**
 *   Handle data if a JS object has been passed to fsa_editor lib
 *   @module utility/local_data_handling
+*   @param {Object} object - the object that was passed to the function
+*   @param {string} mode - the mode in which the application must launch
 */
 define(function(require){
-    /**
-    *   @alias module:utility/local_data_handling
-    *   @param {Object} object - the object that was passed to the function
-    *   @param {string} mode - the mode in which the application must launch
-    */
     var local_data_handling = function(object,mode,options){
         var viewmode = require("../viewmode/view_init");
         var createmode = require("../createmode/create_init");

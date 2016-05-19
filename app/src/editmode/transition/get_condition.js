@@ -1,15 +1,12 @@
 /**
 *   Sweetalert prompt for condition edition
 *   @module editmode/transition/get_condition
+*   @param {Object} d - data for the state, supplied by D3
+*   @param {Object} previouslySelectedState - the source state (previously selected)
+*   @param {string} thisID - a string containing the html id of the target state (e.g. : "#state_1");
+*   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(require){
-    /**
-    *   @alias module:editmode/transition/get_condition
-    *   @param {Object} d - data for the state, supplied by D3
-    *   @param {Object} previouslySelectedState - the source state (previously selected)
-    *   @param {string} thisID - a string containing the html id of the target state (e.g. : "#state_1");
-    *   @param {Object} context - the global application context (svg,force,getData,links)
-    */
     var get_condition = function(d,previouslySelectedState,thisID,context){
         var add_transition = require("./add_transition");
         var edit_condition = require("./edit_condition");

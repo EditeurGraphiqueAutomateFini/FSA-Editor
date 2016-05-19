@@ -1,14 +1,11 @@
 /**
 *   Delete one or more transition
 *   @module editmode/transition/delete_transition
+*   @param {Object} d - data for the link, supplied by D3
+*   @param {array} conditionsToDelete - an array containing the condition indexes to delete
+*   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(){
-    /**
-    *   @alias module:editmode/transition/delete_transition
-    *   @param {Object} d - data for the link, supplied by D3
-    *   @param {array} conditionsToDelete - an array containing the condition indexes to delete
-    *   @param {Object} context - the global application context (svg,force,getData,links)
-    */
     var delete_transition = function(d,conditionsToDelete,context){
         var condition_list = require("../../viewmode/condition_list");
 

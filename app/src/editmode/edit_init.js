@@ -1,15 +1,13 @@
 /**
 *   Initiates the edit mode
 *   @module editmode/edit_init
+*   @param {array} svg - a D3 selection for the main <svg> tag
+*   @param {Object} force - current D3 force layout object
+*   @param {Object} getData - the globaly available data obtained by JSON or JSobject, usable by the FSA Editor
+*   @param {array} links - the D3 (d3.layout.force.links()) array of links
 */
 define(function(require){
     return{
-        /**
-        *   @param {array} svg - a D3 selection for the main <svg> tag
-        *   @param {Object} force - current D3 force layout object
-        *   @param {Object} getData - the globaly available data obtained by JSON or JSobject, usable by the FSA Editor
-        *   @param {array} links - the D3 (d3.layout.force.links()) array of links
-        */
         init: function(svg,force,getData,links){
             // utilities
             var context_menu = require("../menu/context_menu");

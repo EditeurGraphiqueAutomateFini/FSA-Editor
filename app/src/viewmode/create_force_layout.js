@@ -1,15 +1,12 @@
 /**
 *   Create D3 force layout
 *   @module viewmode/create_force_layout
+*   @param {Object} container - a D3 element (d3.select) for the container
+*   @param {Object} states - the object containing the states
+*   @param {Object} links - the object containing the transitions
+*   @returns {Object} force - the generated D3 force layout
 */
 define(function(require){
-    /**
-    *   @alias module:viewmode/create_force_layout
-    *   @param {Object} container - a D3 element (d3.select) for the container
-    *   @param {Object} states - the object containing the states
-    *   @param {Object} links - the object containing the transitions
-    *   @returns {Object} force - the generated D3 force layout
-    */
     var create_force_layout = function(container,states,links,options){
         var tick = require("./tick_helper");
 
