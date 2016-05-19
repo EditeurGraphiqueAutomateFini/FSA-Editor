@@ -67,7 +67,7 @@ define(function(require){
         *   initialisation function
         *   @param {Object[]} states - array of state objects
         *   @param {Object} getData - data retrieved from server or client, will be the global data object for the application
-        *   @returns {Object} - an object containing the application informations for loaded viewmode
+        *   @returns {Object} an object containing the application informations for loaded viewmode
         */
         init : function(states,getData,options){
             var create_svg = require("./create_svg"),

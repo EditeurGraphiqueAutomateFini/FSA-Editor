@@ -6,7 +6,6 @@
 */
 define(function(require){
     /**
-    *   @constructor
     *   @alias module:editmode/state/delete_state
     */
     var delete_state = function(d,context){
