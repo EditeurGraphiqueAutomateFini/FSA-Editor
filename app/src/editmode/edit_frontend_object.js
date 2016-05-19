@@ -4,9 +4,8 @@
 */
 define(function(require){
     /**
-    *   @constructor
     *   @alias module:editmode/edit_frontend_object
-    *   @param {Object} data : data to display, the global object (getData)
+    *   @param {Object} data - data to display, the global object (getData)
     */
     var edit_frontend_object = function(data){
         var utility = require("../utility/utility");

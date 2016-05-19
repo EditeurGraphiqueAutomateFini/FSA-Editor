@@ -4,7 +4,6 @@
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/transition/edit_transition
     *   @param {Object} d - data for the link, supplied by D3
     *   @param {Object[]} conditionsToEdit - an array contaning the condition to edit

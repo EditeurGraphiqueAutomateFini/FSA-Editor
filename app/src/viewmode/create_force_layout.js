@@ -4,7 +4,6 @@
 */
 define(function(require){
     /**
-    *   @constructor
     *   @alias module:viewmode/create_force_layout
     *   @param {Object} container - a D3 element (d3.select) for the container
     *   @param {Object} states - the object containing the states

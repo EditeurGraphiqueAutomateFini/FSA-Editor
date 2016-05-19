@@ -4,7 +4,6 @@
 */
 define(function(require){
     /**
-    *   @constructor
     *   @alias module:editmode/transition/get_condition
     *   @param {Object} d - data for the state, supplied by D3
     *   @param {Object} previouslySelectedState - the source state (previously selected)

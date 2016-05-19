@@ -4,7 +4,6 @@
 */
 define(function(require){
     /**
-    *   @constructor
     *   @alias module:editmode/state/edit_state
     *   @param {Object} newValues - includes newName,newTerminal,newMaxNoise,newMaxTotalNoise,newMaxDuration,newMaxTotalDuration,newDefaultTransition
     *   @param {Object} d - data for the state, supplied by D3

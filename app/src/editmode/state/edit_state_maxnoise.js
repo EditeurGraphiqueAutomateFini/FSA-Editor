@@ -4,7 +4,6 @@
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/state/edit_state_maxnoise
     *   @param {Object} d - data for the state, supplied by D3
     *   @param {number} inputValue - the new max_noise property

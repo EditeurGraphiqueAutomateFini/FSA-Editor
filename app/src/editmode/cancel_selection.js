@@ -4,7 +4,6 @@
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/cancell_selection
     *   @param {Object} d : data for the state, supplied by D3
     */

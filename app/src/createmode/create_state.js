@@ -4,7 +4,6 @@
 */
 define(function(require){
     /**
-    *   @constructor
     *   @alias module:createmode/create_state
     *   @param {Object} context - the context of the application (force,svg,getData)
     *   @param {number} x - x-axis coordinates for the new state

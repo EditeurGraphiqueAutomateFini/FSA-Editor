@@ -4,7 +4,6 @@
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/transition/edit_condition
     *   @param {array} svg - a D3.select svg element
     *   @param {Object} force - current D3 force layout

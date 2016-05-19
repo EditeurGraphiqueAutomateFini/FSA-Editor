@@ -4,7 +4,6 @@
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:viewmode/create_circles
     *   @param {Object} container - a D3 element (d3.select) for the container
     *   @param {Object} force - the D3 force layout

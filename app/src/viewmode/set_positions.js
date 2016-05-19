@@ -4,7 +4,6 @@
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:viewmode/set_positions
     *   @param {Object} states - the set of states object to position
     */

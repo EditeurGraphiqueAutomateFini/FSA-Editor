@@ -5,7 +5,7 @@
 define(function(){
     return{
         /**
-        *   @exports {function} cleanData - cleans the set of data to obtain sendable/displayable data
+        *   cleans the set of data to obtain sendable/displayable data
         *   @param {Object} getData - the data to clean
         *   @returns {Object} endPostData - the cleaned data
         */

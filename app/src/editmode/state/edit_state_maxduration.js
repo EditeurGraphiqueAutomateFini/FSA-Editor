@@ -4,7 +4,6 @@
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/state/edit_state_maxduration
     *   @param {Object} d - data for the state, supplied by D3
     *   @param {number} newMaxDuration - the new max_duration property

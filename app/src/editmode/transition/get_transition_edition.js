@@ -4,7 +4,6 @@
 */
 define(function(require){
     /**
-    *   @constructor
     *   @alias module:editmode/transition/get_transition_edition
     *   @param {Object} d - data for the state, supplied by D3
     *   @param {Object} context - the global application context (svg,force,getData,links)

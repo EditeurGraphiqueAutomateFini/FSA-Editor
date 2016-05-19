@@ -4,7 +4,6 @@
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/transition/delete_transition
     *   @param {Object} d - data for the link, supplied by D3
     *   @param {array} conditionsToDelete - an array containing the condition indexes to delete

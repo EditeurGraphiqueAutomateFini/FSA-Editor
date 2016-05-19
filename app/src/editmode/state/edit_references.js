@@ -4,7 +4,6 @@
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/state/edit_references
     *   @param {Object} object - the object where the references to the state need to be edited
     *   @param {string} name - the name of the state to edit

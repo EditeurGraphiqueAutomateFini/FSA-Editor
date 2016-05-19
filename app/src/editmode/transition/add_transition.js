@@ -4,7 +4,6 @@
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/transition/add_transition
     *   @param {Object} force - current D3 force layout
     *   @param {Object} object - the global getData object

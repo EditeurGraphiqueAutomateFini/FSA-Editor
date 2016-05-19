@@ -4,7 +4,6 @@
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/state/edit_state_defaulttransition
     *   @param {Object} d - data for the state, supplied by D3
     *   @param {boolean} newSilent - the new default_transition.silent property

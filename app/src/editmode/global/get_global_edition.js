@@ -4,7 +4,6 @@
 */
 define(function(require){
         /**
-        *   @constructor
         *   @alias module:editmode/global/get_global_edition
         *   @param {Object} context - the global application context (svg,force,getData,links)
         */

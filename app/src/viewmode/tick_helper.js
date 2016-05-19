@@ -4,7 +4,6 @@
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:viewmode/tick_helper
     *   @param {Object} e - the object representing the event
     *   @param {number} r - the radius

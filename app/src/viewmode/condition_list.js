@@ -4,7 +4,6 @@
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:viewmode/condition_list
     *   @param {Object} d - data for the link, supplied by D3
     *   @returns {string} text - the condition list

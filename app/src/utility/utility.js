@@ -6,7 +6,7 @@ define(function(){
     // TODO optimisation du code
     return{
         /**
-        *   @exports {function} displayObject - displays a JS object on screen (right pannel)
+        *   displays a JS object on screen (right pannel)
         *   @param {Object} object - array of object to display
         *   @param {number} level - current level of recursivity
         *   @returns {string} objString - the html content to render
@@ -100,7 +100,7 @@ define(function(){
         },
 
         /**
-        *   @exports {function} frontEndObject - display the given object in a html container by calling "displayObject" method
+        *   display the given object in a html container by calling "displayObject" method
         *   @param {Object} data - the global data to display
         */
         frontEndObject : function(data){

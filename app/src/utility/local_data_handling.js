@@ -4,7 +4,6 @@
 */
 define(function(require){
     /**
-    *   @constructor
     *   @alias module:utility/local_data_handling
     *   @param {Object} object - the object that was passed to the function
     *   @param {string} mode - the mode in which the application must launch

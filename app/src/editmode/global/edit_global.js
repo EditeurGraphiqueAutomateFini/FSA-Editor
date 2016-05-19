@@ -4,7 +4,6 @@
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/global/edit_global
     *   @param {Object} newValues - a key:value object with new properties (keys are "newDefaultMatcher", "newMaxDuration", "newMaxNoise", "newMaxTotalDuration", "newMaxTotalNoise", "newOverlap", "newTerminal"
     *   @param {Object} context - the global application context (svg,force,getData,links)

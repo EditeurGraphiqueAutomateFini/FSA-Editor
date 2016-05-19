@@ -4,7 +4,6 @@
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/state/delete_references
     *   @param {Object} object - the object to clear
     *   @param {Object} name - the name that we do not want anymore

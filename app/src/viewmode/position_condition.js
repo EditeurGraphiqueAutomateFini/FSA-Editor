@@ -6,7 +6,7 @@ var coefficient = 0.2;
 */
 module.exports = {
     /**
-    *   @exports {function} setXPosition - return the x-axis position
+    *   return the x-axis position
     *   @param {Object} d - data for the state, supplied by D3
     *   @returns {number} - the the x-axis position
     */
@@ -15,7 +15,7 @@ module.exports = {
     },
 
     /**
-    *   @exports {function} setYPosition - return the y-axis position
+    *   return the y-axis position
     *   @param {Object} d - data for the state, supplied by D3
     *   @returns {number} - the the y-axis position
     */

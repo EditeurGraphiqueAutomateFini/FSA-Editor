@@ -4,7 +4,6 @@
 */
 define(function(require){
     /**
-    *   @constructor
     *   @alias module:editmode/state/delete_state
     *   @param {Object} d - data for the state, supplied by D3
     *   @param {Object} context - "context" parameter is containing "svg" object, "getData" original datas, "force" d3 current force layout object

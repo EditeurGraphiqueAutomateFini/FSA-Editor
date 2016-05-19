@@ -4,7 +4,6 @@
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/cancell_all_selection
     */
     var cancell_all_selection = function(){

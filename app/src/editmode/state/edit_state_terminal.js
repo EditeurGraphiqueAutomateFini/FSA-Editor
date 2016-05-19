@@ -4,7 +4,6 @@
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/state/edit_state_terminal
     *   @param {Object} d - data for the state, supplied by D3
     *   @param {boolean} newTerminal - the new terminal property
