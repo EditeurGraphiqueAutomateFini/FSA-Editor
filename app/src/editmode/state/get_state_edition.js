@@ -192,7 +192,7 @@ define(function(require){
                         input = "<input "+
                                     "class='custom_swal_input' "+
                                     "type='number' "+
-                                    "value='"+(currentState[propertiesToEdit[i].name] || 0)+"' "+
+                                    "value='"+(currentState[propertiesToEdit[i].name] >= 0 ? currentState[propertiesToEdit[i].name] : "")+"' "+
                                     "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
                                 "/>";
                         break;

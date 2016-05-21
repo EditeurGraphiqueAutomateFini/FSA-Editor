@@ -10,8 +10,16 @@ define(function(){
     *   @alias module:editmode/state/edit_state_maxnoise
     */
     var edit_state_maxnoise = function(d,inputValue,context){
-        d.max_noise = inputValue;
-        context.getData.states[d.name].max_noise = parseInt(inputValue) || 0;
+        
+        if(inputValue >= 0){
+            d.max_noise = inputValue;
+            context.getData.states[d.name].max_noise = parseInt(inputValue) || 0;
+        }else{
+            d.max_noise = undefined;
+            context.getData.states[d.name].max_noise = undefined;
+        }
+
+        // edit html max_noise value
         d3.select("text#state_name_"+d.index+" tspan.state_name_maxnoise").html(function(d){
           return d.max_noise > 0 ? "["+d.max_noise+"]" : "";
         });

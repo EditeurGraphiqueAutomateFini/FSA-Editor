@@ -10,9 +10,16 @@ define(function(){
     *   @alias module:editmode/state/edit_state_maxduration
     */
     var edit_state_maxduration = function(d,newMaxDuration,context){
-        d.max_duration = newMaxDuration;
-        if(context.getData.states[d.name]){
-            context.getData.states[d.name].max_duration = parseInt(newMaxDuration) || 0;
+        if(newMaxDuration >= 0){
+            d.max_duration = newMaxDuration;
+            if(context.getData.states[d.name]){
+                context.getData.states[d.name].max_duration = newMaxDuration;
+            }
+        }else{
+            d.max_duration = undefined;
+            if(context.getData.states[d.name]){
+                context.getData.states[d.name].max_duration = undefined;
+            }
         }
     };
     return edit_state_maxduration;
