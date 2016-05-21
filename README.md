@@ -2,10 +2,10 @@
 
 ## A graphic editor to display and edit a Finished State Automaton
 
-Usage : ```fsa_editor(object,mode)``` where ```object``` is either a JS object or a URL leading to a JSON object, and ```mode``` is a string (```"view"``` or ```"edit"```) stating the mode in which the editor must launch.
+Usage : `fsa_editor(object,mode)` where `object` is either a JS object or a URL leading to a JSON object, and `mode` is a string (`"view"` or `"edit"`) stating the mode in which the editor must launch.
 
-jQuery and D3JS must be include in the page, along with fsa_editor.js
-An example can be found in ```index.html```.
+jQuery and D3JS must be included in the page, along with fsa_editor.js
+An example can be found in `index.html`.
 
 Sample code :
 ```
@@ -93,15 +93,15 @@ Sample code :
 ```
 
 ## To use the editor
-States of the finished state automaton are represented by circles.
-Transitions are represented by the arrows.
-You can click on a state to select it, click on another state (including the same state) to create a new transition.
-You can also click on any text (transition, state name, max-noise) on the editor to edit it. A lightbox will appear to recieve the user-input.
+States of the Finished Ftate Automaton are represented by circles.
+Transitions are represented by arrows.
+You can click on a state to select it, click on another state (including the same state) to create a new transition between the two selected states.
+You can also click on any text (transition, state name, max-noise) on the editor to edit it. A lightbox will appear to recieve the user input.
 Note : a Javascript event called `fsa_changed` is emitted at the window-level each time the automaton's values are changed. You can listen to it just like any other event with :
 ```
     window.addEventListener("fsa_changed",function(event){
         // your code goes here
-        // the new values are available with event.detail
+        // the new values are available in event.detail
         console.log(event.detail);
     });
 ```
@@ -115,6 +115,6 @@ npm start
 go to http://localhost:3000
 ```
 
-Please run ```"npm run production"``` in order to build the production file in the "/dist" directory
+Please run `"npm run production"` in order to build the production file in the "/dist" directory
 
-Please run ```"npm run documentation"``` in order to generate the jsdoc documentation (HTML) in the "/documentation" directory
+Please run `"npm run documentation"` in order to generate the jsdoc documentation (HTML) in the "/documentation" directory
