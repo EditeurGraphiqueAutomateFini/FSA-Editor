@@ -16,7 +16,7 @@ define(function(){
         var state;
 
         // default_transition cannot be set together w/ max_noise
-        if(d.max_noise > 0){
+        if(d.max_noise > 0 || !(parseInt(newTarget) >= 0)){
             d.default_transition = undefined;
             for(state in states){
                 if(states.hasOwnProperty(state) && states[state]){
