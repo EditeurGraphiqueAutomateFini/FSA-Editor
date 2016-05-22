@@ -3,6 +3,7 @@
 *   @module utility/undo
 */
 define(function(){
+    var data_helper = require("../viewmode/data_helper");
     /** the maximum number of state save*/
     var maxStateSave = 50;
     var rollingBack = false;
@@ -46,6 +47,7 @@ define(function(){
             undoQueue.shift();
         }
         undoQueue.push(stateClone);
+        notifyChange(stateClone);
     }
 
     /**
@@ -54,6 +56,8 @@ define(function(){
     *   @see module:utility/undo
     */
     function rollBack(){
+        var rollBackResult;
+
         if(!rollingBack){
             rollingBack = true;
         }
@@ -62,7 +66,10 @@ define(function(){
         }else{
             rollingBackCount++;
         }
-        return _.cloneDeep(undoQueue[(undoQueue.length)-(1+rollingBackCount)]);
+
+        rollBackResult = _.cloneDeep(undoQueue[(undoQueue.length)-(1+rollingBackCount)]);
+        notifyChange(rollBackResult);
+        return rollBackResult;
     }
 
     /**
@@ -80,6 +87,17 @@ define(function(){
             return _.cloneDeep(undoQueue[(undoQueue.length)-(1+rollingBackCount)]);
         }
         return true;
+    }
+
+    /**
+    *   a function to notify when the data has changed
+    *   emits the event "fsa_changed" every time the object is changed
+    *   new object available in event.detail
+    *   @see module:utility/undo
+    */
+    function notifyChange(newState){
+        var fsaChanged = new CustomEvent('fsa_changed',{'detail' : data_helper.cleanData(newState)});
+        window.dispatchEvent(fsaChanged);
     }
 
     // return (reveal) public methods

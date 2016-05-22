@@ -1,20 +1,19 @@
 /**
 *   Edit a transition
 *   @module editmode/transition/edit_transition
+*   @param {Object} d - data for the link, supplied by D3
+*   @param {Object[]} conditionsToEdit - an array contaning the condition to edit
+*   @param {number} conditionsToEdit[].index - the index of the condition
+*   @param {Object} conditionsToEdit[].updatedValues - the updated values
+*   @param {string} conditionsToEdit[].updatedValues.condition - the updated condition
+*   @param {string} conditionsToEdit[].updatedValues.matcher - the updated matcher
+*   @param {boolean} conditionsToEdit[].updatedValues.silent - the updated silent property
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/transition/edit_transition
-    *   @param {Object} d - data for the link, supplied by D3
-    *   @param {Object[]} conditionsToEdit - an array contaning the condition to edit
-    *   @param {number} conditionsToEdit[].index - the index of the condition
-    *   @param {Object} conditionsToEdit[].updatedValues - the updated values
-    *   @param {string} conditionsToEdit[].updatedValues.condition - the updated condition
-    *   @param {string} conditionsToEdit[].updatedValues.matcher - the updated matcher
-    *   @param {boolean} conditionsToEdit[].updatedValues.silent - the updated silent property
     */
-    return function(d,conditionsToEdit){
+    var edit_transition = function(d,conditionsToEdit){
         var condition_list = require("../../viewmode/condition_list");
 
         // iterating over conditions to edit
@@ -41,4 +40,5 @@ define(function(){
          d3.select("text.link_"+d.source.index+"_"+d.target.index)
              .text(condition_list);
     };
+    return edit_transition;
 });

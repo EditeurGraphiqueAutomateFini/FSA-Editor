@@ -2,7 +2,9 @@
 
 // here we encapsulate our styles for a "fsa_editor" id
 #fsa_editor{
+
     position: relative;
+
     /*svg*/
     svg#svgbox{
         display: block;
@@ -192,94 +194,6 @@
         background-color: blueviolet;
 
     }
-    /*sweet alert*/
-    .condition_display,.state_display,.global_display{
-        display: block;
-    }
-    .swal_display .custom_swal_input,.swal_display .custom_swal_delete{
-        display: inline-block;
-    }
-    .swal_display .custom_swal_input{
-        width: 90%;
-    }
-    /*swal condition*/
-    .swal_display.condition_display .custom_swal_input,.swal_display.condition_display label{
-        width: 35%;
-    }
-    .swal_display.condition_display label.checkbox_label{
-        width: 10%;
-    }
-    .swal_display.condition_display label .custom_swal_input{
-        width: 80%;
-    }
-    .swal_display.condition_display .custom_swal_input[type="checkbox"]{
-        height: auto;
-        width: auto;
-    }
-    .transition_title{
-        margin: 0 0 10px;
-    }
-    .header_transition{
-        text-align: right;
-    }
-    .header_condition,.header_matcher,.header_silent{
-        display: inline-block;
-        font-weight: bold;
-        text-align: center;
-    }
-    .header_condition{
-        width: 45%;
-    }
-    .header_matcher{
-        width: 25%;
-    }
-    .header_silent{
-        width: 20%;
-    }
-    /**/
-    .swal_display.state_display .custom_swal_input,.swal_display.global_display .custom_swal_input{
-        width: auto;
-    }
-    .swal_display.state_display .custom_swal_input[type="checkbox"],.swal_display.global_display .custom_swal_input[type="checkbox"]{
-        height: auto;
-        margin: 0 0 17px 10px;
-        width: auto;
-    }
-    .swal_display .custom_swal_delete{
-        width: 10%;
-    }
-    .swal_display .custom_swal_delete:hover{
-        color: #d9534f;
-        cursor: pointer;
-    }
-    .user_delete{
-        display: none;
-    }
-    .state_display,.global_display{
-        text-align: left;
-    }
-    .state_display .custom_swal_label,.global_display .custom_swal_label{
-        font-weight: bold;
-        width: 40%;
-    }
-    .state_display .custom_swal_delete,.global_display .custom_swal_delete{
-        text-align: center;
-    }
-    .swal_select_container,.swal_select_subcontainer{
-        display: inline-block;
-    }
-    .custom_swal_select{
-        display: block;
-        margin: 0 20px 0 0;
-    }
-    .swal_select_container{
-    }
-    #label_property_default_transition{
-        vertical-align: top;
-    }
-    #label_property_state_defaults{
-        margin: 0 0 20px;
-    }
     /*global properties*/
     #global_properties{
         text-align: center;
@@ -302,4 +216,98 @@
         overflow: visible;
         width: 100%;
     }
+}
+
+
+/*sweet alert*/
+.condition_display,.state_display,.global_display{
+    display: block;
+}
+.swal_display .custom_swal_input,.swal_display .custom_swal_delete{
+    display: inline-block;
+}
+.swal_display .custom_swal_input{
+    width: 90%;
+}
+/*swal condition*/
+.swal_display.condition_display .custom_swal_input,.swal_display.condition_display label{
+    width: 35%;
+}
+.swal_display.condition_display label.checkbox_label{
+    width: 10%;
+}
+.swal_display.condition_display label .custom_swal_input{
+    width: 80%;
+}
+.swal_display.condition_display .custom_swal_input[type="checkbox"]{
+    height: auto;
+    width: auto;
+}
+.transition_title{
+    margin: 0 0 10px;
+}
+.header_transition{
+    text-align: right;
+}
+.header_condition,.header_matcher,.header_silent{
+    display: inline-block;
+    font-weight: bold;
+    text-align: center;
+}
+.header_condition{
+    width: 45%;
+}
+.header_matcher{
+    width: 25%;
+}
+.header_silent{
+    width: 20%;
+}
+/**/
+.swal_display label[for='input_state_defaults']{
+    color: #000;
+    font-weight: bold;
+}
+.swal_display.state_display .custom_swal_input,.swal_display.global_display .custom_swal_input{
+    width: auto;
+}
+.swal_display.state_display .custom_swal_input[type="checkbox"],.swal_display.global_display .custom_swal_input[type="checkbox"]{
+    height: auto;
+    margin: 0 0 17px 10px;
+    width: auto;
+}
+.swal_display .custom_swal_delete{
+    width: 10%;
+}
+.swal_display .custom_swal_delete:hover{
+    color: #d9534f;
+    cursor: pointer;
+}
+.user_delete{
+    display: none;
+}
+.state_display,.global_display{
+    text-align: left;
+}
+.state_display .custom_swal_label,.global_display .custom_swal_label{
+    font-weight: bold;
+    width: 40%;
+}
+.state_display .custom_swal_delete,.global_display .custom_swal_delete{
+    text-align: center;
+}
+.swal_select_container,.swal_select_subcontainer{
+    display: inline-block;
+}
+.custom_swal_select{
+    display: block;
+    margin: 0 20px 0 0;
+}
+.swal_select_container{
+}
+#label_property_default_transition{
+    vertical-align: top;
+}
+#label_property_state_defaults{
+    margin: 0 0 20px;
 }

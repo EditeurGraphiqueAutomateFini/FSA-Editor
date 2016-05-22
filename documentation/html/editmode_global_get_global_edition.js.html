@@ -29,194 +29,194 @@
             <pre class="prettyprint source linenums"><code>/**
 *   Sweetalert prompt for global properties edition
 *   @module editmode/global/get_global_edition
+*   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(require){
+    /**
+    *   @alias module:editmode/global/get_global_edition
+    */
+    var get_global_edition = function(context){
+        var edit_global = require("./edit_global");
+        var undo = require("../../utility/undo");
+        var edit_frontend_object = require("../../editmode/edit_frontend_object");
+
+        // here we define sweetalert prompt
+        swal({
+            title : "Edit global properties",
+            text : displayGlobalPropertiesAsList(),
+            html : true,
+            showCancelButton : true,
+            closeOnConfirm : false,
+            animation : "slide-from-top"
+        },function(inputValue){
+                if(inputValue){
+                    // defining default value for each field
+                    var newOverlap = false;
+                    var newDefaultMatcher = "";
+                    var newTerminal = false;
+                    var newMaxNoise = 0;
+                    var newMaxTotalNoise = 0;
+                    var newMaxDuration = 0;
+                    var newMaxTotalDuration = 0;
+                    var newValues;
+
+                    // overlap
+                    newOverlap = d3.select("#input_allow_overlap").property("checked");
+                    // default_matcher
+                    newDefaultMatcher = d3.select("#input_default_matcher").property("value");
+                    // terminal
+                    newTerminal = d3.select("#input_terminal").property("checked");
+                    // max_noise
+                    newMaxNoise = parseInt(d3.select("#input_max_noise").property("value"));
+                    // max_total_noise
+                    newMaxTotalNoise = parseInt(d3.select("#input_max_total_noise").property("value"));
+                    // max_duration
+                    newMaxDuration = parseInt(d3.select("#input_max_duration").property("value"));
+                    // max_total_duration
+                    newMaxTotalDuration = parseInt(d3.select("#input_max_total_duration").property("value"));
+
+                    // test if user input is correct
+                    if(newMaxNoise &lt; 0){
+                        swal.showInputError("max_noise cannot be negative");
+                        return false;
+                    }
+                    if(newMaxNoise > newMaxTotalNoise){
+                        swal.showInputError("max_noise cannot be > total_max_noise");
+                        return false;
+                    }
+                    if(newMaxTotalNoise &lt; 0){
+                        swal.showInputError("max_total_noise cannot be negative");
+                        return false;
+                    }
+                    if(newMaxDuration &lt; 0){
+                        swal.showInputError("max_duration cannot be negative");
+                        return false;
+                    }
+                    if(newMaxDuration > newMaxTotalDuration){
+                        swal.showInputError("max_duration cannot be > total_max_duration");
+                        return false;
+                    }
+                    if(newMaxTotalDuration &lt; 0){
+                        swal.showInputError("max_total_duration cannot be negative");
+                        return false;
+                    }
+
+                    // values assignment
+                    newValues = {
+                        "newOverlap" : newOverlap,
+                        "newDefaultMatcher" : newDefaultMatcher,
+                        "newTerminal" : newTerminal,
+                        "newMaxNoise" : newMaxNoise,
+                        "newMaxTotalNoise" : newMaxTotalNoise,
+                        "newMaxDuration" : newMaxDuration,
+                        "newMaxTotalDuration" : newMaxTotalDuration
+                    };
+
+                    // call global edition module
+                    edit_global(newValues,context);
+
+                    // edit front-end object and add new state to the stack
+                    edit_frontend_object(context.getData);
+                    undo.addToStack(context.getData);
+
+                    // close sweetalert prompt window
+                    swal.close();
+
+                // on cancel
+                }else if(inputValue === false){
+                    return false;
+                // this should never happen
+                }else if(inputValue === ""){
+                    swal.showInputError("error");
+                    return false;
+                }
+        });
+
         /**
-        *   @constructor
-        *   @alias module:editmode/global/get_global_edition
-        *   @param {Object} context - the global application context (svg,force,getData,links)
+        *   display form with properties list - iterates over each propertie to return a complete form for the sweetalert prompt
+        *   @return {string} html - the complete html form for the sweetalert prompt of global properties
         */
-        return function(context){
-            var edit_global = require("./edit_global");
-            var undo = require("../../utility/undo");
-            var edit_frontend_object = require("../../editmode/edit_frontend_object");
+        function displayGlobalPropertiesAsList(){
+            var html = "";
+            var input = "";
+            var previousValue;
 
-            // here we define sweetalert prompt
-            swal({
-                title : "Edit global properties",
-                text : displayGlobalPropertiesAsList(),
-                html : true,
-                showCancelButton : true,
-                closeOnConfirm : false,
-                animation : "slide-from-top"
-            },function(inputValue){
-                    if(inputValue){
-                        // defining default value for each field
-                        var newOverlap = false;
-                        var newDefaultMatcher = "";
-                        var newTerminal = false;
-                        var newMaxNoise = 0;
-                        var newMaxTotalNoise = 0;
-                        var newMaxDuration = 0;
-                        var newMaxTotalDuration = 0;
-                        var newValues;
+            // defining each property to edit with a name and a type
+            // state_defaults properties have a "sub" field because they are "sub-properties" of state_defaults
+            var propertiesToEdit = [
+                { "name":"allow_overlap", "type":"check" },
+                { "name":"default_matcher", "type":"text" },
+                { "name":"state_defaults", "type":"" },
+                { "name":"terminal", "type":"check", "sub":"state_defaults" },
+                { "name":"max_noise", "type":"number", "sub":"state_defaults" },
+                { "name":"max_total_noise", "type":"number", "sub":"state_defaults" },
+                { "name":"max_duration", "type":"number", "sub":"state_defaults" },
+                { "name":"max_total_duration", "type":"number", "sub":"state_defaults" }
+            ];
 
-                        // overlap
-                        newOverlap = d3.select("#input_allow_overlap").property("checked");
-                        // default_matcher
-                        newDefaultMatcher = d3.select("#input_default_matcher").property("value");
-                        // terminal
-                        newTerminal = d3.select("#input_terminal").property("checked");
-                        // max_noise
-                        newMaxNoise = parseInt(d3.select("#input_max_noise").property("value"));
-                        // max_total_noise
-                        newMaxTotalNoise = parseInt(d3.select("#input_max_total_noise").property("value"));
-                        // max_duration
-                        newMaxDuration = parseInt(d3.select("#input_max_duration").property("value"));
-                        // max_total_duration
-                        newMaxTotalDuration = parseInt(d3.select("#input_max_total_duration").property("value"));
+            // iterating over each property
+            for(var i=0; i &lt; propertiesToEdit.length; i++){
 
-                        // test if user input is correct
-                        if(newMaxNoise &lt; 0){
-                            swal.showInputError("max_noise cannot be negative");
-                            return false;
-                        }
-                        if(newMaxNoise > newMaxTotalNoise){
-                            swal.showInputError("max_noise cannot be > total_max_noise");
-                            return false;
-                        }
-                        if(newMaxTotalNoise &lt; 0){
-                            swal.showInputError("max_total_noise cannot be negative");
-                            return false;
-                        }
-                        if(newMaxDuration &lt; 0){
-                            swal.showInputError("max_duration cannot be negative");
-                            return false;
-                        }
-                        if(newMaxDuration > newMaxTotalDuration){
-                            swal.showInputError("max_duration cannot be > total_max_duration");
-                            return false;
-                        }
-                        if(newMaxTotalDuration &lt; 0){
-                            swal.showInputError("max_total_duration cannot be negative");
-                            return false;
-                        }
-
-                        // values assignment
-                        newValues = {
-                            "newOverlap" : newOverlap,
-                            "newDefaultMatcher" : newDefaultMatcher,
-                            "newTerminal" : newTerminal,
-                            "newMaxNoise" : newMaxNoise,
-                            "newMaxTotalNoise" : newMaxTotalNoise,
-                            "newMaxDuration" : newMaxDuration,
-                            "newMaxTotalDuration" : newMaxTotalDuration
-                        };
-
-                        // call global edition module
-                        edit_global(newValues,context);
-
-                        // edit front-end object and add new state to the stack
-                        edit_frontend_object(context.getData);
-                        undo.addToStack(context.getData);
-
-                        // close sweetalert prompt window
-                        swal.close();
-
-                    // on cancel
-                    }else if(inputValue === false){
-                        return false;
-                    // this should never happen
-                    }else if(inputValue === ""){
-                        swal.showInputError("error");
-                        return false;
+                // retrieve the previous value of the property to edit, if it existed previously
+                if(propertiesToEdit[i].sub){
+                    if(context.getData[propertiesToEdit[i].sub]){
+                        previousValue = context.getData[propertiesToEdit[i].sub][propertiesToEdit[i].name];
                     }
-            });
-
-            /**
-            *   display form with properties list - iterates over each propertie to return a complete form for the sweetalert prompt
-            *   @return {string} html - the complete html form for the sweetalert prompt of global properties
-            */
-            function displayGlobalPropertiesAsList(){
-                var html = "";
-                var input = "";
-                var previousValue;
-
-                // defining each property to edit with a name and a type
-                // state_defaults properties have a "sub" field because they are "sub-properties" of state_defaults
-                var propertiesToEdit = [
-                    { "name":"allow_overlap", "type":"check" },
-                    { "name":"default_matcher", "type":"text" },
-                    { "name":"state_defaults", "type":"" },
-                    { "name":"terminal", "type":"check", "sub":"state_defaults" },
-                    { "name":"max_noise", "type":"number", "sub":"state_defaults" },
-                    { "name":"max_total_noise", "type":"number", "sub":"state_defaults" },
-                    { "name":"max_duration", "type":"number", "sub":"state_defaults" },
-                    { "name":"max_total_duration", "type":"number", "sub":"state_defaults" }
-                ];
-
-                // iterating over each property
-                for(var i=0; i &lt; propertiesToEdit.length; i++){
-
-                    // retrieve the previous value of the property to edit, if it existed previously
-                    if(propertiesToEdit[i].sub){
-                        if(context.getData[propertiesToEdit[i].sub]){
-                            previousValue = context.getData[propertiesToEdit[i].sub][propertiesToEdit[i].name];
-                        }
-                    }else{
-                        previousValue = context.getData[propertiesToEdit[i].name];
-                    }
-
-                    // treat each type of property differently, generating a different input
-                    switch(propertiesToEdit[i].type){
-                        // in case the type is "text", diplay a &lt;input type="text"> tag
-                        case "text":
-                            input = "&lt;input "+
-                                        "class='custom_swal_input' "+
-                                        "type='text' "+
-                                        "value='"+ (previousValue || "")+"' "+
-                                        "id='input_"+propertiesToEdit[i].name+"' "+
-                                    "/>";
-                            break;
-                        // in case the type is "number", diplay a &lt;input type="number"> tag
-                        case "number":
-                            input = "&lt;input "+
-                                        "class='custom_swal_input' "+
-                                        "type='number' "+
-                                        "value='"+(previousValue || 0)+"' "+
-                                        "id='input_"+propertiesToEdit[i].name+"' "+
-                                    "/>";
-                            break;
-                        // in case the type is "check", diplay a &lt;input type="checkbox"> tag
-                        case "check":
-                            input = "&lt;input "+
-                                        "class='custom_swal_input' "+
-                                        "type='checkbox' "+
-                                        (previousValue ? "checked='true' " : "")+
-                                        "id='input_"+propertiesToEdit[i].name+"' "+
-                                    "/>";
-                            break;
-                        default:
-                            input="";
-                            break;
-                    }
-
-                    // in any case, add a label for the field and wrap it in a &lt;span> tag
-                    html += "&lt;span class='swal_display global_display'>"+
-                                "&lt;label "+
-                                    "class='custom_swal_label' "+
-                                    "for='input_"+propertiesToEdit[i].name+"' "+
-                                    "id='label_property_"+propertiesToEdit[i].name+"'"+
-                                ">"
-                                    +propertiesToEdit[i].name+" : "+
-                                "&lt;/label>"+
-                                input+
-                            "&lt;/span>";
+                }else{
+                    previousValue = context.getData[propertiesToEdit[i].name];
                 }
 
-                return html;
+                // treat each type of property differently, generating a different input
+                switch(propertiesToEdit[i].type){
+                    // in case the type is "text", diplay a &lt;input type="text"> tag
+                    case "text":
+                        input = "&lt;input "+
+                                    "class='custom_swal_input' "+
+                                    "type='text' "+
+                                    "value='"+ (previousValue || "")+"' "+
+                                    "id='input_"+propertiesToEdit[i].name+"' "+
+                                "/>";
+                        break;
+                    // in case the type is "number", diplay a &lt;input type="number"> tag
+                    case "number":
+                        input = "&lt;input "+
+                                    "class='custom_swal_input' "+
+                                    "type='number' "+
+                                    "value='"+(previousValue || 0)+"' "+
+                                    "id='input_"+propertiesToEdit[i].name+"' "+
+                                "/>";
+                        break;
+                    // in case the type is "check", diplay a &lt;input type="checkbox"> tag
+                    case "check":
+                        input = "&lt;input "+
+                                    "class='custom_swal_input' "+
+                                    "type='checkbox' "+
+                                    (previousValue ? "checked='true' " : "")+
+                                    "id='input_"+propertiesToEdit[i].name+"' "+
+                                "/>";
+                        break;
+                    default:
+                        input="";
+                        break;
+                }
+
+                // in any case, add a label for the field and wrap it in a &lt;span> tag
+                html += "&lt;span class='swal_display global_display'>"+
+                            "&lt;label "+
+                                "class='custom_swal_label' "+
+                                "for='input_"+propertiesToEdit[i].name+"' "+
+                                "id='label_property_"+propertiesToEdit[i].name+"'"+
+                            ">"
+                                +propertiesToEdit[i].name+" : "+
+                            "&lt;/label>"+
+                            input+
+                        "&lt;/span>";
             }
-        };
+
+            return html;
+        }
+    };
+    return get_global_edition;
 });
 </code></pre>
         </article>
@@ -228,13 +228,13 @@ define(function(require){
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-createmode_create_init.html">createmode/create_init</a></li><li><a href="module-createmode_create_state.html">createmode/create_state</a></li><li><a href="module-editmode_cancell_all_selection.html">editmode/cancell_all_selection</a></li><li><a href="module-editmode_cancell_selection.html">editmode/cancell_selection</a></li><li><a href="module-editmode_edit_frontend_object.html">editmode/edit_frontend_object</a></li><li><a href="module-editmode_edit_init.html">editmode/edit_init</a></li><li><a href="module-editmode_global_edit_global.html">editmode/global/edit_global</a></li><li><a href="module-editmode_global_get_global_edition.html">editmode/global/get_global_edition</a></li><li><a href="module-editmode_state_delete_references.html">editmode/state/delete_references</a></li><li><a href="module-editmode_state_delete_state.html">editmode/state/delete_state</a></li><li><a href="module-editmode_state_edit_references.html">editmode/state/edit_references</a></li><li><a href="module-editmode_state_edit_state.html">editmode/state/edit_state</a></li><li><a href="module-editmode_state_edit_state_defaulttransition.html">editmode/state/edit_state_defaulttransition</a></li><li><a href="module-editmode_state_edit_state_maxduration.html">editmode/state/edit_state_maxduration</a></li><li><a href="module-editmode_state_edit_state_maxnoise.html">editmode/state/edit_state_maxnoise</a></li><li><a href="module-editmode_state_edit_state_maxtotalduration.html">editmode/state/edit_state_maxtotalduration</a></li><li><a href="module-editmode_state_edit_state_maxtotalnoise.html">editmode/state/edit_state_maxtotalnoise</a></li><li><a href="module-editmode_state_edit_state_name.html">editmode/state/edit_state_name</a></li><li><a href="module-editmode_state_edit_state_terminal.html">editmode/state/edit_state_terminal</a></li><li><a href="module-editmode_state_get_max_noise_edition.html">editmode/state/get_max_noise_edition</a></li><li><a href="module-editmode_state_get_state_edition.html">editmode/state/get_state_edition</a></li><li><a href="module-editmode_state_get_state_name_edition.html">editmode/state/get_state_name_edition</a></li><li><a href="module-editmode_transition_add_transition.html">editmode/transition/add_transition</a></li><li><a href="module-editmode_transition_delete_transition.html">editmode/transition/delete_transition</a></li><li><a href="module-editmode_transition_edit_condition.html">editmode/transition/edit_condition</a></li><li><a href="module-editmode_transition_edit_transition.html">editmode/transition/edit_transition</a></li><li><a href="module-editmode_transition_get_condition.html">editmode/transition/get_condition</a></li><li><a href="module-editmode_transition_get_transition_edition.html">editmode/transition/get_transition_edition</a></li><li><a href="module-utility_local_data_handling.html">utility/local_data_handling</a></li><li><a href="module-utility_server_request.html">utility/server_request</a></li><li><a href="module-utility_undo.html">utility/undo</a></li><li><a href="module-utility_utility.html">utility/utility</a></li><li><a href="module-viewmode_condition_list.html">viewmode/condition_list</a></li><li><a href="module-viewmode_create_circles.html">viewmode/create_circles</a></li><li><a href="module-viewmode_create_conditions.html">viewmode/create_conditions</a></li><li><a href="module-viewmode_create_force_layout.html">viewmode/create_force_layout</a></li><li><a href="module-viewmode_create_paths.html">viewmode/create_paths</a></li><li><a href="module-viewmode_create_state_names.html">viewmode/create_state_names</a></li><li><a href="module-viewmode_create_svg.html">viewmode/create_svg</a></li><li><a href="module-viewmode_data_helper.html">viewmode/data_helper</a></li><li><a href="module-viewmode_position_condition.html">viewmode/position_condition</a></li><li><a href="module-viewmode_set_positions.html">viewmode/set_positions</a></li><li><a href="module-viewmode_tick_helper.html">viewmode/tick_helper</a></li><li><a href="module-viewmode_view_init.html">viewmode/view_init</a></li><li><a href="module-%25252525252525252525257Bfunction%25252525252525252525257D.html">{function}</a></li></ul><h3>Classes</h3><ul><li><a href="module-editmode_edit_init-init.html">init</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-createmode_create_init.html">createmode/create_init</a></li><li><a href="module-createmode_create_state.html">createmode/create_state</a></li><li><a href="module-editmode_cancel_all_selection.html">editmode/cancel_all_selection</a></li><li><a href="module-editmode_cancel_selection.html">editmode/cancel_selection</a></li><li><a href="module-editmode_edit_frontend_object.html">editmode/edit_frontend_object</a></li><li><a href="module-editmode_edit_init.html">editmode/edit_init</a></li><li><a href="module-editmode_global_edit_global.html">editmode/global/edit_global</a></li><li><a href="module-editmode_global_get_global_edition.html">editmode/global/get_global_edition</a></li><li><a href="module-editmode_state_delete_references.html">editmode/state/delete_references</a></li><li><a href="module-editmode_state_delete_state.html">editmode/state/delete_state</a></li><li><a href="module-editmode_state_edit_references.html">editmode/state/edit_references</a></li><li><a href="module-editmode_state_edit_state.html">editmode/state/edit_state</a></li><li><a href="module-editmode_state_edit_state_defaulttransition.html">editmode/state/edit_state_defaulttransition</a></li><li><a href="module-editmode_state_edit_state_maxduration.html">editmode/state/edit_state_maxduration</a></li><li><a href="module-editmode_state_edit_state_maxnoise.html">editmode/state/edit_state_maxnoise</a></li><li><a href="module-editmode_state_edit_state_maxtotalduration.html">editmode/state/edit_state_maxtotalduration</a></li><li><a href="module-editmode_state_edit_state_maxtotalnoise.html">editmode/state/edit_state_maxtotalnoise</a></li><li><a href="module-editmode_state_edit_state_name.html">editmode/state/edit_state_name</a></li><li><a href="module-editmode_state_edit_state_terminal.html">editmode/state/edit_state_terminal</a></li><li><a href="module-editmode_state_get_max_noise_edition.html">editmode/state/get_max_noise_edition</a></li><li><a href="module-editmode_state_get_state_edition.html">editmode/state/get_state_edition</a></li><li><a href="module-editmode_state_get_state_name_edition.html">editmode/state/get_state_name_edition</a></li><li><a href="module-editmode_transition_add_transition.html">editmode/transition/add_transition</a></li><li><a href="module-editmode_transition_delete_transition.html">editmode/transition/delete_transition</a></li><li><a href="module-editmode_transition_edit_condition.html">editmode/transition/edit_condition</a></li><li><a href="module-editmode_transition_edit_transition.html">editmode/transition/edit_transition</a></li><li><a href="module-editmode_transition_get_condition.html">editmode/transition/get_condition</a></li><li><a href="module-editmode_transition_get_transition_edition.html">editmode/transition/get_transition_edition</a></li><li><a href="module-utility_local_data_handling.html">utility/local_data_handling</a></li><li><a href="module-utility_server_request.html">utility/server_request</a></li><li><a href="module-utility_undo.html">utility/undo</a></li><li><a href="module-utility_utility.html">utility/utility</a></li><li><a href="module-viewmode_condition_list.html">viewmode/condition_list</a></li><li><a href="module-viewmode_create_circles.html">viewmode/create_circles</a></li><li><a href="module-viewmode_create_conditions.html">viewmode/create_conditions</a></li><li><a href="module-viewmode_create_force_layout.html">viewmode/create_force_layout</a></li><li><a href="module-viewmode_create_paths.html">viewmode/create_paths</a></li><li><a href="module-viewmode_create_state_names.html">viewmode/create_state_names</a></li><li><a href="module-viewmode_create_svg.html">viewmode/create_svg</a></li><li><a href="module-viewmode_data_helper.html">viewmode/data_helper</a></li><li><a href="module-viewmode_position_condition.html">viewmode/position_condition</a></li><li><a href="module-viewmode_set_positions.html">viewmode/set_positions</a></li><li><a href="module-viewmode_tick_helper.html">viewmode/tick_helper</a></li><li><a href="module-viewmode_view_init.html">viewmode/view_init</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri May 13 2016 22:52:27 GMT+0200 (Paris, Madrid (heure d’été))
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu May 19 2016 15:40:27 GMT+0200 (Paris, Madrid (heure d’été))
 </footer>
 
 <script> prettyPrint(); </script>

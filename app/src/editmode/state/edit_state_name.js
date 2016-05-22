@@ -1,16 +1,15 @@
 /**
 *   Edit name property for a state
 *   @module editmode/state/edit_state_name
+*   @param {Object} d - data for the state, supplied by D3
+*   @param {string} inputValue - the new name property
+*   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/state/edit_state_name
-    *   @param {Object} d - data for the state, supplied by D3
-    *   @param {string} inputValue - the new name property
-    *   @param {Object} context - the global application context (svg,force,getData,links)
     */
-    return function(d,inputValue,context){
+    var edit_state_name = function(d,inputValue,context){
         var oldName = d.name;
 
         d.name = inputValue;
@@ -23,4 +22,5 @@ define(function(){
         // restart force layout w/ new data
         context.force.start();
     };
+    return edit_state_name;
 });

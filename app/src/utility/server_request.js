@@ -5,7 +5,7 @@
 define(function(require){
     return{
         /**
-        *   @exports {function} getRequest - request the data from a given url
+        *   request the data from a given url
         *   @param {Object} object - the url that was passed to the function
         *   @param {string} mode - the mode in which the application must launch
         */
@@ -40,7 +40,6 @@ define(function(require){
             *   success function for ajax GET
             *   @param {Object} getData : data retrieved from the server
             *   @param {string} mode - the mode in which the application must launch
-            *   @see module:utility/server_request
             */
             function succesFunction(getData,mode,options){
                 if(getData){
@@ -94,7 +93,6 @@ define(function(require){
 
             /**
             *   error function for ajax GET
-            *   @see module:utility/server_request
             */
             function errorFunction(){
                 // there has been an error w/ ajax request
@@ -104,7 +102,7 @@ define(function(require){
         },
 
         /**
-        *   @exports {function} postRequest - post data to overwrite JSON file server-side
+        *   post data to overwrite JSON file server-side
         *   @param {Object} postData - data to post
         *   @param {Object} object - the url that was passed to the function
         *   @param {string} mode - the mode in which the application must launch

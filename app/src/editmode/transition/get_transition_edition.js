@@ -1,15 +1,14 @@
 /**
 *   Sweetalert prompt for transition edition
 *   @module editmode/transition/get_transition_edition
+*   @param {Object} d - data for the state, supplied by D3
+*   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(require){
     /**
-    *   @constructor
     *   @alias module:editmode/transition/get_transition_edition
-    *   @param {Object} d - data for the state, supplied by D3
-    *   @param {Object} context - the global application context (svg,force,getData,links)
     */
-    return function (d,context){
+    var get_transition_edition = function (d,context){
         var edit_transition = require("./edit_transition");
         var delete_transition = require("./delete_transition");
         var undo = require("../../utility/undo");
@@ -175,4 +174,5 @@ define(function(require){
             return html;
         }
     };
+    return get_transition_edition;
 });

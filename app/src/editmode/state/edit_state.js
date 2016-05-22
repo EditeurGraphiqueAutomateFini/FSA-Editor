@@ -1,16 +1,15 @@
 /**
 *   Edit all properties for a state
 *   @module editmode/state/edit_state
+*   @param {Object} newValues - includes newName,newTerminal,newMaxNoise,newMaxTotalNoise,newMaxDuration,newMaxTotalDuration,newDefaultTransition
+*   @param {Object} d - data for the state, supplied by D3
+*   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(require){
     /**
-    *   @constructor
     *   @alias module:editmode/state/edit_state
-    *   @param {Object} newValues - includes newName,newTerminal,newMaxNoise,newMaxTotalNoise,newMaxDuration,newMaxTotalDuration,newDefaultTransition
-    *   @param {Object} d - data for the state, supplied by D3
-    *   @param {Object} context - the global application context (svg,force,getData,links)
     */
-    return function(newValues,d,context){
+    var edit_state = function(newValues,d,context){
         var edit_references = require("./edit_references");
         var edit_state_defaulttransition = require("./edit_state_defaulttransition");
         var edit_state_maxduration = require("./edit_state_maxduration");
@@ -71,4 +70,5 @@ define(function(require){
         // restart force layout w/ new data
         context.force.start();
     };
+    return edit_state;
 });

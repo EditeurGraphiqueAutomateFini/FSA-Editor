@@ -17,11 +17,11 @@
                 padding: 0;
             }
             #fsa_editor{
-                height: 500px;
-                width: 500px;
+                height: 100%;
+                margin: 0 auto;
+                width: 100%;
             }
         </style>
-        <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.20.0.css" />
 
     </head>
     <body>
@@ -48,6 +48,10 @@
                 <script>
                     fsa_editor('http://www.fsaeditor.com',"edit");
                     //fsa_editor(browser_html_parsing,"edit");
+
+                    /*window.addEventListener("fsa_changed",function(e){
+                        console.log(e.detail);
+                    });*/
                 </script>
     </body>
 </html>

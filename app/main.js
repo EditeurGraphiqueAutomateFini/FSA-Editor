@@ -1,6 +1,5 @@
 /**
 *   Main module
-*   @exports {function} fsa_editor(object,mode)
 */
 module.exports = function(object,mode,options){
         var server = require("./src/utility/server_request");

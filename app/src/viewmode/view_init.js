@@ -5,7 +5,7 @@
 define(function(require){
     return{
         /**
-        *   @exports {function} extractStates - extract states from given object
+        *   extract states from given object
         *   @param {Object} data - data retrieved from server or client
         *   @returns {Object} states - the operational object representing states
         */
@@ -23,7 +23,7 @@ define(function(require){
         },
 
         /**
-        *   @exports {function} getIdFromName - get an id from a given state name
+        *   getIdFromName - get an id from a given state name
         *   @param {Object} data - data retrieved from server or client
         *   @returns {string} name - the name to look for
         */
@@ -40,7 +40,7 @@ define(function(require){
         },
 
         /**
-        *   @exports {function} getConditions - get a condition array for a given (source,target) couple
+        *   get a condition array for a given (source,target) couple
         *   @param {Object} data - data retrieved from server or client
         *   @returns {number} source - the id of the source state
         *   @returns {string} target - the name of the target state
@@ -64,11 +64,10 @@ define(function(require){
         },
 
         /**
-        *   @constructor
-        *   @exports {function} init - initialisation function
+        *   initialisation function
         *   @param {Object[]} states - array of state objects
         *   @param {Object} getData - data retrieved from server or client, will be the global data object for the application
-        *   @returns {Object} - an object containing the application informations for loaded viewmode
+        *   @returns {Object} an object containing the application informations for loaded viewmode
         */
         init : function(states,getData,options){
             var create_svg = require("./create_svg"),
@@ -77,7 +76,7 @@ define(function(require){
                 create_state_names = require("./create_state_names"),
                 create_paths = require("./create_paths"),
                 create_conditions = require("./create_conditions"),
-                 set_positions = require("./set_positions"),
+                set_positions = require("./set_positions"),
                 viewmode = require("./view_init"),
                 undo = require("../utility/undo");
 

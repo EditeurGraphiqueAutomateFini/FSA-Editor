@@ -1,15 +1,14 @@
 /**
 *   Create svg circles to represent state
 *   @module viewmode/create_circles
+*   @param {Object} container - a D3 element (d3.select) for the container
+*   @param {Object} force - the D3 force layout
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:viewmode/create_circles
-    *   @param {Object} container - a D3 element (d3.select) for the container
-    *   @param {Object} force - the D3 force layout
     */
-    return function(container,force){
+    var create_circles = function(container,force){
 
         var svg = container;
         var state_container;
@@ -39,4 +38,5 @@ define(function(){
             })
             .call(force.drag);
       };
+      return create_circles;
 });

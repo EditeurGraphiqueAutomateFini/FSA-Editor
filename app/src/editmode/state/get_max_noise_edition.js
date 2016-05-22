@@ -1,15 +1,14 @@
 /**
 *   Sweetalert prompt for max_noise property edition
 *   @module editmode/state/get_max_noise_edition
+*   @param {Object} d - data for the state, supplied by D3
+*   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(require){
     /**
-    *   @constructor
     *   @alias module:editmode/state/get_max_noise_edition
-    *   @param {Object} d - data for the state, supplied by D3
-    *   @param {Object} context - the global application context (svg,force,getData,links)
     */
-    return function (d,context){
+    var get_max_noise_edition = function (d,context){
         var edit_state_maxnoise = require("./edit_state_maxnoise");
         var cancel_selection = require("../cancel_selection");
         var undo = require("../../utility/undo");
@@ -56,4 +55,5 @@ define(function(require){
             }
         });
     };
+    return get_max_noise_edition;
 });

@@ -1,18 +1,17 @@
 /**
 *   Add transition array to the global object
 *   @module editmode/transition/add_transition
+*   @param {Object} force - current D3 force layout
+*   @param {Object} object - the global getData object
+*   @param {Object} source - the source state object
+*   @param {Object} target - the target state object
+*   @param {string} condition - the new condition
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/transition/add_transition
-    *   @param {Object} force - current D3 force layout
-    *   @param {Object} object - the global getData object
-    *   @param {Object} source - the source state object
-    *   @param {Object} target - the target state object
-    *   @param {string} condition - the new condition
     */
-    return function(force,object,source,target,condition){
+    var add_transition = function(force,object,source,target,condition){
 
         // edit global object
         var state = object.states[source.name];
@@ -51,4 +50,5 @@ define(function(){
         // restart force layout
         force.start();
     };
+    return add_transition;
 });

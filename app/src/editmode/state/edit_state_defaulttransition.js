@@ -1,23 +1,22 @@
 /**
 *   Edit default_transition property for a state
 *   @module editmode/state/edit_state_defaulttransition
+*   @param {Object} d - data for the state, supplied by D3
+*   @param {boolean} newSilent - the new default_transition.silent property
+*   @param {number} newTarget - the new default_transition.target property (the id of a state)
+*   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/state/edit_state_defaulttransition
-    *   @param {Object} d - data for the state, supplied by D3
-    *   @param {boolean} newSilent - the new default_transition.silent property
-    *   @param {number} newTarget - the new default_transition.target property (the id of a state)
-    *   @param {Object} context - the global application context (svg,force,getData,links)
     */
-    return function(d,newSilent,newTarget,context){
+    var edit_state_defaulttransition = function(d,newSilent,newTarget,context){
         var states = context.getData.states;
         var newTargetName = "";
         var state;
 
         // default_transition cannot be set together w/ max_noise
-        if(d.max_noise > 0){
+        if(d.max_noise > 0 || !(parseInt(newTarget) >= 0)){
             d.default_transition = undefined;
             for(state in states){
                 if(states.hasOwnProperty(state) && states[state]){
@@ -69,4 +68,5 @@ define(function(){
             }
         }
     };
+    return edit_state_defaulttransition;
 });

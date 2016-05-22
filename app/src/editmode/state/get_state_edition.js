@@ -1,15 +1,14 @@
 /**
 *   Sweetalert prompt for global state properties edition
 *   @module editmode/state/get_state_edition
+*   @param {Object} d - data for the state, supplied by D3
+*   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(require){
     /**
-    *   @constructor
     *   @alias module:editmode/state/get_state_edition
-    *   @param {Object} d - data for the state, supplied by D3
-    *   @param {Object} context - the global application context (svg,force,getData,links)
     */
-    return function (d,context){
+    var get_state_edition = function (d,context){
         var edit_state = require("./edit_state");
         var delete_state = require("./delete_state");
         var cancel_selection = require("../cancel_selection");
@@ -193,7 +192,7 @@ define(function(require){
                         input = "<input "+
                                     "class='custom_swal_input' "+
                                     "type='number' "+
-                                    "value='"+(currentState[propertiesToEdit[i].name] || 0)+"' "+
+                                    "value='"+(currentState[propertiesToEdit[i].name] >= 0 ? currentState[propertiesToEdit[i].name] : "")+"' "+
                                     "id='input_"+propertiesToEdit[i].name+"_"+d.index+"' "+
                                 "/>";
                         break;
@@ -280,4 +279,5 @@ define(function(require){
             return html;
         }
     };
+    return get_state_edition;
 });

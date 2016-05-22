@@ -1,15 +1,14 @@
 /**
 *   Edit global automaton properties
 *   @module editmode/global/edit_global
+*   @param {Object} newValues - a key:value object with new properties (keys are "newDefaultMatcher", "newMaxDuration", "newMaxNoise", "newMaxTotalDuration", "newMaxTotalNoise", "newOverlap", "newTerminal"
+*   @param {Object} context - the global application context (svg,force,getData,links)
 */
 define(function(){
     /**
-    *   @constructor
     *   @alias module:editmode/global/edit_global
-    *   @param {Object} newValues - a key:value object with new properties (keys are "newDefaultMatcher", "newMaxDuration", "newMaxNoise", "newMaxTotalDuration", "newMaxTotalNoise", "newOverlap", "newTerminal"
-    *   @param {Object} context - the global application context (svg,force,getData,links)
     */
-    return function(newValues,context){
+    var edit_global = function(newValues,context){
 
         // edit allow_overlap
         context.getData.allow_overlap = newValues.newOverlap;
@@ -23,16 +22,32 @@ define(function(){
             context.getData.state_defaults.terminal = newValues.newTerminal;
 
             // edit max_noise
-            context.getData.state_defaults.max_noise = parseInt(newValues.newMaxNoise) || 0;
+            if( newValues.newMaxNoise >= 0 ){
+                context.getData.state_defaults.max_noise = parseInt(newValues.newMaxNoise) || 0;
+            }else{
+                context.getData.state_defaults.max_noise = undefined;
+            }
 
             // edit max_total_noise
-            context.getData.state_defaults.max_total_noise = parseInt(newValues.newMaxTotalNoise) || 0;
+            if( newValues.newMaxTotalNoise >= 0){
+                context.getData.state_defaults.max_total_noise = parseInt(newValues.newMaxTotalNoise) || 0;
+            }else{
+                context.getData.state_defaults.max_total_noise = undefined;
+            }
 
             // edit max_duration
-            context.getData.state_defaults.max_duration = parseInt(newValues.newMaxDuration) || 0;
+            if( newValues.newMaxDuration >= 0 ){
+                context.getData.state_defaults.max_duration = parseInt(newValues.newMaxDuration) || 0;
+            }else{
+                context.getData.state_defaults.max_duration = undefined;
+            }
 
             // edit max_total_duration
-            context.getData.state_defaults.max_total_duration = parseInt(newValues.newMaxTotalDuration) || 0;
+            if( newValues.newMaxTotalDuration >= 0 ){
+                context.getData.state_defaults.max_total_duration = parseInt(newValues.newMaxTotalDuration) || 0;
+            }else{
+                context.getData.state_defaults.max_total_duration = undefined;
+            }
 
         // if a state_defaults property is not defined, we create it
         }else{
@@ -45,4 +60,5 @@ define(function(){
             };
         }
     };
+    return edit_global;
 });
