@@ -22,16 +22,32 @@ define(function(){
             context.getData.state_defaults.terminal = newValues.newTerminal;
 
             // edit max_noise
-            context.getData.state_defaults.max_noise = parseInt(newValues.newMaxNoise) || 0;
+            if( newValues.newMaxNoise >= 0 ){
+                context.getData.state_defaults.max_noise = parseInt(newValues.newMaxNoise) || 0;
+            }else{
+                context.getData.state_defaults.max_noise = undefined;
+            }
 
             // edit max_total_noise
-            context.getData.state_defaults.max_total_noise = parseInt(newValues.newMaxTotalNoise) || 0;
+            if( newValues.newMaxTotalNoise >= 0){
+                context.getData.state_defaults.max_total_noise = parseInt(newValues.newMaxTotalNoise) || 0;
+            }else{
+                context.getData.state_defaults.max_total_noise = undefined;
+            }
 
             // edit max_duration
-            context.getData.state_defaults.max_duration = parseInt(newValues.newMaxDuration) || 0;
+            if( newValues.newMaxDuration >= 0 ){
+                context.getData.state_defaults.max_duration = parseInt(newValues.newMaxDuration) || 0;
+            }else{
+                context.getData.state_defaults.max_duration = undefined;
+            }
 
             // edit max_total_duration
-            context.getData.state_defaults.max_total_duration = parseInt(newValues.newMaxTotalDuration) || 0;
+            if( newValues.newMaxTotalDuration >= 0 ){
+                context.getData.state_defaults.max_total_duration = parseInt(newValues.newMaxTotalDuration) || 0;
+            }else{
+                context.getData.state_defaults.max_total_duration = undefined;
+            }
 
         // if a state_defaults property is not defined, we create it
         }else{

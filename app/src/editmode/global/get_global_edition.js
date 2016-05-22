@@ -154,7 +154,7 @@ define(function(require){
                         input = "<input "+
                                     "class='custom_swal_input' "+
                                     "type='number' "+
-                                    "value='"+(previousValue || 0)+"' "+
+                                    "value='"+(previousValue >= 0 ? previousValue : "")+"' "+
                                     "id='input_"+propertiesToEdit[i].name+"' "+
                                 "/>";
                         break;
