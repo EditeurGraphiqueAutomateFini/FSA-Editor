@@ -76,7 +76,7 @@ define(function(require){
                 create_state_names = require("./create_state_names"),
                 create_paths = require("./create_paths"),
                 create_conditions = require("./create_conditions"),
-                 set_positions = require("./set_positions"),
+                set_positions = require("./set_positions"),
                 viewmode = require("./view_init"),
                 undo = require("../utility/undo");
 
