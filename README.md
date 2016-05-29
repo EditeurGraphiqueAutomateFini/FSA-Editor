@@ -93,11 +93,11 @@ Sample code :
 ```
 
 ## To use the editor
-States of the Finished Ftate Automaton are represented by circles.
+States of the Finished State Automaton are represented by circles.
 Transitions are represented by arrows.
 You can click on a state to select it, click on another state (including the same state) to create a new transition between the two selected states.
 You can also click on any text (transition, state name, max-noise) on the editor to edit it. A lightbox will appear to recieve the user input.
-Note : a Javascript event called `fsa_changed` is emitted at the window-level each time the automaton's values are changed. You can listen to it just like any other event with :
+Note : a Javascript event called `fsa_changed` is emitted at the window-level each time the automaton's values are changed. You can listen to the event just like any other event with :
 ```
     window.addEventListener("fsa_changed",function(event){
         // your code goes here
