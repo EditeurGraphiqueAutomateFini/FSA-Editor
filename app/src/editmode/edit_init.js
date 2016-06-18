@@ -75,7 +75,8 @@ define(function(require){
             d3.selectAll("text.state_name .state_name_label").each(function(){
                 d3.select(this)
                     .on("click",function(d){
-                        get_state_name_edition(d,context);
+                        // get_state_name_edition(d,context);
+                        get_state_edition(d,context);
                     });
             });
 
@@ -83,7 +84,8 @@ define(function(require){
             d3.selectAll("text.state_name .state_name_maxnoise").each(function(){
                 d3.select(this)
                     .on("click",function(d){
-                        get_max_noise_edition(d,context);
+                        // get_max_noise_edition(d,context);
+                        get_state_edition(d,context);
                     });
             });
 
@@ -146,6 +148,14 @@ define(function(require){
                                 if(isEligible(d)){
                                     d3.select("#state_"+d.index).classed("editing",true);
                                     get_max_noise_edition(d,context);
+                                }
+                            });
+                            break;
+                        case 78:    // on key "N" edit state_name
+                            d3.selectAll(".state_container circle").each(function(d){    // testing if a state is being linked
+                                if(isEligible(d)){
+                                    d3.select("#state_"+d.index).classed("editing",true);
+                                    get_state_name_edition(d,context);
                                 }
                             });
                             break;
