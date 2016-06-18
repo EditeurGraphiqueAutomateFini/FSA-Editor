@@ -26,7 +26,6 @@ define(function(require){
                 var conditionsToDelete = [];
                 var conditionsToEdit = [];
                 var editedItem = {};
-                var commaError = false;
                 var attribute = 0;
                 var index = 0;
                 var type = "";
@@ -85,21 +84,9 @@ define(function(require){
                     }
                 });
 
-                // checking new conditions values for unauthorized commas (",")
+                // edit conditions
                 if(conditionsToEdit.length > 0){
-                    conditionsToEdit.forEach(function(el){
-                        if(el.updatedValues){
-                            if(el.updatedValues.condition.indexOf(",") != -1){
-                                commaError = true;
-                            }
-                        }
-                    });
-                    if(commaError){
-                        swal.showInputError("\',\' is not allowed for transitions");
-                        return false;
-                    }else{
-                        edit_transition(d,conditionsToEdit);
-                    }
+                    edit_transition(d,conditionsToEdit);
                 }
 
                 // delete conditions

@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node server.js",
     "production": "webpack --config webpack-production.config.js -p",
-    "documentation": "jsdoc ./app/src/ -c ./conf.json -r",
+    "documentation": "rimraf documentation/* && jsdoc ./app/src/ -c ./conf.json -r",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -44,6 +44,7 @@
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "lodash": "^4.11.1",
+    "rimraf": "^2.5.2",
     "style-loader": "^0.13.1",
     "sweetalert": "^1.1.3",
     "url-loader": "^0.5.7",

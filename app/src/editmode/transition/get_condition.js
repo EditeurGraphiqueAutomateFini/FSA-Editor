@@ -44,11 +44,6 @@ define(function(require){
                 swal.showInputError("You need to write a condition");
                 return false;
             }
-            // if there is a comma (",") in the input value
-            if(inputValue.indexOf(",") !== -1){
-                swal.showInputError("\',\' is not allowed for transitions");
-                return false;
-            }
             // error : if link alreay exists with the condition
             if(d3.select(linkingTestID).data()[0].hasOwnProperty("transitions")){
                 d3.select(linkingTestID).data()[0].transitions.forEach(function(el){
