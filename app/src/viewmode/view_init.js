@@ -121,8 +121,9 @@ define(function(require){
                         if(data.hasOwnProperty(key)){
                             state = data[key];
                             if(state){
+                                // handling transitions
                                 if(state.transitions && state.transitions.length > 0){
-                                    for(i=0; i < state.transitions.length; i++){
+                                    for(i = 0; i < state.transitions.length; i++){
                                         // add the new link if not already present
                                         testPresence = links.find(function(el){
                                              return (
@@ -138,6 +139,28 @@ define(function(require){
                                                 "conditions" : viewmode.getConditions(dataset,state.uniqueId,state.transitions[i].target)
                                             };
                                             links.push(newLink);
+                                        }
+                                    }
+                                }
+                                // handling default_transition if necessary
+                                // by adding "*" as the first condition
+                                if(state.default_transition){
+                                    testPresence = links.find(function(el){
+                                        return (
+                                            el.source === state.uniqueId
+                                            && el.target === viewmode.getIdFromName(dataset,state.default_transition.target)
+                                        );
+                                    });
+                                    if (!testPresence) {
+                                        newLink = {
+                                            "source" : state.uniqueId,
+                                            "target" : viewmode.getIdFromName(dataset,state.default_transition.target),
+                                            "conditions" : [{condition: "*"}]
+                                        };
+                                        links.push(newLink);
+                                    } else {
+                                        if (testPresence.conditions) {
+                                            testPresence.conditions.unshift({condition: "*"});
                                         }
                                     }
                                 }
