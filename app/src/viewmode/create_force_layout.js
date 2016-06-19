@@ -30,7 +30,7 @@ define(function(require){
                 tick(e,r,containmentWidth,containmentHeight);
             })
             .start();
-
+            
         return force;
 
     };

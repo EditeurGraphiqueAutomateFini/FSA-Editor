@@ -144,17 +144,19 @@ define(function(require){
             if(d.conditions){
                 // iterating over each condition
                 d.conditions.forEach(function(condition,index){
-                    // adding an element with the condition properties
-                    html += "<span class='swal_display condition_display' id='condition_display_"+index+"'>"+
-                            "<span class='custom_swal_delete' id='delete_condition_"+index+"'>X</span>"+
-                            "<label><input class='custom_swal_input condition_input' type='text' value='"+condition.condition+"' id='input_condition_"+index+"' /></label>"+
-                            "<label><input class='custom_swal_input matcher_input' type='text' value='"+
-                                (condition.matcher ? condition.matcher : "") +"'/>"+
-                            "</label>"+
-                            "<label class='checkbox_label'><input class='custom_swal_input silent_input' type='checkbox' "+
-                                (condition.silent ? "checked='true'" : "") +"'/>"+
-                            "</label> "+
-                        "</span>";
+                    if(!condition.default_transition){
+                        // adding an element with the condition properties
+                        html += "<span class='swal_display condition_display' id='condition_display_"+index+"'>"+
+                                "<span class='custom_swal_delete' id='delete_condition_"+index+"'>X</span>"+
+                                "<label><input class='custom_swal_input condition_input' type='text' value='"+condition.condition+"' id='input_condition_"+index+"' /></label>"+
+                                "<label><input class='custom_swal_input matcher_input' type='text' value='"+
+                                    (condition.matcher ? condition.matcher : "") +"'/>"+
+                                "</label>"+
+                                "<label class='checkbox_label'><input class='custom_swal_input silent_input' type='checkbox' "+
+                                    (condition.silent ? "checked='true'" : "") +"'/>"+
+                                "</label> "+
+                            "</span>";
+                    }
                 });
             }
 

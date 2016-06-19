@@ -155,12 +155,13 @@ define(function(require){
                                         newLink = {
                                             "source" : state.uniqueId,
                                             "target" : viewmode.getIdFromName(dataset,state.default_transition.target),
-                                            "conditions" : [{condition: "*"}]
+                                            "conditions" : [{condition: "*"}],
+                                            "default_transition": true
                                         };
                                         links.push(newLink);
                                     } else {
                                         if (testPresence.conditions) {
-                                            testPresence.conditions.unshift({condition: "*"});
+                                            testPresence.conditions.unshift({"condition": "*", "default_transition": true});
                                         }
                                     }
                                 }
