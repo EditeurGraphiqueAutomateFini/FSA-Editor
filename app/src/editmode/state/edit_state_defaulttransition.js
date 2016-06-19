@@ -11,11 +11,13 @@ define(function(){
     *   @alias module:editmode/state/edit_state_defaulttransition
     */
     var edit_state_defaulttransition = function(d,newSilent,newTarget,context){
+
         var states = context.getData.states;
         var newTargetName = "";
         var state;
 
         // default_transition cannot be set together w/ max_noise
+        // no target means no default_transition
         if(d.max_noise > 0 || !(parseInt(newTarget) >= 0)){
             d.default_transition = undefined;
             for(state in states){

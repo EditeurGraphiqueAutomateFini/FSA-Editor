@@ -93,7 +93,13 @@ define(function(require){
             d3.selectAll("text.condition").each(function(){
                 d3.select(this)
                     .on("click",function(d){
-                        get_transition_edition(d,context);
+                        // if there is only the default_transition, edit concerned state
+                        if((d.conditions.length === 1 && d.conditions[0].default_transition === true)) {
+                            get_state_edition(d.source,context);
+                        // else git normal transition edition
+                        } else {
+                            get_transition_edition(d,context);
+                        }
                     });
             });
 
