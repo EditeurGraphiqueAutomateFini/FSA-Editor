@@ -11,14 +11,18 @@ define(function(){
     *   @alias module:editmode/state/edit_state_defaulttransition
     */
     var edit_state_defaulttransition = function(d,newSilent,newTarget,context){
+        var delete_transition = require('../transition/delete_transition');
+        var viewmode = require('../../viewmode/view_init');
 
         var states = context.getData.states;
         var newTargetName = "";
         var state;
+        var links = context.force.links();
 
         // default_transition cannot be set together w/ max_noise
         // no target means no default_transition
         if(d.max_noise > 0 || !(parseInt(newTarget) >= 0)){
+
             d.default_transition = undefined;
             for(state in states){
                 if(states.hasOwnProperty(state) && states[state]){
@@ -27,6 +31,17 @@ define(function(){
                     }
                 }
             }
+
+            // remove corresponding transition object
+            Object.keys(links).forEach(function(key){
+                if(links[key].source){
+                    if(links[key].source.index === d.index){
+                        if(links[key].default_transition){
+                            delete_transition(links[key],[0],context);
+                        }
+                    }
+                }
+            });
         }else{
             // get the state name from the "newTarget" number
             for(state in states){
@@ -47,6 +62,14 @@ define(function(){
                     "silent" : newSilent,
                     "target" : newTargetName
                 };
+
+                // add corresponding transition object
+                links.push({
+                    "source" : d.index,
+                    "target" : viewmode.getIdFromName(context.getData.states,newTargetName),
+                    "conditions" : [{condition: "*"}],
+                    "default_transition": true
+                });
             }
 
             // iterating over states in the global object
@@ -69,6 +92,8 @@ define(function(){
                 }
             }
         }
+
+        context.force.start();
     };
     return edit_state_defaulttransition;
 });

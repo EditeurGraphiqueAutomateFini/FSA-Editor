@@ -22,7 +22,7 @@ define(function(require){
                 "x" : position_condition.setXPosition,
                 "y" : position_condition.setYPosition,
                 "class" : function(d){
-                    return "condition link_"+d.source.index +"_"+d.target.index;
+                    return "condition link_"+d.source.index +"_"+d.target.index + (d.default_transition ? " default_transition" : "");
                 }
             })
             .text(condition_list);
