@@ -155,8 +155,7 @@ define(function(require){
                                         newLink = {
                                             "source" : state.uniqueId,
                                             "target" : viewmode.getIdFromName(dataset,state.default_transition.target),
-                                            "conditions" : [{condition: "*"}],
-                                            "default_transition": true
+                                            "conditions" : [{condition: "*", default_transition: true}]
                                         };
                                         links.push(newLink);
                                     } else {

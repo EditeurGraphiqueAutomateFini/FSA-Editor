@@ -94,7 +94,7 @@ define(function(require){
                 d3.select(this)
                     .on("click",function(d){
                         // if there is only the default_transition, edit concerned state
-                        if((d.conditions.length === 1 && d.conditions[0].default_transition === true)) {
+                        if(d.conditions.length === 1 && d.conditions[0].default_transition === true) {
                             get_state_edition(d.source,context);
                         // else git normal transition edition
                         } else {

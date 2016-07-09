@@ -36,8 +36,12 @@ define(function(){
             Object.keys(links).forEach(function(key){
                 if(links[key].source){
                     if(links[key].source.index === d.index){
-                        if(links[key].default_transition){
-                            delete_transition(links[key],[0],context);
+                        if(links[key].conditions){
+                            links[key].conditions.forEach(function(transition) {
+                                if (transition.default_transition) {
+                                    delete_transition(links[key],[transition.condition],context);
+                                }
+                            });
                         }
                     }
                 }
@@ -67,8 +71,7 @@ define(function(){
                 links.push({
                     "source" : d.index,
                     "target" : viewmode.getIdFromName(context.getData.states,newTargetName),
-                    "conditions" : [{condition: "*"}],
-                    "default_transition": true
+                    "conditions" : [{condition: "*", default_transition: true}]
                 });
             }
 
