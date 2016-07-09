@@ -39,7 +39,7 @@ define(function(){
                         if(links[key].conditions){
                             links[key].conditions.forEach(function(transition) {
                                 if (transition.default_transition) {
-                                    delete_transition(links[key],[transition.condition],context);
+                                    delete_transition(links[key],[0],context);
                                 }
                             });
                         }
